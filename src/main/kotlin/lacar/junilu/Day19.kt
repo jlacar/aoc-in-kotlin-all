@@ -5,14 +5,17 @@ class Day19(
     private val molecule: String
 ) : Solution<Int> {
 
-    override fun part1(): Int {
-        return replacements.flatMap { (left, right) ->
+    override fun part1() = distinctMoleculesFromReplacements()
+
+    override fun part2() = fewestReplacementsFrom("e")
+
+    private fun distinctMoleculesFromReplacements() =
+        replacements.flatMap { (left, right) ->
             molecule.replaceOccurrencesOf(left, right)
         }.distinct().size
-    }
 
-    override fun part2(): Int {
-        TODO("Not yet implemented")
+    private fun fewestReplacementsFrom(startingMolecule: String): Int {
+        return 0
     }
 
     companion object {
@@ -28,8 +31,8 @@ class Day19(
 
 private fun String.replaceOccurrencesOf(left: String, right: String) =
     indices.map { i ->
-        val rest = drop(i)
-        if (rest.startsWith(left)) {
-            take(i) + right + rest.drop(left.length)
+        val remaining = drop(i)
+        if (remaining.startsWith(left)) {
+            take(i) + right + remaining.drop(left.length)
         } else ""
     }.filter { it.isNotBlank() }
