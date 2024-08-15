@@ -1,18 +1,24 @@
 # Advent of Code 2015 - In Kotlin
 
-I'm actually backtracking to the first AoC set of problems here, having already started solving some of the more recent ones. I've learned a few lessons since then and I'm applying those learnings here. Also taking some inspiration from [Todd Ginsberg](https://github.com/tginsberg) and the way he approaches solving these problems in Kotlin.
+[Advent of Code](https://adventofcode.com) is an annual programming competition with a Christmas-y theme. It runs during Advent, from December 1st to the 25th.
+
+I'm backtracking to the first AoC set of problems, having already started solving some of the more recent years' puzzles. My goal is to get all fifty stars for each year and solve the puzzles using Kotlin.
+
+I've learned a few lessons since then and I'm applying those learnings here. Also taking some inspiration from [Todd Ginsberg](https://github.com/tginsberg) and the way he approaches solving these problems in Kotlin.
 
 ## General approach
 
-I'm using the `Solution` interface to define the shape of a solution. The interface defines the `part1()` and `part2()` functions, with the return type specified as a generic parameter. Most of the solutions will be defined as `Solution<Int>` because most of the problem answers are numeric.
+I'll be doing Test-Driven Development to solve all of these puzzles, so there should be tests for every solution class. Following my practice in real-world development, I use the tests as a drawing board, a way to experiment with different options, and as a sandbox for experiments.
 
-A common pattern I'm using is that of the companion object as a builder or factory. I'll usually name the factory method as `using` because it reads very naturally when passed in the input. One example of this is the `Day09` solution:
+I'm using the `Solution` interface to define the shape of a solution. The interface defines the `part1()` and `part2()` functions, with the return type specified as a generic parameter. Most of the solutions will be defined as `Solution<Int>` because most of the puzzle answers are numeric.
 
-    Day09.using(puzzleInput).part1()
-    ...
-    Day09.using(puzzleInput).part2()
+A common pattern I'm using is that of the companion object as a builder or factory. I'll usually name the factory method as `using` because it reads very naturally when passed in the input. 
 
-Whenever possible, I try to find and extract the core logic that can be used to solve both parts of each problem. 
+You'll see an example of this in the Day 1 test:
+
+    private val day01 = Day01.using(readResource("day01"))
+
+The tests are also organized so that I can run the puzzle solutions separately from the examples. A test class will typically have nested `Examples` and `Solution` classes to house their respective set of tests.
 
 ## Solutions
 
