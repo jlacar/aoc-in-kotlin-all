@@ -15,13 +15,13 @@ class Day19(
         }
 
     private fun stepsToReduceToE(): Int {
-        val convertibleToE = replacementsForE()
+        val toE = replacementsForE()
         val otherReplacements = otherReplacements()
         var reducedMolecule = molecule
         var steps = 1
-        while (reducedMolecule.isNot(convertibleToE)) {
+        while (reducedMolecule.isNotConvertible(toE)) {
             val (element, replacement) = otherReplacements.first { (element, _) -> reducedMolecule.contains(element) }
-            steps += reducedMolecule.occurrencesOf(element)
+            steps += reducedMolecule.countOf(element)
             reducedMolecule = reducedMolecule.replace(element, replacement)
         }
         return steps
@@ -40,10 +40,13 @@ class Day19(
     }
 }
 
-private fun String.isNot(reduceableToE: List<String>) =
-    reduceableToE.none { this == it }
+private fun String.isNotConvertible(toE: List<String>) =
+    toE.none { this == it }
 
-private fun String.occurrencesOf(substring: String) =
+/**
+ * Counts how many times the given substring occurs in this string.
+ */
+private fun String.countOf(substring: String) =
     this.split(substring).size - 1
 
 private fun String.replaceOccurrencesOf(left: String, right: String) =
