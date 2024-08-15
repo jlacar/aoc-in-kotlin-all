@@ -41,7 +41,7 @@ class Day01Test {
             assertEquals(expectedLevel, Day01(input).part1())
         }
 
-        @ParameterizedTest(name = "{0} should give level {1}")
+        @ParameterizedTest(name = "{0} should give position {1}")
         @CsvSource(
             "),     1",
             "()()), 5",
