@@ -22,4 +22,8 @@ class Day01(private val directions: String) : Solution<Int> {
     private val nextFloor: (Int, Char) -> Int = { currentFloor, direction ->
         if (direction == '(') currentFloor.inc() else currentFloor.dec()
     }
+
+    companion object {
+        fun using(input: List<String>) = Day01(input.first())
+    }
 }
