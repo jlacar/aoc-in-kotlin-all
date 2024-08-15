@@ -9,10 +9,9 @@ private val puzzleInput = readResource("day19")
 class Day19Test {
 
     @Nested
-    inner class Samples {
-
+    inner class Part1 {
         @Test
-        fun `Part 1 example`() {
+        fun examples() {
             assertEquals(7, Day19.using(
                 """
                     H => HO
@@ -25,7 +24,16 @@ class Day19Test {
         }
 
         @Test
-        fun `Part 2 example`() {
+        fun solution() {
+            assertEquals(535, Day19.using(puzzleInput).part1())
+        }
+    }
+
+    @Nested
+    inner class Part2 {
+
+        @Test
+        fun example() {
             assertEquals(6, Day19.using(
                 """
                     e => H
@@ -36,21 +44,12 @@ class Day19Test {
                     
                     HOHOHO
                 """.trimIndent().lines()
-
             ).part2())
         }
-    }
-
-    @Nested
-    inner class Solution {
-        @Test
-        fun `Part 1 - SOLVED`() {
-            assertEquals(535, Day19.using(puzzleInput).part1())
-        }
 
         @Test
-        fun `Part 2 -`() {
-            assertEquals(0, Day19.using(puzzleInput).part1())
+        fun solution() {
+            assertEquals(212, Day19.using(puzzleInput).part2())
         }
     }
 }

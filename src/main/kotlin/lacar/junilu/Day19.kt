@@ -5,17 +5,26 @@ class Day19(
     private val molecule: String
 ) : Solution<Int> {
 
-    override fun part1() = distinctMoleculesFromReplacements()
+    override fun part1() = newMolecules().distinct().count()
 
-    override fun part2() = fewestReplacementsFrom("e")
+    override fun part2() = stepsToReduceToE()
 
-    private fun distinctMoleculesFromReplacements() =
+    private fun newMolecules() =
         replacements.flatMap { (left, right) ->
             molecule.replaceOccurrencesOf(left, right)
-        }.distinct().size
+        }
 
-    private fun fewestReplacementsFrom(startingMolecule: String): Int {
-        return 0
+    private fun stepsToReduceToE(): Int {
+        val finalRedux = replacements.filter { it.first == "e" }.map { Pair(it.second, it.first) }
+        val intermediateRedux = replacements.filterNot { it.first == "e" }.map { Pair(it.second, it.first) }
+        var newMolecule = molecule
+        var steps = 0
+        while (finalRedux.none { it.first == newMolecule }) {
+            val redux = intermediateRedux.first { newMolecule.contains(it.first) }
+            steps += newMolecule.occurrencesOf(redux.first)
+            newMolecule = newMolecule.replace(redux.first, redux.second)
+        }
+        return steps + 1
     }
 
     companion object {
@@ -28,6 +37,8 @@ class Day19(
         )
     }
 }
+
+private fun String.occurrencesOf(substring: String) = this.split(substring).size - 1
 
 private fun String.replaceOccurrencesOf(left: String, right: String) =
     indices.map { i ->
