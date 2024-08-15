@@ -15,11 +15,11 @@ class Day19(
         }
 
     private fun stepsToReduceToE(): Int {
-        val toE = replacementsForE()
+        val replacementsForE = replacementsForE()
         val otherReplacements = otherReplacements()
         var reducedMolecule = molecule
         var steps = 1
-        while (reducedMolecule.isNotConvertible(toE)) {
+        while (reducedMolecule.isNotContainedIn(replacementsForE)) {
             val (element, replacement) = otherReplacements.first { (element, _) -> reducedMolecule.contains(element) }
             steps += reducedMolecule.countOf(element)
             reducedMolecule = reducedMolecule.replace(element, replacement)
@@ -40,8 +40,8 @@ class Day19(
     }
 }
 
-private fun String.isNotConvertible(toE: List<String>) =
-    toE.none { this == it }
+private fun String.isNotContainedIn(replacements: List<String>) =
+    replacements.none { this == it }
 
 /**
  * Counts how many times the given substring occurs in this string.
