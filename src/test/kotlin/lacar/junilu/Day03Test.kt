@@ -1,50 +1,49 @@
 package lacar.junilu
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DynamicTest.dynamicTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
-private val puzzleInput = readResource("day03").first()
+private val day03 = Day03.using(readResource("day03"))
 
 class Day03Test {
-    @Nested
-    inner class Samples {
-
-        @TestFactory
-        fun `Part 1`() = listOf(
-            ">" to 2,
-            "^>v<" to 4,
-            "^v^v^v^v^v" to 2
-        ).map { (directions, expectedCount) ->
-            dynamicTest("$directions should visit $expectedCount houses") {
-                assertEquals(expectedCount, Day03(directions).part1())
-            }
-        }
-
-        @TestFactory
-        fun `Part 2`() = listOf(
-            "^v" to 3,
-            "^>v<" to 3,
-            "^v^v^v^v^v" to 11
-        ).map { (directions, expectedCount) ->
-            dynamicTest("$directions should visit $expectedCount houses") {
-                assertEquals(expectedCount, Day03(directions).part2())
-            }
-        }
-    }
 
     @Nested
     inner class Solution {
         @Test
-        fun `Part 1 - SOLVED`() {
-            assertEquals(2565, Day03(puzzleInput).part1())
+        fun part1() {
+            assertEquals(2565, day03.part1())
         }
 
         @Test
-        fun `Part 2 - SOLVED`() {
-            assertEquals(2639, Day03(puzzleInput).part2())
+        fun part2() {
+            assertEquals(2639, day03.part2())
+        }
+    }
+
+    @Nested
+    inner class Examples {
+
+        @ParameterizedTest(name = "{0} should visit {1} houses")
+        @CsvSource(
+            ">, 2",
+            "^>v<, 4",
+            "^v^v^v^v^v, 2",
+        )
+        fun part1(directions: String, expectedCount: Int) {
+            assertEquals(expectedCount, Day03(directions).part1())
+        }
+
+        @ParameterizedTest(name = "{0} should visit {1} houses")
+        @CsvSource(
+            "^v, 3",
+            "^>v<, 3",
+            "^v^v^v^v^v, 11",
+        )
+        fun part2(directions: String, expectedCount: Int) {
+            assertEquals(expectedCount, Day03(directions).part2())
         }
     }
 }

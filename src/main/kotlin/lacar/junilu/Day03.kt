@@ -2,6 +2,8 @@ package lacar.junilu
 
 /**
  * AoC 2015 - Day 3: Perfectly Spherical Houses in a Vacuum
+ *
+ * https://adventofcode.com/2015/day/3
  */
 class Day03(private val directions: String) : Solution<Int> {
     override fun part1() = housesVisited(directions).distinct().count()
@@ -14,11 +16,16 @@ class Day03(private val directions: String) : Solution<Int> {
 
     private fun housesVisited(directions: String) =
         directions.runningFold(Pair(0, 0)) { currentHouse, ch ->
+            val (horizontal, vertical) = currentHouse
             when (ch) {
-                '<' -> currentHouse.copy(first = currentHouse.first - 1)
-                '>' -> currentHouse.copy(first = currentHouse.first + 1)
-                '^' -> currentHouse.copy(second = currentHouse.second + 1)
-                else -> currentHouse.copy(second = currentHouse.second - 1)
+                '<' -> currentHouse.copy(first = horizontal - 1)
+                '>' -> currentHouse.copy(first = horizontal + 1)
+                '^' -> currentHouse.copy(second = vertical + 1)
+                else -> currentHouse.copy(second = vertical - 1)
             }
         }
+
+    companion object {
+        fun using(input: List<String>) = Day03(input.first())
+    }
 }
