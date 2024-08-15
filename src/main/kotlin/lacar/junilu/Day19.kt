@@ -11,7 +11,7 @@ class Day19(
 
     private fun newMolecules() =
         replacements.flatMap { (element, replacement) ->
-            molecule.replaceOccurrencesOf(element, replacement)
+            molecule.allChangesFor(element, replacement)
         }
 
     private fun stepsToReduceToE(): Int {
@@ -49,10 +49,14 @@ private fun String.isNotContainedIn(replacements: List<String>) =
 private fun String.countOf(substring: String) =
     this.split(substring).size - 1
 
-private fun String.replaceOccurrencesOf(left: String, right: String) =
+/**
+ * Returns a list of all new molecules created by replacing an occurrence of the
+ * given element with the specified replacement.
+ */
+private fun String.allChangesFor(element: String, replacement: String) =
     indices.map { i ->
         val remaining = drop(i)
-        if (remaining.startsWith(left)) {
-            take(i) + right + remaining.drop(left.length)
+        if (remaining.startsWith(element)) {
+            take(i) + replacement + remaining.drop(element.length)
         } else ""
     }.filter { it.isNotBlank() }
