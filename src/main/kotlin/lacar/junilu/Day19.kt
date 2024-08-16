@@ -1,9 +1,6 @@
 package lacar.junilu
 
-class Day19(
-    private val replacements: List<Pair<String, String>>,
-    private val molecule: String
-) : Solution<Int> {
+class Day19(private val replacements: List<Pair<String, String>>, private val molecule: String) : Solution<Int> {
 
     override fun part1() = newMolecules().distinct().count()
 
