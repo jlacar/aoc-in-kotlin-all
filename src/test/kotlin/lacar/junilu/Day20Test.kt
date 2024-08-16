@@ -9,13 +9,13 @@ import org.junit.jupiter.params.provider.CsvSource
 class Day20Test {
     @Nested
     inner class Part1 {
-        @ParameterizedTest(name = "At least {0} at house {1}")
+        @ParameterizedTest(name = "House {1} is first to get at least {0} presents")
         @CsvSource(
             "120, 6",
             "150, 8",
         )
-        fun example(minPresents: Int, house: Int) {
-            assertEquals(house, Day20(minPresents).part1())
+        fun example(numberOfPresents: Int, expectedHouse: Int) {
+            assertEquals(expectedHouse, Day20(numberOfPresents).part1())
         }
 
         @Test
