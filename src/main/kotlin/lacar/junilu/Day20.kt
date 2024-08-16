@@ -1,19 +1,33 @@
 package lacar.junilu
 
-class Day20(private val leastNumberOfPresents: Int) : Solution<Int> {
-    override fun part1(): Int {
-        return generateSequence(1) { it.inc() }
-            .takeWhile { presentsReceivedBy(it) < leastNumberOfPresents }
-            .last() + 1
-    }
+import kotlin.math.sqrt
 
-    private fun presentsReceivedBy(house: Int) =
-        factorsOf(house).fold(10 + house * 10) { acc, elf -> acc + elf * 10 }
+class Day20(private val numberOfPresents: Int) : Solution<Int> {
+    override fun part1(): Int = firstHouseToGetAtLeastAsManyPresents()
 
-    override fun part2(): Int {
-        TODO("Not yet implemented")
+    override fun part2(): Int = firstOfFiftyHousesToGetAsManyPresents()
+
+    private fun firstHouseToGetAtLeastAsManyPresents() = generateSequence(1) { it.inc() }
+        .takeWhile { house -> presentsReceivedBy(house, 10) < numberOfPresents }
+        .last() + 1
+
+    private fun presentsReceivedBy(house: Int, presentsPerElf: Int) =
+        house.factors().fold(presentsPerElf + house * presentsPerElf) { acc, elf -> acc + elf * presentsPerElf }
+
+    private fun firstOfFiftyHousesToGetAsManyPresents(): Int {
+        return 0
     }
 }
 
-fun factorsOf(n: Int) : List<Int> =
-    (2..n/2).filter { n % it == 0 }
+private fun Int.factors(): Sequence<Int> = sequence {
+    val limit = floorDiv(sqrt(toDouble()).toInt())
+    for (divisor in 2..limit) {
+        if (rem(divisor) == 0) {
+            yieldAll(listOf(divisor, div(divisor)))
+        }
+    }
+}.distinct()
+
+fun main() {
+    50.factors().forEach(::println)
+}
