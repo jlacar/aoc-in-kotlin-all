@@ -2,6 +2,11 @@ package lacar.junilu
 
 import kotlin.math.sqrt
 
+/**
+ * AoC 2015 - Day 20: Infinite Elves and Infinite Houses
+ *
+ * https://adventofcode.com/2015/day/20
+ */
 class Day20(private val numberOfPresents: Int, private val visitLimit: Int = 0) : Solution<Int> {
 
     override fun part1(): Int = firstToGetAsManyPresentsWith(10, visitLimit)

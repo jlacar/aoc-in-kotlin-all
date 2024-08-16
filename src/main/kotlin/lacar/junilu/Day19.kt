@@ -1,5 +1,10 @@
 package lacar.junilu
 
+/**
+ * AoC 2015 - Day 19: Medicine for Rudolph
+ *
+ * https://adventofcode.com/2015/day/19
+ */
 class Day19(private val replacements: List<Pair<String, String>>, private val molecule: String) : Solution<Int> {
 
     override fun part1() = newMolecules().distinct().count()
