@@ -27,8 +27,8 @@ private fun Int.factors(): Sequence<Int> = sequence {
     yieldAll(listOf(1, this@factors))
     val limit = floorDiv(sqrt(toDouble()).toInt())
     for (divisor in 2..limit) {
-        if (rem(divisor) == 0) {
-            yieldAll(listOf(divisor, div(divisor)))
+        if (this@factors % divisor == 0) {
+            yieldAll(listOf(divisor, this@factors/divisor))
         }
     }
 }.distinct()
