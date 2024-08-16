@@ -24,11 +24,12 @@ class Day20(
 }
 
 private fun Int.factors(): Sequence<Int> = sequence {
-    yieldAll(listOf(1, this@factors))
+    val thisNumber = this@factors
+    yieldAll(listOf(1, thisNumber))
     val limit = floorDiv(sqrt(toDouble()).toInt())
     for (divisor in 2..limit) {
-        if (this@factors % divisor == 0) {
-            yieldAll(listOf(divisor, this@factors/divisor))
+        if (thisNumber % divisor == 0) {
+            yieldAll(listOf(divisor, thisNumber/divisor))
         }
     }
 }.distinct()
