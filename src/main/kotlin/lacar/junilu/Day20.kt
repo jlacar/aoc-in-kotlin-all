@@ -26,7 +26,8 @@ class Day20(
 private fun Int.factors(): Sequence<Int> = sequence {
     val thisNumber = this@factors
     yieldAll(listOf(1, thisNumber))
-    val limit = floorDiv(sqrt(toDouble()).toInt())
+    
+    val limit = thisNumber.floorDiv(sqrt(thisNumber.toDouble()).toInt())
     for (divisor in 2..limit) {
         if (thisNumber % divisor == 0) {
             yieldAll(listOf(divisor, thisNumber/divisor))
