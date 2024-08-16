@@ -45,12 +45,12 @@ class Day20Test {
         @ParameterizedTest(name = "House {1} is first to get at least {0} presents")
         @CsvSource("33, 2", "99, 6")
         fun `Example when limited to 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
-            assertEquals(expectedHouse, Day20(numberOfPresents).firstToGetAsManyPresentsWith(11, 2))
+            assertEquals(expectedHouse, Day20(numberOfPresents, 2).part2())
         }
 
         @Test
         fun `Solution for up to 50 houses visited by each elf`() {
-            assertEquals(705600, Day20(puzzleInput).part2())
+            assertEquals(705600, Day20(puzzleInput, 50).part2())
         }
     }
 }

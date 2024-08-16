@@ -2,12 +2,15 @@ package lacar.junilu
 
 import kotlin.math.sqrt
 
-class Day20(private val numberOfPresents: Int) : Solution<Int> {
-    override fun part1(): Int = firstToGetAsManyPresentsWith(10, 0)
+class Day20(
+    private val numberOfPresents: Int,
+    private val visitLimit: Int = 0
+) : Solution<Int> {
+    override fun part1(): Int = firstToGetAsManyPresentsWith(10, visitLimit)
 
-    override fun part2(): Int = firstToGetAsManyPresentsWith(11, 50)
+    override fun part2(): Int = firstToGetAsManyPresentsWith(11, visitLimit)
 
-    fun firstToGetAsManyPresentsWith(presentsPerElf: Int, visitLimit: Int) =
+    private fun firstToGetAsManyPresentsWith(presentsPerElf: Int, visitLimit: Int) =
         generateSequence(1) { it.inc() }
         .takeWhile { house -> presentsDeliveredTo(house, presentsPerElf, visitLimit) < numberOfPresents }
         .last() + 1
