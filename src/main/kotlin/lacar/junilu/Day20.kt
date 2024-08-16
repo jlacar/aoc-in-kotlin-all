@@ -3,23 +3,27 @@ package lacar.junilu
 import kotlin.math.sqrt
 
 class Day20(private val numberOfPresents: Int) : Solution<Int> {
-    override fun part1(): Int = firstHouseToGetAtLeastAsManyPresents()
+    override fun part1(): Int = firstToGetAsManyPresentsWith(10, 0)
 
-    override fun part2(): Int = firstOfFiftyHousesToGetAsManyPresents()
+    override fun part2(): Int = firstToGetAsManyPresentsWith(11, 50)
 
-    private fun firstHouseToGetAtLeastAsManyPresents() = generateSequence(1) { it.inc() }
-        .takeWhile { house -> presentsReceivedBy(house, 10) < numberOfPresents }
+    fun testPart2(visitLimit: Int) = firstToGetAsManyPresentsWith(11, visitLimit)
+
+    private fun firstToGetAsManyPresentsWith(presentsPerElf: Int, visitLimit: Int) =
+        generateSequence(1) { it.inc() }
+        .takeWhile { house -> presentsDeliveredTo(house, presentsPerElf, visitLimit) < numberOfPresents }
         .last() + 1
 
-    private fun presentsReceivedBy(house: Int, presentsPerElf: Int) =
-        house.factors().fold(presentsPerElf + house * presentsPerElf) { acc, elf -> acc + elf * presentsPerElf }
+    private fun presentsDeliveredTo(house: Int, presentsPerElf: Int, visitLimit: Int) =
+        house.factors().fold(0) { acc, elf ->
+            if (visitLimit == 0 || elf.willVisit(house, visitLimit)) acc + elf * presentsPerElf else acc
+        }
 
-    private fun firstOfFiftyHousesToGetAsManyPresents(): Int {
-        return 0
-    }
+    private fun Int.willVisit(house: Int, limit: Int) = house <= this * limit
 }
 
 private fun Int.factors(): Sequence<Int> = sequence {
+    yieldAll(listOf(1, this@factors))
     val limit = floorDiv(sqrt(toDouble()).toInt())
     for (divisor in 2..limit) {
         if (rem(divisor) == 0) {
@@ -27,7 +31,3 @@ private fun Int.factors(): Sequence<Int> = sequence {
         }
     }
 }.distinct()
-
-fun main() {
-    50.factors().forEach(::println)
-}

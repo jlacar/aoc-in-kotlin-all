@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
 
 class Day20Test {
     @Nested
@@ -22,6 +21,34 @@ class Day20Test {
         @Test
         fun solution() {
             assertEquals(665280, Day20(29_000_000).part1())
+        }
+    }
+
+    @Nested
+    inner class Part2 {
+
+        /*
+         * Limit 2 visits per elf
+         * House Presents
+         *   1   (11)
+         *   2   (33) 11 + 22
+         *   3   (33)
+         *   4   (66) 22 + 44
+         *   5   (55)
+         *   6   (99) 33 + 66
+         *   7   (77)
+         *   8   (132) 44 + 88
+         *   9   (99)
+         */
+        @ParameterizedTest(name = "House {1} is first to get at least {0} presents")
+        @CsvSource("33, 2", "99, 6")
+        fun `Example with only 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
+            assertEquals(expectedHouse, Day20(numberOfPresents).testPart2(2))
+        }
+
+        @Test
+        fun solution() {
+            assertEquals(705600, Day20(29_000_000).part2())
         }
     }
 }
