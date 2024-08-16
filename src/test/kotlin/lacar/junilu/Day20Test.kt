@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
+private const val puzzleInput = 29_000_000
+
 class Day20Test {
     @Nested
     inner class Part1 {
@@ -14,13 +16,13 @@ class Day20Test {
             "120, 6",
             "150, 8",
         )
-        fun example(numberOfPresents: Int, expectedHouse: Int) {
+        fun `Example when unlimited houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
             assertEquals(expectedHouse, Day20(numberOfPresents).part1())
         }
 
         @Test
-        fun solution() {
-            assertEquals(665280, Day20(29_000_000).part1())
+        fun `Solution for unlimited houses visited by each elf`() {
+            assertEquals(665280, Day20(puzzleInput).part1())
         }
     }
 
@@ -42,13 +44,13 @@ class Day20Test {
          */
         @ParameterizedTest(name = "House {1} is first to get at least {0} presents")
         @CsvSource("33, 2", "99, 6")
-        fun `Example with only 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
-            assertEquals(expectedHouse, Day20(numberOfPresents).testPart2(2))
+        fun `Example when limited to 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
+            assertEquals(expectedHouse, Day20(numberOfPresents).firstToGetAsManyPresentsWith(11, 2))
         }
 
         @Test
-        fun solution() {
-            assertEquals(705600, Day20(29_000_000).part2())
+        fun `Solution for up to 50 houses visited by each elf`() {
+            assertEquals(705600, Day20(puzzleInput).part2())
         }
     }
 }

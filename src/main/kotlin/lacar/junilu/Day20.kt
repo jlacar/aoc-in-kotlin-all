@@ -7,9 +7,7 @@ class Day20(private val numberOfPresents: Int) : Solution<Int> {
 
     override fun part2(): Int = firstToGetAsManyPresentsWith(11, 50)
 
-    fun testPart2(visitLimit: Int) = firstToGetAsManyPresentsWith(11, visitLimit)
-
-    private fun firstToGetAsManyPresentsWith(presentsPerElf: Int, visitLimit: Int) =
+    fun firstToGetAsManyPresentsWith(presentsPerElf: Int, visitLimit: Int) =
         generateSequence(1) { it.inc() }
         .takeWhile { house -> presentsDeliveredTo(house, presentsPerElf, visitLimit) < numberOfPresents }
         .last() + 1
