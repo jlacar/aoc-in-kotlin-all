@@ -2,6 +2,8 @@ package lacar.junilu
 
 /**
  * AoC 2015 - Day 17: No Such Thing as Too Much
+ *
+ * https://adventofcode.com/2015/day/17
  */
 class Day17(private val containers: List<Int>, private val liters: Int) : Solution<Int> {
 
