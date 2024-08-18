@@ -7,12 +7,12 @@ import kotlinx.serialization.json.*
  *
  * http://adventofcode.com/2015/day/12
  */
-class Day12(val input: String) : Solution<Int> {
+class Day12(val input: String) {
     private val json = Json.decodeFromString<JsonElement>(input)
 
-    override fun part1() = deepSumOfNumbersIn(json)
+    fun part1() = deepSumOfNumbersIn(json)
 
-    override fun part2() = deepSumOfNumbersIn(json) { element ->
+    fun part2() = deepSumOfNumbersIn(json) { element ->
         element.values.any() { it == JsonPrimitive("red") }
     }
 }
