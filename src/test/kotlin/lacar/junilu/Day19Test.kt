@@ -24,7 +24,7 @@ class Day19Test {
     @Nested
     inner class Examples {
         @Test
-        fun `Number of molecules that can be produced by one replacement`() {
+        fun `Number of new molecules that can be produced by a single replacement`() {
             assertEquals(7, Day19.using(
                 """
                     H => HO
@@ -37,7 +37,7 @@ class Day19Test {
         }
 
         @Test
-        fun `Number of replacements to reduce to e`() {
+        fun `Fewest steps to create molecule from e`() {
             assertEquals(6, Day19.using(
                 """
                     e => H
