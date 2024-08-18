@@ -17,12 +17,12 @@ class Day20Test {
             "150, 8",
         )
         fun `Example when unlimited houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
-            assertEquals(expectedHouse, Day20(numberOfPresents).part1())
+            assertEquals(expectedHouse, Day20(numberOfPresents, 10).firstToGetAsManyPresents())
         }
 
         @Test
         fun `Solution for unlimited houses visited by each elf`() {
-            assertEquals(665280, Day20(puzzleInput).part1())
+            assertEquals(665280, Day20(puzzleInput, 10).firstToGetAsManyPresents())
         }
     }
 
@@ -48,12 +48,12 @@ class Day20Test {
             "99, 6"
         )
         fun `Example when limited to 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
-            assertEquals(expectedHouse, Day20(numberOfPresents, 2).part2())
+            assertEquals(expectedHouse, Day20(numberOfPresents, 11, 2).firstToGetAsManyPresents())
         }
 
         @Test
         fun `Solution for up to 50 houses visited by each elf`() {
-            assertEquals(705600, Day20(puzzleInput, 50).part2())
+            assertEquals(705600, Day20(puzzleInput, 11, 50).firstToGetAsManyPresents())
         }
     }
 }

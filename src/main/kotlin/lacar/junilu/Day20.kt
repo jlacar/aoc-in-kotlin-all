@@ -7,18 +7,17 @@ import kotlin.math.sqrt
  *
  * https://adventofcode.com/2015/day/20
  */
-class Day20(private val numberOfPresents: Int, private val visitLimit: Int = 0) : Solution<Int> {
-
-    override fun part1(): Int = firstToGetAsManyPresentsWith(10, visitLimit)
-
-    override fun part2(): Int = firstToGetAsManyPresentsWith(11, visitLimit)
-
-    private fun firstToGetAsManyPresentsWith(presentsPerElf: Int, visitLimit: Int) =
+class Day20(
+    private val numberOfPresents: Int,
+    private val presentsPerElf: Int,
+    private val visitLimit: Int = 0
+) {
+    fun firstToGetAsManyPresents() =
         generateSequence(1) { it.inc() }
-        .takeWhile { house -> presentsDeliveredTo(house, presentsPerElf, visitLimit) < numberOfPresents }
+        .takeWhile { house -> presentsDeliveredTo(house) < numberOfPresents }
         .last() + 1
 
-    private fun presentsDeliveredTo(house: Int, presentsPerElf: Int, visitLimit: Int) =
+    private fun presentsDeliveredTo(house: Int) =
         house.factors().fold(0) { acc, elf ->
             if (visitLimit == 0 || elf.willVisit(house, visitLimit)) acc + elf * presentsPerElf else acc
         }
