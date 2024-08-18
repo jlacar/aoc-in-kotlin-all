@@ -5,6 +5,8 @@ import kotlin.math.min
 
 /**
  * AoC 2015 Day 15: Science for Hungry People
+ *
+ * https://adventofcode.com/2015/day/15
  */
 class Day15(private val ingredients: List<Ingredient>, private val teaspoonsTotal: Int) : Solution<Int> {
 
