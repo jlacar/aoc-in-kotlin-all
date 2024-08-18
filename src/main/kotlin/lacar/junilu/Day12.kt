@@ -10,9 +10,9 @@ import kotlinx.serialization.json.*
 class Day12(val input: String) {
     private val json = Json.decodeFromString<JsonElement>(input)
 
-    fun part1() = deepSumOfNumbersIn(json)
+    fun sumOfAllNumbersInDocument() = deepSumOfNumbersIn(json)
 
-    fun part2() = deepSumOfNumbersIn(json) { element ->
+    fun sumOfAllNumbersExcludingObjectsWithRed() = deepSumOfNumbersIn(json) { element ->
         element.values.any() { it == JsonPrimitive("red") }
     }
 }
