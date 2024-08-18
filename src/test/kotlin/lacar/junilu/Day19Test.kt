@@ -9,9 +9,22 @@ private val puzzleInput = readResource("day19")
 class Day19Test {
 
     @Nested
-    inner class Part1 {
+    inner class Solution {
         @Test
-        fun examples() {
+        fun part1() {
+            assertEquals(535, Day19.using(puzzleInput).part1())
+        }
+
+        @Test
+        fun part2() {
+            assertEquals(212, Day19.using(puzzleInput).part2())
+        }
+    }
+
+    @Nested
+    inner class Examples {
+        @Test
+        fun `Number of molecules that can be produced by one replacement`() {
             assertEquals(7, Day19.using(
                 """
                     H => HO
@@ -24,16 +37,7 @@ class Day19Test {
         }
 
         @Test
-        fun solution() {
-            assertEquals(535, Day19.using(puzzleInput).part1())
-        }
-    }
-
-    @Nested
-    inner class Part2 {
-
-        @Test
-        fun example() {
+        fun `Number of replacements to reduce to e`() {
             assertEquals(6, Day19.using(
                 """
                     e => H
@@ -45,11 +49,6 @@ class Day19Test {
                     HOHOHO
                 """.trimIndent().lines()
             ).part2())
-        }
-
-        @Test
-        fun solution() {
-            assertEquals(212, Day19.using(puzzleInput).part2())
         }
     }
 }

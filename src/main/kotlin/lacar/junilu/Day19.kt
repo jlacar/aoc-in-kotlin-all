@@ -5,11 +5,11 @@ package lacar.junilu
  *
  * https://adventofcode.com/2015/day/19
  */
-class Day19(private val replacements: List<Pair<String, String>>, private val molecule: String) : Solution<Int> {
+class Day19(private val replacements: List<Pair<String, String>>, private val molecule: String) {
 
-    override fun part1() = newMolecules().distinct().count()
+    fun part1() = newMolecules().distinct().count()
 
-    override fun part2() = stepsToReduceToE()
+    fun part2() = stepsToReduceToE()
 
     private fun newMolecules() =
         replacements.flatMap { (element, replacement) ->
