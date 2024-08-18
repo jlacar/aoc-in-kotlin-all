@@ -47,32 +47,4 @@ class Day14(private val reindeer: List<Reindeer>, private val raceTime: Int) : S
 
         fun isFlyingAt(raceTime: Int) = (raceTime % cycleTime) in (1..flightTime)
     }
-
-    fun showFlightStatusThrough(time: Int) {
-        for (t in 1..time) {
-            println("After $t seconds,")
-            showFlyingOrRestingAt(t)
-        }
-    }
-
-    fun showFlyingOrRestingAt(tSeconds: Int) {
-        reindeer.forEach {
-            val status = if (it.isFlyingAt(tSeconds)) "flying" else "resting"
-            println("\t$it is $status and has flown ${it.distanceFlownAt(tSeconds)} kms")
-        }
-    }
-}
-
-fun main() {
-    Day14.using(readResource("day14"), 2503)
-        .showFlyingOrRestingAt(2503)
-//        .showFlightStatusThrough(2503)
-
-    Day14(
-        listOf(
-            Day14.Reindeer(speed = 14, flightTime = 10, restTime = 127),
-            Day14.Reindeer(speed = 16, flightTime = 11, restTime = 162)
-        ), 1000)
-//      .showFlyingOrRestingAt(11)
-      .showFlightStatusThrough(140)
 }
