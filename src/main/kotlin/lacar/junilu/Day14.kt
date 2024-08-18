@@ -7,11 +7,11 @@ import kotlin.math.min
  *
  * https://adventofcode.com/2015/day/14
  */
-class Day14(private val reindeer: List<Reindeer>, private val raceTime: Int) : Solution<Int> {
+class Day14(private val reindeer: List<Reindeer>, private val raceTime: Int) {
 
-    override fun part1() = reindeer.maxOf { it.distanceFlownAt(raceTime) }
+    fun part1() = reindeer.maxOf { it.distanceFlownAt(raceTime) }
 
-    override fun part2() = racePoints().values.max()
+    fun part2() = racePoints().values.max()
 
     private fun racePoints(): Map<Reindeer, Int> =
         (1..raceTime).fold(reindeer.associateWith { 0 }) { points, second ->
