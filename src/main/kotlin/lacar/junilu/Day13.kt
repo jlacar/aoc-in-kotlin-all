@@ -7,14 +7,14 @@ import java.util.Collections.swap
  *
  * https://adventofcode.com/2015/day/13
  */
-class Day13(private val happiness: Map<String, Int>) : Solution<Int> {
+class Day13(private val happiness: Map<String, Int>) {
 
     private val allAttendees = happiness.keys.map { it.split(" ").first() }.distinct()
 
-    override fun part1(): Int = allAttendees.permutations()
+    fun part1(): Int = allAttendees.permutations()
         .maxOf { arrangement -> happinessFor(arrangement) }
 
-    override fun part2(): Int = (allAttendees + "Me").permutations()
+    fun part2(): Int = (allAttendees + "Me").permutations()
         .maxOf { arrangement -> happinessFor(arrangement) }
 
     private fun happinessFor(arrangement: List<String>): Int =
