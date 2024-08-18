@@ -4,6 +4,8 @@ import kotlinx.serialization.json.*
 
 /**
  * AoC 2015 - Day 12: JSAbacusFramework.io
+ *
+ * http://adventofcode.com/2015/day/12
  */
 class Day12(val input: String) : Solution<Int> {
     private val json = Json.decodeFromString<JsonElement>(input)
