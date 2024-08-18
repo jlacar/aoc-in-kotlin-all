@@ -8,11 +8,11 @@ private val puzzleInput = readResource("day16")
 class Day16Test {
     @Test
     fun `Part 1 - SOLVED`() {
-        assertEquals(40, Day16.using(puzzleInput).part1())
+        assertEquals(40, Day16.using(puzzleInput).probableAuntSue())
     }
 
     @Test
     fun `Part 2 - SOLVED `() {
-        assertEquals(241, Day16.using(puzzleInput).part2())
+        assertEquals(241, Day16.using(puzzleInput).realAuntSue())
     }
 }

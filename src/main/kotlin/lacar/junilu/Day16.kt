@@ -5,7 +5,7 @@ package lacar.junilu
  *
  * https://adventofcode/2015/day/16
  */
-class Day16(private val auntSues: List<Map<String, Int>>) : Solution<Int> {
+class Day16(private val auntSues: List<Map<String, Int>>) {
 
     private val traceAnalysis = """
         children: 3
@@ -20,11 +20,11 @@ class Day16(private val auntSues: List<Map<String, Int>>) : Solution<Int> {
         perfumes: 1
         """.trimIndent().lines().associate { keyValuePair(it, ": ", String::toInt) }
 
-    override fun part1() = auntSues.indexOfFirst { auntSueWhoseList ->
-        auntSueWhoseList.hasEqualQuantitiesIn(traceAnalysis)
+    fun probableAuntSue() = auntSues.indexOfFirst { auntSueWhoseList ->
+        auntSueWhoseList.hasQuantitiesThatMatch(traceAnalysis)
     } + 1
 
-    override fun part2() = auntSues.indexOfFirst { auntSueWhoseList ->
+    fun realAuntSue() = auntSues.indexOfFirst { auntSueWhoseList ->
         auntSueWhoseList.hasQuantitiesConsistentWith(traceAnalysis)
     } + 1
 
@@ -37,7 +37,7 @@ class Day16(private val auntSues: List<Map<String, Int>>) : Solution<Int> {
             )
         }
 
-        private fun Map<String, Int>.hasEqualQuantitiesIn(traceAnalysis: Map<String, Int>) =
+        private fun Map<String, Int>.hasQuantitiesThatMatch(traceAnalysis: Map<String, Int>) =
             all { (compound, quantity) -> traceAnalysis[compound]!! == quantity }
 
         private fun Map<String, Int>.hasQuantitiesConsistentWith(traceAnalysis: Map<String, Int>) =
