@@ -7,35 +7,6 @@ import org.junit.jupiter.api.Test
 private val puzzleInput = readResource("day18")
 
 class Day18Test {
-    @Nested
-    inner class Samples {
-        @Test
-        fun part1() {
-            val config =
-                """
-                .#.#.#
-                ...##.
-                #....#
-                ..#...
-                #.#..#
-                ####..
-                """.trimIndent().lines()
-            assertEquals(4, Day18.using(config, 4).part1())
-        }
-        @Test
-        fun part2() {
-            val config =
-                """
-                ##.#.#
-                ...##.
-                #....#
-                ..#...
-                #.#..#
-                ####.#
-                """.trimIndent().lines()
-            assertEquals(17, Day18.using(config, 5).part2())
-        }
-    }
 
     @Nested
     inner class Solution {
@@ -47,6 +18,37 @@ class Day18Test {
         @Test
         fun `Part 2 - SOLVED`() {
             assertEquals(924, Day18.using(puzzleInput, 100).part2())
+        }
+    }
+
+    @Nested
+    inner class Examples {
+        @Test
+        fun `Using standard GoL rules`() {
+            val config =
+                """
+                .#.#.#
+                ...##.
+                #....#
+                ..#...
+                #.#..#
+                ####..
+                """.trimIndent().lines()
+            assertEquals(4, Day18.using(config, 4).part1())
+        }
+
+        @Test
+        fun `Using modified rules - corners always on`() {
+            val config =
+                """
+                ##.#.#
+                ...##.
+                #....#
+                ..#...
+                #.#..#
+                ####.#
+                """.trimIndent().lines()
+            assertEquals(17, Day18.using(config, 5).part2())
         }
     }
 }
