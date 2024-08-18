@@ -5,11 +5,11 @@ package lacar.junilu
  *
  * https://adventofcode.com/2015/day/1
  */
-class Day01(private val directions: String) : Solution<Int> {
+class Day01(private val directions: String) {
 
     // Solutions
-    override fun part1() = directions.lastFloor()
-    override fun part2() = directions.positionOfFirstTimeInBasement()
+    fun part1() = directions.lastFloor()
+    fun part2() = directions.positionOfFirstTimeInBasement()
 
     // Extension functions
     private fun CharSequence.lastFloor() =
