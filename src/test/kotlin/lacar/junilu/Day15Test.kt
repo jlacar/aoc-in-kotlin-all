@@ -8,9 +8,23 @@ private val puzzleInput = readResource("day15")
 
 class Day15Test {
     @Nested
-    inner class Samples {
+    inner class Solution {
         @Test
-        fun `Part 1 example`() {
+        fun `Part 1 - SOLVED`() {
+            assertEquals(222870, Day15.using(puzzleInput, 100).highestCookieScore())
+        }
+
+        @Test
+        fun `Part 2 - SOLVED`() {
+            assertEquals(117936, Day15.using(puzzleInput, 100).highest500CalorieCookieScore())
+        }
+    }
+
+    @Nested
+    inner class Examples {
+
+        @Test
+        fun `Highest cookie score`() {
             assertEquals(62842880,
                 Day15.using(
                     """
@@ -18,12 +32,12 @@ class Day15Test {
                     Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3  
                     """.trimIndent().lines()
                     , 100
-                ).part1()
+                ).highestCookieScore()
             )
         }
 
         @Test
-        fun `Part 2 example`() {
+        fun `Highest 500-calorie cookie score`() {
             assertEquals(57600000,
                 Day15.using(
                     """
@@ -31,30 +45,8 @@ class Day15Test {
                     Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3  
                     """.trimIndent().lines()
                     , 100
-                ).part2()
+                ).highest500CalorieCookieScore()
             )
-        }
-
-        @Test
-        fun `try proportions`() {
-            val props = proportions(3, 10).iterator()
-            while (props.hasNext()) {
-                println(props.next().joinToString(" "))
-            }
-        }
-    }
-
-    @Nested
-    inner class Solution {
-
-        @Test
-        fun `Part 1 - SOLVED`() {
-            assertEquals(222870, Day15.using(puzzleInput, 100).part1())
-        }
-
-        @Test
-        fun `Part 2 - SOLVED`() {
-            assertEquals(117936, Day15.using(puzzleInput, 100).part2())
         }
     }
 }

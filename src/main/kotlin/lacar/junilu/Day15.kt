@@ -8,9 +8,9 @@ import kotlin.math.min
  *
  * https://adventofcode.com/2015/day/15
  */
-class Day15(private val ingredients: List<Ingredient>, private val teaspoonsTotal: Int) : Solution<Int> {
+class Day15(private val ingredients: List<Ingredient>, private val teaspoonsTotal: Int) {
 
-    override fun part1(): Int {
+    fun highestCookieScore(): Int {
         val properties = listOf("capacity", "durability", "flavor", "texture")
         return proportions(ingredients.size, teaspoonsTotal)
             .maxOf { portion ->
@@ -18,7 +18,7 @@ class Day15(private val ingredients: List<Ingredient>, private val teaspoonsTota
             }
     }
 
-    override fun part2(): Int {
+    fun highest500CalorieCookieScore(): Int {
         val properties = listOf("capacity", "durability", "flavor", "texture", "calories")
         return proportions(ingredients.size, teaspoonsTotal)
             .maxOf { portion ->
