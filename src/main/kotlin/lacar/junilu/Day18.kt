@@ -11,11 +11,11 @@ private typealias Grid = List<GridRow>
 
 class Day18(private val initialConfiguration: Grid, private val steps: Int) {
 
-    fun part1(): Int = initialConfiguration
+    fun lightsOnAfterAnimation(): Int = initialConfiguration
         .animate(steps)
         .howManyAreOn()
 
-    fun part2(): Int = initialConfiguration
+    fun lightsOnAfterAnimationWithCornersAlwaysOn(): Int = initialConfiguration
         .animate(steps) { grid -> grid.turnOnCorners() }
         .howManyAreOn()
 

@@ -12,12 +12,12 @@ class Day18Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(814, Day18.using(puzzleInput, 100).part1())
+            assertEquals(814, Day18.using(puzzleInput, 100).lightsOnAfterAnimation())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(924, Day18.using(puzzleInput, 100).part2())
+            assertEquals(924, Day18.using(puzzleInput, 100).lightsOnAfterAnimationWithCornersAlwaysOn())
         }
     }
 
@@ -34,7 +34,7 @@ class Day18Test {
                 #.#..#
                 ####..
                 """.trimIndent().lines()
-            assertEquals(4, Day18.using(config, 4).part1())
+            assertEquals(4, Day18.using(config, 4).lightsOnAfterAnimation())
         }
 
         @Test
@@ -48,7 +48,7 @@ class Day18Test {
                 #.#..#
                 ####.#
                 """.trimIndent().lines()
-            assertEquals(17, Day18.using(config, 5).part2())
+            assertEquals(17, Day18.using(config, 5).lightsOnAfterAnimationWithCornersAlwaysOn())
         }
     }
 }
