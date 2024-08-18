@@ -2,6 +2,8 @@ package lacar.junilu
 
 /**
  * AoC 2015 - Day 16: Aunt Sue
+ *
+ * https://adventofcode/2015/day/16
  */
 class Day16(private val auntSues: List<Map<String, Int>>) : Solution<Int> {
 
