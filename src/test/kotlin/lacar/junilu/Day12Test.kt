@@ -31,15 +31,13 @@ class Day12Test {
     inner class Examples {
         @ParameterizedTest(name = "{0} -> expect {1}")
         @MethodSource("lacar.junilu.Day12Test#part1Arguments")
-        fun `Sum of all numbers in document`(input: String, expectedSum: Int) {
+        fun `Sum of all numbers in document`(input: String, expectedSum: Int) =
             assertEquals(expectedSum, Day12(input).sumOfAllNumbersInDocument())
-        }
 
         @ParameterizedTest(name = "{0} -> expect {1}")
         @MethodSource("lacar.junilu.Day12Test#part2Arguments")
-        fun `Sum of all numbers excluding objects with 'red'`(jsonString: String, expectedSum: Int) {
+        fun `Sum of all numbers excluding objects with 'red'`(jsonString: String, expectedSum: Int) =
             assertEquals(expectedSum, Day12(jsonString).sumOfAllNumbersExcludingObjectsWithRed())
-        }
     }
 
     companion object {
