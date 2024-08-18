@@ -9,9 +9,9 @@ import kotlin.math.min
  */
 class Day14(private val reindeer: List<Reindeer>, private val raceTime: Int) {
 
-    fun part1() = reindeer.maxOf { it.distanceFlownAt(raceTime) }
+    fun distanceTraveledByWinner() = reindeer.maxOf { it.distanceFlownAt(raceTime) }
 
-    fun part2() = racePoints().values.max()
+    fun pointsEarnedByWinner() = racePoints().values.max()
 
     private fun racePoints(): Map<Reindeer, Int> =
         (1..raceTime).fold(reindeer.associateWith { 0 }) { points, second ->
@@ -46,7 +46,5 @@ class Day14(private val reindeer: List<Reindeer>, private val raceTime: Int) {
         private fun secondsFlyingAt(raceTime: Int) = fullFlightTime(raceTime) + partialFlightTime(raceTime)
         private fun fullFlightTime(raceTime: Int) = raceTime / cycleTime * flightTime
         private fun partialFlightTime(raceTime: Int) = min(flightTime, raceTime % cycleTime)
-
-        fun isFlyingAt(raceTime: Int) = (raceTime % cycleTime) in (1..flightTime)
     }
 }
