@@ -5,12 +5,12 @@ package lacar.junilu
  *
  * https://adventofcode.com/2015/day/17
  */
-class Day17(private val containers: List<Int>, private val liters: Int) : Solution<Int> {
+class Day17(private val containers: List<Int>, private val liters: Int) {
 
-    override fun part1(): Int =
+    fun part1(): Int =
         (1..containers.size).sumOf { n -> waysToFill(n, containers, liters) }
 
-    override fun part2(): Int {
+    fun part2(): Int {
         for (n in 1..containers.size) {
             val ways = waysToFill(n, containers, liters)
             if (ways > 0) return ways
