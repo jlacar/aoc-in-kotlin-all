@@ -7,22 +7,19 @@ package lacar.junilu
  */
 class Day19(private val replacements: List<Pair<String, String>>, private val molecule: String) {
 
-    fun part1() = newMolecules().distinct().count()
+    fun newMoleculesWithSingleReplacement() = replacements.flatMap { (element, replacement) ->
+        molecule.allChangesFor(element, replacement)
+    }.distinct().count()
 
-    fun part2() = stepsToReduceToE()
-
-    private fun newMolecules() =
-        replacements.flatMap { (element, replacement) ->
-            molecule.allChangesFor(element, replacement)
-        }
-
-    private fun stepsToReduceToE(): Int {
+    fun fewestStepsFromE(): Int {
         val replacementsForE = replacementsForE()
         val otherReplacements = otherReplacements()
         var reducedMolecule = molecule
         var steps = 1
         while (reducedMolecule.isNotContainedIn(replacementsForE)) {
-            val (element, replacement) = otherReplacements.first { (element, _) -> reducedMolecule.contains(element) }
+            val (element, replacement) = otherReplacements.first { (element, _) ->
+                reducedMolecule.contains(element)
+            }
             steps += reducedMolecule.countOf(element)
             reducedMolecule = reducedMolecule.replace(element, replacement)
         }

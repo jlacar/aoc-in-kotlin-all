@@ -12,12 +12,12 @@ class Day19Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(535, Day19.using(puzzleInput).part1())
+            assertEquals(535, Day19.using(puzzleInput).newMoleculesWithSingleReplacement())
         }
 
         @Test
         fun part2() {
-            assertEquals(212, Day19.using(puzzleInput).part2())
+            assertEquals(212, Day19.using(puzzleInput).fewestStepsFromE())
         }
     }
 
@@ -33,7 +33,7 @@ class Day19Test {
                     
                     HOHOHO
                 """.trimIndent().lines()
-            ).part1())
+            ).newMoleculesWithSingleReplacement())
         }
 
         @Test
@@ -48,7 +48,7 @@ class Day19Test {
                     
                     HOHOHO
                 """.trimIndent().lines()
-            ).part2())
+            ).fewestStepsFromE())
         }
     }
 }
