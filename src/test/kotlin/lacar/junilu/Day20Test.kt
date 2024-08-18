@@ -10,24 +10,28 @@ private const val puzzleInput = 29_000_000
 
 class Day20Test {
     @Nested
-    inner class Part1 {
+    inner class Solution {
+        @Test
+        fun `Solution for unlimited houses visited by each elf`() {
+            assertEquals(665280, Day20(puzzleInput, 10).firstToGetAsManyPresents())
+        }
+
+        @Test
+        fun `Solution for up to 50 houses visited by each elf`() {
+            assertEquals(705600, Day20(puzzleInput, 11, 50).firstToGetAsManyPresents())
+        }
+    }
+
+    @Nested
+    inner class Examples {
         @ParameterizedTest(name = "House {1} is first to get at least {0} presents")
         @CsvSource(
             "120, 6",
             "150, 8",
         )
-        fun `Example when unlimited houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
+        fun `Examples when unlimited houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
             assertEquals(expectedHouse, Day20(numberOfPresents, 10).firstToGetAsManyPresents())
         }
-
-        @Test
-        fun `Solution for unlimited houses visited by each elf`() {
-            assertEquals(665280, Day20(puzzleInput, 10).firstToGetAsManyPresents())
-        }
-    }
-
-    @Nested
-    inner class Part2 {
 
         /*
          * Limit 2 visits per elf
@@ -47,13 +51,8 @@ class Day20Test {
             "33, 2",
             "99, 6"
         )
-        fun `Example when limited to 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
+        fun `Examples when limited to 2 houses visited by each elf`(numberOfPresents: Int, expectedHouse: Int) {
             assertEquals(expectedHouse, Day20(numberOfPresents, 11, 2).firstToGetAsManyPresents())
-        }
-
-        @Test
-        fun `Solution for up to 50 houses visited by each elf`() {
-            assertEquals(705600, Day20(puzzleInput, 11, 50).firstToGetAsManyPresents())
         }
     }
 }
