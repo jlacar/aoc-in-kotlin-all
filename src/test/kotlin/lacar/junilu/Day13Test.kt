@@ -8,9 +8,22 @@ private val puzzleInput = readResource("day13")
 
 class Day13Test {
     @Nested
-    inner class Samples {
+    inner class Solution {
         @Test
-        fun `Part 1`() {
+        fun `Part 1 - SOLVED`() {
+            assertEquals(664, Day13.using(puzzleInput).changeInHappinessForOptimalSeating())
+        }
+
+        @Test
+        fun `Part 2 - SOLVED`() {
+            assertEquals(640, Day13.using(puzzleInput).changeInHappinessForOptimalSeatingIncludingMe())
+        }
+    }
+
+    @Nested
+    inner class Examples {
+        @Test
+        fun part1() {
             val input =
                 """
                 Alice would gain 54 happiness units by sitting next to Bob.
@@ -27,20 +40,7 @@ class Day13Test {
                 David would gain 41 happiness units by sitting next to Carol.                
                 """.trimIndent().lines()
 
-            assertEquals(330, Day13.using(input).part1())
-        }
-    }
-
-    @Nested
-    inner class Solution {
-        @Test
-        fun `Part 1 - SOLVED`() {
-            assertEquals(664, Day13.using(puzzleInput).part1())
-        }
-
-        @Test
-        fun `Part 2 - SOLVED`() {
-            assertEquals(640, Day13.using(puzzleInput).part2())
+            assertEquals(330, Day13.using(input).changeInHappinessForOptimalSeating())
         }
     }
 }

@@ -1,7 +1,5 @@
 package lacar.junilu
 
-import java.util.Collections.swap
-
 /**
  * AoC 2015 - Day 13: Knights of the Dinner Table
  *
@@ -11,10 +9,10 @@ class Day13(private val happiness: Map<String, Int>) {
 
     private val allAttendees = happiness.keys.map { it.split(" ").first() }.distinct()
 
-    fun part1(): Int = allAttendees.permutations()
+    fun changeInHappinessForOptimalSeating(): Int = allAttendees.permutations()
         .maxOf { arrangement -> happinessFor(arrangement) }
 
-    fun part2(): Int = (allAttendees + "Me").permutations()
+    fun changeInHappinessForOptimalSeatingIncludingMe(): Int = (allAttendees + "Me").permutations()
         .maxOf { arrangement -> happinessFor(arrangement) }
 
     private fun happinessFor(arrangement: List<String>): Int =
