@@ -12,12 +12,12 @@ class Day17Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(1638, Day17.using(puzzleInput, 150).part1())
+            assertEquals(1638, Day17.using(puzzleInput, 150).waysToFill())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(17, Day17.using(puzzleInput, 150).part2())
+            assertEquals(17, Day17.using(puzzleInput, 150).waysToFillFewestContainers())
         }
     }
 
@@ -27,13 +27,13 @@ class Day17Test {
         private val containers = listOf(20, 15, 10, 5, 5)
 
         @Test
-        fun `All possible combinations of containers`() {
-            assertEquals(4, Day17(containers, 25).part1())
+        fun `Ways to fill containers`() {
+            assertEquals(4, Day17(containers, 25).waysToFill())
         }
 
         @Test
-        fun `Number of combinations for minimum number of containers`() {
-            assertEquals(3, Day17(containers, 25).part2())
+        fun `Ways to fill with fewest containers`() {
+            assertEquals(3, Day17(containers, 25).waysToFillFewestContainers())
         }
     }
 }

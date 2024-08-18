@@ -7,10 +7,10 @@ package lacar.junilu
  */
 class Day17(private val containers: List<Int>, private val liters: Int) {
 
-    fun part1(): Int =
+    fun waysToFill(): Int =
         (1..containers.size).sumOf { n -> waysToFill(n, containers, liters) }
 
-    fun part2(): Int {
+    fun waysToFillFewestContainers(): Int {
         for (n in 1..containers.size) {
             val ways = waysToFill(n, containers, liters)
             if (ways > 0) return ways
