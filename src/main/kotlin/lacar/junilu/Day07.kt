@@ -7,16 +7,16 @@ import java.rmi.UnexpectedException
  *
  * https://adventofcode/2015/day/7
  */
-class Day07(private val instructions: List<String>) : Solution<Int> {
+class Day07(private val instructions: List<String>) {
 
     private val circuit = Circuit.assemble(instructions)
 
-    override fun part1(): Int {
+    fun part1(): Int {
         memo.clear()
         return circuit.signalTo("a") ?: throw UnexpectedException("Something's wrong!")
     }
 
-    override fun part2(): Int {
+    fun part2(): Int {
         val a = part1()
 
         memo.clear()
