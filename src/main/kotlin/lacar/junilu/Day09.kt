@@ -7,14 +7,14 @@ private typealias SantaRouteSegment = Pair<String, Int>
  *
  *  https://adventofcode/2015/day/10
  */
-class Day09(private val segments: List<SantaRouteSegment>) : Solution<Int> {
+class Day09(private val segments: List<SantaRouteSegment>) {
 
     private val allCities = segments.flatMap { it.first.split(" to ") }.distinct()
     private val allPossiblePaths = allCities.permutations()
 
-    override fun part1() = allPossiblePaths.minOf { eachPath -> distanceThrough(eachPath) }
+    fun part1() = allPossiblePaths.minOf { eachPath -> distanceThrough(eachPath) }
 
-    override fun part2() = allPossiblePaths.maxOf { eachPath -> distanceThrough(eachPath) }
+    fun part2() = allPossiblePaths.maxOf { eachPath -> distanceThrough(eachPath) }
 
     private fun distanceThrough(cities: List<String>) = cities.windowed(2)
         .sumOf { (city1, city2) ->
