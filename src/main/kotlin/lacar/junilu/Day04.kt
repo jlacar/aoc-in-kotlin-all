@@ -8,10 +8,6 @@ import java.security.MessageDigest
  * https://adventofcode.com/2015/day/4
  */
 class Day04(private val secretKey: String) {
-    fun lowestHashWithFiveLeadingZeroes() = mineFor("00000")
-
-    fun lowestHashWithSixLeadingZeroes() = mineFor("000000")
-
     fun lowestHashWith(leadingZeroes: Int) = mineFor("0".repeat(leadingZeroes))
 
     private fun mineFor(prefix: String): Int =
