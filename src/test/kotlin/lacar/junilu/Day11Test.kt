@@ -1,82 +1,65 @@
 package lacar.junilu
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class Day11Test {
-    @Nested
-    inner class Samples {
-        @TestFactory
-        fun `Part 1`() = listOf(
-            "abcdefgh" to "abcdffaa",
-            "ghijklmn" to "ghjaabcc",
-        ).map { (input, expected) ->
-            DynamicTest.dynamicTest("Part 1: $input -> $expected") {
-                assertEquals(expected, Day11(input).part1())
-            }
-        }
-
-        @TestFactory
-        fun `Rejects invalid passwords`() = listOf(
-            "iijklmmn" to "i and l",
-            "aabccmno" to "o",
-            "abbceffg" to "no 3 increasing letters",
-            "abbcefgx" to "only one pair, bb",
-            "abbbcxyz" to "no different overlapping pairs",
-            "abbcdbbk" to "no different overlapping pairs",
-            "abbcdbbA" to "uppercase letter 'A'",
-        ).map { (password, reasonToReject) ->
-            DynamicTest.dynamicTest("Reject '$password' because it has $reasonToReject") {
-                assertFalse(Day11().isValid(password))
-            }
-        }
-
-        @TestFactory
-        fun `Calculates next password increment correctly`() = listOf(
-            "abcdefgh" to "abcdffaa",
-            "ghijklmn" to "ghjaabcc",
-        ).map { (password, expectedNext) ->
-            DynamicTest.dynamicTest("$password incr is $expectedNext") {
-                assertEquals(expectedNext, Day11(password).part1())
-            }
-        }
-
-        @TestFactory
-        fun `Accepts valid passwords`() = listOf(
-            "bbjjqqrs",
-        ).map { password ->
-            DynamicTest.dynamicTest("'$password' is valid") {
-                assertTrue(Day11().isValid(password))
-            }
-        }
-
-        @TestFactory
-        fun `Increments password`() = listOf(
-            "a" to "b",
-            "z" to "a",
-            "czz" to "daa",
-            "wxyzz" to "wxzaa",
-            "azwzzz" to "azxaaa"
-        ).map { (password, expected) ->
-            DynamicTest.dynamicTest("'$password' incr to '$expected'") {
-                assertEquals(expected, Day11().nextIncrement(password))
-            }
-        }
-    }
-
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals("cqjxxyzz", Day11().part1())
+            assertEquals("cqjxxyzz", Day11().nextPassword("cqjxjnds"))
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals("cqkaabcc", Day11("cqjxxyzz").part1())
+            assertEquals("cqkaabcc", Day11().nextPassword("cqjxxyzz"))
+        }
+    }
+
+    @Nested
+    inner class Examples {
+
+        @ParameterizedTest(name = "{0} increments to {1}")
+        @CsvSource(
+            "a, b",
+            "z, a",
+            "czz, daa",
+            "wxyzz, wxzaa",
+            "azwzzz, azxaaa"
+        )
+        fun `Increment letters with z wrapping back to a`(str: String, incrementStr: String) {
+            assertEquals(incrementStr, Day11().incr(str))
+        }
+
+        @Test
+        fun `Valid password`() {
+            assertTrue(Day11().isValid("bbjjqqrs"))
+        }
+
+        @ParameterizedTest(name = "{0} is invalid because it {1}")
+        @CsvSource(
+            "iijklmmn, contains 'i' and 'l'",
+            "aabccmno, contains 'o'",
+            "abbceffg, has no straight three increasing letters",
+            "abbcefgx, has only one pair, bb",
+            "abbbcxyz, has no different non-overlapping pairs",
+            "abbcdbbk, has no different non-overlapping pairs",
+            "abbcdbbA, has the uppercase letter 'A'",
+        )
+        fun `Invalid passwords`(password: String, reason: String) {
+            assertFalse(Day11().isValid(password))
+        }
+        @ParameterizedTest(name = "{0} -> {1}")
+        @CsvSource(
+            "abcdefgh, abcdffaa",
+            "ghijklmn, ghjaabcc",
+        )
+        fun `Next valid password increments`(input: String, expected: String) {
+            assertEquals(expected, Day11().nextPassword(input))
         }
     }
 }

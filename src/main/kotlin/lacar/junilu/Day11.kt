@@ -2,47 +2,41 @@ package lacar.junilu
 
 /**
  * AoC 2015 - Day 11: Corporate Policy
+ *
+ * https://adventofcode.com/2015/day/11
  */
-class Day11(val password: String = "cqjxjnds") : Solution<String> {
-    override fun part1(): String {
-        var newPassword = password
-        do { newPassword = newPassword.incr() } while (!isValid(newPassword))
-        return newPassword
-    }
+class Day11() {
+    fun nextPassword(currentPassword: String) =
+        generateSequence(currentPassword.increment()) { it.increment() }.first { it.isValid() }
 
-    override fun part2(): String {
-        TODO("Not implemented")
-    }
+    private fun String.isValid() =
+        hasNoIllegalCharacters(this) &&
+        hasValidTrio(this) &&
+        hasPairOfDoubleLetters(this)
 
-    fun nextIncrement(password: String): String = password.incr()
-
-    fun isValid(password: String) =
-        hasNoIllegalCharacters(password) &&
-        hasValidTrio(password) &&
-        hasPairOfDoubleLetters(password)
-
-    private fun String.incr() =
-        foldRight(StringBuilder()) { c, sb ->
-            if (sb.isEmpty() || sb.last() == 'A')
-                sb.append(incWrap(c))
-            else
-                sb.append(c)
+    private fun String.increment() =
+        foldRight(StringBuilder()) { ch, sb ->
+            sb.append(ch.nextIncrement(sb.isEmpty() || sb.last() == 'A'))
         }.reverse().toString().lowercase()
 
-    private fun incWrap(c: Char): Char = if (c == 'z') 'A' else c.inc()
+    private fun Char.nextIncrement(nextOrWrap: Boolean): Char =
+        if (nextOrWrap) { if (this != 'z') inc() else 'A' } else { this }
+
+    internal fun isValid(password: String) = password.isValid()
+    internal fun incr(s: String) = s.increment()
 
     companion object {
+        fun hasNoIllegalCharacters(str: String) = str.none { "ilo".contains(it) }
+
         private val validTrios = "abcdefghijklmnopqrstuvwxyz".windowed(3).filter { hasNoIllegalCharacters(it) }
+        fun hasValidTrio(password: String) = validTrios.any { trio -> password.contains(trio) }
+
         private val doubleLetters = Regex("([a-z])\\1")
-
-        private fun hasValidTrio(password: String) = validTrios.any { trio -> password.contains(trio) }
-
-        private fun hasNoIllegalCharacters(str: String) = str.none { "ilo".contains(it) }
-
-        private fun hasPairOfDoubleLetters(password: String) = doubleLetters
+        fun hasPairOfDoubleLetters(password: String) = doubleLetters
             .findAll(password, 0)
             .map { matches -> matches.groupValues.first() }
             .distinct().count() >= 2
 
+        // For testing
     }
 }
