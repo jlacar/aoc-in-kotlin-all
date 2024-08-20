@@ -28,12 +28,12 @@ class Day04Test {
 
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(117946, Day04(puzzleInput).lowestHashWithFiveLeadingZeroes())
+            assertEquals(117946, Day04(puzzleInput).lowestHashWith(5))
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(3938038, Day04(puzzleInput).lowestHashWithSixLeadingZeroes())
+            assertEquals(3938038, Day04(puzzleInput).lowestHashWith(6))
         }
     }
 }

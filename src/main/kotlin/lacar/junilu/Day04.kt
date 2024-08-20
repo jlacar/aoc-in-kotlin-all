@@ -12,6 +12,8 @@ class Day04(private val secretKey: String) {
 
     fun lowestHashWithSixLeadingZeroes() = mineFor("000000")
 
+    fun lowestHashWith(leadingZeroes: Int) = mineFor("0".repeat(leadingZeroes))
+
     private fun mineFor(prefix: String): Int =
         (1..Int.MAX_VALUE).first { secretKey.md5(it).startsWith(prefix) }
 }
