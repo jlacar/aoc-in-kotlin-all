@@ -9,11 +9,11 @@ class Day10(val input: String = "3113322113") : Solution<Int> {
 
     private fun lookSay(n: Int) = (1..n).fold(input) { look, _ -> say(look) }.length
 
-    private val digitSequences = """(.)\1*""".toRegex()
+    private val sameConsecutiveDigit = """(.)\1*""".toRegex()
 
-    fun say(input: String) = digitSequences
-        .findAll(input, 0)
+    fun say(digits: String) = sameConsecutiveDigit
+        .findAll(digits, 0)
         .map { matches -> matches.groupValues.first() }
-        .map { sequence -> "${sequence.length}${sequence.first()}" }
+        .map { sameDigits -> "${sameDigits.length}${sameDigits.first()}" }
         .joinToString("")
 }
