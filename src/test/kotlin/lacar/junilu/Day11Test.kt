@@ -53,6 +53,7 @@ class Day11Test {
         fun `Invalid passwords`(password: String, reason: String) {
             assertFalse(Day11().isValid(password))
         }
+
         @ParameterizedTest(name = "{0} -> {1}")
         @CsvSource(
             "abcdefgh, abcdffaa",
