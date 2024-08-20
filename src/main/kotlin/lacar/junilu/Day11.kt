@@ -14,11 +14,13 @@ class Day11() {
 
     private fun String.increment() =
         foldRight(StringBuilder()) { ch, sb ->
-            sb.append(ch.nextIncrement(sb.isEmpty() || sb.last() == 'A'))
+            sb.append(ch.nextIncrement(emptyOrWrappedToA(sb)))
         }.reverse().toString().lowercase()
 
-    private fun Char.nextIncrement(nextOrWrap: Boolean): Char =
-        if (nextOrWrap) { if (this != 'z') inc() else 'A' } else { this }
+    private fun emptyOrWrappedToA(sb: StringBuilder) = sb.isEmpty() || sb.last() == 'A'
+
+    private fun Char.nextIncrement(wrapOrIncrement: Boolean): Char =
+        if (wrapOrIncrement) { if (this == 'z') 'A' else inc() } else { this }
 
     private fun String.hasNoIllegalCharacters() = none { "ilo".contains(it) }
 
