@@ -10,9 +10,9 @@ typealias Corner = Pair<Int, Int>
  * https://adventofcode.com/2015/day/6
  */
 class Day06(private val instructions: List<String>) {
-    fun part1() = Part1().perform(instructions).totalOf { row -> row.count { it } }
+    fun lightsLit() = Part1().perform(instructions).totalOf { row -> row.count { it } }
 
-    fun part2() = Part2().perform(instructions).totalOf { row -> row.sum() }
+    fun totalBrightness() = Part2().perform(instructions).totalOf { row -> row.sum() }
 }
 
 data class Day6Instruction(val details: String) {
