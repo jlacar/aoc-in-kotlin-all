@@ -7,11 +7,11 @@ import kotlin.math.abs
  *
  * https://adventofcode.com/2015/day/5
  */
-class Day05(private val strings: List<String>) : Solution<Int> {
+class Day05(private val strings: List<String>) {
 
     // --- PART 1 ---
 
-    override fun part1() = strings.count { isNice(it) }
+    fun part1() = strings.count { isNice(it) }
 
     private fun isNice(s: String) =
         hasEnoughVowels(s) && hasDoubleLetters(s) && hasNoDisallowedLetters(s)
@@ -27,7 +27,7 @@ class Day05(private val strings: List<String>) : Solution<Int> {
 
     // --- PART 2 ---
 
-    override fun part2() = strings.count { isNicer(it) }
+    fun part2() = strings.count { isNicer(it) }
 
     private fun isNicer(s: String) = hasNonOverlappingPair(s) && hasThreeLetterPalindrome(s)
 
