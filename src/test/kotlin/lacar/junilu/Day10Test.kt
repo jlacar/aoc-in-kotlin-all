@@ -31,6 +31,6 @@ class Day10Test {
         "111221, 312211"
     )
     fun examples(input: String, expected: String) {
-        assertEquals(expected, Day10().say(input))
+        assertEquals(expected, Day10().lookSay(input))
     }
 }
