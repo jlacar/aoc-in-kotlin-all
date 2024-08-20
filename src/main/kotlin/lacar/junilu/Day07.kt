@@ -7,7 +7,7 @@ import java.rmi.UnexpectedException
  *
  * https://adventofcode/2015/day/7
  */
-class Day07(private val instructions: List<String>) {
+class Day07(instructions: List<String>) {
 
     private val circuit = Circuit.assemble(instructions)
 
@@ -25,7 +25,7 @@ class Day07(private val instructions: List<String>) {
 
     private fun replaceSegmentB(circuit: Circuit, a: Int): Map<String, SignalProvider> {
         val newSegments = mutableMapOf<String, SignalProvider>().apply { putAll(circuit.segments) }
-        newSegments["b"] = Value("b", a.toString(), Op.ASSIGN)
+        newSegments["b"] = Value("b", a.toString())
         return newSegments
     }
 }
@@ -62,7 +62,7 @@ private enum class Op {
 /** Extension function to check if value is a numeric literal */
 private fun String.isNumberLiteral(): Boolean = first().isDigit()
 
-private class Value(override val name: String, val input: String, val op: Op) : SignalProvider {
+private class Value(override val name: String, val input: String) : SignalProvider {
     override fun output(segments: SegmentMap): Int? =
         if (input.isNumberLiteral()) input.toInt()
         else memo.signalTo(input) { id -> segments[id]?.output(segments) }
@@ -85,11 +85,11 @@ private class Circuit(val segments: SegmentMap) {
         private const val NOT_USED = "_"
         fun assemble(instructions: List<String>): Circuit {
             val segments = mutableMapOf<String, SignalProvider>()
-            segments[NOT_USED] = Value("0", "0", Op.ASSIGN)
+            segments[NOT_USED] = Value("0", "0")
             instructions.forEach { instruction ->
                 val parts = instruction.split(" ")
                 val segment: SignalProvider = when (parts.size) {
-                    3 -> Value(name = parts.last(), parts.first(), Op.ASSIGN)                   // ? -> wire
+                    3 -> Value(name = parts.last(), parts.first())                   // ? -> wire
                     4 -> Gate(name = parts.last(), parts[1], NOT_USED, Op.NOT)                  // NOT wire -> wire
                     5 -> Gate(name = parts.last(), parts[0], parts[2], Op.valueOf(parts[1]))    // a OP b -> wire
                     else -> throw UnsupportedOperationException("Unsupported instruction: $instruction")
