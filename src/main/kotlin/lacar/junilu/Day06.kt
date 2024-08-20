@@ -6,6 +6,8 @@ typealias Corner = Pair<Int, Int>
 
 /**
  * AoC 2015 - Day 6: Probably a Fire Hazard
+ *
+ * https://adventofcode.com/2015/day/6
  */
 class Day06(private val instructions: List<String>) : Solution<Int> {
     override fun part1() = Part1().perform(instructions).totalOf { row -> row.count { it } }
