@@ -23,16 +23,16 @@ class Day11Test {
     @Nested
     inner class Examples {
 
-        @ParameterizedTest(name = "{0} increments to {1}")
+        @ParameterizedTest(name = "{0} increments to {1} ({2})")
         @CsvSource(
-            "a, b",
-            "z, a",
-            "czz, daa",
-            "wxyzz, wxzaa",
-            "azwzzz, azxaaa"
+            "a, b, inc to b",
+            "z, a, with wrap",
+            "czz, daa, inc-wrap-wrap",
+            "wxyzz, wxzaa, inc-wrap-wrap",
+            "azwzzz, azxaaa, inc-wrap-wrap-wrap"
         )
-        fun `Increment letters with z wrapping back to a`(str: String, incrementStr: String) {
-            assertEquals(incrementStr, Day11().incr(str))
+        fun `Increment letters with z wrapping back to a`(str: String, strInc: String, desc: String) {
+            assertEquals(strInc, Day11().incr(str))
         }
 
         @Test
