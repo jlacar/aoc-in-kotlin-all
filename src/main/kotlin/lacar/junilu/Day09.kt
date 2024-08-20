@@ -1,11 +1,11 @@
 package lacar.junilu
 
-import java.util.Collections.swap
-
 private typealias SantaRouteSegment = Pair<String, Int>
 
 /**
  * AoC 2015 - Day 9: All in a Single Night
+ *
+ *  https://adventofcode/2015/day/10
  */
 class Day09(private val segments: List<SantaRouteSegment>) : Solution<Int> {
 
