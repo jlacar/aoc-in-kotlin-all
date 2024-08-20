@@ -1,10 +1,12 @@
 package lacar.junilu
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 private val puzzleInput = readResource("day07")
 
@@ -24,65 +26,78 @@ class Day07Test {
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun part1Examples() = Stream.of(
+            Arguments.of(
+                """
+                123 -> a
+                """.trimIndent().lines(), 123),
+
+            Arguments.of(
+                """
+                x -> a
+                123 -> x
+                """.trimIndent().lines(), 123),
+
+            Arguments.of(
+                """
+                NOT x -> a
+                123 -> x
+                """.trimIndent().lines(), 65412),
+
+            Arguments.of(
+                """
+                NOT y -> a
+                456 -> y
+                """.trimIndent().lines(), 65079),
+
+            Arguments.of(
+                """
+                x AND y -> a
+                123 -> x
+                456 -> y
+                """.trimIndent().lines(), 72),
+
+            Arguments.of(
+                """
+                1 AND x -> a
+                123 -> x
+                """.trimIndent().lines(), 1),
+
+            Arguments.of(
+                """
+                1 AND x -> a
+                456 -> x
+                """.trimIndent().lines(), 0),
+
+            Arguments.of(
+                """
+                x OR y -> a
+                123 -> x
+                456 -> y
+                """.trimIndent().lines(), 507),
+
+            Arguments.of(
+                """
+                x LSHIFT 2 -> a
+                123 -> x
+                """.trimIndent().lines(), 492),
+
+            Arguments.of(
+                """
+                y RSHIFT 2 -> a
+                456 -> y
+                """.trimIndent().lines(), 114),
+        )
+    }
+
     @Nested
     inner class Samples {
-        @TestFactory
-        fun `Part 1`() = listOf(
-            """
-            123 -> a
-            """.trimIndent().lines() to 123,
-
-            """
-            x -> a
-            123 -> x
-            """.trimIndent().lines() to 123,
-
-            """
-            NOT x -> a
-            123 -> x
-            """.trimIndent().lines() to 65412,
-
-            """
-            NOT y -> a
-            456 -> y
-            """.trimIndent().lines() to 65079,
-
-            """
-            x AND y -> a
-            123 -> x
-            456 -> y
-            """.trimIndent().lines() to 72,
-
-            """
-            1 AND x -> a
-            123 -> x
-            """.trimIndent().lines() to 1,
-
-            """
-            1 AND x -> a
-            456 -> x
-            """.trimIndent().lines() to 0,
-
-            """
-            x OR y -> a
-            123 -> x
-            456 -> y
-            """.trimIndent().lines() to 507,
-
-            """
-            x LSHIFT 2 -> a
-            123 -> x
-            """.trimIndent().lines() to 492,
-
-            """
-            y RSHIFT 2 -> a
-            456 -> y
-            """.trimIndent().lines() to 114,
-
-            ).map { (input, expected) ->
-            DynamicTest.dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day07(input).signalOnWireA())
-            }
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("lacar.junilu.Day07Test#part1Examples")
+        fun `Part 1`(input: List<String>, expectedDiff: Int) {
+            assertEquals(expectedDiff, Day07(input).signalOnWireA())
         }
     }
 }
