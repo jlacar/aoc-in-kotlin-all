@@ -19,7 +19,7 @@ class Day05Test {
                 "aaa"
             ).map { sample ->
                 DynamicTest.dynamicTest("$sample is nice") {
-                    assertEquals(1, Day05(listOf(sample)).part1())
+                    assertEquals(1, Day05(listOf(sample)).countOfNiceStrings())
                 }
             }
 
@@ -29,7 +29,7 @@ class Day05Test {
                 "xxyxx"
             ).map { sample ->
                 DynamicTest.dynamicTest("$sample is nice") {
-                    assertEquals(1, Day05(listOf(sample)).part2())
+                    assertEquals(1, Day05(listOf(sample)).countOfNicerStrings())
                 }
             }
         }
@@ -43,7 +43,7 @@ class Day05Test {
                 "dvszwmarrgswjxmb"
             ).map { sample ->
                 DynamicTest.dynamicTest("$sample is naughty") {
-                    assertEquals(0, Day05(listOf(sample)).part1())
+                    assertEquals(0, Day05(listOf(sample)).countOfNiceStrings())
                 }
             }
 
@@ -53,7 +53,7 @@ class Day05Test {
                 "ieodomkazucvgmuy"
             ).map { sample ->
                 DynamicTest.dynamicTest("$sample is naughty") {
-                    assertEquals(0, Day05(listOf(sample)).part2())
+                    assertEquals(0, Day05(listOf(sample)).countOfNicerStrings())
                 }
             }
         }
@@ -63,12 +63,12 @@ class Day05Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(258, Day05(puzzleInput).part1())
+            assertEquals(258, Day05(puzzleInput).countOfNiceStrings())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(53, Day05(puzzleInput).part2())
+            assertEquals(53, Day05(puzzleInput).countOfNicerStrings())
         }
     }
 }
