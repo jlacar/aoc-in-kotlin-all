@@ -8,20 +8,6 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class Day10Test {
 
-    @ParameterizedTest(name = "lookSay({0}).times(1) is {1}")
-    @CsvSource(
-        "211, 1221",
-        "1, 11",
-        "11, 21",
-        "21, 1211",
-        "1211, 111221",
-        "111221, 312211"
-    )
-    fun examples(input: String, expected: String) {
-        assertEquals(expected, Day10().say(input))
-    }
-
-
     @Nested
     inner class Solution {
         @Test
@@ -33,5 +19,19 @@ class Day10Test {
         fun `Part 2 - SOLVED`() {
             assertEquals(4666278, Day10().lookSay("3113322113", 50).length)
         }
+    }
+
+
+    @ParameterizedTest(name = "lookSay({0}).times(1) is {1}")
+    @CsvSource(
+        "211, 1221",
+        "1, 11",
+        "11, 21",
+        "21, 1211",
+        "1211, 111221",
+        "111221, 312211"
+    )
+    fun examples(input: String, expected: String) {
+        assertEquals(expected, Day10().say(input))
     }
 }
