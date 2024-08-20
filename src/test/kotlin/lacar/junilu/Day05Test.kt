@@ -10,9 +10,24 @@ private val puzzleInput = readResource("Day05")
 
 class Day05Test {
     @Nested
+    inner class Solution {
+        @Test
+        fun `Part 1 - SOLVED`() {
+            assertEquals(258, Day05(puzzleInput).countOfNiceStrings())
+        }
+
+        @Test
+        fun `Part 2 - SOLVED`() {
+            assertEquals(53, Day05(puzzleInput).countOfNicerStrings())
+        }
+    }
+
+    @Nested
     inner class Samples {
+
         @Nested
         inner class Nice {
+
             @TestFactory
             fun `Part 1`() = listOf(
                 "ugknbfddgicrmopn",
@@ -22,7 +37,6 @@ class Day05Test {
                     assertEquals(1, Day05(listOf(sample)).countOfNiceStrings())
                 }
             }
-
             @TestFactory
             fun `Part 2`() = listOf(
                 "qjhvhtzxzqqjkmpb",
@@ -36,6 +50,7 @@ class Day05Test {
 
         @Nested
         inner class Naughty {
+
             @TestFactory
             fun `Part 1`() = listOf(
                 "jchzalrnumimnmhp",
@@ -46,7 +61,6 @@ class Day05Test {
                     assertEquals(0, Day05(listOf(sample)).countOfNiceStrings())
                 }
             }
-
             @TestFactory
             fun `Part 2`() = listOf(
                 "uurcxstgmygtbstg",
@@ -56,19 +70,6 @@ class Day05Test {
                     assertEquals(0, Day05(listOf(sample)).countOfNicerStrings())
                 }
             }
-        }
-    }
-
-    @Nested
-    inner class Solution {
-        @Test
-        fun `Part 1 - SOLVED`() {
-            assertEquals(258, Day05(puzzleInput).countOfNiceStrings())
-        }
-
-        @Test
-        fun `Part 2 - SOLVED`() {
-            assertEquals(53, Day05(puzzleInput).countOfNicerStrings())
         }
     }
 }
