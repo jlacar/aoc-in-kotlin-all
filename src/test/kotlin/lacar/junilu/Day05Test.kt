@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 private val puzzleInput = readResource("Day05")
 
@@ -23,52 +25,58 @@ class Day05Test {
     }
 
     @Nested
-    inner class Samples {
+    inner class Examples {
 
         @Nested
         inner class Nice {
 
-            @TestFactory
-            fun `Part 1`() = listOf(
-                "ugknbfddgicrmopn",
-                "aaa"
-            ).map { sample ->
-                DynamicTest.dynamicTest("$sample is nice") {
-                    assertEquals(1, Day05(listOf(sample)).countOfNiceStrings())
-                }
+            @ParameterizedTest
+            @ValueSource(
+                strings = [
+                    "ugknbfddgicrmopn",
+                    "aaa",
+                ]
+            )
+            fun `Part 1 - Nice strings`(input: String) {
+                assertEquals(1, Day05(listOf(input)).countOfNiceStrings())
             }
-            @TestFactory
-            fun `Part 2`() = listOf(
-                "qjhvhtzxzqqjkmpb",
-                "xxyxx"
-            ).map { sample ->
-                DynamicTest.dynamicTest("$sample is nice") {
-                    assertEquals(1, Day05(listOf(sample)).countOfNicerStrings())
-                }
+
+            @ParameterizedTest
+            @ValueSource(
+                strings = [
+                    "qjhvhtzxzqqjkmpb",
+                    "xxyxx"
+                ]
+            )
+            fun `Part 2 - Nicer strings`(input: String) {
+                assertEquals(1, Day05(listOf(input)).countOfNicerStrings())
             }
         }
 
         @Nested
         inner class Naughty {
 
-            @TestFactory
-            fun `Part 1`() = listOf(
-                "jchzalrnumimnmhp",
-                "haegwjzuvuyypxyu",
-                "dvszwmarrgswjxmb"
-            ).map { sample ->
-                DynamicTest.dynamicTest("$sample is naughty") {
-                    assertEquals(0, Day05(listOf(sample)).countOfNiceStrings())
-                }
+            @ParameterizedTest
+            @ValueSource(
+                strings = [
+                    "jchzalrnumimnmhp",
+                    "haegwjzuvuyypxyu",
+                    "dvszwmarrgswjxmb"
+                ]
+            )
+            fun `Part 1 - Naughty strings`(input: String) {
+                assertEquals(0, Day05(listOf(input)).countOfNiceStrings())
             }
-            @TestFactory
-            fun `Part 2`() = listOf(
-                "uurcxstgmygtbstg",
-                "ieodomkazucvgmuy"
-            ).map { sample ->
-                DynamicTest.dynamicTest("$sample is naughty") {
-                    assertEquals(0, Day05(listOf(sample)).countOfNicerStrings())
-                }
+
+            @ParameterizedTest
+            @ValueSource(
+                strings = [
+                    "uurcxstgmygtbstg",
+                    "ieodomkazucvgmuy",
+                ]
+            )
+            fun `Part 2 - Naughty strings`(input: String) {
+                assertEquals(0, Day05(listOf(input)).countOfNicerStrings())
             }
         }
     }
