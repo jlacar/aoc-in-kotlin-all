@@ -25,7 +25,7 @@ class Day01Test {
 
     @Nested
     inner class Examples {
-        @ParameterizedTest(name = "{0} should give level {1}")
+        @ParameterizedTest(name = "{1} with directions {0}")
         @CsvSource(
             "(()),     0",
             "()(),     0",
@@ -37,17 +37,17 @@ class Day01Test {
             "))),     -3",
             ")())()), -3",
         )
-        fun part1(input: String, expectedLevel: Int) {
+        fun `Last floor should be`(input: String, expectedLevel: Int) {
             assertEquals(expectedLevel, Day01(input).lastFloor())
         }
 
-        @ParameterizedTest(name = "{0} should give position {1}")
+        @ParameterizedTest(name = "{1} with directions {0}")
         @CsvSource(
             "),     1",
             "()()), 5",
             "()))())(()), 3",
         )
-        fun part2(input: String, expectedPosition: Int) {
+        fun `Position for first time in basement should be`(input: String, expectedPosition: Int) {
             assertEquals(expectedPosition, Day01(input).positionOfFirstTimeInBasement())
         }
     }
