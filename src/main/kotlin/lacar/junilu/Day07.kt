@@ -11,13 +11,13 @@ class Day07(private val instructions: List<String>) {
 
     private val circuit = Circuit.assemble(instructions)
 
-    fun part1(): Int {
+    fun signalOnWireA(): Int {
         memo.clear()
         return circuit.signalTo("a") ?: throw UnexpectedException("Something's wrong!")
     }
 
-    fun part2(): Int {
-        val a = part1()
+    fun signalOnWireAAfterReplacingB(): Int {
+        val a = signalOnWireA()
 
         memo.clear()
         return Circuit(replaceSegmentB(circuit, a)).signalTo("a") ?: throw UnexpectedException("Something's wrong!")

@@ -67,7 +67,7 @@ class Day07Test {
 
             ).map { (input, expected) ->
             DynamicTest.dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day07(input).part1())
+                assertEquals(expected, Day07(input).signalOnWireA())
             }
         }
     }
@@ -77,12 +77,12 @@ class Day07Test {
 
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(3176, Day07(puzzleInput).part1())
+            assertEquals(3176, Day07(puzzleInput).signalOnWireA())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(14710, Day07(puzzleInput).part2())
+            assertEquals(14710, Day07(puzzleInput).signalOnWireAAfterReplacingB())
         }
     }
 }
