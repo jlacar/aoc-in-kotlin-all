@@ -2,6 +2,8 @@ package lacar.junilu
 
 /**
  * AoC 2015 - Day 8: Matchsticks
+ *
+ * https://adventofcode.com/2015/day/8
  */
 class Day08(val input: List<String>) : Solution<Int> {
     override fun part1(): Int = input.sumOf { it.length - it.decoded().length }
