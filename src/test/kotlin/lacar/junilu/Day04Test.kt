@@ -17,7 +17,7 @@ class Day04Test {
             "pqrstuv" to 1048970
         ).map { (input, expected) ->
             dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day04(input).part1())
+                assertEquals(expected, Day04(input).lowestHashWithFiveLeadingZeroes())
             }
         }
     }
@@ -28,12 +28,12 @@ class Day04Test {
 
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(117946, Day04(puzzleInput).part1())
+            assertEquals(117946, Day04(puzzleInput).lowestHashWithFiveLeadingZeroes())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(3938038, Day04(puzzleInput).part2())
+            assertEquals(3938038, Day04(puzzleInput).lowestHashWithSixLeadingZeroes())
         }
     }
 }
