@@ -6,9 +6,9 @@ package lacar.junilu
  * https://adventofcode.com/2015/day/3
  */
 class Day03(private val directions: String) {
-    fun part1() = housesVisited(directions).distinct().count()
+    fun housesSantaVisited() = housesVisited(directions).distinct().count()
 
-    fun part2() =
+    fun housesSantaOrRoboSantaVisited() =
         (housesVisited(directions.filterIndexed { index, _ -> index % 2 == 0 }) +
          housesVisited(directions.filterIndexed { index, _ -> index % 2 == 1 }))
         .distinct()

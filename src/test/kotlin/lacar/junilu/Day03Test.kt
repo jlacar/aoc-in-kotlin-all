@@ -14,12 +14,12 @@ class Day03Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(2565, day03.part1())
+            assertEquals(2565, day03.housesSantaVisited())
         }
 
         @Test
         fun part2() {
-            assertEquals(2639, day03.part2())
+            assertEquals(2639, day03.housesSantaOrRoboSantaVisited())
         }
     }
 
@@ -33,7 +33,7 @@ class Day03Test {
             "^v^v^v^v^v, 2",
         )
         fun part1(directions: String, expectedCount: Int) {
-            assertEquals(expectedCount, Day03(directions).part1())
+            assertEquals(expectedCount, Day03(directions).housesSantaVisited())
         }
 
         @ParameterizedTest(name = "{0} should visit {1} houses")
@@ -43,7 +43,7 @@ class Day03Test {
             "^v^v^v^v^v, 11",
         )
         fun part2(directions: String, expectedCount: Int) {
-            assertEquals(expectedCount, Day03(directions).part2())
+            assertEquals(expectedCount, Day03(directions).housesSantaOrRoboSantaVisited())
         }
     }
 }
