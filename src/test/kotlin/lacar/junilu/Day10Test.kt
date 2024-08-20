@@ -21,7 +21,6 @@ class Day10Test {
         }
     }
 
-
     @ParameterizedTest(name = "lookSay({0}).times(1) is {1}")
     @CsvSource(
         "211, 1221",
