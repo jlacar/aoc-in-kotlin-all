@@ -1,60 +1,50 @@
 package lacar.junilu
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 private val puzzleInput = readResource("Day06")
 
 class Day06Test {
 
     @Nested
-    inner class Samples {
-        @TestFactory
-        fun `Part 1`() = listOf(
-            "turn on 0,0 through 999,999".lines() to 1_000_000,
-
-            """
-            turn on 499,0 through 500,999
-            turn off 499,499 through 500,500
-            turn off 498,0 through 498,999""".trimIndent().lines()
-            to 1_996,
-
-            "toggle 0,0 through 1,1".lines() to 4,
-
-            "toggle 0,0 through 999,999".lines() to 1_000_000,
-
-        ).map { (input, expected) ->
-            DynamicTest.dynamicTest("Part 1: $input") {
-                assertEquals(expected, Day06(input).part1())
-            }
-        }
-
-        @TestFactory
-        fun `Part 2`() = listOf(
-            "turn on 0,0 through 0,0".lines() to 1,
-            "toggle 0,0 through 0,0".lines() to 2,
-            "toggle 0,0 through 999,999".lines() to 2_000_000,
-
-        ).map { (input, expected) ->
-            DynamicTest.dynamicTest("Part 1: $input -> $expected") {
-                assertEquals(expected, Day06(input).part2())
-            }
-        }
-    }
-
-    @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(543903, Day06(puzzleInput).part1())
+            assertEquals(543903, Day06(puzzleInput).lightsLit())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(14687245, Day06(puzzleInput).part2())
+            assertEquals(14687245, Day06(puzzleInput).totalBrightness())
         }
+    }
+
+    @ParameterizedTest(name = "Instructions {0} -> expect {1} lights to be on")
+    @MethodSource("lacar.junilu.Day06Test#part1Examples")
+    fun `Part 1 examples`(input: List<String>, expected: Int) {
+        assertEquals(expected, Day06(input).lightsLit())
+    }
+
+    companion object {
+        @JvmStatic
+        fun part1Examples() = Stream.of(
+            Arguments.of("turn on 0,0 through 999,999".lines(), 1_000_000),
+
+            Arguments.of(
+                """
+                turn on 499,0 through 500,999
+                turn off 499,499 through 500,500
+                turn off 498,0 through 498,999""".trimIndent().lines(), 1_996),
+
+            Arguments.of("toggle 0,0 through 1,1".lines(), 4),
+
+            Arguments.of("toggle 0,0 through 999,999".lines(), 1_000_000),
+        )
     }
 }
