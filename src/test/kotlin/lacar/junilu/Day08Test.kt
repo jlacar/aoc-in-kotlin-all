@@ -10,7 +10,21 @@ private val puzzleInput = readResource("day08")
 
 class Day08Test {
     @Nested
+    inner class Solution {
+        @Test
+        fun `Part 1 - SOLVED`() {
+            assertEquals(1342, Day08(puzzleInput).decodedLengthDiff())
+        }
+
+        @Test
+        fun `Part 2 - SOLVED`() {
+            assertEquals(2074, Day08(puzzleInput).encodedLengthDiff())
+        }
+    }
+
+    @Nested
     inner class Samples {
+
         @TestFactory
         fun `Part 1`() = listOf(
             """
@@ -47,7 +61,7 @@ class Day08Test {
 
         ).map { (input, expected) ->
             DynamicTest.dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day08(input.lines()).part1())
+                assertEquals(expected, Day08(input.lines()).decodedLengthDiff())
             }
         }
 
@@ -71,22 +85,8 @@ class Day08Test {
 
         ).map { (input, expected) ->
             DynamicTest.dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day08(input.lines()).part2())
+                assertEquals(expected, Day08(input.lines()).encodedLengthDiff())
             }
-        }
-
-    }
-
-    @Nested
-    inner class Solution {
-        @Test
-        fun `Part 1 - SOLVED`() {
-            assertEquals(1342, Day08(puzzleInput).part1())
-        }
-
-        @Test
-        fun `Part 2 - SOLVED`() {
-            assertEquals(2074, Day08(puzzleInput).part2())
         }
     }
 
