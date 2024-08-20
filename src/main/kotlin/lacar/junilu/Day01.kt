@@ -8,8 +8,8 @@ package lacar.junilu
 class Day01(private val directions: String) {
 
     // Solutions
-    fun part1() = directions.lastFloor()
-    fun part2() = directions.positionOfFirstTimeInBasement()
+    fun lastFloor() = directions.lastFloor()
+    fun positionOfFirstTimeInBasement() = directions.positionOfFirstTimeInBasement()
 
     // Extension functions
     private fun CharSequence.lastFloor() =

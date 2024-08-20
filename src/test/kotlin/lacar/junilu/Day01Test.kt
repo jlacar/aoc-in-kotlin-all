@@ -14,12 +14,12 @@ class Day01Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(280, day01.part1())
+            assertEquals(280, day01.lastFloor())
         }
 
         @Test
         fun part2() {
-            assertEquals(1797, day01.part2())
+            assertEquals(1797, day01.positionOfFirstTimeInBasement())
         }
     }
 
@@ -38,7 +38,7 @@ class Day01Test {
             ")())()), -3",
         )
         fun part1(input: String, expectedLevel: Int) {
-            assertEquals(expectedLevel, Day01(input).part1())
+            assertEquals(expectedLevel, Day01(input).lastFloor())
         }
 
         @ParameterizedTest(name = "{0} should give position {1}")
@@ -48,7 +48,7 @@ class Day01Test {
             "()))())(()), 3",
         )
         fun part2(input: String, expectedPosition: Int) {
-            assertEquals(expectedPosition, Day01(input).part2())
+            assertEquals(expectedPosition, Day01(input).positionOfFirstTimeInBasement())
         }
     }
 }
