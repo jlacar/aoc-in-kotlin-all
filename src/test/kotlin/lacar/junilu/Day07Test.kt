@@ -26,6 +26,15 @@ class Day07Test {
         }
     }
 
+    @Nested
+    inner class Samples {
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("lacar.junilu.Day07Test#part1Examples")
+        fun `Part 1`(input: List<String>, expectedDiff: Int) {
+            assertEquals(expectedDiff, Day07(input).signalOnWireA())
+        }
+    }
+
     companion object {
         @JvmStatic
         fun part1Examples() = Stream.of(
@@ -92,12 +101,4 @@ class Day07Test {
         )
     }
 
-    @Nested
-    inner class Samples {
-        @ParameterizedTest(name = "{0} -> {1}")
-        @MethodSource("lacar.junilu.Day07Test#part1Examples")
-        fun `Part 1`(input: List<String>, expectedDiff: Int) {
-            assertEquals(expectedDiff, Day07(input).signalOnWireA())
-        }
-    }
 }
