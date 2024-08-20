@@ -5,10 +5,10 @@ package lacar.junilu
  *
  * https://adventofcode.com/2015/day/3
  */
-class Day03(private val directions: String) : Solution<Int> {
-    override fun part1() = housesVisited(directions).distinct().count()
+class Day03(private val directions: String) {
+    fun part1() = housesVisited(directions).distinct().count()
 
-    override fun part2() =
+    fun part2() =
         (housesVisited(directions.filterIndexed { index, _ -> index % 2 == 0 }) +
          housesVisited(directions.filterIndexed { index, _ -> index % 2 == 1 }))
         .distinct()
