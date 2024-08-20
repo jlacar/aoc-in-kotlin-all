@@ -5,6 +5,10 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 private val puzzleInput = readResource("day08")
 
@@ -25,69 +29,83 @@ class Day08Test {
     @Nested
     inner class Samples {
 
-        @TestFactory
-        fun `Part 1`() = listOf(
-            """
-            ""
-            """.trimIndent() to (2 - 0),
-
-            """
-            "v\xfb\"lgs\"kvjfywmut\x9cr"
-            """.trimIndent() to (28 - 18),
-
-            """
-            "h\\"
-            """.trimIndent() to (5 - 2),
-
-            """
-            "abc"
-            """.trimIndent() to (5 - 3),
-
-            """
-            "aaa\"aaa"
-            "aaa\"aa\"aa"
-            """.trimIndent() to (10 - 7 + 13 - 9),
-
-            """
-            "\x27"
-            """.trimIndent() to (6 - 1),
-
-            """
-            ""
-            "abc"
-            "aaa\"aaa"
-            "\x27"
-            """.trimIndent() to 12
-
-        ).map { (input, expected) ->
-            DynamicTest.dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day08(input.lines()).decodedLengthDiff())
-            }
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("lacar.junilu.Day08Test#decodeExamples")
+        fun `Part 1 examples`(input: String, expectedDiff: Int) {
+            assertEquals(expectedDiff, Day08(input.lines()).decodedLengthDiff())
         }
 
-        @TestFactory
-        fun `Part 2`() = listOf(
-            """
-            ""
-            """.trimIndent() to (6 - 2),
-
-            """
-            "abc"
-            """.trimIndent() to (9 - 5),
-
-            """
-            "aaa\"aaa"
-            """.trimIndent() to (16 - 10),
-
-            """
-            "\x27"
-            """.trimIndent() to (11 - 6),
-
-        ).map { (input, expected) ->
-            DynamicTest.dynamicTest("$input -> $expected") {
-                assertEquals(expected, Day08(input.lines()).encodedLengthDiff())
-            }
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("lacar.junilu.Day08Test#encodeExamples")
+        fun `Part 2 examples`(input: String, expectedDiff: Int) {
+            assertEquals(expectedDiff, Day08(input.lines()).encodedLengthDiff())
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun decodeExamples() = Stream.of(
+            Arguments.of(
+                """
+                ""
+                """.trimIndent(), 2 - 0),
+
+            Arguments.of(
+                """
+                "v\xfb\"lgs\"kvjfywmut\x9cr"
+                """.trimIndent(), 28 - 18),
+
+            Arguments.of(
+                """
+                "h\\"
+                """.trimIndent(),5 - 2),
+
+            Arguments.of(
+                """
+                "abc"
+                """.trimIndent(), 5 - 3),
+
+            Arguments.of(
+                """
+                "aaa\"aaa"
+                "aaa\"aa\"aa"
+                """.trimIndent(), 10 - 7 + 13 - 9),
+
+            Arguments.of(
+                """
+                "\x27"
+                """.trimIndent(), 6 - 1),
+
+            Arguments.of(
+                """
+                ""
+                "abc"
+                "aaa\"aaa"
+                "\x27"
+                """.trimIndent(), 12)
+        )
+
+        @JvmStatic
+        fun encodeExamples() = Stream.of(
+            Arguments.of(
+                """
+                ""
+                """.trimIndent(), 6 - 2),
+
+            Arguments.of(
+                """
+                "abc"
+                """.trimIndent(), 9 - 5),
+
+            Arguments.of(
+                """
+                "aaa\"aaa"
+                """.trimIndent(), 16 - 10),
+
+            Arguments.of(
+                """
+                "\x27"
+                """.trimIndent(), 11 - 6),
+        )
+    }
 }
