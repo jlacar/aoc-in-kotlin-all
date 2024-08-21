@@ -12,14 +12,14 @@ class Day07(instructions: List<String>) {
     private val circuit = Circuit.assemble(instructions)
 
     fun signalOnWireA(): Int {
-        memo.clear()
+        knownSignals.clear()
         return circuit.signalTo("a") ?: throw UnexpectedException("Something's wrong!")
     }
 
     fun signalOnWireAAfterReplacingB(): Int {
         val a = signalOnWireA()
 
-        memo.clear()
+        knownSignals.clear()
         return Circuit(replaceSegmentB(circuit, a)).signalTo("a") ?: throw UnexpectedException("Something's wrong!")
     }
 
@@ -30,14 +30,14 @@ class Day07(instructions: List<String>) {
     }
 }
 
-private val memo = object {
-    private val cache = mutableMapOf<String, Int?>()
+private val knownSignals = object {
+    private val signalTo = mutableMapOf<String, Int?>()
 
-    fun clear() = cache.clear()
+    fun clear() = signalTo.clear()
 
-    fun signalTo(id: String, calc: (String) -> Int?): Int? {
-        if (cache[id] == null) cache[id] = calc(id)
-        return cache[id]
+    fun signalTo(wire: String, calculateSignalTo: (String) -> Int?): Int? {
+        if (signalTo[wire] == null) signalTo[wire] = calculateSignalTo(wire)
+        return signalTo[wire]
     }
 }
 
@@ -65,14 +65,14 @@ private fun String.isNumberLiteral(): Boolean = first().isDigit()
 private class Value(override val name: String, val input: String) : SignalProvider {
     override fun output(segments: SegmentMap): Int? =
         if (input.isNumberLiteral()) input.toInt()
-        else memo.signalTo(input) { id -> segments[id]?.output(segments) }
+        else knownSignals.signalTo(input) { id -> segments[id]?.output(segments) }
 }
 
 private class Gate(override val name: String, val inputA: String, val inputB: String, val op: Op) : SignalProvider {
     override fun output(segments: SegmentMap): Int? {
         val calc: (String) -> Int? = { id -> segments[id]?.output(segments) }
-        val valueA = if (inputA.isNumberLiteral()) inputA.toInt() else memo.signalTo(inputA, calc)
-        val valueB = if (inputB.isNumberLiteral()) inputB.toInt() else memo.signalTo(inputB, calc)
+        val valueA = if (inputA.isNumberLiteral()) inputA.toInt() else knownSignals.signalTo(inputA, calc)
+        val valueB = if (inputB.isNumberLiteral()) inputB.toInt() else knownSignals.signalTo(inputB, calc)
         return if (valueA == null || valueB == null) null else op.eval(valueA, valueB)
     }
 }
