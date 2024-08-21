@@ -70,8 +70,12 @@ private class Value(override val name: String, val input: String) : SignalProvid
         else knownSignals.signalTo(input, segments)
 }
 
-private class Gate(override val name: String, val op: Operation, val inputA: String, val inputB: String = "?") :
-    SignalProvider {
+private class Gate(
+    override val name: String,
+    val op: Operation,
+    val inputA: String,
+    val inputB: String = Circuit.NO_SIGNAL
+) : SignalProvider {
     override fun outputOf(segments: SegmentMap): Int? {
         val valueA = if (inputA.isNumber()) inputA.toInt() else knownSignals.signalTo(inputA, segments)
         val valueB = if (inputB.isNumber()) inputB.toInt() else knownSignals.signalTo(inputB, segments)
@@ -84,7 +88,7 @@ private class Circuit(val segments: SegmentMap) {
     fun signalTo(id: String): Int? = segments.outputOf(id)
 
     companion object {
-        private const val NO_SIGNAL = "_"
+        const val NO_SIGNAL = "_"
 
         fun assembleFrom(instructions: List<String>): Circuit {
             val segments = mutableMapOf<String, SignalProvider>()
