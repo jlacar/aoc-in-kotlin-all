@@ -9,7 +9,7 @@ import java.rmi.UnexpectedException
  */
 class Day07(instructions: List<String>) {
 
-    private val circuit = Circuit.assemble(instructions)
+    private val circuit = Circuit.assembleFrom(instructions)
 
     fun signalOnWireA(): Int {
         knownSignals.clear()
@@ -35,8 +35,8 @@ private val knownSignals = object {
 
     fun clear() = signalTo.clear()
 
-    fun signalTo(wire: String, calculateSignalTo: (String) -> Int?): Int? {
-        if (signalTo[wire] == null) signalTo[wire] = calculateSignalTo(wire)
+    fun signalTo(wire: String, segments: SegmentMap): Int? {
+        if (signalTo[wire] == null) signalTo[wire] = segments.outputOf(wire)
         return signalTo[wire]
     }
 }
@@ -54,6 +54,8 @@ private enum class Operation {
 
 private typealias SegmentMap = Map<String, SignalProvider>
 
+private fun SegmentMap.outputOf(id: String): Int? = this[id]?.outputOf(this)
+
 private sealed interface SignalProvider {
     val name: String
     fun outputOf(segments: SegmentMap): Int?
@@ -65,27 +67,26 @@ private fun String.isNumber(): Boolean = all { it.isDigit() }
 private class Value(override val name: String, val input: String) : SignalProvider {
     override fun outputOf(segments: SegmentMap): Int? =
         if (input.isNumber()) input.toInt()
-        else knownSignals.signalTo(input) { id -> segments[id]?.outputOf(segments) }
+        else knownSignals.signalTo(input, segments)
 }
 
-private class Gate(override val name: String, val op: Operation, val inputA: String, val inputB: String = "*") :
+private class Gate(override val name: String, val op: Operation, val inputA: String, val inputB: String = "?") :
     SignalProvider {
     override fun outputOf(segments: SegmentMap): Int? {
-        val calc: (String) -> Int? = { id -> segments[id]?.outputOf(segments) }
-        val valueA = if (inputA.isNumber()) inputA.toInt() else knownSignals.signalTo(inputA, calc)
-        val valueB = if (inputB.isNumber()) inputB.toInt() else knownSignals.signalTo(inputB, calc)
+        val valueA = if (inputA.isNumber()) inputA.toInt() else knownSignals.signalTo(inputA, segments)
+        val valueB = if (inputB.isNumber()) inputB.toInt() else knownSignals.signalTo(inputB, segments)
         return if (valueA == null || valueB == null) null else op.eval(valueA, valueB)
     }
 }
 
 private class Circuit(val segments: SegmentMap) {
 
-    fun signalTo(id: String): Int? = segments[id]?.outputOf(segments)
+    fun signalTo(id: String): Int? = segments.outputOf(id)
 
     companion object {
         private const val NO_SIGNAL = "_"
 
-        fun assemble(instructions: List<String>): Circuit {
+        fun assembleFrom(instructions: List<String>): Circuit {
             val segments = mutableMapOf<String, SignalProvider>()
             segments[NO_SIGNAL] = Value("0", "0")
             instructions.forEach { instruction ->
