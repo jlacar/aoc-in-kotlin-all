@@ -41,7 +41,7 @@ private val knownSignals = object {
     }
 }
 
-private enum class Op {
+private enum class Operation {
     ASSIGN { override fun eval(a: Int, b: Int): Int = a },                  // b is ignored
     NOT { override fun eval(a: Int, b: Int): Int = a.inv() and 0xffff },    // mask to 16-bit value
     AND { override fun eval(a: Int, b: Int): Int = a and b },
@@ -68,7 +68,7 @@ private class Value(override val name: String, val input: String) : SignalProvid
         else knownSignals.signalTo(input) { id -> segments[id]?.outputOf(segments) }
 }
 
-private class Gate(override val name: String, val op: Op, val inputA: String, val inputB: String = "*") :
+private class Gate(override val name: String, val op: Operation, val inputA: String, val inputB: String = "*") :
     SignalProvider {
     override fun outputOf(segments: SegmentMap): Int? {
         val calc: (String) -> Int? = { id -> segments[id]?.outputOf(segments) }
@@ -97,10 +97,10 @@ private class Circuit(val segments: SegmentMap) {
 
         private fun signalProviderFrom(instruction: String): SignalProvider {
             val parts = instruction.split(" ")
-            return when (parts.size) {
-                3 -> Value(name = parts.last(), parts.first())                              // ? -> wire
-                4 -> Gate(name = parts.last(), Op.NOT, parts[1], NO_SIGNAL)                 // NOT wire -> wire
-                5 -> Gate(name = parts.last(), Op.valueOf(parts[1]), parts[0], parts[2])    // a OP b -> wire
+            return when (parts.size) {                                                           // Patterns:
+                3 -> Value(name = parts.last(), parts.first())                                   //   ? -> wire
+                4 -> Gate(name = parts.last(), Operation.NOT, parts[1], NO_SIGNAL)               //   NOT wire -> wire
+                5 -> Gate(name = parts.last(), Operation.valueOf(parts[1]), parts[0], parts[2])  //   a OP b -> wire
                 else -> throw UnsupportedOperationException("Unsupported instruction: $instruction")
             }
         }
