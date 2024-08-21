@@ -1,7 +1,5 @@
 package lacar.junilu
 
-import kotlin.math.abs
-
 /**
  * AoC 2015 - Day 5: Doesn't He Have Intern-Elves For This?
  *
@@ -29,13 +27,12 @@ class Day05(private val strings: List<String>) {
 
     fun countOfNicerStrings() = strings.count { it.isNicer() }
 
-    private fun String.isNicer() = hasNonOverlappingPair() && hasThreeLetterPalindrome()
+    private fun String.isNicer() =
+        hasNonOverlappingPair() && hasThreeLetterPalindrome()
 
     private fun String.hasThreeLetterPalindrome() =
         windowed(3).any { it.first() == it.last() }
 
-    private fun String.hasNonOverlappingPair(): Boolean {
-        val pairs = windowed(2)
-        return pairs.any { abs(indexOf(it) - lastIndexOf(it)) > 1 }
-    }
+    private fun String.hasNonOverlappingPair() =
+        windowed(2).any { (lastIndexOf(it) - indexOf(it)) > 1 }
 }
