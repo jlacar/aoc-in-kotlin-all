@@ -13,8 +13,11 @@ class Day03(private val directions: String) {
     fun housesSantaOrRobotSantaVisited() =
         (housesVisited(bySanta) + housesVisited(byRobotSanta)).distinct().count()
 
-    private val bySanta = directions.filterIndexed { index, _ -> index % 2 == 0 }
-    private val byRobotSanta = directions.filterIndexed { index, _ -> index % 2 == 1 }
+    private val evenIndicesOnly = { index: Int, _: Char -> index % 2 == 0 }
+    private val oddIndicesOnly = { index: Int, _: Char -> index % 2 == 1 }
+
+    private val bySanta = directions.filterIndexed(evenIndicesOnly)
+    private val byRobotSanta = directions.filterIndexed(oddIndicesOnly)
 
     private val startLocation = Pair(0, 0)
 
