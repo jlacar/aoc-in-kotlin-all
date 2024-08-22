@@ -9,7 +9,7 @@ class Day05(private val strings: List<String>) {
 
     // --- PART 1 ---
 
-    fun countOfNiceStrings() = strings.count { it.isNice() }
+    fun howManyNiceStringsPart1() = strings.count { it.isNice() }
 
     private fun String.isNice() =
         hasAtLeastThreeVowels() && hasDoubleLetters() && hasNoDisallowedSubstrings()
@@ -25,7 +25,7 @@ class Day05(private val strings: List<String>) {
 
     // --- PART 2 ---
 
-    fun countOfNicerStrings() = strings.count { it.isNicer() }
+    fun howManyNiceStringsPart2() = strings.count { it.isNicer() }
 
     private fun String.isNicer() =
         hasNonOverlappingPair() && hasThreeLetterPalindrome()

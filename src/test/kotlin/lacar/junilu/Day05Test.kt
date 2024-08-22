@@ -14,12 +14,12 @@ class Day05Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(258, Day05(puzzleInput).countOfNiceStrings())
+            assertEquals(258, Day05(puzzleInput).howManyNiceStringsPart1())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(53, Day05(puzzleInput).countOfNicerStrings())
+            assertEquals(53, Day05(puzzleInput).howManyNiceStringsPart2())
         }
     }
 
@@ -36,7 +36,7 @@ class Day05Test {
                 ]
             )
             fun `These are nice `(input: String) {
-                assertEquals(1, Day05(listOf(input)).countOfNiceStrings())
+                assertEquals(1, Day05(listOf(input)).howManyNiceStringsPart1())
             }
 
             @ParameterizedTest(name = "{0} - because it {1}")
@@ -46,7 +46,7 @@ class Day05Test {
                 "dvszwmarrgswjxmb, contains only one vowel",
             )
             fun `These are naughty `(input: String, reason: String) {
-                assertEquals(0, Day05(listOf(input)).countOfNiceStrings())
+                assertEquals(0, Day05(listOf(input)).howManyNiceStringsPart1())
             }
         }
 
@@ -58,7 +58,7 @@ class Day05Test {
                 "xxyxx, pair that appears twice (xx) and repeat with letter in between (xyx)",
             )
             fun `These are nice `(input: String, reason: String) {
-                assertEquals(1, Day05(listOf(input)).countOfNicerStrings())
+                assertEquals(1, Day05(listOf(input)).howManyNiceStringsPart2())
             }
 
             @ParameterizedTest(name = "{0} - because it {1}")
@@ -67,7 +67,7 @@ class Day05Test {
                 "ieodomkazucvgmuy, has repeat with a letter in between (odo) but no repeating pair",
             )
             fun `These are naughty `(input: String, reason: String) {
-                assertEquals(0, Day05(listOf(input)).countOfNicerStrings())
+                assertEquals(0, Day05(listOf(input)).howManyNiceStringsPart2())
             }
         }
     }
