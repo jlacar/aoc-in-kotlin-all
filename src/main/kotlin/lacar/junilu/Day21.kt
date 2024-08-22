@@ -44,17 +44,12 @@ data class Player(var points: Int, val damage: Int = 0, val armor: Int = 0) {
     fun isStillAlive() = points > 0
 }
 
-enum class ShopItemType() { WEAPON, ARMOR, RING }
-
-data class ShopItem(
-    val type: ShopItemType,
-    val cost: Int, val damage: Int = 0, val armor: Int = 0
-)
+data class ShopItem(val cost: Int, val damage: Int = 0, val armor: Int = 0)
 
 object RpgShop {
 
     private fun weapon(cost: Int, damage: Int) =
-        ShopItem(ShopItemType.WEAPON, cost = cost, damage = damage)
+        ShopItem(cost = cost, damage = damage)
 
     private val allWeapons = listOf(
         weapon(8, 4),  // Dagger
@@ -65,7 +60,7 @@ object RpgShop {
     )
 
     private fun armor(cost: Int, armor: Int) =
-        ShopItem(ShopItemType.ARMOR, cost = cost, armor = armor)
+        ShopItem(cost = cost, armor = armor)
 
     private val allArmor = listOf(
         armor(13, 1),   // Leather
@@ -76,7 +71,7 @@ object RpgShop {
     )
 
     private fun ring(cost: Int, damage: Int = 0, armor: Int = 0) =
-        ShopItem(ShopItemType.RING, cost = cost, damage = damage, armor = armor)
+        ShopItem(cost = cost, damage = damage, armor = armor)
 
     private val allRings = listOf(
         ring(25, damage = 1),  // Damage +1
