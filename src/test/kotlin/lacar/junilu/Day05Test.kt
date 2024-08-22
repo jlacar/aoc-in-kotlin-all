@@ -52,23 +52,21 @@ class Day05Test {
 
         @Nested
         inner class Part2 {
-            @ParameterizedTest(name = "{0}")
-            @ValueSource(
-                strings = [
-                    "qjhvhtzxzqqjkmpb",
-                    "xxyxx"
-                ]
+            @ParameterizedTest(name = "{0} - because it has {1}")
+            @CsvSource(
+                "qjhvhtzxzqqjkmpb, pair that appears twice (qj) and repeat with letter in between (zxz)",
+                "xxyxx, pair that appears twice (xx) and repeat with letter in between (xyx)",
             )
-            fun `These are nice`(input: String) {
+            fun `These are nice `(input: String, reason: String) {
                 assertEquals(1, Day05(listOf(input)).countOfNicerStrings())
             }
 
             @ParameterizedTest(name = "{0} - because it {1}")
             @CsvSource(
-                "uurcxstgmygtbstg, has a repeating pair (tg) but no repeat with single letter in between",
-                "ieodomkazucvgmuy, has repeat with single letter in between (odo) but no pair that appears twice",
+                "uurcxstgmygtbstg, has a repeating pair (tg) but no repeat with a letter in between",
+                "ieodomkazucvgmuy, has repeat with a letter in between (odo) but no repeating pair",
             )
-            fun `These are naughty`(input: String, reason: String) {
+            fun `These are naughty `(input: String, reason: String) {
                 assertEquals(0, Day05(listOf(input)).countOfNicerStrings())
             }
         }
