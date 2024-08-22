@@ -11,12 +11,10 @@ class Day03(private val directions: String) {
     fun housesSantaVisited() = housesVisited(directions).distinct().count()
 
     fun housesSantaOrRobotSantaVisited() =
-        (housesVisited(directions.filterIndexed(bySanta)) +
-         housesVisited(directions.filterIndexed(byRobotSanta)))
-        .distinct().count()
+        (housesVisited(bySanta) + housesVisited(byRobotSanta)).distinct().count()
 
-    private val bySanta: (Int, Any) -> Boolean = { index, _ -> index % 2 == 0 }
-    private val byRobotSanta: (Int, Any) -> Boolean = { index, _ -> index % 2 == 1 }
+    private val bySanta = directions.filterIndexed { index, _ -> index % 2 == 0 }
+    private val byRobotSanta = directions.filterIndexed { index, _ -> index % 2 == 1 }
 
     private val startLocation = Pair(0, 0)
 
