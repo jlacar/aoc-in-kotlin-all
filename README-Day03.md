@@ -56,6 +56,6 @@ Reading the code again, I renamed a few more times until I settled on `evenIndic
 
 # Solution Core
 
-The core of the solution is in the processing of the direction. I used a `runningFold()` operation initialized with the origin location. The `when` expression will translate the direction to the corresponding line that makes a copy of the current location with either the first (X) or second (Y) incremented or decremented.
+The core of the solution is in the processing of the direction. I used a `runningFold()` operation initialized with the origin location. The `when` expression will translate the direction to the corresponding line that makes a copy of the current location with either `first`, representing the row, or `second`, representing the column, either incremented or decremented.
 
 
