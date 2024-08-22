@@ -20,7 +20,7 @@ Day03Test {
 
         @Test
         fun part2() {
-            assertEquals(2639, day03.housesSantaOrRoboSantaVisited())
+            assertEquals(2639, day03.housesSantaOrRobotSantaVisited())
         }
     }
 
@@ -44,7 +44,7 @@ Day03Test {
             "^v^v^v^v^v, 11",
         )
         fun part2(directions: String, expectedCount: Int) {
-            assertEquals(expectedCount, Day03(directions).housesSantaOrRoboSantaVisited())
+            assertEquals(expectedCount, Day03(directions).housesSantaOrRobotSantaVisited())
         }
     }
 }
