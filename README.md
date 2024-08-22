@@ -26,7 +26,7 @@ These are links to notes on each of my solutions to [Advent of Code 2015](https:
 
 * [Day 1](README-Day01.md)
 * Day 2
-* Day 3
+* [Day 3](README-Day03.md)
 * Day 4
 * Day 5
 * Day 6
