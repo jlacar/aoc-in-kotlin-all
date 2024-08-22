@@ -90,12 +90,12 @@ object RpgShop {
     private fun ring(cost: Int, damage: Int = 0, armor: Int = 0) =
         ShopItem(ShopItemType.RING, cost = cost, damage = damage, armor = armor)
 
-    fun itemCombinations(): Sequence<ShopItemList> = sequence {
-        val allWeapons = items.filter { it.type == ShopItemType.WEAPON }
-        val allArmor = items.filter { it.type == ShopItemType.ARMOR }
-        val allRings = items.filter { it.type == ShopItemType.RING }
-        val allRingPairs = allRings.combinations(2)
+    private val allWeapons = items.filter { it.type == ShopItemType.WEAPON }
+    private val allArmor = items.filter { it.type == ShopItemType.ARMOR }
+    private val allRings = items.filter { it.type == ShopItemType.RING }
+    private val allRingPairs = allRings.combinations(2)
 
+    fun itemCombinations(): Sequence<ShopItemList> = sequence {
         allWeapons.forEach { weapon ->
             yield(listOf(weapon))
             allArmor.forEach { armor ->
