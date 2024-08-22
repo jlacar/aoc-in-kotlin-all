@@ -1,5 +1,7 @@
 package lacar.junilu
 
+private typealias HouseLocation = Pair<Int, Int>
+
 /**
  * AoC 2015 - Day 3: Perfectly Spherical Houses in a Vacuum
  *
@@ -14,14 +16,16 @@ class Day03(private val directions: String) {
         .distinct()
         .count()
 
-    private fun housesVisited(directions: String) =
-        directions.runningFold(Pair(0, 0)) { currentHouse, ch ->
-            val (horizontal, vertical) = currentHouse
+    private val Origin = Pair(0, 0)
+
+    private fun housesVisited(directions: String): List<HouseLocation> =
+        directions.runningFold(Origin) { currentLocation, ch ->
+            val (horizontal, vertical) = currentLocation
             when (ch) {
-                '<' -> currentHouse.copy(first = horizontal - 1)
-                '>' -> currentHouse.copy(first = horizontal + 1)
-                '^' -> currentHouse.copy(second = vertical + 1)
-                else -> currentHouse.copy(second = vertical - 1)
+                '<' -> currentLocation.copy(first = horizontal - 1)
+                '>' -> currentLocation.copy(first = horizontal + 1)
+                '^' -> currentLocation.copy(second = vertical + 1)
+                else -> currentLocation.copy(second = vertical - 1)
             }
         }
 

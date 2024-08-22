@@ -8,7 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource
 
 private val day03 = Day03.using(readResource("day03"))
 
-class Day03Test {
+class
+Day03Test {
 
     @Nested
     inner class Solution {
