@@ -9,8 +9,8 @@ class Day21Test {
     @Nested
     inner class Solution {
         @Test
-        fun `Part 1 - `() {
-            assertEquals(1, Day21().leastAmountOfGoldSpentToWin())
+        fun `Part 1 - SOLVED`() {
+            assertEquals(91, Day21().leastAmountOfGoldSpentToWin())
         }
     }
 
@@ -20,6 +20,17 @@ class Day21Test {
             RolePlayingGame(
                 player = Player(points = 8, damage = 8, armor = 5),
                 boss = Player(points = 12, damage = 7, armor = 2)
+            )
+            .playerWins()
+        )
+    }
+
+    @Test
+    fun `Debug player wins`() {
+        assertTrue(
+            RolePlayingGame(
+                player = Player(points = 100, damage = 5, armor = 5),
+                boss = Player(points = 100, damage = 8, armor = 2)
             )
             .playerWins()
         )
