@@ -12,6 +12,11 @@ class Day21Test {
         fun `Part 1 - SOLVED`() {
             assertEquals(91, Day21().leastAmountOfGoldSpentToWin())
         }
+
+        @Test
+        fun `Part 2 - SOLVED`() {
+            assertEquals(158, Day21().mostAmountOfGoldSpentJustToLose())
+        }
     }
 
     @Test

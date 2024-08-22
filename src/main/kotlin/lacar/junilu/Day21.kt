@@ -8,10 +8,10 @@ typealias ShopItemList = List<ShopItem>
  * https://adventofcode.com/2015/day/21
  */
 class Day21() {
-    fun leastAmountOfGoldSpentToWin(): Int {
-        val theBoss = Player(100, damage = 8, armor = 2) // puzzle input
-        return itemsBoughtThatCanBeat(theBoss).minOf { it.totalCost() }
-    }
+    // puzzle input
+    private val theBoss = Player(100, damage = 8, armor = 2)
+
+    fun leastAmountOfGoldSpentToWin() = itemsBoughtThatCanBeat(theBoss).minOf { it.totalCost() }
 
     private fun ShopItemList.totalCost() = sumOf { it.cost }
 
@@ -26,13 +26,23 @@ class Day21() {
                 boss
             ).playerWins()
         }
+
+    fun mostAmountOfGoldSpentJustToLose() = itemsBoughtThatLoseAgainst(theBoss).maxOf { it.totalCost() }
+
+    private fun itemsBoughtThatLoseAgainst(boss: Player) =
+        RpgShop.itemCombinations().filter { itemsBought ->
+            RolePlayingGame(
+                Player(
+                    points = 100,
+                    damage = itemsBought.sumOf { it.damage },
+                    armor = itemsBought.sumOf { it.armor }
+                ),
+                boss
+            ).playerLoses()
+        }
 }
 
-data class Player(
-    var points: Int,
-    val damage: Int = 0,
-    val armor: Int = 0,
-) {
+data class Player(var points: Int, val damage: Int = 0, val armor: Int = 0) {
     fun dealDamageTo(enemy: Player) {
         enemy.receive(damage)
     }
@@ -42,9 +52,6 @@ data class Player(
     }
 
     fun isStillAlive() = points > 0
-
-    companion object {
-    }
 }
 
 enum class ShopItemType() { WEAPON, ARMOR, RING }
@@ -119,4 +126,6 @@ class RolePlayingGame(val player: Player, val boss: Player) {
         } while (defender.isStillAlive())
         return attacker === thePlayer
     }
+
+    fun playerLoses() = !playerWins()
 }
