@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val day03 = Day03.using(readResource("day03"))
+private val puzzleInput = readResource("day03").first()
 
 class
 Day03Test {
@@ -15,12 +15,12 @@ Day03Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(2565, day03.housesSantaVisited())
+            assertEquals(2565, Day03(puzzleInput).housesSantaVisited())
         }
 
         @Test
         fun part2() {
-            assertEquals(2639, day03.housesSantaOrRobotSantaVisited())
+            assertEquals(2639, Day03(puzzleInput).housesSantaOrRobotSantaVisited())
         }
     }
 

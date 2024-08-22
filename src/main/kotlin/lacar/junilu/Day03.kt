@@ -30,8 +30,4 @@ class Day03(private val directions: String) {
                 else -> currentLocation.copy(second = vertical - 1)
             }
         }
-
-    companion object {
-        fun using(input: List<String>) = Day03(input.first())
-    }
 }
