@@ -9,36 +9,26 @@ typealias ShopItemList = List<ShopItem>
  */
 class Day21() {
     // puzzle input
-    private val theBoss = Player(100, damage = 8, armor = 2)
+    private val theBoss = Player(points = 100, damage = 8, armor = 2)
 
     fun leastAmountOfGoldSpentToWin() = itemsBoughtThatCanBeat(theBoss).minOf { it.totalCost() }
 
     private fun ShopItemList.totalCost() = sumOf { it.cost }
+    private fun ShopItemList.totalDamage() = sumOf { it.damage }
+    private fun ShopItemList.totalArmor() = sumOf { it.armor }
 
     private fun itemsBoughtThatCanBeat(boss: Player) =
         RpgShop.itemCombinations().filter { itemsBought ->
-            RolePlayingGame(
-                Player(
-                    points = 100,
-                    damage = itemsBought.sumOf { it.damage },
-                    armor = itemsBought.sumOf { it.armor }
-                ),
-                boss
-            ).playerWins()
+            val player = Player(points = 100, damage = itemsBought.totalDamage(), armor = itemsBought.totalArmor())
+            RolePlayingGame(player, boss).playerWins()
         }
 
     fun mostAmountOfGoldSpentJustToLose() = itemsBoughtThatLoseAgainst(theBoss).maxOf { it.totalCost() }
 
     private fun itemsBoughtThatLoseAgainst(boss: Player) =
         RpgShop.itemCombinations().filter { itemsBought ->
-            RolePlayingGame(
-                Player(
-                    points = 100,
-                    damage = itemsBought.sumOf { it.damage },
-                    armor = itemsBought.sumOf { it.armor }
-                ),
-                boss
-            ).playerLoses()
+            val player = Player(points = 100, damage = itemsBought.totalDamage(), armor = itemsBought.totalArmor())
+            RolePlayingGame(player, boss).playerLoses()
         }
 }
 
@@ -56,23 +46,39 @@ data class Player(var points: Int, val damage: Int = 0, val armor: Int = 0) {
 
 enum class ShopItemType() { WEAPON, ARMOR, RING }
 
-data class ShopItem(val type: ShopItemType,
-                    val cost: Int, val damage: Int = 0, val armor: Int = 0)
+data class ShopItem(
+    val type: ShopItemType,
+    val cost: Int, val damage: Int = 0, val armor: Int = 0
+)
 
 object RpgShop {
-    private val items = listOf(
+
+    private fun weapon(cost: Int, damage: Int) =
+        ShopItem(ShopItemType.WEAPON, cost = cost, damage = damage)
+
+    private val allWeapons = listOf(
         weapon(8, 4),  // Dagger
         weapon(10, 5), // Shortsword
         weapon(25, 6), // Warhammer
         weapon(40, 7), // Longsword
         weapon(74, 8), // Greataxe
+    )
 
+    private fun armor(cost: Int, armor: Int) =
+        ShopItem(ShopItemType.ARMOR, cost = cost, armor = armor)
+
+    private val allArmor = listOf(
         armor(13, 1),   // Leather
         armor(31, 2),   // Chainmail
         armor(53, 3),   // Splintmail
         armor(75, 4),   // Bandedmail
-        armor(102, 5),    // Platemail
+        armor(102, 5),  // Platemail
+    )
 
+    private fun ring(cost: Int, damage: Int = 0, armor: Int = 0) =
+        ShopItem(ShopItemType.RING, cost = cost, damage = damage, armor = armor)
+
+    private val allRings = listOf(
         ring(25, damage = 1),  // Damage +1
         ring(50, damage = 2),  // Damage +2
         ring(100, damage = 3), // Damage +3
@@ -81,18 +87,6 @@ object RpgShop {
         ring(80, armor = 3),   // Defense +3
     )
 
-    private fun weapon(cost: Int, damage: Int) =
-        ShopItem(ShopItemType.WEAPON, cost = cost, damage = damage)
-
-    private fun armor(cost: Int, armor: Int) =
-        ShopItem(ShopItemType.ARMOR, cost = cost, armor = armor)
-
-    private fun ring(cost: Int, damage: Int = 0, armor: Int = 0) =
-        ShopItem(ShopItemType.RING, cost = cost, damage = damage, armor = armor)
-
-    private val allWeapons = items.filter { it.type == ShopItemType.WEAPON }
-    private val allArmor = items.filter { it.type == ShopItemType.ARMOR }
-    private val allRings = items.filter { it.type == ShopItemType.RING }
     private val allRingPairs = allRings.combinations(2)
 
     fun itemCombinations(): Sequence<ShopItemList> = sequence {
