@@ -19,16 +19,16 @@ class Day21() {
     fun leastAmountOfGoldSpentToWin() = itemsBoughtThatCanBeat(theBoss).minOf { it.totalCost() }
 
     private fun itemsBoughtThatCanBeat(boss: Player) =
-        RpgShop.itemCombinations().filter { itemsBought ->
-            val player = Player(points = 100, damage = itemsBought.totalDamage(), armor = itemsBought.totalArmor())
+        RpgShop.allCombinationsOfItemsBought().filter { mixOfItems ->
+            val player = Player(points = 100, damage = mixOfItems.totalDamage(), armor = mixOfItems.totalArmor())
             RolePlayingGame(player, boss).playerWins()
         }
 
     fun mostAmountOfGoldSpentJustToLose() = itemsBoughtThatLoseAgainst(theBoss).maxOf { it.totalCost() }
 
     private fun itemsBoughtThatLoseAgainst(boss: Player) =
-        RpgShop.itemCombinations().filter { itemsBought ->
-            val player = Player(points = 100, damage = itemsBought.totalDamage(), armor = itemsBought.totalArmor())
+        RpgShop.allCombinationsOfItemsBought().filter { mixOfItems ->
+            val player = Player(points = 100, damage = mixOfItems.totalDamage(), armor = mixOfItems.totalArmor())
             RolePlayingGame(player, boss).playerLoses()
         }
 }
@@ -85,7 +85,7 @@ object RpgShop {
 
     private val allRingPairs = allRings.combinations(2)
 
-    fun itemCombinations(): Sequence<ShopItemList> = sequence {
+    fun allCombinationsOfItemsBought(): Sequence<ShopItemList> = sequence {
         allWeapons.forEach { weapon ->
             yield(listOf(weapon))
             allArmor.forEach { armor ->
