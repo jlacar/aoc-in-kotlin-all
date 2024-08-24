@@ -8,15 +8,10 @@ package lacar.junilu
 class Day01(private val directions: String) {
 
     // Solutions
-    fun lastFloor() = directions.lastFloor()
-    fun positionOfFirstTimeInBasement() = directions.positionOfFirstTimeInBasement()
+    fun lastFloor() = directions.fold(0, nextFloor)
 
-    // Extension functions
-    private fun CharSequence.lastFloor() =
-        fold(0, nextFloor)
-
-    private fun CharSequence.positionOfFirstTimeInBasement() =
-        asSequence().runningFold(0, nextFloor).indexOfFirst { it == -1 }
+    fun positionOfFirstTimeInBasement() = directions
+        .runningFold(0, nextFloor).indexOfFirst { it == -1 }
 
     // Shared calculation
     private val nextFloor: (Int, Char) -> Int = { currentFloor, direction ->
