@@ -13,16 +13,14 @@ class Day03(private val directions: String) {
     fun housesSantaOrRobotSantaVisited() =
         (housesVisited(bySanta) union housesVisited(byRobotSanta)).count()
 
-    private val evenIndicesOnly = { index: Int, _: Char -> index % 2 == 0 }
-    private val oddIndicesOnly = { index: Int, _: Char -> index % 2 == 1 }
+    private val evenIndices = { index: Int, _: Char -> index % 2 == 0 }
+    private val oddIndices = { index: Int, _: Char -> index % 2 == 1 }
 
-    private val bySanta = directions.filterIndexed(evenIndicesOnly)
-    private val byRobotSanta = directions.filterIndexed(oddIndicesOnly)
-
-    private val startLocation = HouseLocation(0, 0)
+    private val bySanta = directions.filterIndexed(evenIndices)
+    private val byRobotSanta = directions.filterIndexed(oddIndices)
 
     private fun housesVisited(directions: String): Set<HouseLocation> =
-        directions.runningFold(startLocation) { currentLocation, direction ->
+        directions.runningFold(initial = HouseLocation(0, 0)) { currentLocation, direction ->
             val (row, col) = currentLocation
             when (direction) {
                 '<' -> currentLocation.copy(col = col - 1)
