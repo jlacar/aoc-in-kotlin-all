@@ -48,7 +48,7 @@ These are links to notes on each of my solutions to [Advent of Code 2015](https:
 * Day 22
 * Day 23
 * Day 24
-* Day 25
+* [Day 25](README-Day25.md)
 
 ## Utilities 
 

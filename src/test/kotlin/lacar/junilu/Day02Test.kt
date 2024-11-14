@@ -32,8 +32,8 @@ class Day02Test {
             "1, 1, 10, 43"
         )
         fun part1(w: Int, l: Int, h: Int, expectedArea: Int) {
-            val dimensions = listOf(intArrayOf(w, l, h))
-            assertEquals(expectedArea, Day02(dimensions).part1())
+            val dimensions = listOf(w, l, h)
+            assertEquals(expectedArea, Day02(listOf(dimensions)).part1())
         }
 
         @ParameterizedTest(name = "{0}x{1}x{2} needs {3} length of ribbon")
@@ -42,8 +42,8 @@ class Day02Test {
             "1, 1, 10, 14",
         )
         fun part2(w: Int, l: Int, h: Int, expectedLength: Int) {
-            val dimensions = listOf(intArrayOf(w, l, h))
-            assertEquals(expectedLength, Day02(dimensions).part2())
+            val dimensions = listOf(w, l, h)
+            assertEquals(expectedLength, Day02(listOf(dimensions)).part2())
         }
     }
 }
