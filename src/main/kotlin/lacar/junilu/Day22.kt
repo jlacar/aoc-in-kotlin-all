@@ -27,13 +27,7 @@ data class FightOutcome(val boss: Boss22, val wizard: Wizard, val spellsCast: Li
     fun cost() = spellsCast.sumOf { it.cost }
 }
 
-typealias TurnOutcome = Pair<Wizard, Boss22>
-
-val TurnOutcome.wizard
-    get() = first
-
-val TurnOutcome.boss
-    get() = second
+data class TurnOutcome(val wizard: Wizard, val boss: Boss22, val effects: List<Effect> = emptyList()) {}
 
 data class Boss22(
     val points: Int,
@@ -41,7 +35,7 @@ data class Boss22(
 ) {
     fun isDead() = points <= 0
 
-    fun attack(wizard: Wizard) = TurnOutcome (wizard.receive(damage), this)
+    fun attack(wizard: Wizard) = TurnOutcome (boss = this, wizard = wizard.receive(damage))
 }
 
 data class Wizard(
@@ -54,17 +48,18 @@ data class Wizard(
     fun receive(damage: Int) = copy(points = points - max(damage - armor, 1))
 
     fun cast(spell: Spell, boss: Boss22) = TurnOutcome(
-        copy(points = points + spell.effect().heal, mana = mana - spell.cost),
-        boss.copy(points = boss.points - spell.effect().damage),
+        wizard = this.copy(points = points + spell.effect().heal, mana = mana - spell.cost),
+        boss = boss.copy(points = boss.points - spell.effect().immediateDamage),
+        effects = if (spell.effect().hasTimer()) listOf(spell.effect()) else emptyList()
     )
 }
 
 enum class Spell(val cost: Int) {
     MAGIC_MISSILE(53) {
-        override fun effect() = Effect(this, damage = 4)
+        override fun effect() = Effect(this, immediateDamage = 4)
     } ,
     DRAIN(73) {
-        override fun effect() = Effect(this, damage = 2, heal = 2)
+        override fun effect() = Effect(this, immediateDamage = 2, heal = 2)
     },
     SHIELD(113) {
         override fun effect() = Effect(this, timer = 6, armor = 7)
@@ -84,10 +79,22 @@ data class Effect(
     val timer: Int = 0,
     val armor: Int = 0,
     val damage: Int = 0,
+    val immediateDamage: Int = 0,
     val heal: Int = 0,
     val recharge: Int = 0
 ) {
+    fun hasTimer() = timer != 0
+
     fun hasEnded() = timer == 0
-    fun isEnding() = timer == 1
-    fun decrease() = if (timer > 0) copy(timer = timer - 1) else this
+
+    private fun decrease() = if (timer > 0) copy(timer = timer - 1) else this
+
+    fun applyTo(wizard: Wizard, boss: Boss22): TurnOutcome {
+        return TurnOutcome(
+                    wizard = wizard.copy(armor = armor, mana = wizard.mana + recharge),
+                    boss = boss.copy(points = boss.points - damage),
+                    effects = listOf(this.decrease())
+               )
+    }
+
 }
