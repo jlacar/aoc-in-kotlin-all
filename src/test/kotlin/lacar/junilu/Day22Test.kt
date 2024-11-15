@@ -4,6 +4,8 @@ import lacar.junilu.Spell.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class Day22Test {
 
@@ -22,7 +24,7 @@ class Day22Test {
     }
 
     @Nested
-    inner class `Part One Example 1` {
+    inner class Spells {
 
         private val boss = Boss22(points = 13, damage = 8)
         private val wizard = Wizard(points = 10, mana = 250)
@@ -41,8 +43,8 @@ class Day22Test {
             @Test
             fun `costs wizard 53 mana`() {
                 val expectedWizard = wizard.copy(
-                        mana = wizard.mana - 53
-                    )
+                    mana = wizard.mana - 53
+                )
 
                 assertEquals(expectedWizard, outcome.wizard)
             }
@@ -55,9 +57,9 @@ class Day22Test {
             @Test
             fun `costs wizard 73 mana and heals for 2 hit points`() {
                 val expectedWizard = wizard.copy(
-                        points = wizard.points + 2,
-                        mana = wizard.mana - 73
-                    )
+                    points = wizard.points + 2,
+                    mana = wizard.mana - 73
+                )
 
                 assertEquals(expectedWizard, outcome.wizard)
             }
@@ -70,8 +72,8 @@ class Day22Test {
             @Test
             fun `costs wizard 113 mana`() {
                 val expectedWizard = wizard.copy(
-                        mana = wizard.mana - 113
-                    )
+                    mana = wizard.mana - 113
+                )
 
                 assertEquals(expectedWizard, outcome.wizard)
             }
@@ -99,6 +101,33 @@ class Day22Test {
 
                 assertEquals(expectedWizard, outcome.wizard)
             }
+        }
+    }
+
+    @Nested
+    inner class `Boss attacks` {
+
+        private val irrelevantNonZero = 1
+
+        @Test
+        fun `deals full damage when wizard has no armor`() {
+            val boss = Boss22(damage = 8, points = irrelevantNonZero)
+            val wizard = Wizard(points = 10, armor = 0, mana = irrelevantNonZero)
+
+            val outcome = boss.attack(wizard)
+
+            assertEquals(boss.damage, wizard.points - outcome.wizard.points)
+        }
+
+        @ParameterizedTest
+        @CsvSource("8, 1", "10, 1", "7, 1", "6, 2", "5, 3")
+        fun `deals at least 1 damage when wizard has armor`(armor: Int, expectedDamage: Int) {
+            val boss = Boss22(damage = 8, points = irrelevantNonZero)
+            val wizard = Wizard(points = 10, armor = armor, mana = irrelevantNonZero)
+
+            val outcome = boss.attack(wizard)
+
+            assertEquals(expectedDamage, wizard.points - outcome.wizard.points)
         }
     }
 }
