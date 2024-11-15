@@ -12,6 +12,10 @@ class Day22(val boss: Boss22, val wizard: Wizard) {
 data class FightOutcome(val boss: Boss22, val wizard: Wizard, val spellsCast: List<Spell> = emptyList()) {
     fun wizardWins() = wizard.isAlive() && boss.isDead()
 
+    fun canCast(spell: Spell): Boolean{
+        return false
+    }
+
     fun wizardCasts(spell: Spell): FightOutcome {
         return this
     }
@@ -50,32 +54,38 @@ data class Wizard(
     fun receive(damage: Int) = copy(points = points - max(damage - armor, 1))
 
     fun cast(spell: Spell, boss: Boss22) = TurnOutcome(
-        copy(points = points + spell.heal, mana = mana - spell.cost),
-        boss.copy(points = boss.points - spell.damage),
+        copy(points = points + spell.effect().heal, mana = mana - spell.cost),
+        boss.copy(points = boss.points - spell.effect().damage),
     )
 }
 
-enum class Spell(
-    val cost: Int,
-    val damage: Int = 0,
-    val timer: Int = 0,
-    val heal: Int = 0,
-    val armor: Int = 0,
-    val recharge: Int = 0
-) {
-    MAGIC_MISSILE(53, damage = 4),
-    DRAIN(73, damage = 2, heal = 2),
-    SHIELD(113, timer = 6, armor = 7),
-    POISON(173, timer = 6, damage = 3),
-    RECHARGE(229, timer = 5, recharge = 101);
+enum class Spell(val cost: Int) {
+    MAGIC_MISSILE(53) {
+        override fun effect() = Effect(this, damage = 4)
+    } ,
+    DRAIN(73) {
+        override fun effect() = Effect(this, damage = 2, heal = 2)
+    },
+    SHIELD(113) {
+        override fun effect() = Effect(this, timer = 6, armor = 7)
+    },
+    POISON(173) {
+        override fun effect() = Effect(this, timer = 6, damage = 3)
+    },
+    RECHARGE(229) {
+        override fun effect() = Effect(this, timer = 5, recharge = 101)
+    };
+
+    abstract fun effect(): Effect;
 }
 
 data class Effect(
+    val spell: Spell,
     val timer: Int = 0,
     val armor: Int = 0,
     val damage: Int = 0,
-    val points: Int = 0,
-    val mana: Int = 0
+    val heal: Int = 0,
+    val recharge: Int = 0
 ) {
     fun hasEnded() = timer == 0
     fun isEnding() = timer == 1

@@ -24,7 +24,7 @@ class Day22Test {
     }
 
     @Nested
-    inner class Spells {
+    inner class `Casting Spells` {
 
         private val boss = Boss22(points = 13, damage = 8)
         private val wizard = Wizard(points = 10, mana = 250)
@@ -34,19 +34,13 @@ class Day22Test {
             private val outcome = wizard.cast(MAGIC_MISSILE, boss)
 
             @Test
-            fun `instantly does 4 damage to boss`() {
-                val expectedBoss = boss.copy(points = boss.points - 4)
-
-                assertEquals(expectedBoss, outcome.boss)
+            fun `costs wizard 53 mana`() {
+                assertEquals(53, wizard.mana - outcome.wizard.mana)
             }
 
             @Test
-            fun `costs wizard 53 mana`() {
-                val expectedWizard = wizard.copy(
-                    mana = wizard.mana - 53
-                )
-
-                assertEquals(expectedWizard, outcome.wizard)
+            fun `instantly does 4 damage to boss`() {
+                assertEquals(4, boss.points - outcome.boss.points)
             }
         }
 
@@ -55,13 +49,13 @@ class Day22Test {
             private val outcome = wizard.cast(DRAIN, boss)
 
             @Test
-            fun `costs wizard 73 mana and heals for 2 hit points`() {
-                val expectedWizard = wizard.copy(
-                    points = wizard.points + 2,
-                    mana = wizard.mana - 73
-                )
+            fun `costs wizard 73 mana`() {
+                assertEquals(73, wizard.mana - outcome.wizard.mana)
+            }
 
-                assertEquals(expectedWizard, outcome.wizard)
+            @Test
+            fun `heals wizard for 2 hit points`() {
+                assertEquals(2, outcome.wizard.points - wizard.points)
             }
         }
 
@@ -71,11 +65,7 @@ class Day22Test {
 
             @Test
             fun `costs wizard 113 mana`() {
-                val expectedWizard = wizard.copy(
-                    mana = wizard.mana - 113
-                )
-
-                assertEquals(expectedWizard, outcome.wizard)
+                assertEquals(113, wizard.mana - outcome.wizard.mana)
             }
         }
 
@@ -85,9 +75,7 @@ class Day22Test {
 
             @Test
             fun `costs wizard 173 mana`() {
-                val expectedWizard = wizard.copy(mana = wizard.mana - 173)
-
-                assertEquals(expectedWizard, outcome.wizard)
+                assertEquals(173, wizard.mana - outcome.wizard.mana)
             }
         }
 
@@ -97,9 +85,7 @@ class Day22Test {
 
             @Test
             fun `costs wizard 229 mana`() {
-                val expectedWizard = wizard.copy(mana = wizard.mana - 229)
-
-                assertEquals(expectedWizard, outcome.wizard)
+                assertEquals(229, wizard.mana - outcome.wizard.mana)
             }
         }
     }
