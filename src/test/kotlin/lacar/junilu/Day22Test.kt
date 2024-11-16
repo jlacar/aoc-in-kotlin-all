@@ -26,71 +26,141 @@ class Day22Test {
         }
     }
 
+    @Test
+    fun `Part 1 Example 1`() {
+
+        val boss = Boss22(points = 13, damage = 8)
+        val wizard = Wizard(points = 10, mana = 250)
+
+        val cast1w = wizard.cast(POISON, boss)
+
+        assertAll("boss turn 1 before effects applied",
+            { assertEquals(10, cast1w.wizard.points) },
+            { assertEquals(0, cast1w.wizard.armor) },
+            { assertEquals(77, cast1w.wizard.mana) },
+            { assertEquals(13, cast1w.boss.points) },
+            { assertEquals(POISON, cast1w.effects.first().spell) },
+            { assertEquals(6, cast1w.effects.first().timer) }
+        )
+
+        val apply1b = cast1w.effects.fold(cast1w) { acc, effect ->
+            effect.applyTo(acc.wizard, acc.boss)
+        }
+
+        assertAll("boss turn 1 after effects applied",
+            { assertEquals(POISON, apply1b.effects.first().spell) },
+            { assertEquals(5, apply1b.effects.first().timer) },
+        )
+
+        val attack1b = apply1b.boss.attack(apply1b.wizard)
+
+        assertAll("wizard turn 2 before applying effects",
+            { assertEquals(2, attack1b.wizard.points) },
+            { assertEquals(0, attack1b.wizard.armor) },
+            { assertEquals(77, attack1b.wizard.mana) },
+            { assertEquals(10, apply1b.boss.points) }
+        )
+
+        val apply2w = apply1b.effects.fold(apply1b.copy(wizard = attack1b.wizard)) { acc, effect ->
+            effect.applyTo(acc.wizard, acc.boss)
+        }
+
+        assertAll("wizard turn 2 after applying effects",
+            { assertEquals(7, apply2w.boss.points) },
+            { assertEquals(POISON, apply2w.effects.first().spell) },
+            { assertEquals(4, apply2w.effects.first().timer) }
+        )
+
+        val cast2w = apply2w.wizard.cast(MAGIC_MISSILE, apply2w.boss)
+
+        assertAll("boss turn 2 before applying effects",
+            { assertEquals(2, cast2w.wizard.points) },
+            { assertEquals(3, cast2w.boss.points) },
+        )
+
+        val apply2b = apply2w.effects.fold(cast2w) { acc, effect ->
+            effect.applyTo(acc.wizard, acc.boss)
+        }
+
+        assertAll("boss turn 2 after applying effects",
+            { assertEquals(POISON, apply2b.effects.first().spell) },
+            { assertEquals(3, apply2b.effects.first().timer) },
+            { assertTrue(apply2b.boss.isDead()) }
+        )
+    }
+
+    @Test
+    fun `Part 1 Example 2`() {
+        val boss = Boss22(points = 14, damage = 8)
+        val wizard = Wizard(points = 10, mana = 250)
+
+        val cast1w = wizard.cast(RECHARGE, boss)
+
+        assertAll("boss turn 1 before effects applied",
+            { assertEquals(10, cast1w.wizard.points) },
+            { assertEquals(21, cast1w.wizard.mana) },
+            { assertEquals(0, cast1w.wizard.armor) },
+            { assertEquals(14, cast1w.boss.points) },
+            { assertEquals(RECHARGE, cast1w.effects.first().spell) },
+            { assertEquals(5, cast1w.effects.first().timer) },
+        )
+
+        val apply1b = cast1w.effects.fold(cast1w) { acc, effect ->
+            effect.applyTo(acc.wizard, acc.boss)
+        }
+
+        assertAll("boss turn 1 after effects applied",
+            { assertEquals(RECHARGE, apply1b.effects.first().spell) },
+            { assertEquals(4, apply1b.effects.first().timer) },
+            { assertEquals(122, apply1b.wizard.mana) }
+        )
+
+        val attack1b = boss.attack(apply1b.wizard)
+
+        assertAll("wizard turn 2 before applying effects",
+            { assertEquals(2, attack1b.wizard.points) },
+            { assertEquals(14, attack1b.boss.points) },
+            { assertEquals(122, apply1b.wizard.mana) }
+        )
+
+        val apply2w = apply1b.effects.fold(attack1b.copy(effects = apply1b.effects)) { acc, effect ->
+            effect.applyTo(acc.wizard, acc.boss)
+        }
+
+        assertAll("wizard turn 2 after applying effects",
+            { assertEquals(RECHARGE, apply2w.effects.first().spell) },
+            { assertEquals(3, apply2w.effects.first().timer) },
+            { assertEquals(223, apply2w.wizard.mana) },
+        )
+
+        val cast2wIsolated = apply2w.wizard.cast(SHIELD, apply2w.boss)
+        val cast2w = cast2wIsolated.copy(effects = cast2wIsolated.effects + apply2w.effects)
+
+        assertAll("boss turn 2 before applying effects",
+            { assertEquals(2, cast2w.wizard.points) },
+            { assertEquals(110, cast2w.wizard.mana) },
+            { assertEquals(0, cast2w.wizard.armor) },
+            { assertEquals(14, cast2w.boss.points) },
+            { assertEquals(2, cast2w.effects.size) },
+            { assertTrue(cast2w.effects.any { it.spell == RECHARGE }) },
+            { assertEquals( 3, cast2w.effects.first { it.spell == RECHARGE }.timer) },
+            { assertTrue(cast2w.effects.any { it.spell == SHIELD }) },
+            { assertEquals(6, cast2w.effects.first { it.spell == SHIELD }.timer) },
+        )
+
+        val apply2b = cast2w.effects.fold(cast2w) { acc, effect ->
+            effect.applyTo(acc.wizard, acc.boss)
+        }
+
+        assertAll("boss turn 2 after applying effects",
+            { assertEquals(5, apply2b.effects.first { it.spell == SHIELD }.timer) },
+        )
+    }
+
     @Nested
     inner class Spells {
-
         private val boss = Boss22(points = 13, damage = 8)
         private val wizard = Wizard(points = 10, mana = 250)
-
-        @Test
-        fun `Part 1 Example 1`() {
-            val cast1w = wizard.cast(POISON, boss)
-
-            assertAll("wizard turn 1 - casts Poison",
-                { assertEquals(POISON, cast1w.effects.first().spell) },
-                { assertEquals(6, cast1w.effects.first().timer) }
-            )
-
-            assertAll("boss turn 1 before attacking",
-                { assertEquals(POISON, cast1w.effects.first().spell) },
-                { assertEquals(Wizard(points = 10, mana = 77, armor = 0), cast1w.wizard) },
-                { assertEquals(Boss22(points = 13, damage = 8), cast1w.boss) }
-            )
-
-            val apply1b = cast1w.effects.fold(cast1w) { acc, effect ->
-                effect.applyTo(acc.wizard, acc.boss)
-            }
-
-            assertAll("boss turn 1 after effects applied",
-                { assertEquals(POISON, apply1b.effects.first().spell) },
-                { assertEquals(5, apply1b.effects.first().timer) }
-            )
-
-            val attack1b = apply1b.boss.attack(apply1b.wizard)
-
-            assertAll("wizard turn 2 before applying effects",
-                { assertEquals(Wizard(points = 2, mana = 77), attack1b.wizard) },
-                { assertEquals(Boss22(points = 10, damage = 8), apply1b.boss) }
-            )
-
-            val apply2w = apply1b.effects.fold(apply1b.copy(wizard = attack1b.wizard)) { acc, effect ->
-                effect.applyTo(acc.wizard, acc.boss)
-            }
-
-            assertAll("wizard turn 2 after applying effects",
-                { assertEquals(Boss22(points = 7, damage = 8), apply2w.boss) },
-                { assertEquals(POISON, apply2w.effects.first().spell) },
-                { assertEquals(4, apply2w.effects.first().timer) }
-            )
-
-            val cast2w = apply2w.wizard.cast(MAGIC_MISSILE, apply2w.boss)
-
-            assertAll("boss turn 2 before applying effects",
-                { assertEquals(Wizard(points = 2, mana = 24), cast2w.wizard) },
-                { assertEquals(Boss22(points = 3, damage = 8), cast2w.boss) }
-            )
-
-            val apply2b = apply2w.effects.fold(cast2w) { acc, effect ->
-                effect.applyTo(acc.wizard, acc.boss)
-            }
-
-            assertAll("boss turn 2 after applying effects",
-                { assertEquals(POISON, apply2b.effects.first().spell) },
-                { assertEquals(3, apply2b.effects.first().timer) }
-            )
-
-            assertTrue(apply2b.boss.isDead())
-        }
 
         @Nested
         inner class `Magic Missile` {

@@ -4,30 +4,19 @@ import kotlin.math.max
 
 class Day22(val boss: Boss22, val wizard: Wizard) {
 
-    fun cheapestWizardWin(): Int = fightsWonByWizard().minOf { it.cost() }
+    fun cheapestWizardWin(): Int = fightsWonByWizard().minOf { it.cost }
 
     private fun fightsWonByWizard(): List<FightOutcome> = emptyList()
 }
 
 data class FightOutcome(val boss: Boss22, val wizard: Wizard, val spellsCast: List<Spell> = emptyList()) {
-    fun wizardWins() = wizard.isAlive() && boss.isDead()
+    val wizardWins: Boolean
+        get() = wizard.isAlive() && boss.isDead()
 
-    fun canCast(spell: Spell): Boolean{
-        return false
-    }
-
-    fun wizardCasts(spell: Spell): FightOutcome {
-        return this
-    }
-
-    fun bossAttacks(): FightOutcome {
-        return this
-    }
-
-    fun cost() = spellsCast.sumOf { it.cost }
+    val cost: Int
+        get() = spellsCast.sumOf { it.cost }
 }
 
-data class TurnOutcome(val wizard: Wizard, val boss: Boss22, val effects: List<Effect> = emptyList()) {}
 
 data class Boss22(
     val points: Int,
