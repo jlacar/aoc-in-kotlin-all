@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class DesignTest {
+class SolutionTest {
 
     @Nested
     inner class Solution {
@@ -117,82 +117,83 @@ class DesignTest {
                 }
             }
         }
-//
-//        @Nested
-//        inner class Poison {
-//            private val outcome = wizard.cast(POISON, boss)
-//
-//            @Test
-//            fun `costs wizard 173 mana`() {
-//                assertEquals(-173, outcome.wizard.mana - wizard.mana)
-//            }
-//
-//            @Test
-//            fun `starts an effect that lasts for 6 turns`() {
-//                assertTrue(outcome.effects.isNotEmpty())
-//                assertEquals(6, outcome.effects.first().timer)
-//            }
-//
-//            @Test
-//            fun `does not immediately deal damage to boss when cast`() {
-//                assertEquals(boss, outcome.boss)
-//            }
-//
-//            @Nested
-//            inner class `when Active during a turn`() {
-//                private val effect = Effect(spell = POISON, damage = 3, timer = 6)
-//                private val outcome = effect.applyTo(wizard, boss)
-//
-//                @Test
-//                fun `deals 3 damage to boss`() {
-//                    assertEquals(-3, outcome.boss.points - boss.points)
-//                }
-//
-//                @Test
-//                fun `decreases timer by 1`() {
-//                    assertEquals(-1, outcome.effects.first().timer - effect.timer)
-//                }
-//            }
-//        }
-//
-//        @Nested
-//        inner class Recharge {
-//            private val outcome = wizard.cast(RECHARGE, boss)
-//
-//            @Test
-//            fun `costs wizard 229 mana`() {
-//                assertEquals(-229, outcome.wizard.mana - wizard.mana)
-//            }
-//
-//            @Test
-//            fun `starts an effect that lasts for 5 turns`() {
-//                assertTrue(outcome.effects.isNotEmpty())
-//                assertEquals(5, outcome.effects.first().timer)
-//            }
-//
-//            @Test
-//            fun `does not affect boss when cast`() {
-//                assertEquals(boss, outcome.boss)
-//            }
-//
-//            @Nested
-//            inner class `when Active during a turn`() {
-//                private val effect = Effect(spell = RECHARGE, recharge = 101, timer = 5)
-//                private val outcome = effect.applyTo(wizard, boss)
-//
-//                @Test
-//                fun `gives 101 new mana to wizard`() {
-//                    assertEquals(101, outcome.wizard.mana - wizard.mana)
-//                }
-//
-//                @Test
-//                fun `decreases timer by 1`() {
-//                    assertEquals(-1, outcome.effects.first().timer - effect.timer)
-//                }
-//            }
-//        }
-//    }
-//
+
+        @Nested
+        inner class Poison {
+            private val afterCast = fight.cast(POISON)
+
+            @Test
+            fun `costs wizard 173 mana`() {
+                assertEquals(-173, afterCast.wizard.mana - wizard.mana)
+            }
+
+            @Test
+            fun `starts an effect that lasts for 6 turns`() {
+                assertTrue(afterCast.hasActive(POISON, 6))
+            }
+
+            @Test
+            fun `does not immediately deal damage to boss when cast`() {
+                assertEquals(boss, afterCast.boss)
+            }
+
+            @Nested
+            inner class `When boss attacks`() {
+                private val afterAttack = afterCast.attack()
+
+                @Test
+                fun `deals 3 damage to boss`() {
+                    assertEquals(-3, afterAttack.boss.points - boss.points)
+                }
+
+                @Test
+                fun `decreases timer to 5`() {
+                    assertTrue(afterAttack.hasActive(POISON, 5))
+                }
+            }
+        }
+
+        @Nested
+        inner class Recharge {
+            private val afterCast = fight.cast(RECHARGE)
+
+            @Test
+            fun `costs wizard 229 mana`() {
+                assertEquals(-229, afterCast.wizard.mana - wizard.mana)
+            }
+
+            @Test
+            fun `starts an effect that lasts for 5 turns`() {
+                assertTrue(afterCast.hasActive(RECHARGE, 5))
+            }
+
+            @Test
+            fun `does not affect boss when cast`() {
+                assertEquals(boss, afterCast.boss)
+            }
+
+            @Nested
+            inner class `When boss attacks`() {
+                private val afterAttack = afterCast.attack()
+
+                @Test
+                fun `wizard gains 101 mana`() {
+                    assertEquals(101, afterAttack.wizard.mana - afterCast.wizard.mana)
+                }
+
+                @Test
+                fun `wizard loses hit points`() {
+                    assertEquals(afterCast.boss.damage, afterCast.wizard.points - afterAttack.wizard.points)
+                }
+
+                @Test
+                fun `decreases timer to 4`() {
+                    assertTrue(afterAttack.hasActive(RECHARGE, 4))
+                }
+            }
+        }
+    }
+
 //    @Nested
 //    inner class `Boss attacks` {
 //
@@ -219,5 +220,4 @@ class DesignTest {
 //            assertEquals(expectedDamage, wizard.points - outcome.wizard.points)
 //        }
 //    }
-    }
 }
