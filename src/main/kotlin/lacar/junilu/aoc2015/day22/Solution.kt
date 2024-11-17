@@ -14,20 +14,27 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 //    fun bossTurns(): List<Fight> {}
 
     fun cast(spell: Spell): Fight {
-        val wizardAfter = spell.effects.fold(wizard.buy(spell.cost)) { wiz, effect -> effect.onCast(wiz) }
-        val bossAfter = spell.effects.fold(boss) { boss, effect -> effect.onCast(boss) }
-        return Fight(wizardAfter, bossAfter, spells + spell.activate())
+        val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
+        val wizardBefore = activeEffects.fold(wizard) { w, effect -> effect.onTurn(w) }
+        val bossBefore = activeEffects.fold(boss) { b, effect -> effect.onTurn(b) }
+        val reducedSpells = spells.map { (sp, t) -> Pair(sp, if (t > 0) t - 1 else 0) }
+
+        val wizardAfter = spell.effects.fold(wizardBefore.buy(spell.cost)) { wiz, effect -> effect.onCast(wiz) }
+        val bossAfter = spell.effects.fold(bossBefore) { boss, effect -> effect.onCast(boss) }
+
+        return Fight(wizardAfter, bossAfter, reducedSpells + spell.activate())
     }
 
     fun attack(): Fight {
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
-        val wizardBeforeAttack = activeEffects.fold(wizard) { w, effect -> effect.onTurn(w) }
-        val bossBeforeAttack = activeEffects.fold(boss) { b, effect -> effect.onTurn(b) }
-        val wizardAfterAttack = if (bossBeforeAttack.isAlive()) bossBeforeAttack.attack(wizardBeforeAttack)
-                                else wizardBeforeAttack
+        val wizardBefore = activeEffects.fold(wizard) { w, effect -> effect.onTurn(w) }
+        val bossBefore = activeEffects.fold(boss) { b, effect -> effect.onTurn(b) }
         val reducedSpells = spells.map { (sp, t) -> Pair(sp, if (t > 0) t - 1 else 0) }
 
-        return Fight(wizardAfterAttack, bossBeforeAttack, reducedSpells)
+        val wizardAfter = if (bossBefore.isAlive()) bossBefore.attack(wizardBefore)
+                                else wizardBefore
+
+        return Fight(wizardAfter, bossBefore, reducedSpells)
     }
 
     fun wizardWins() = boss.isDead() && wizard.isAlive()

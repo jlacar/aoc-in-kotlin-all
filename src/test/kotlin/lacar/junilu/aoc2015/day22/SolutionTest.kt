@@ -201,24 +201,84 @@ class SolutionTest {
             wizard = Wizard(points = 10, mana = 250),
             boss = Boss(points = 13, damage = 8)
         )
-        val afterCast1 = initialState.cast(POISON)
+        val wizardTurn1 = initialState.cast(POISON)
 
         @Nested
-        inner class `After wizard turn 1`() {
-
+        inner class `Wizard turn 1`() {
             @Test
             fun `starts poison effect for 6 turns`() {
-                afterCast1.hasActive(POISON, 6)
+                wizardTurn1.hasActive(POISON, 6)
             }
 
             @Test
             fun `wizard has 10 hit points, 77 mana, 0 armor`() {
-                assertEquals(Wizard(points = 10, mana = 77), afterCast1.wizard)
+                assertEquals(Wizard(points = 10, mana = 77), wizardTurn1.wizard)
             }
 
             @Test
-            fun `boss not damaged yet`() {
-                assertEquals(initialState.boss, afterCast1.boss)
+            fun `boss not been damaged yet`() {
+                assertEquals(initialState.boss, wizardTurn1.boss)
+            }
+        }
+
+        val bossTurn1 = wizardTurn1.attack()
+
+        @Nested
+        inner class `Boss turn 1` {
+            @Test
+            fun `boss takes 3 damage from poison`() {
+                assertEquals(10, bossTurn1.boss.points)
+            }
+
+            @Test
+            fun `wizard takes 8 damage from boss attack`() {
+                assertEquals(2, bossTurn1.wizard.points)
+            }
+
+            @Test
+            fun `poison timer is now 5`() {
+                assertTrue(bossTurn1.hasActive(POISON, 5))
+            }
+        }
+
+        val wizardTurn2 = bossTurn1.cast(MAGIC_MISSILE)
+
+        @Nested
+        inner class `Wizard turn 2` {
+            @Test
+            fun `wizard has 2 hit points and 24 mana`() {
+                assertEquals(Wizard(points = 2, mana = 24), wizardTurn2.wizard)
+            }
+
+            @Test
+            fun `poison timer is now 4`() {
+                assertTrue(wizardTurn2.hasActive(POISON, 4))
+            }
+
+            @Test
+            fun `boss takes 3 damage from poison and 4 instant damage from Magic Missile`() {
+                assertEquals(3, wizardTurn2.boss.points)
+            }
+        }
+
+        val bossTurn2 = wizardTurn2.attack()
+
+        @Nested
+        inner class `Boss turn 2` {
+            @Test
+            fun `wizard has 2 hit points and 24 mana`() {
+                assertEquals(Wizard(points = 2, mana = 24), bossTurn2.wizard)
+            }
+
+            @Test
+            fun `boss is dead from poison and wizard wins`() {
+                assertTrue(bossTurn2.boss.isDead())
+                assertTrue(bossTurn2.wizardWins())
+            }
+
+            @Test
+            fun `win cost Magic Missile plus Poison costs`() {
+                assertEquals(MAGIC_MISSILE.cost + POISON.cost, bossTurn2.cost())
             }
         }
     }
