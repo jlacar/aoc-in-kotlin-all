@@ -194,30 +194,32 @@ class SolutionTest {
         }
     }
 
-//    @Nested
-//    inner class `Boss attacks` {
-//
-//        private val irrelevantNonZero = 1
-//
-//        @Test
-//        fun `deals full damage when wizard has no armor`() {
-//            val boss = Boss(damage = 8, points = irrelevantNonZero)
-//            val wizard = Wizard(points = 10, armor = 0, mana = irrelevantNonZero)
-//
-//            val outcome = boss.attack(wizard)
-//
-//            assertEquals(boss.damage, wizard.points - outcome.wizard.points)
-//        }
-//
-//        @ParameterizedTest(name = "armor: {0}, damage done: {1}")
-//        @CsvSource("8, 1", "10, 1", "7, 1", "6, 2", "5, 3")
-//        fun `deals at least 1 damage when wizard has armor`(armor: Int, expectedDamage: Int) {
-//            val boss = Boss(damage = 8, points = irrelevantNonZero)
-//            val wizard = Wizard(points = 10, armor = armor, mana = irrelevantNonZero)
-//
-//            val outcome = boss.attack(wizard)
-//
-//            assertEquals(expectedDamage, wizard.points - outcome.wizard.points)
-//        }
-//    }
+    @Nested
+    inner class `Part 1 Example 1 scenarios` {
+
+        val initialState = Fight(
+            wizard = Wizard(points = 10, mana = 250),
+            boss = Boss(points = 13, damage = 8)
+        )
+        val afterCast1 = initialState.cast(POISON)
+
+        @Nested
+        inner class `After wizard turn 1`() {
+
+            @Test
+            fun `starts poison effect for 6 turns`() {
+                afterCast1.hasActive(POISON, 6)
+            }
+
+            @Test
+            fun `wizard has 10 hit points, 77 mana, 0 armor`() {
+                assertEquals(Wizard(points = 10, mana = 77), afterCast1.wizard)
+            }
+
+            @Test
+            fun `boss not damaged yet`() {
+                assertEquals(initialState.boss, afterCast1.boss)
+            }
+        }
+    }
 }

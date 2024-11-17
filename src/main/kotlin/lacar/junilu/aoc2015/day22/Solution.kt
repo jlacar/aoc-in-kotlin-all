@@ -30,6 +30,8 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
         return Fight(wizardAfterAttack, bossBeforeAttack, reducedSpells)
     }
 
+    fun wizardWins() = boss.isDead() && wizard.isAlive()
+
     fun hasActive(spell: Spell, timer: Int = 0) =
         spells.any { (sp, t) -> spell == sp &&
                         when {
