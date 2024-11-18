@@ -276,6 +276,76 @@ class SolutionTest {
     }
 
     @Nested
+    inner class `Part 1 Example 2 scenarios` {
+        val initialState = Fight(
+            wizard = Wizard(points = 10, mana = 250),
+            boss = Boss(points = 14, damage = 8)
+        )
+
+        val wizardTurn1 = initialState.cast(RECHARGE)
+        val bossTurn1 = wizardTurn1.applyActiveSpells().attack()
+        val wizardTurn2 = bossTurn1.applyActiveSpells().cast(SHIELD)
+        val bossTurn2 = wizardTurn2.applyActiveSpells().attack()
+        val wizardTurn3 = bossTurn2.applyActiveSpells().cast(DRAIN)
+        val bossTurn3 = wizardTurn3.applyActiveSpells().attack()
+        val wizardTurn4 = bossTurn3.applyActiveSpells().cast(POISON)
+        val bossTurn4 = wizardTurn4.applyActiveSpells().attack()
+        val wizardTurn5 = bossTurn4.applyActiveSpells().cast(MAGIC_MISSILE)
+        val bossTurn5 = wizardTurn5.applyActiveSpells().attack()
+
+        @Nested
+        inner class `After boss turn 4` {
+            @Test
+            fun `wizard has 1 point 7 armor 167 mana`() {
+                assertEquals(Wizard(points = 1, armor = 7, mana = 167), bossTurn4.wizard)
+            }
+
+            @Test
+            fun `boss has 9 hit points`() {
+                assertEquals(9, bossTurn4.boss.points)
+            }
+
+        }
+
+        @Nested
+        inner class `After wizard turn 5` {
+            @Test
+            fun `shield effect ends`() {
+                assertFalse(wizardTurn5.hasActive(SHIELD))
+            }
+
+            @Test
+            fun `poison timer is 4`() {
+                assertTrue(wizardTurn5.hasActive(POISON, 4))
+            }
+
+            @Test
+            fun `boss has 2 hit points left`() {
+                assertEquals(2, wizardTurn5.boss.points)
+            }
+
+            @Test
+            fun `wizard has 114 mana left`() {
+                assertEquals(114, wizardTurn5.wizard.mana)
+            }
+        }
+
+        @Nested
+        inner class `After boss turn 5` {
+            @Test
+            fun `wizard has 0 armor`() {
+                assertEquals(0, bossTurn5.wizard.armor)
+            }
+
+            @Test
+            fun `wizard wins when poison deals 3 damage`() {
+                assertTrue(bossTurn5.wizardWins())
+            }
+        }
+    }
+
+
+    @Nested
     inner class `Rules of Engagement` {
         private val boss = Boss(points = 13, damage = 8)
         private val wizard = Wizard(points = 10, mana = 250)
