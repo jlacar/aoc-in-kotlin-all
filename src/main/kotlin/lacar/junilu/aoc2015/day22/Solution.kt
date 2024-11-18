@@ -39,11 +39,11 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 
     fun wizardWins() = wizard.isAlive() && boss.isDead()
 
-    fun hasActive(spell: Spell, timer: Int = 0) =
-        if (timer == 0)
-            spells.any { (sp, t) -> spell == sp && t > 0 }
+    fun hasActive(spell: Spell, timeLeft: Int = 0) =
+        if (timeLeft == 0)
+            spells.any { (sp, timer) -> spell == sp && timer > 0 }
         else
-            spells.any { (sp, t) -> spell == sp && timer == t }
+            spells.any { (sp, timer) -> spell == sp && timeLeft == timer }
 
     fun cost(): Int = spells.sumOf { (spell, _) -> spell.cost }
 }
