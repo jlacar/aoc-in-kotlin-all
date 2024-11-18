@@ -22,7 +22,7 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
     private fun List<SpellEffect>.applyOnCast(wizard: Wizard) = fold(wizard) { w, effect -> effect.onCast(w) }
     private fun List<SpellEffect>.applyOnCast(boss: Boss) = fold(boss) { b, effect -> effect.onCast(b) }
 
-    fun applySpells(): Fight {
+    fun applyActiveSpells(): Fight {
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
         return Fight(
             wizard = activeEffects.applyOnTurn(wizard.noArmor()),

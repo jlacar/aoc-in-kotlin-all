@@ -99,7 +99,7 @@ class SolutionTest {
 
             @Nested
             inner class `When boss attacks`() {
-                private val afterAttack = afterCast.applySpells().attack()
+                private val afterAttack = afterCast.applyActiveSpells().attack()
 
                 @Test
                 fun `gives wizard 7 armor`() {
@@ -139,7 +139,7 @@ class SolutionTest {
 
             @Nested
             inner class `When boss attacks`() {
-                private val afterAttack = afterCast.applySpells().attack()
+                private val afterAttack = afterCast.applyActiveSpells().attack()
 
                 @Test
                 fun `deals 3 damage to boss`() {
@@ -174,7 +174,7 @@ class SolutionTest {
 
             @Nested
             inner class `When boss attacks`() {
-                private val afterAttack = afterCast.applySpells().attack()
+                private val afterAttack = afterCast.applyActiveSpells().attack()
 
                 @Test
                 fun `wizard gains 101 mana`() {
@@ -221,7 +221,7 @@ class SolutionTest {
             }
         }
 
-        val bossTurn1 = wizardTurn1.applySpells().attack()
+        val bossTurn1 = wizardTurn1.applyActiveSpells().attack()
 
         @Nested
         inner class `Boss turn 1` {
@@ -241,7 +241,7 @@ class SolutionTest {
             }
         }
 
-        val wizardTurn2 = bossTurn1.applySpells().cast(MAGIC_MISSILE)
+        val wizardTurn2 = bossTurn1.applyActiveSpells().cast(MAGIC_MISSILE)
 
         @Nested
         inner class `Wizard turn 2` {
@@ -261,7 +261,7 @@ class SolutionTest {
             }
         }
 
-        val bossTurn2 = wizardTurn2.applySpells().attack()
+        val bossTurn2 = wizardTurn2.applyActiveSpells().attack()
 
         @Nested
         inner class `Boss turn 2` {
