@@ -72,6 +72,11 @@ data class Wizard(
     fun healBy(points: Int): Wizard = copy(points = this.points + points)
 }
 
+/*
+ * By default, methods are no-ops and return the same
+ * object they receive. Override to return another object
+ * that shows how the original object would be affected.
+ */
 interface SpellEffect {
     fun onCast(wizard: Wizard) = wizard
     fun onCast(boss: Boss) = boss
