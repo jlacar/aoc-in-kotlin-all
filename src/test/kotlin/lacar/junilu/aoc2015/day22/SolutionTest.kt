@@ -309,7 +309,7 @@ class SolutionTest {
             assertTrue(fight.spellsAvailableToCast().contains(POISON))
         }
 
-        @ParameterizedTest(name = "boss dies with {0} points")
+        @ParameterizedTest(name = "boss with {0} points is dead")
         @ValueSource(ints = [0, -1])
         fun `wizard wins when boss is dead`(bossPoints: Int) {
             val fight = Fight(wizard, boss.copy(points = bossPoints))
