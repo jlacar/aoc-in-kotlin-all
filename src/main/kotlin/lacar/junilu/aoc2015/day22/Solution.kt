@@ -22,22 +22,16 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 
     fun applySpells(): Fight {
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
-        val noArmor = wizard.copy(armor = 0)
-        val wizardAfter = activeEffects.fold(noArmor) { w, effect -> effect.onTurn(w) }
+        val wizardAfter = activeEffects.fold(wizard.noArmor()) { w, effect -> effect.onTurn(w) }
         val bossAfter = activeEffects.fold(boss) { b, effect -> effect.onTurn(b) }
         val spellsAfter = spells.map { (sp, t) -> Pair(sp, if (t > 0) t - 1 else 0) }
 
         return Fight(wizardAfter, bossAfter, spellsAfter)
     }
 
-    fun attack(): Fight {
-        val wizardAfter = if (boss.isAlive()) boss.attack(wizard)
-                                else wizard
+    fun attack(): Fight = if (boss.isDead()) this else Fight(boss.attack(wizard), boss, spells)
 
-        return Fight(wizardAfter, boss, spells)
-    }
-
-    fun wizardWins() = boss.isDead() && wizard.isAlive()
+    fun wizardWins() = wizard.isAlive() && boss.isDead()
 
     fun hasActive(spell: Spell, timer: Int = 0) =
         if (timer == 0)
@@ -69,6 +63,8 @@ data class Wizard(
     fun receive(damage: Int) = copy(points = points - max(damage - armor, 1))
 
     fun buy(cost: Int) = copy(mana = mana - cost)
+
+    fun noArmor() = copy(armor = 0)
 
     fun healBy(points: Int): Wizard = copy(points = this.points + points)
 }
