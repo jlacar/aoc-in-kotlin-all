@@ -4,6 +4,8 @@ import lacar.junilu.aoc2015.day22.Spell.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class SolutionTest {
 
@@ -270,6 +272,49 @@ class SolutionTest {
             fun `win cost Magic Missile plus Poison costs`() {
                 assertEquals(MAGIC_MISSILE.cost + POISON.cost, bossTurn2.cost())
             }
+        }
+    }
+
+    @Nested
+    inner class `Rules of Engagement` {
+        private val boss = Boss(points = 13, damage = 8)
+        private val wizard = Wizard(points = 10, mana = 250)
+
+        @Test
+        fun `wizard has enough buy any spell`() {
+            val fight = Fight(wizard, boss)
+
+            assertEquals(Spell.entries, fight.spellsAvailableToCast())
+        }
+
+        @Test
+        fun `wizard loses when cannot afford to cast any spells`() {
+            val poorWizard = wizard.copy(mana = 5)
+            val fight = Fight(poorWizard, boss)
+
+            assertTrue(fight.wizardLoses())
+        }
+
+        @Test
+        fun `wizard cannot cast spells that are still in effect`() {
+            val fight = Fight(wizard, boss, spells = listOf(Pair(POISON, 1)))
+
+            assertFalse(fight.spellsAvailableToCast().contains(POISON))
+        }
+
+        @Test
+        fun `wizard can cast a spell again if it is not in effect`() {
+            val fight = Fight(wizard, boss, spells = listOf(Pair(POISON, 0)))
+
+            assertTrue(fight.spellsAvailableToCast().contains(POISON))
+        }
+
+        @ParameterizedTest(name = "boss dies with {0} points")
+        @ValueSource(ints = [0, -1])
+        fun `wizard wins when boss is dead`(bossPoints: Int) {
+            val fight = Fight(wizard, boss.copy(points = bossPoints))
+
+            assertTrue(fight.wizardWins())
         }
     }
 }

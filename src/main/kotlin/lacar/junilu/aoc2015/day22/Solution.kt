@@ -14,13 +14,18 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 //    fun bossTurns(): List<Fight> {}
 
     fun cast(spell: Spell) = Fight(
-        wizard = spell.effects.applyOnCast(wizard.buy(spell.cost)),
+        wizard = spell.effects.applyOnCast(wizard.spend(spell.cost)),
         boss = spell.effects.applyOnCast(boss),
         spells = spells + spell.activate()
     )
 
     private fun List<SpellEffect>.applyOnCast(wizard: Wizard) = fold(wizard) { w, effect -> effect.onCast(w) }
     private fun List<SpellEffect>.applyOnCast(boss: Boss) = fold(boss) { b, effect -> effect.onCast(b) }
+
+    fun spellsAvailableToCast(): List<Spell> = when {
+        wizard.isAlive() -> Spell.entries.filter { spell -> !hasActive(spell) && wizard.canAfford(spell.cost)}
+        else -> emptyList()
+    }
 
     fun applyActiveSpells(): Fight {
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
@@ -38,6 +43,7 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
     fun attack(): Fight = if (boss.isDead()) this else Fight(boss.attack(wizard), boss, spells)
 
     fun wizardWins() = wizard.isAlive() && boss.isDead()
+    fun wizardLoses() = !wizard.isAlive() || spellsAvailableToCast().isEmpty()
 
     fun hasActive(spell: Spell) = spells.any { (sp, timer) -> spell == sp && timer > 0 }
     fun hasActive(spell: Spell, timeLeft: Int) = spells.any { (sp, timer) -> spell == sp && timeLeft == timer }
@@ -65,11 +71,13 @@ data class Wizard(
 
     fun receive(damage: Int) = copy(points = points - max(damage - armor, 1))
 
-    fun buy(cost: Int) = copy(mana = mana - cost)
+    fun canAfford(cost: Int) = mana >= cost
+    fun spend(cost: Int) = copy(mana = mana - cost)
 
     fun noArmor() = copy(armor = 0)
 
     fun healBy(points: Int): Wizard = copy(points = this.points + points)
+
 }
 
 /*
