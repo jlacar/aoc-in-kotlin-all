@@ -13,12 +13,14 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 //    fun wizardTurns(): List<Fight> {}
 //    fun bossTurns(): List<Fight> {}
 
-    fun cast(spell: Spell): Fight {
-        val wizardAfter = spell.effects.fold(wizard.buy(spell.cost)) { wiz, effect -> effect.onCast(wiz) }
-        val bossAfter = spell.effects.fold(boss) { boss, effect -> effect.onCast(boss) }
+    fun cast(spell: Spell) = Fight(
+            wizard = spell.effects.applyOnCast(wizard.buy(spell.cost)),
+            boss = spell.effects.applyOnCast(boss),
+            spells = spells + spell.activate()
+        )
 
-        return Fight(wizardAfter, bossAfter, spells + spell.activate())
-    }
+    private fun List<SpellEffect>.applyOnCast(wizard: Wizard) = fold(wizard) { w, effect -> effect.onCast(w) }
+    private fun List<SpellEffect>.applyOnCast(boss: Boss) = fold(boss) { b, effect -> effect.onCast(b) }
 
     fun applySpells(): Fight {
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
