@@ -14,10 +14,10 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 //    fun bossTurns(): List<Fight> {}
 
     fun cast(spell: Spell) = Fight(
-            wizard = spell.effects.applyOnCast(wizard.buy(spell.cost)),
-            boss = spell.effects.applyOnCast(boss),
-            spells = spells + spell.activate()
-        )
+        wizard = spell.effects.applyOnCast(wizard.buy(spell.cost)),
+        boss = spell.effects.applyOnCast(boss),
+        spells = spells + spell.activate()
+    )
 
     private fun List<SpellEffect>.applyOnCast(wizard: Wizard) = fold(wizard) { w, effect -> effect.onCast(w) }
     private fun List<SpellEffect>.applyOnCast(boss: Boss) = fold(boss) { b, effect -> effect.onCast(b) }
@@ -39,11 +39,8 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 
     fun wizardWins() = wizard.isAlive() && boss.isDead()
 
-    fun hasActive(spell: Spell, timeLeft: Int = 0) =
-        if (timeLeft == 0)
-            spells.any { (sp, timer) -> spell == sp && timer > 0 }
-        else
-            spells.any { (sp, timer) -> spell == sp && timeLeft == timer }
+    fun hasActive(spell: Spell) = spells.any { (sp, timer) -> spell == sp && timer > 0 }
+    fun hasActive(spell: Spell, timeLeft: Int) = spells.any { (sp, timer) -> spell == sp && timeLeft == timer }
 
     fun cost(): Int = spells.sumOf { (spell, _) -> spell.cost }
 }
@@ -83,23 +80,23 @@ interface SpellEffect {
     fun onTurn(boss: Boss) = boss
 }
 
-class InstantDamage(private val points: Int): SpellEffect {
+class InstantDamage(private val points: Int) : SpellEffect {
     override fun onCast(boss: Boss) = boss.takeAway(points)
 }
 
-class Heal(private val points: Int): SpellEffect {
+class Heal(private val points: Int) : SpellEffect {
     override fun onCast(wizard: Wizard) = wizard.healBy(points)
 }
 
-class Damage(private val points: Int): SpellEffect {
+class Damage(private val points: Int) : SpellEffect {
     override fun onTurn(boss: Boss) = boss.takeAway(points)
 }
 
-class Armor(private val amount: Int): SpellEffect {
+class Armor(private val amount: Int) : SpellEffect {
     override fun onTurn(wizard: Wizard) = wizard.copy(armor = amount)
 }
 
-class Recharge(private val mana: Int): SpellEffect {
+class Recharge(private val mana: Int) : SpellEffect {
     override fun onTurn(wizard: Wizard) = wizard.copy(mana = wizard.mana + mana)
 }
 
