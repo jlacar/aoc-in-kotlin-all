@@ -221,7 +221,7 @@ class SolutionTest {
             }
         }
 
-        val bossTurn1 = wizardTurn1.attack()
+        val bossTurn1 = wizardTurn1.applySpells().attack()
 
         @Nested
         inner class `Boss turn 1` {
@@ -241,7 +241,7 @@ class SolutionTest {
             }
         }
 
-        val wizardTurn2 = bossTurn1.cast(MAGIC_MISSILE)
+        val wizardTurn2 = bossTurn1.applySpells().cast(MAGIC_MISSILE)
 
         @Nested
         inner class `Wizard turn 2` {
@@ -261,7 +261,7 @@ class SolutionTest {
             }
         }
 
-        val bossTurn2 = wizardTurn2.attack()
+        val bossTurn2 = wizardTurn2.applySpells().attack()
 
         @Nested
         inner class `Boss turn 2` {
