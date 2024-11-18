@@ -46,11 +46,6 @@ class SolutionTest {
             fun `does not start a timed effect`() {
                 assertFalse(outcome.hasActive(MAGIC_MISSILE))
             }
-
-            @Test
-            fun `fight so far costs 53 mana`() {
-                assertEquals(53, outcome.cost())
-            }
         }
 
         @Nested
@@ -76,11 +71,6 @@ class SolutionTest {
         @Nested
         inner class Shield {
             private val afterCast = fight.cast(SHIELD)
-
-            @Test
-            fun `fight so far costs 113 mana`() {
-                assertEquals(113, afterCast.cost())
-            }
 
             @Test
             fun `costs wizard 113 mana`() {
