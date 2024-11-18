@@ -22,12 +22,16 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 
     fun applySpells(): Fight {
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
-        val wizardAfter = activeEffects.fold(wizard.noArmor()) { w, effect -> effect.onTurn(w) }
-        val bossAfter = activeEffects.fold(boss) { b, effect -> effect.onTurn(b) }
-        val spellsAfter = spells.map { (sp, t) -> Pair(sp, if (t > 0) t - 1 else 0) }
-
-        return Fight(wizardAfter, bossAfter, spellsAfter)
+        return Fight(
+            wizard = activeEffects.applyOnTurn(wizard.noArmor()),
+            boss = activeEffects.applyOnTurn(boss),
+            spells = decreaseTimers()
+        )
     }
+
+    private fun List<SpellEffect>.applyOnTurn(wizard: Wizard) = fold(wizard) { w, effect -> effect.onTurn(w) }
+    private fun List<SpellEffect>.applyOnTurn(boss: Boss) = fold(boss) { b, effect -> effect.onTurn(b) }
+    private fun decreaseTimers() = spells.map { (sp, t) -> Pair(sp, if (t > 0) t - 1 else 0) }
 
     fun attack(): Fight = if (boss.isDead()) this else Fight(boss.attack(wizard), boss, spells)
 
