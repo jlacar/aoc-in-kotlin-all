@@ -4,19 +4,22 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val puzzleInput = readResource("day15")
+private val puzzleInputDay15 = readPuzzleInput("day15")
+private val puzzleInputDay15Gh = readPuzzleInput("day15-gh")
 
 class Day15Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(222870, Day15.using(puzzleInput, 100).highestCookieScore())
+            assertEquals(222870, Day15.using(puzzleInputDay15, 100).highestCookieScore())
+            assertEquals(21367368, Day15.using(puzzleInputDay15Gh, 100).highestCookieScore())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(117936, Day15.using(puzzleInput, 100).highest500CalorieCookieScore())
+            assertEquals(117936, Day15.using(puzzleInputDay15, 100).highest500CalorieCookieScore())
+            assertEquals(1766400, Day15.using(puzzleInputDay15Gh, 100).highest500CalorieCookieScore())
         }
     }
 

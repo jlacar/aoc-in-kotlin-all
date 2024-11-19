@@ -4,14 +4,30 @@ import kotlin.math.max
 
 class Simulator(val wizard: Wizard, val boss: Boss) {
 
-    fun cheapestWizardWin(): Int = fightsWonByWizard().minOf { it.cost() }
+    fun cheapestWizardWin(): Int = fightsWonByWizard().minOf { it.wizard.spent }
 
-    private fun fightsWonByWizard(): List<Fight> = emptyList()
+    fun fightsWonByWizard(): Sequence<Fight> = Fight(wizard, boss).sequence().filter { it.wizardWins() }
 }
 
+typealias TimedEffect = Pair<Spell, Int>
+val TimedEffect.spell get() = first
+val TimedEffect.timer get() = second
+fun TimedEffect.isEnding() = timer == 1
+fun TimedEffect.decrease() = copy(second = timer - 1)
+
 class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Spell, Int>> = emptyList()) {
-//    fun wizardTurns(): List<Fight> {}
-//    fun bossTurns(): List<Fight> {}
+
+    fun sequence(): Sequence<Fight> = sequence {
+        val casts = spellsAvailableToCast().asSequence().map { applyActiveSpells().cast(it) }
+        yieldAll(casts.filter { it.isOver() })
+
+        val attacks = casts.filter { !it.isOver() }.map { it.applyActiveSpells().attack() }
+        yieldAll(attacks.filter { it.isOver() })
+
+        attacks.filter { !it.isOver() }.forEach { yieldAll(it.sequence()) }
+    }
+
+    override fun toString() = "Fight[$wizard, $boss, ${spells.joinToString(",\n")}]\n"
 
     fun cast(spell: Spell) = Fight(
         wizard = spell.effects.applyOnCast(wizard.spend(spell.cost)),
@@ -28,9 +44,10 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
     }
 
     fun applyActiveSpells(): Fight {
+        // TODO - check logic here
         val activeEffects = spells.filter { (_, t) -> t > 0 }.flatMap { it.first.effects }
         return Fight(
-            wizard = activeEffects.applyOnTurn(wizard.noArmor()),
+            wizard = activeEffects.applyOnTurn(wizard),
             boss = activeEffects.applyOnTurn(boss),
             spells = decreaseTimers()
         )
@@ -42,6 +59,7 @@ class Fight(val wizard: Wizard, val boss: Boss, private val spells: List<Pair<Sp
 
     fun attack(): Fight = if (boss.isDead()) this else Fight(boss.attack(wizard), boss, spells)
 
+    fun isOver() = wizardWins() && wizardLoses()
     fun wizardWins() = wizard.isAlive() && boss.isDead()
     fun wizardLoses() = !wizard.isAlive() || spellsAvailableToCast().isEmpty()
 
@@ -58,26 +76,22 @@ data class Boss(
     fun isAlive() = points > 0
     fun isDead() = !isAlive()
 
-    fun takeAway(damage: Int) = copy(points = points - damage)
-    fun attack(wizard: Wizard) = wizard.receive(damage)
+    fun attack(wizard: Wizard) = wizard.weaken(damage)
+    fun weaken(points: Int) = copy(points = this.points - points)
 }
 
 data class Wizard(
     val points: Int,
     val mana: Int,
-    val armor: Int = 0
+    val armor: Int = 0,
+    val spent: Int = 0
 ) {
     fun isAlive() = points > 0
-
-    fun receive(damage: Int) = copy(points = points - max(damage - armor, 1))
-
     fun canAfford(cost: Int) = mana >= cost
-    fun spend(cost: Int) = copy(mana = mana - cost)
+    fun spend(cost: Int) = copy(mana = mana - cost, spent = spent + cost)
 
-    fun noArmor() = copy(armor = 0)
-
-    fun healBy(points: Int): Wizard = copy(points = this.points + points)
-
+    fun weaken(points: Int) = copy(points = this.points - max(points - armor, 1))
+    fun heal(points: Int) = copy(points = this.points + points)
 }
 
 /*
@@ -91,38 +105,41 @@ interface SpellEffect {
 
     fun onTurn(wizard: Wizard) = wizard
     fun onTurn(boss: Boss) = boss
+
+    fun onEnd(wizard: Wizard) = wizard
 }
 
-class InstantDamage(private val points: Int) : SpellEffect {
-    override fun onCast(boss: Boss) = boss.takeAway(points)
+private class InstantDamage(private val points: Int) : SpellEffect {
+    override fun onCast(boss: Boss) = boss.weaken(points)
 }
 
-class Heal(private val points: Int) : SpellEffect {
-    override fun onCast(wizard: Wizard) = wizard.healBy(points)
+private class Heal(private val points: Int) : SpellEffect {
+    override fun onCast(wizard: Wizard) = wizard.heal(points)
 }
 
-class Damage(private val points: Int) : SpellEffect {
-    override fun onTurn(boss: Boss) = boss.takeAway(points)
+private class Damage(private val points: Int) : SpellEffect {
+    override fun onTurn(boss: Boss) = boss.weaken(points)
 }
 
-class Armor(private val amount: Int) : SpellEffect {
-    override fun onTurn(wizard: Wizard) = wizard.copy(armor = amount)
+private class Armor(private val amount: Int) : SpellEffect {
+    override fun onCast(wizard: Wizard) = wizard.copy(armor = amount)
+    override fun onEnd(wizard: Wizard) = wizard.copy(armor = 0)
 }
 
-class Recharge(private val mana: Int) : SpellEffect {
+private class Recharge(private val mana: Int) : SpellEffect {
     override fun onTurn(wizard: Wizard) = wizard.copy(mana = wizard.mana + mana)
 }
 
-enum class Spell(val cost: Int, val timer: Int, val effects: List<SpellEffect>) {
-    MAGIC_MISSILE(cost = 53, timer = 0, listOf(InstantDamage(4))),
+enum class Spell(val cost: Int, val duration: Int, val effects: List<SpellEffect>) {
+    MAGIC_MISSILE(cost = 53, duration = 0, listOf(InstantDamage(4))),
 
-    DRAIN(cost = 73, timer = 0, listOf(InstantDamage(2), Heal(2))),
+    DRAIN(cost = 73, duration = 0, listOf(InstantDamage(2), Heal(2))),
 
-    SHIELD(cost = 113, timer = 6, listOf(Armor(7))),
+    SHIELD(cost = 113, duration = 6, listOf(Armor(7))),
 
-    POISON(cost = 173, timer = 6, listOf(Damage(3))),
+    POISON(cost = 173, duration = 6, listOf(Damage(3))),
 
-    RECHARGE(cost = 229, timer = 5, listOf(Recharge(101)));
+    RECHARGE(cost = 229, duration = 5, listOf(Recharge(101)));
 
-    fun activate(): Pair<Spell, Int> = Pair(this, timer)
+    fun activate(): Pair<Spell, Int> = Pair(this, duration)
 }

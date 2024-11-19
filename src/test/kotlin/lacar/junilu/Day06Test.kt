@@ -8,7 +8,8 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-private val puzzleInput = readResource("Day06")
+private val puzzleInputDay06 = readPuzzleInput("day06")
+private val puzzleInputDay06Gh = readPuzzleInput("day06-gh")
 
 class Day06Test {
 
@@ -16,12 +17,14 @@ class Day06Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(543903, Day06(puzzleInput).lightsLit())
+            assertEquals(543903, Day06(puzzleInputDay06).lightsLit())
+            assertEquals(377891, Day06(puzzleInputDay06Gh).lightsLit())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(14687245, Day06(puzzleInput).totalBrightness())
+            assertEquals(14687245, Day06(puzzleInputDay06).totalBrightness())
+            assertEquals(14110788, Day06(puzzleInputDay06Gh).totalBrightness())
         }
     }
 

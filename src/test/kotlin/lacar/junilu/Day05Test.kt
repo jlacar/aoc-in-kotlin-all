@@ -7,19 +7,19 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-private val puzzleInput = readResource("Day05")
+private val puzzleInputDay05 = readPuzzleInput("day05")
 
 class Day05Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(258, Day05(puzzleInput).howManyNiceStringsPart1())
+            assertEquals(258, Day05(puzzleInputDay05).howManyNiceStringsPart1())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(53, Day05(puzzleInput).howManyNiceStringsPart2())
+            assertEquals(53, Day05(puzzleInputDay05).howManyNiceStringsPart2())
         }
     }
 

@@ -7,14 +7,14 @@ typealias ShopItemList = List<ShopItem>
  *
  * https://adventofcode.com/2015/day/21
  */
-class Day21() {
+class Day21(val theBoss: Player) {
 
     private fun ShopItemList.totalCost() = sumOf { it.cost }
     private fun ShopItemList.totalDamage() = sumOf { it.damage }
     private fun ShopItemList.totalArmor() = sumOf { it.armor }
 
     // puzzle input
-    private val theBoss = Player(points = 100, damage = 8, armor = 2)
+//    private val theBoss = Player(points = 100, damage = 8, armor = 2)
 
     fun leastAmountOfGoldSpentToWin() = itemsBoughtThatCanBeat(theBoss).minOf { it.totalCost() }
 

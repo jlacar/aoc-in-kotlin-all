@@ -2,6 +2,7 @@ package lacar.junilu.aoc2015.day22
 
 import lacar.junilu.aoc2015.day22.Spell.*
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -9,20 +10,33 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class SolutionTest {
 
+    @Disabled
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - `() {
-            TODO()
-//            assertEquals(0,
-//                Simulator(
-//                    Wizard(points = 50, mana = 500)
-//                    Boss22(points = 58, damage = 9),
-//                )
-//                .cheapestWizardWin()
-//            )
+            assertEquals(0,  // 985 < answer < 1401
+                Simulator(
+                    Wizard(points = 50, mana = 500),
+                    Boss(points = 58, damage = 9),
+                ).cheapestWizardWin()
+            )
         }
     }
+
+    @Nested
+    inner class SimpleFights {
+        @Test
+        fun `win with one spell cast`() {
+            val oneTurnFight = Simulator(
+                wizard = Wizard(points = 5, mana = 53),
+                boss = Boss(points = 4, damage = 10)
+            )
+
+            assertEquals(MAGIC_MISSILE.cost, oneTurnFight.cheapestWizardWin())
+        }
+    }
+
 
     @Nested
     inner class Spells {

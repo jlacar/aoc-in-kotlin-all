@@ -4,19 +4,19 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val puzzleInput = readResource("day13")
+private val puzzleInputDay13 = readPuzzleInput("day13")
 
 class Day13Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(664, Day13.using(puzzleInput).changeInHappinessForOptimalSeating())
+            assertEquals(664, Day13.using(puzzleInputDay13).changeInHappinessForOptimalSeating())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(640, Day13.using(puzzleInput).changeInHappinessForOptimalSeatingIncludingMe())
+            assertEquals(640, Day13.using(puzzleInputDay13).changeInHappinessForOptimalSeatingIncludingMe())
         }
     }
 

@@ -62,7 +62,7 @@ class Day15(private val ingredients: List<Ingredient>, private val teaspoonsTota
             teaspoonsTotal
         )
 
-        private fun properties(line: String) = toKeyValuePairMap(
+        private fun properties(line: String) = toPropsMap(
             line.substringAfter(": "),
             itemDelimiter = ", ",
             keyValueDelimiter = " ",

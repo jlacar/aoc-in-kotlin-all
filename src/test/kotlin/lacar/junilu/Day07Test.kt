@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-private val puzzleInput = readResource("day07")
+private val puzzleInputDay07 = readPuzzleInput("day07")
 
 class Day07Test {
 
@@ -17,12 +17,12 @@ class Day07Test {
 
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(3176, Day07(puzzleInput).signalOnWireA())
+            assertEquals(3176, Day07(puzzleInputDay07).signalOnWireA())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(14710, Day07(puzzleInput).signalOnWireAAfterReplacingB())
+            assertEquals(14710, Day07(puzzleInputDay07).signalOnWireAAfterReplacingB())
         }
     }
 

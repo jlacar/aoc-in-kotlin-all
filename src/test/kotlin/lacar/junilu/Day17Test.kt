@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val puzzleInput = readResource("day17")
+private val puzzleInputDay17 = readPuzzleInput("day17")
+private val puzzleInputDay17Gh = readPuzzleInput("day17-gh")
 
 class Day17Test {
 
@@ -12,12 +13,14 @@ class Day17Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(1638, Day17.using(puzzleInput, 150).waysToFill())
+            assertEquals(1638, Day17.using(puzzleInputDay17, 150).waysToFill())
+            assertEquals(1304, Day17.using(puzzleInputDay17Gh, 150).waysToFill())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(17, Day17.using(puzzleInput, 150).waysToFillFewestContainers())
+            assertEquals(17, Day17.using(puzzleInputDay17, 150).waysToFillFewestContainers())
+            assertEquals(18, Day17.using(puzzleInputDay17Gh, 150).waysToFillFewestContainers())
         }
     }
 

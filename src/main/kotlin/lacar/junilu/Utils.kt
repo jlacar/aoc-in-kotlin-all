@@ -5,7 +5,7 @@ import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
 
-fun readResource(name: String) = Path("src/main/resources/$name.txt").readLines()
+fun readPuzzleInput(name: String) = Path("src/main/resources/$name.txt").readLines()
 
 fun Any?.println() = println(this)
 
@@ -74,13 +74,12 @@ fun <R> keyValuePair(item: String, delimiters: String, transform: (String) -> R)
     return name to transform(value)
 }
 
-fun <R> toKeyValuePairMap(
+fun <R> toPropsMap(
     list: String,
     itemDelimiter: String,
     keyValueDelimiter: String,
     transform: (String) -> R
 ): Map<String, R> =
-
     list.split(itemDelimiter)
         .associate { keyValuePair(it, keyValueDelimiter, transform) }
 

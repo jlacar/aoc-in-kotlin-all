@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val day02 = Day02.using(readResource("day02"))
+private val day02 = Day02.using(readPuzzleInput("day02"))
+private val day02gh = Day02.using(readPuzzleInput("day02-gh"))
 
 class Day02Test {
 
@@ -15,11 +16,13 @@ class Day02Test {
         @Test
         fun part1() {
             assertEquals(1588178, day02.part1())
+            assertEquals(1586300, day02gh.part1())
         }
 
         @Test
         fun part2() {
             assertEquals(3783758, day02.part2())
+            assertEquals(3737498, day02gh.part2())
         }
     }
 

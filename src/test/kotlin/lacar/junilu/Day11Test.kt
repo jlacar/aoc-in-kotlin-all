@@ -6,17 +6,22 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
+val puzzleInputDay11: String = readPuzzleInput("day11").first()
+val puzzleInputDay11Gh: String = readPuzzleInput("day11-gh").first()
+
 class Day11Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals("cqjxxyzz", Day11().nextPassword("cqjxjnds"))
+            assertEquals("cqjxxyzz", Day11().nextPassword(puzzleInputDay11))
+            assertEquals("hepxxyzz", Day11().nextPassword(puzzleInputDay11Gh))
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
             assertEquals("cqkaabcc", Day11().nextPassword("cqjxxyzz"))
+            assertEquals("heqaabcc", Day11().nextPassword("hepxxyzz"))
         }
     }
 

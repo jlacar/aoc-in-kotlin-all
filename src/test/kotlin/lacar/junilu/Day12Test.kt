@@ -1,29 +1,26 @@
 package lacar.junilu
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-private val puzzleInput = readResource("day12").first()
+private val puzzleInputDay12 = readPuzzleInput("day12").first()
 
 class Day12Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(111754, Day12(puzzleInput).sumOfAllNumbersInDocument())
+            assertEquals(111754, Day12(puzzleInputDay12).sumOfAllNumbersInDocument())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(65402, Day12(puzzleInput).sumOfAllNumbersExcludingObjectsWithRed())
+            assertEquals(65402, Day12(puzzleInputDay12).sumOfAllNumbersExcludingObjectsWithRed())
         }
     }
 

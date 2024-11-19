@@ -32,7 +32,7 @@ class Day16(private val auntSues: List<Map<String, Int>>) {
         fun using(input: List<String>) = Day16(auntSuesThingsFrom(input))
 
         private fun auntSuesThingsFrom(input: List<String>) = input.map { line ->
-            toKeyValuePairMap(
+            toPropsMap(
                 line.substringAfter(": "), itemDelimiter = ", ", keyValueDelimiter = ": ", String::toInt
             )
         }

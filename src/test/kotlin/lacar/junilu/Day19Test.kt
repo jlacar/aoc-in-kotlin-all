@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val puzzleInput = readResource("day19")
+private val puzzleInputDay19 = readPuzzleInput("day19")
+private val puzzleInputDay19Gh = readPuzzleInput("day19-gh")
 
 class Day19Test {
 
@@ -12,12 +13,14 @@ class Day19Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(535, Day19.using(puzzleInput).newMoleculesWithSingleReplacement())
+            assertEquals(535, Day19.using(puzzleInputDay19).newMoleculesWithSingleReplacement())
+            assertEquals(518, Day19.using(puzzleInputDay19Gh).newMoleculesWithSingleReplacement())
         }
 
         @Test
         fun part2() {
-            assertEquals(212, Day19.using(puzzleInput).fewestStepsFromE())
+            assertEquals(212, Day19.using(puzzleInputDay19).fewestStepsFromE())
+            assertEquals(200, Day19.using(puzzleInputDay19Gh).fewestStepsFromE())
         }
     }
 

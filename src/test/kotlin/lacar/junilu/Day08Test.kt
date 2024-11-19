@@ -8,19 +8,19 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-private val puzzleInput = readResource("day08")
+private val puzzleInputDay08 = readPuzzleInput("day08")
 
 class Day08Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(1342, Day08(puzzleInput).decodedLengthDiff())
+            assertEquals(1342, Day08(puzzleInputDay08).decodedLengthDiff())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(2074, Day08(puzzleInput).encodedLengthDiff())
+            assertEquals(2074, Day08(puzzleInputDay08).encodedLengthDiff())
         }
     }
 

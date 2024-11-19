@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 
-private val puzzleInput = readResource("day09")
+private val puzzleInputDay09 = readPuzzleInput("day09")
 
 class Day09Test {
     @Nested
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(141, Day09.using(puzzleInput).shortestRoute())
+            assertEquals(141, Day09.using(puzzleInputDay09).shortestRoute())
         }
 
         @Test
         fun `Part 2 - SOLVED `() {
-            assertEquals(736, Day09.using(puzzleInput).longestRoute())
+            assertEquals(736, Day09.using(puzzleInputDay09).longestRoute())
         }
     }
 
