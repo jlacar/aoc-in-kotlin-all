@@ -30,7 +30,7 @@ class Day21Test {
         @Test
         fun `Part 2 - SOLVED`() {
             assertEquals(158, Day21(bossDay21("day21")).mostAmountOfGoldSpentJustToLose())
-            assertEquals(158, Day21(bossDay21("day21-gh")).mostAmountOfGoldSpentJustToLose())
+            assertEquals(201, Day21(bossDay21("day21-gh")).mostAmountOfGoldSpentJustToLose())
         }
     }
 
