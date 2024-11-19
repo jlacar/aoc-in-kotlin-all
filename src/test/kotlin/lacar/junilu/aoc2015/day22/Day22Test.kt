@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class SolutionTest {
+class Day22Test {
 
     @Disabled
     @Nested
@@ -16,7 +16,7 @@ class SolutionTest {
         @Test
         fun `Part 1 - `() {
             assertEquals(0,  // 985 < answer < 1401
-                Simulator(
+                Day22(
                     Wizard(points = 50, mana = 500),
                     Boss(points = 58, damage = 9),
                 ).cheapestWizardWin()
@@ -28,7 +28,7 @@ class SolutionTest {
     inner class SimpleFights {
         @Test
         fun `win with one spell cast`() {
-            val oneTurnFight = Simulator(
+            val oneTurnFight = Day22(
                 wizard = Wizard(points = 5, mana = 53),
                 boss = Boss(points = 4, damage = 10)
             )
@@ -218,7 +218,7 @@ class SolutionTest {
 
             @Test
             fun `wizard has 10 hit points, 77 mana, 0 armor`() {
-                assertEquals(Wizard(points = 10, mana = 77), wizardTurn1.wizard)
+                assertEquals(Wizard(points = 10, mana = 77, spent = POISON.cost), wizardTurn1.wizard)
             }
 
             @Test
@@ -253,7 +253,7 @@ class SolutionTest {
         inner class `Wizard turn 2` {
             @Test
             fun `wizard has 2 hit points and 24 mana`() {
-                assertEquals(Wizard(points = 2, mana = 24), wizardTurn2.wizard)
+                assertEquals(Wizard(points = 2, mana = 24, spent = POISON.cost + MAGIC_MISSILE.cost), wizardTurn2.wizard)
             }
 
             @Test
@@ -273,7 +273,7 @@ class SolutionTest {
         inner class `Boss turn 2` {
             @Test
             fun `wizard has 2 hit points and 24 mana`() {
-                assertEquals(Wizard(points = 2, mana = 24), bossTurn2.wizard)
+                assertEquals(wizardTurn2.wizard.copy(points = 2, mana = 24), bossTurn2.wizard)
             }
 
             @Test
@@ -311,7 +311,7 @@ class SolutionTest {
         inner class `After boss turn 4` {
             @Test
             fun `wizard has 1 point 7 armor 167 mana`() {
-                assertEquals(Wizard(points = 1, armor = 7, mana = 167), bossTurn4.wizard)
+                assertEquals(wizardTurn4.wizard.copy(points = 1, armor = 7, mana = 167), bossTurn4.wizard)
             }
 
             @Test
@@ -342,18 +342,27 @@ class SolutionTest {
             fun `wizard has 114 mana left`() {
                 assertEquals(114, wizardTurn5.wizard.mana)
             }
+
+            @Test
+            fun `wizard has 0 armor`() {
+                assertEquals(0, wizardTurn5.wizard.armor)
+            }
         }
 
         @Nested
         inner class `After boss turn 5` {
             @Test
-            fun `wizard has 0 armor`() {
-                assertEquals(0, bossTurn5.wizard.armor)
+            fun `wizard wins`() {
+                assertTrue(bossTurn5.wizardWins())
             }
 
             @Test
-            fun `wizard wins when poison deals 3 damage`() {
-                assertTrue(bossTurn5.wizardWins())
+            fun `wizard spent 641 and has 1 hit point and 114 mana left`() {
+                assertAll(
+                    { assertEquals(641, bossTurn5.wizard.spent)},
+                    { assertEquals(1, bossTurn5.wizard.points)},
+                    { assertEquals(114, bossTurn5.wizard.mana)}
+                )
             }
         }
     }
@@ -381,14 +390,14 @@ class SolutionTest {
 
         @Test
         fun `wizard cannot cast spells that are still in effect`() {
-            val fight = Fight(wizard, boss, spells = listOf(Pair(POISON, 1)))
+            val fight = Fight(wizard, boss, spells = listOf(ActiveSpell(POISON, 1)))
 
             assertFalse(fight.spellsAvailableToCast().contains(POISON))
         }
 
         @Test
         fun `wizard can cast a spell again if it is not in effect`() {
-            val fight = Fight(wizard, boss, spells = listOf(Pair(POISON, 0)))
+            val fight = Fight(wizard, boss, spells = listOf(ActiveSpell(POISON, 0)))
 
             assertTrue(fight.spellsAvailableToCast().contains(POISON))
         }

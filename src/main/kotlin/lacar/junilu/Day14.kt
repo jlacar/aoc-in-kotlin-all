@@ -11,18 +11,19 @@ class Day14(private val reindeer: List<Reindeer>, private val raceTime: Int) {
 
     fun distanceTraveledByWinner() = reindeer.maxOf { it.distanceFlownAt(raceTime) }
 
-    fun pointsEarnedByWinner() = racePoints().values.max()
+    fun pointsEarnedByWinner() = scoreBoard().values.max()
 
-    private fun racePoints(): Map<Reindeer, Int> =
-        (1..raceTime).fold(reindeer.associateWith { 0 }) { points, second ->
-            award(points, reindeer.associateWith { it.distanceFlownAt(second) })
+    private fun scoreBoard(): Map<Reindeer, Int> =
+        (1..raceTime).fold(reindeer.associateWith { 0 }) { scoreBoard, second ->
+            award(scoreBoard, reindeer.associateWith { it.distanceFlownAt(second) })
         }
 
-    private fun award(points: Map<Reindeer, Int>, distances: Map<Reindeer, Int>): Map<Reindeer, Int>
+    private fun award(scoreBoard: Map<Reindeer, Int>, distances: Map<Reindeer, Int>): Map<Reindeer, Int>
     {
         val leadersDistance = distances.values.max()
-        return points.map { (reindeer, leaderPoints) ->
-            reindeer to if (distances[reindeer] == leadersDistance) leaderPoints + 1 else leaderPoints
+        fun Reindeer.isLeading() = distances[this]!! == leadersDistance
+        return scoreBoard.map { (reindeer, points) ->
+            reindeer to points + if (reindeer.isLeading()) 1 else 0
         }.toMap()
     }
 
