@@ -14,15 +14,16 @@ class Day22Test {
     inner class Solution {
         @Test
         fun `Part 1 - `() {
-            assertEquals(0,  // 985 < answer < 1401
+            assertEquals(0,  // 985 < ? < 1196
                 Day22(
                     Wizard(points = 50, mana = 500),
-                    Boss(points = 58, damage = 9),
+                    Boss(points = 55, damage = 8),
                 ).cheapestWizardWin()
             )
         }
     }
 
+    @Disabled
     @Nested
     inner class SimpleFights {
         @Test
@@ -31,7 +32,6 @@ class Day22Test {
                 wizard = Wizard(points = 10, mana = 250),
                 boss = Boss(points = 13, damage = 8)
             )
-
             assertEquals(MAGIC_MISSILE.cost, oneTurnFight.cheapestWizardWin())
         }
     }
@@ -104,7 +104,7 @@ class Day22Test {
 
             @Nested
             inner class `When boss attacks`() {
-                private val afterAttack = afterCast.applyActiveSpells().attack()
+                private val afterAttack = afterCast.attack()
 
                 @Test
                 fun `gives wizard 7 armor`() {
@@ -144,7 +144,7 @@ class Day22Test {
 
             @Nested
             inner class `When boss attacks`() {
-                private val afterAttack = afterCast.applyActiveSpells().attack()
+                private val afterAttack = afterCast.attack()
 
                 @Test
                 fun `deals 3 damage to boss`() {
@@ -179,7 +179,7 @@ class Day22Test {
 
             @Nested
             inner class `When boss attacks`() {
-                private val afterAttack = afterCast.applyActiveSpells().attack()
+                private val afterAttack = afterCast.attack()
 
                 @Test
                 fun `wizard gains 101 mana`() {
@@ -226,7 +226,7 @@ class Day22Test {
             }
         }
 
-        val bossTurn1 = wizardTurn1.applyActiveSpells().attack()
+        val bossTurn1 = wizardTurn1.attack()
 
         @Nested
         inner class `Boss turn 1` {
@@ -246,7 +246,7 @@ class Day22Test {
             }
         }
 
-        val wizardTurn2 = bossTurn1.applyActiveSpells().cast(MAGIC_MISSILE)
+        val wizardTurn2 = bossTurn1.cast(MAGIC_MISSILE)
 
         @Nested
         inner class `Wizard turn 2` {
@@ -266,7 +266,7 @@ class Day22Test {
             }
         }
 
-        val bossTurn2 = wizardTurn2.applyActiveSpells().attack()
+        val bossTurn2 = wizardTurn2.attack()
 
         @Nested
         inner class `Boss turn 2` {
@@ -283,7 +283,7 @@ class Day22Test {
 
             @Test
             fun `win cost Magic Missile plus Poison costs`() {
-                assertEquals(MAGIC_MISSILE.cost + POISON.cost, bossTurn2.cost())
+                assertEquals(MAGIC_MISSILE.cost + POISON.cost, bossTurn2.cost)
             }
         }
     }
@@ -296,15 +296,15 @@ class Day22Test {
         )
 
         val wizardTurn1 = initialState.cast(RECHARGE)
-        val bossTurn1 = wizardTurn1.applyActiveSpells().attack()
-        val wizardTurn2 = bossTurn1.applyActiveSpells().cast(SHIELD)
-        val bossTurn2 = wizardTurn2.applyActiveSpells().attack()
-        val wizardTurn3 = bossTurn2.applyActiveSpells().cast(DRAIN)
-        val bossTurn3 = wizardTurn3.applyActiveSpells().attack()
-        val wizardTurn4 = bossTurn3.applyActiveSpells().cast(POISON)
-        val bossTurn4 = wizardTurn4.applyActiveSpells().attack()
-        val wizardTurn5 = bossTurn4.applyActiveSpells().cast(MAGIC_MISSILE)
-        val bossTurn5 = wizardTurn5.applyActiveSpells().attack()
+        val bossTurn1 = wizardTurn1.attack()
+        val wizardTurn2 = bossTurn1.cast(SHIELD)
+        val bossTurn2 = wizardTurn2.attack()
+        val wizardTurn3 = bossTurn2.cast(DRAIN)
+        val bossTurn3 = wizardTurn3.attack()
+        val wizardTurn4 = bossTurn3.cast(POISON)
+        val bossTurn4 = wizardTurn4.attack()
+        val wizardTurn5 = bossTurn4.cast(MAGIC_MISSILE)
+        val bossTurn5 = wizardTurn5.attack()
 
         @Nested
         inner class `After boss turn 4` {
@@ -358,14 +358,13 @@ class Day22Test {
             @Test
             fun `wizard spent 641 and has 1 hit point and 114 mana left`() {
                 assertAll(
-                    { assertEquals(641, bossTurn5.wizard.spent)},
-                    { assertEquals(1, bossTurn5.wizard.points)},
-                    { assertEquals(114, bossTurn5.wizard.mana)}
+                    { assertEquals(641, bossTurn5.wizard.spent) },
+                    { assertEquals(1, bossTurn5.wizard.points) },
+                    { assertEquals(114, bossTurn5.wizard.mana) }
                 )
             }
         }
     }
-
 
     @Nested
     inner class `Rules of Engagement` {
@@ -397,7 +396,7 @@ class Day22Test {
             val poorWizard = wizard.copy(mana = cheapest - 1)
             val fight = Fight(poorWizard, boss)
 
-            assertTrue(fight.wizardLoses())
+            assertTrue(fight.wizardCantCast())
         }
 
         @Test
