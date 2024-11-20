@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class Day22Test {
 
-    @Disabled
     @Nested
     inner class Solution {
         @Test
@@ -29,8 +28,8 @@ class Day22Test {
         @Test
         fun `win with one spell cast`() {
             val oneTurnFight = Day22(
-                wizard = Wizard(points = 5, mana = 53),
-                boss = Boss(points = 4, damage = 10)
+                wizard = Wizard(points = 10, mana = 250),
+                boss = Boss(points = 13, damage = 8)
             )
 
             assertEquals(MAGIC_MISSILE.cost, oneTurnFight.cheapestWizardWin())
@@ -374,32 +373,65 @@ class Day22Test {
         private val wizard = Wizard(points = 10, mana = 250)
 
         @Test
-        fun `wizard has enough buy any spell`() {
-            val fight = Fight(wizard, boss)
+        fun `wizard with enough mana can cast any spell when no active spells`() {
+            val fight = Fight(wizard, boss, spells = emptyList())
 
-            assertEquals(Spell.entries, fight.spellsAvailableToCast())
+            assertEquals(Spell.entries, fight.availableSpells())
         }
 
         @Test
-        fun `wizard loses when cannot afford to cast any spells`() {
-            val poorWizard = wizard.copy(mana = 5)
+        fun `wizard can only cast spells they can afford`() {
+            val lessThanRechargeCost = RECHARGE.cost - 1
+            val spellsWizardCanCast = Fight(
+                    wizard = Wizard(mana = lessThanRechargeCost, points = 10),
+                    boss = boss,
+                    spells = emptyList()
+                ).availableSpells()
+
+            assertFalse(spellsWizardCanCast.contains(RECHARGE))
+        }
+
+        @Test
+        fun `wizard loses when they cannot afford to cast any spells`() {
+            val cheapest = Spell.entries.minOf { it.cost }
+            val poorWizard = wizard.copy(mana = cheapest - 1)
             val fight = Fight(poorWizard, boss)
 
             assertTrue(fight.wizardLoses())
         }
 
         @Test
-        fun `wizard cannot cast spells that are still in effect`() {
+        fun `wizard can cast a spell that is ending`() {
             val fight = Fight(wizard, boss, spells = listOf(ActiveSpell(POISON, 1)))
 
-            assertFalse(fight.spellsAvailableToCast().contains(POISON))
+            assertTrue(fight.availableSpells().contains(POISON))
         }
 
         @Test
-        fun `wizard can cast a spell again if it is not in effect`() {
-            val fight = Fight(wizard, boss, spells = listOf(ActiveSpell(POISON, 0)))
+        fun `wizard can cast any affordable spell that is not active or is ending`() {
+            val fight = Fight(
+                wizard = Wizard(mana = 180, armor = 7, points = 10),
+                boss = boss,
+                spells = listOf(ActiveSpell(POISON, 1), ActiveSpell(SHIELD, 2)),
+            )
+            val availableSpells = fight.availableSpells()
 
-            assertTrue(fight.spellsAvailableToCast().contains(POISON))
+            assertAll(
+                // can cast these
+                { assertTrue(availableSpells.contains(MAGIC_MISSILE)) },
+                { assertTrue(availableSpells.contains(DRAIN)) },
+                { assertTrue(availableSpells.contains(POISON)) },
+                // can't cast these
+                { assertFalse(availableSpells.contains(SHIELD)) },  // still active
+                { assertFalse(availableSpells.contains(RECHARGE)) } // not enough mana
+            )
+        }
+
+        @Test
+        fun `wizard cannot cast spells that are not ending`() {
+            val fight = Fight(wizard, boss, spells = listOf(ActiveSpell(POISON, 2)))
+
+            assertFalse(fight.availableSpells().contains(POISON))
         }
 
         @ParameterizedTest(name = "boss with {0} points is dead")
