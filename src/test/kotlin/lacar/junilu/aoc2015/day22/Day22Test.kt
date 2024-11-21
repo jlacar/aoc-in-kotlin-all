@@ -19,8 +19,8 @@ class Day22Test {
                 0,  // 985 < ? < 1006  - google 1256
                 Day22(
                     Wizard(points = 50, mana = 500),
-//                    Boss(points = 58, damage = 9), // @gmail
-                    Boss(points = 55, damage = 8), // @github
+                    Boss(points = 58, damage = 9), // @gmail
+//                    Boss(points = 55, damage = 8), // @github
                 ).cheapestWin()
             )
         }
