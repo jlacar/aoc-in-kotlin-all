@@ -5,28 +5,44 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.DisabledOnOs
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class Day22Test {
 
-//    @Disabled
+    //    @Disabled
     @Nested
     inner class Solution {
+        private val wizard = Wizard(points = 50, mana = 500)
+
         @Test
-        fun `Part 1 - `() {
-            assertEquals(
-                0,  // 985 < ? < 1006  - google 1256
-                Day22(
-                    Wizard(points = 50, mana = 500),
-                    Boss(points = 58, damage = 9), // @gmail
-//                    Boss(points = 55, damage = 8), // @github
-                ).cheapestWin()
-            )
+        fun `Part 1 - github`() {
+            val boss = Boss(points = 55, damage = 8)
+            assertEquals(953, Day22(wizard, boss).cheapestWin())
+        }
+
+//        @Disabled
+        @Test
+        fun `Part 2 - github`() {
+            val boss = Boss(points = 55, damage = 8)
+            assertEquals(1289, Day22(wizard, boss, PlayMode.HARD).cheapestWin())
+        }
+
+        @Test
+        fun `Part 1 - gmail`() {
+            val boss = Boss(points = 58, damage = 9)
+            assertEquals(1269, Day22(wizard, boss).cheapestWin())
+        }
+
+        @Test
+        fun `Part 2 - gmail`() {
+            val boss = Boss(points = 58, damage = 9)
+            assertEquals(1309, Day22(wizard, boss, PlayMode.HARD).cheapestWin())
         }
     }
 
-//    @Disabled
+    //    @Disabled
     @Nested
     inner class SimpleFights {
         @Test

@@ -3,16 +3,23 @@ package lacar.junilu.aoc2015.day22
 import kotlin.math.min
 import kotlin.math.max
 
-class Day22(val wizard: Wizard, val boss: Boss) {
+enum class PlayMode { EASY, HARD }
+private lateinit var day22Mode: PlayMode
+
+class Day22(val wizard: Wizard, val boss: Boss, playMode: PlayMode = PlayMode.EASY) {
+
+    init { day22Mode = playMode }
+
     fun cheapestWin(): Int {
         var cheapest = Int.MAX_VALUE
-        var nextRound = Fight(wizard, boss).nextRound()
-        while (nextRound.isNotEmpty()) {
-            val (wins, nonWins) = nextRound.partition { it.wizardWins() && it.cost < cheapest }
-            if (wins.isNotEmpty()) {
+        var roundOutcomes = Fight(wizard, boss).roundOutComes()
+        while (roundOutcomes.isNotEmpty()) {
+            val (wins, nonWins) = roundOutcomes.partition { it.wizardWins() }
+
+            if (wins.isNotEmpty())
                 cheapest = min(cheapest, wins.minOf { it.cost })
-            }
-            nextRound = nonWins.flatMap { it.nextRound() }.filterNot { it.wizardLoses() || it.cost > cheapest }
+
+            roundOutcomes = nonWins.flatMap { it.roundOutComes() }.filterNot { it.wizardLoses() || it.cost > cheapest }
         }
         return cheapest
     }
@@ -28,8 +35,24 @@ class Fight(val wizard: Wizard, val boss: Boss, val spells: List<ActiveSpell> = 
 
     val cost: Int get() = wizard.spent
 
-    fun nextRound(): List<Fight> {
-        val (wizardWins, bossTurn) = wizardTurnOutcomes().partition { it.wizardWins() }
+    override fun toString() = "Fight[$wizard, $boss, ${spells.joinToString(",\n")}]\n"
+
+    fun copy(wizard: Wizard = this.wizard, boss: Boss = this.boss, spells: List<ActiveSpell> = this.spells) =
+        Fight(wizard, boss, spells)
+
+    fun availableSpells() = Spell.entries
+        .filter { wizard.canAfford(it.cost) }
+        .minus(spells.filterNot { it.isEnding() }.map { it.spell }.toSet())
+
+    fun roundOutComes(): List<Fight> {
+        val (wizardWins, bossTurn) =
+            if (day22Mode == PlayMode.EASY) {
+                wizardTurnOutcomes().partition { it.wizardWins() }
+            } else {
+                copy(wizard = wizard.copy(points = wizard.points - 1))
+                    .wizardTurnOutcomes().partition { it.wizardWins() }
+            }
+
         return wizardWins + bossTurn.map { it.bossTurnOutcome() }
     }
 
@@ -41,6 +64,7 @@ class Fight(val wizard: Wizard, val boss: Boss, val spells: List<ActiveSpell> = 
     }
 
     private fun wizardTurnOutcomes(): List<Fight> {
+
         val afterAllSpellsApplied = afterAllSpellsApplied()
         if (afterAllSpellsApplied.wizardWins()) return listOf(afterAllSpellsApplied)
 
@@ -59,13 +83,6 @@ class Fight(val wizard: Wizard, val boss: Boss, val spells: List<ActiveSpell> = 
             )
         }
 
-    fun availableSpells() = Spell.entries
-            .filter { wizard.canAfford(it.cost) }
-            .minus(spells.filterNot { it.isEnding() }.map { it.spell }.toSet())
-
-    fun copy(wizard: Wizard = this.wizard, boss: Boss = this.boss, spells: List<ActiveSpell> = this.spells) =
-        Fight(wizard, boss, spells)
-
     private fun afterAllSpellsApplied(): Fight {
         val wizardOnTurn = spells.applyOnTurn(wizard)
         val wizardOnEnd = spells.allEndingSpells().applyOnEnd(wizardOnTurn)
@@ -73,11 +90,21 @@ class Fight(val wizard: Wizard, val boss: Boss, val spells: List<ActiveSpell> = 
         return Fight(wizard = wizardOnEnd, boss = bossOnTurn, spells = spells.decreaseAllNotEnding())
     }
 
+    fun wizardWins() = wizard.isAlive() && boss.isDead()
+
+    fun wizardLoses() = !wizard.isAlive()
+    fun wizardCantCast() = availableSpells().isEmpty()
+
+    //-----
+    // Extension functions for List<SpellEffect>
+    //
     private fun List<SpellEffect>.applyOnCast(wizard: Wizard) = fold(wizard) { w, effect -> effect.onCast(w) }
     private fun List<SpellEffect>.applyOnCast(boss: Boss) = fold(boss) { b, effect -> effect.onCast(b) }
 
-    private fun List<ActiveSpell>.allEndingSpells() = filter { it.isEnding() }
-    private fun List<ActiveSpell>.decreaseAllNotEnding() = filter { it.isNotEnding() }.map { it.decrease() }
+    private fun List<ActiveSpell>.applyOnEnd(wizard: Wizard) =
+        allEndingSpells().fold(wizard) { w, endingSpell ->
+            endingSpell.spell.effects.fold(w) { wiz, effect -> effect.onEnd(wiz) }
+        }
 
     private fun List<ActiveSpell>.applyOnTurn(wizard: Wizard) = fold(wizard) { w, activeSpell ->
         activeSpell.spell.effects.fold(w) { wiz, spellEffect -> spellEffect.onTurn(wiz) }
@@ -87,20 +114,14 @@ class Fight(val wizard: Wizard, val boss: Boss, val spells: List<ActiveSpell> = 
         activeSpell.spell.effects.fold(b) { boss, spellEffect -> spellEffect.onTurn(boss) }
     }
 
-    private fun List<ActiveSpell>.applyOnEnd(wizard: Wizard) =
-        allEndingSpells().fold(wizard) { w, endingSpell ->
-            endingSpell.spell.effects.fold(w) { wiz, effect -> effect.onEnd(wiz) }
-        }
+    private fun List<ActiveSpell>.allEndingSpells() = filter { it.isEnding() }
+    private fun List<ActiveSpell>.decreaseAllNotEnding() = filter { it.isNotEnding() }.map { it.decrease() }
 
-    fun wizardWins() = wizard.isAlive() && boss.isDead()
-    fun wizardLoses() = !wizard.isAlive()
-    fun wizardCantCast() = availableSpells().isEmpty()
+    //----
+    // Functions used for testing
 
-    fun hasActive(spell: Spell) = spells.any { (sp, timer) -> spell == sp && timer > 0 }
-    fun hasActive(spell: Spell, timeLeft: Int) = spells.any { (sp, timer) -> spell == sp && timeLeft == timer }
-
-
-    override fun toString() = "Fight[$wizard, $boss, ${spells.joinToString(",\n")}]\n"
+    // fun hasActive(spell: Spell, timeLeft: Int) = spells.any { (sp, timer) -> spell == sp && timeLeft == timer }
+    // fun hasActive(spell: Spell) = spells.any { (sp, timer) -> spell == sp && timer > 0 }
 }
 
 data class Boss(
