@@ -60,7 +60,7 @@ fun <T> Iterable<T>.combinations(k: Int): Sequence<List<T>> =
     }
 
 /**
- * Converts a string representing a key-value pair into a Pair.
+ * Converts a string representing a key-value pair into a Pair<String, R>.
  *
  * Use this as a convenient way to create map entries whose values need to be converted
  *
@@ -74,6 +74,11 @@ fun <R> keyValuePair(item: String, delimiters: String, transform: (String) -> R)
     return name to transform(value)
 }
 
+/**
+ * Converts a string to a map entry.
+ *
+ * Use this to
+ */
 fun <R> toPropsMap(
     list: String,
     itemDelimiter: String,
@@ -93,6 +98,5 @@ fun comboDemo() {
 }
 
 fun main() {
-     comboDemo()
-    // md5Demo()
+    comboDemo()
 }

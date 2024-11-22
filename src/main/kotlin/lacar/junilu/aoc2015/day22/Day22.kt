@@ -4,11 +4,11 @@ import kotlin.math.min
 import kotlin.math.max
 
 enum class PlayMode { EASY, HARD }
-private lateinit var day22Mode: PlayMode
+private lateinit var sim20XXPlayMode: PlayMode
 
 class Day22(val wizard: Wizard, val boss: Boss, playMode: PlayMode = PlayMode.EASY) {
 
-    init { day22Mode = playMode }
+    init { sim20XXPlayMode = playMode }
 
     fun cheapestWin(): Int {
         var cheapest = Int.MAX_VALUE
@@ -46,7 +46,7 @@ class Fight(val wizard: Wizard, val boss: Boss, val spells: List<ActiveSpell> = 
 
     fun roundOutComes(): List<Fight> {
         val (wizardWins, bossTurn) =
-            if (day22Mode == PlayMode.EASY) {
+            if (sim20XXPlayMode == PlayMode.EASY) {
                 wizardTurnOutcomes().partition { it.wizardWins() }
             } else {
                 copy(wizard = wizard.copy(points = wizard.points - 1))
