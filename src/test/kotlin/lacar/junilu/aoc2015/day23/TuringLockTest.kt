@@ -12,26 +12,66 @@ import org.junit.jupiter.api.Test
  */
 class TuringLockTest {
 
-    //    private lateinit var turingLock: TuringLock
-    private val turingLock = TuringLock()
 
     @Nested
-        inner class Solution {
-            @Test
-            fun `Part 1`() {
-            }
+    inner class SolutionPart1 {
+        private val lock = TuringLock()
+
+        @Test
+        fun `Part 1 - gmail`() {
+            assertEquals(255, lock.run(puzzleInputDay23ForGmail).get("b"))
         }
+
+        @Test
+        fun `Part 1 - github`() {
+            assertEquals(307, lock.run(puzzleInputDay23ForGithub).get("b"))
+        }
+    }
+
+    @Nested
+    inner class SolutionPart2 {
+        private val lock = TuringLock(initialState = mapOf("a" to 1, "b" to 0, "pc" to 0))
+
+        @Test
+        fun `Part 2 - gmail`() {
+            assertEquals(334, lock.run(puzzleInputDay23ForGmail).get("b"))
+        }
+
+        @Test
+        fun `Part 2 - github`() {
+            assertEquals(160, lock.run(puzzleInputDay23ForGithub).get("b"))
+        }
+    }
 
     @Nested
     inner class Examples {
         @Test
-        fun testSomeFunctionality() {
+        fun `Part 1 example with four instructions`() {
+            val program = listOf(
+                Instruction("inc", "a"),
+                Instruction("jio", "a", 2),
+                Instruction("tpl", "a"),
+                Instruction("inc", "a")
+            )
 
-            assertNotNull(turingLock)
+            val lock = TuringLock()
+            assertEquals(2, lock.run(program).get("a"))
         }
     }
 }
 
-private fun puzzleInput(fileName: String = "day23"): List<Instruction> {
-    readPuzzleInput(fileName)
-}
+private var puzzleInputDay23ForGmail = puzzleInputDay23("day23")
+private var puzzleInputDay23ForGithub = puzzleInputDay23("day23-gh")
+
+private fun puzzleInputDay23(fileName: String): List<Instruction> =
+    readPuzzleInput(fileName).map { line ->
+        when (line.substring(0, 3)) {
+            "hlf" -> Instruction("hlf", line.substring(4))
+            "tpl" -> Instruction("tpl", line.substring(4))
+            "inc" -> Instruction("inc", line.substring(4))
+            "jmp" -> Instruction("jmp", offset = line.substring(4).toInt())
+            "jie" -> Instruction("jie", line.substring(4, 5), line.substring(7).toInt())
+            "jio" -> Instruction("jio", line.substring(4, 5), line.substring(7).toInt())
+            else -> throw IllegalArgumentException("Unknown instruction: $line")
+        }
+    }

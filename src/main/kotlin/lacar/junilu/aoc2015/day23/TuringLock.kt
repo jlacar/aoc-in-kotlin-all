@@ -5,38 +5,45 @@ package lacar.junilu.aoc2015.day23
  *
  * https://adventofcode.com/2015/day/23
  */
+class TuringLock(private val initialState: LockState = mapOf("a" to 0, "b" to 0, "pc" to 0)) {
+    fun run(program: List<Instruction>): LockState {
+        return generateSequence(initialState) { state ->
+            if (state.isProgramCounterLessThan(program.size))
+                program[state.currentInstruction].execute(state)
+            else null
+        }.last()
+    }
+}
 
-class Instruction(val command: String, val register: String = "", val offset: Int = 0) {
-    fun execute(state: Map<String, Int>): Map<String, Int> {
-        val value = state.getOrDefault(register, 0)
+class Instruction(
+    private val command: String,
+    private val register: String = "",
+    private val offset: Int = 0
+) {
+    fun execute(state: LockState): LockState {
         return when (command) {
-            "hlf" -> state + (register to value / 2)
-            "tpl" -> state + (register to value * 3)
-            "inc" -> state + (register to value + 1)
-            "jmp" -> state + ("pc" to state.getValue("pc") + offset)
-            "jie" -> if (value % 2 == 0) state + ("pc" to state.getValue("pc") + offset) else state + ("pc" to state.getValue("pc") + 1)
-            "jio" -> if (value == 1) state + ("pc" to state.getValue("pc") + offset) else state + ("pc" to state.getValue("pc") + 1)
-            else -> state
+            "hlf" -> state.halve(register)
+            "tpl" -> state.triple(register)
+            "inc" -> state.inc(register)
+            "jmp" -> state.jump(offset)
+            "jie" -> state.jumpIfEven(register, offset)
+            "jio" -> state.jumpIfOne(register, offset)
+            else -> throw IllegalArgumentException("Unknown command: $command")
         }
     }
 }
 
-fun main() {
-    val instructions = listOf(
-        Instruction("hlf", "a"),
-        Instruction("tpl", "a"),
-        Instruction("inc", "a"),
-        Instruction("jmp", offset = 2),
-        Instruction("jie", "a", 2),
-        Instruction("jio", "a", 3)
-    )
-
-    val initialState = mapOf("a" to 0, "b" to 0, "pc" to 0)
-
-    val finalState = generateSequence(initialState) { state ->
-        if (state["pc"]!! >= instructions.size) null
-        else instructions[state["pc"]!!].execute(state)
-    }.last()
-
-    println("Final state: $finalState")
-}
+typealias LockState = Map<String, Int>
+val LockState.currentInstruction get() = this["pc"]!!
+fun LockState.isProgramCounterLessThan(offset: Int) = this["pc"]!! < offset
+fun LockState.next() = "pc" to (this.getValue("pc") + 1)
+fun LockState.getValue(register: String) = this.getOrDefault(register, 0)
+fun LockState.halve(register: String) = this + (register to this.getValue(register) / 2) + this.next()
+fun LockState.triple(register: String) = this + (register to this.getValue(register) * 3) + this.next()
+fun LockState.inc(register: String) = this + (register to this.getValue(register) + 1) + this.next()
+fun LockState.jump(offset: Int) = this + ("pc" to this.getValue("pc") + offset)
+fun LockState.jumpIfEven(register: String, offset: Int) = if (this.getValue(register) % 2 == 0) this.jump(offset)
+else this + this.next()
+fun LockState.jumpIfOne(register: String, offset: Int) = if (this.getValue(register) == 1) this.jump(offset)
+else this + this.next()
+fun LockState.getRegister(register: String) = this.getOrDefault(register, 0)
