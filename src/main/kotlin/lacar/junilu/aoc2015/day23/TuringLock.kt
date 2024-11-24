@@ -14,9 +14,12 @@ class TuringLock(private val initialState: LockState = initialLockState()) {
 }
 
 /*
-   DEVELOPER NOTE: The following extensions are used primarily to introduce domain semantics
-   to the high level code. It also limits the scope of the knowledge of the specific map keys
-   used for the two registers, "a" and "b", and the program counter, "pc".
+   DEVELOPER NOTE: Reasons for the following extensions
+
+   1. Introduce domain semantics to the high level code and make it more intention-revealing.
+   2. Hide implementation details and limit scope of implementation knowledge, thus preventing
+      leaky abstractions. Knowledge of the literals used for the two registers, "a" and "b",
+      and the program counter, "pc", is confined to the implementation-level code below.
  */
 
 typealias Program = List<Instruction>
