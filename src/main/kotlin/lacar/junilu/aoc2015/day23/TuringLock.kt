@@ -7,9 +7,10 @@ package lacar.junilu.aoc2015.day23
  */
 class TuringLock(private val initialState: LockState = initialLockState()) {
     fun run(program: Program) = generateSequence(initialState) { state ->
-        if (program.hasNext(state))
-            program.executeNext(state)
-        else null
+        when {
+            program.hasNext(state) -> program.executeNext(state)
+            else -> null
+        }
     }.last()
 }
 
