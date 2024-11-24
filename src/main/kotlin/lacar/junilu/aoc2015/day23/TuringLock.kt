@@ -63,20 +63,22 @@ class Instruction(
 
         fun parse(line: String): Instruction {
             val opcode = line.substring(0, 3)
+            val args = line.substring(4)
+            val r = args.substring(0, 1)
             return when (opcode) {
-                "hlf" -> Instruction(operationFor(opcode), register = line.substring(4))
-                "tpl" -> Instruction(operationFor(opcode), register = line.substring(4))
-                "inc" -> Instruction(operationFor(opcode), register = line.substring(4))
-                "jmp" -> Instruction(operationFor(opcode), offset = line.substring(4).toInt())
+                "hlf" -> Instruction(operationFor(opcode), register = r)
+                "tpl" -> Instruction(operationFor(opcode), register = r)
+                "inc" -> Instruction(operationFor(opcode), register = r)
+                "jmp" -> Instruction(operationFor(opcode), offset = args.toInt())
                 "jie" -> Instruction(
                             operation = operationFor(opcode),
-                            register = line.substring(4, 5),
-                            offset = line.substring(7).toInt()
+                            register = r,
+                            offset = args.substring(3).toInt()
                          )
                 "jio" -> Instruction(
                             operation = operationFor(opcode),
-                            register = line.substring(4, 5),
-                            offset = line.substring(7).toInt()
+                            register = r,
+                            offset = args.substring(3).toInt()
                          )
                 else -> throw IllegalArgumentException("Unknown operation: $line")
             }
