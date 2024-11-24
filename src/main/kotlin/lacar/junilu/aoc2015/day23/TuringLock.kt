@@ -13,7 +13,11 @@ class TuringLock(private val initialState: LockState = initialLockState()) {
     }.last()
 }
 
-fun initialLockState(a: Int = 0, b: Int = 0, pc: Int = 0) = mapOf("a" to a, "b" to b, "pc" to pc)
+/*
+   DEVELOPER NOTE: The following extensions are used primarily to introduce domain semantics
+   to the high level code. It also limits the scope of the knowledge of the specific map keys
+   used for the two registers, "a" and "b", and the program counter, "pc".
+ */
 
 typealias Program = List<Instruction>
 fun Program.hasNext(state: LockState) = size > state.programCounter
@@ -32,12 +36,14 @@ val LockState.programCounter: Int get() = valueOf("pc")
 
 typealias Operation = (LockState, String, Int) -> LockState
 
+fun initialLockState(a: Int = 0, b: Int = 0, pc: Int = 0) = mapOf("a" to a, "b" to b, "pc" to pc)
+
 class Instruction(
     private val operation: Operation,
     private val register: String = "",
     private val offset: Int = 0
 ) {
-    fun execute(state: LockState): LockState = operation.invoke(state, register, offset)
+    fun execute(state: LockState): LockState = operation(state, register, offset)
 
     companion object {
         private val operations: Map<String, Operation> = mapOf(
