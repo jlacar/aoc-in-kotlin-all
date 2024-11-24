@@ -18,12 +18,12 @@ class TuringLockTest {
 
         @Test
         fun `Part 1 - gmail`() {
-            assertEquals(255, lock.run(puzzleInputDay23ForGmail).b)
+            assertEquals(255, lock.run(gmailProgram).b)
         }
 
         @Test
         fun `Part 1 - github`() {
-            assertEquals(307, lock.run(puzzleInputDay23ForGithub).b)
+            assertEquals(307, lock.run(githubProgram).b)
         }
     }
 
@@ -33,12 +33,12 @@ class TuringLockTest {
 
         @Test
         fun `Part 2 - gmail`() {
-            assertEquals(334, lock.run(puzzleInputDay23ForGmail).b)
+            assertEquals(334, lock.run(gmailProgram).b)
         }
 
         @Test
         fun `Part 2 - github`() {
-            assertEquals(160, lock.run(puzzleInputDay23ForGithub).b)
+            assertEquals(160, lock.run(githubProgram).b)
         }
     }
 
@@ -51,7 +51,7 @@ class TuringLockTest {
                 jio a, 2
                 tpl a
                 inc a
-            """.trimIndent().lines().map { Command.parse(it) }
+            """.trimIndent().lines().map { Instruction.parse(it) }
 
             val lock = TuringLock()
             assertEquals(2, lock.run(program).a)
@@ -59,7 +59,7 @@ class TuringLockTest {
     }
 }
 
-private val puzzleInputDay23ForGmail = puzzleInputDay23("day23")
-private val puzzleInputDay23ForGithub = puzzleInputDay23("day23-gh")
+private val gmailProgram = puzzleInputDay23("day23")
+private val githubProgram = puzzleInputDay23("day23-gh")
 
-private fun puzzleInputDay23(fileName: String) = readPuzzleInput(fileName).map { line -> Command.parse(line) }
+private fun puzzleInputDay23(fileName: String) = readPuzzleInput(fileName).map { line -> Instruction.parse(line) }
