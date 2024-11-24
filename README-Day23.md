@@ -1,6 +1,12 @@
 # Day 23: Opening the Turing Lock
 
+I decided to see how the JetBrains AI Assistant might help me with this puzzle. Overall, I think it did a fairly decent job. There's clearly potential for the AI Assistant to significantly improve developer productivity. Some of the things it did also showed that a competent human programmer is still needed.
+
+When prompted, the AI Assistant generated some fairly decent code that, with a few tweaks and corrections, calculated the correct answer to part 1 of the puzzle.
+
 ## AI Assistant Notes
+
+One of the useful things the AI Assistant did was coming up with elements of the solution that proved to be very useful.
 
 I thought of using an enumeration to represent the instructions for the Turing lock and the AI Assistant surprised me by suggesting all the correct enum values.
 
@@ -10,9 +16,8 @@ I thought of using an enumeration to represent the instructions for the Turing l
 
 I think what surprised me the most was the amount of context the AI had used in giving that suggestion. I don't know if it used the link to the puzzle page that I always put in the header comment for every solution but that was the first thought that came to mind. 
 
-The JetBrains documentation I found said that AI Assistant uses files from the current project and that tabs you currently have open. I had the input data in a file in the `main/resources` folder of my project and I'm not sure if was open in one of the tabs at that point.
+The JetBrains documentation I found said that AI Assistant uses files from the current project and any tabs you currently have open. The input data for the puzzle was in a file in the `main/resources` folder of my project but I'm not sure if I had it open in one of the tabs at that point.
 
-When prompted, the AI Assistant generated some fairly decent code that, with a few minor tweaks, arrived at the correct answer to part 1 of the puzzle.
 
 ### Explaining errors
 

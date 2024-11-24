@@ -23,6 +23,8 @@ class TuringLock(private val initialState: LockState = initialLockState()) {
       and the program counter, "pc", is confined to the implementation-level code below.
  */
 
+fun initialLockState(a: Int = 0, b: Int = 0, pc: Int = 0) = mapOf("a" to a, "b" to b, "pc" to pc)
+
 typealias Program = List<Instruction>
 fun Program.hasNext(state: LockState) = size > state.programCounter
 fun Program.executeNext(state: LockState): LockState = this[state.programCounter].execute(state)
@@ -36,11 +38,10 @@ fun LockState.valueOf(register: String) = this[register]!!
 val LockState.next: Register get() = this.jump(1)
 val LockState.a: Int get() = valueOf("a")
 val LockState.b: Int get() = valueOf("b")
+
 val LockState.programCounter: Int get() = valueOf("pc")
 
 typealias Operation = (LockState, String, Int) -> LockState
-
-fun initialLockState(a: Int = 0, b: Int = 0, pc: Int = 0) = mapOf("a" to a, "b" to b, "pc" to pc)
 
 class Instruction(
     private val operation: Operation,
