@@ -19,11 +19,12 @@ typealias Program = List<Command>
 fun Program.hasNextCommand(state: LockState) = size > state.programCounter
 fun Program.executeNext(state: LockState): LockState = this[state.programCounter].execute(state)
 
+// convenience extensions
 typealias Register = Pair<String, Int>
 typealias LockState = Map<String, Int>
 fun LockState.copy(vararg newValues: Register) = this + newValues.toSet()
-fun LockState.valueOf(register: String) = this[register]!!
 fun LockState.jump(offset: Int) = "pc" to (programCounter + offset)
+fun LockState.valueOf(register: String) = this[register]!!
 val LockState.nextInstruction: Register get() = this.jump(1)
 val LockState.a: Int get() = valueOf("a")
 val LockState.b: Int get() = valueOf("b")
@@ -39,6 +40,27 @@ class Command(
     fun execute(state: LockState): LockState = operation.invoke(state, register, offset)
 
     companion object {
+        private val operations: Map<String, Operation> = mapOf(
+            "hlf" to { state, r, _ -> state.copy(r to state.valueOf(r) / 2, state.nextInstruction) },
+            "tpl" to { state, r, _ -> state.copy(r to state.valueOf(r) * 3, state.nextInstruction) },
+            "inc" to { state, r, _ -> state.copy(r to state.valueOf(r) + 1, state.nextInstruction) },
+            "jmp" to { state, _, offset -> state.copy(state.jump(offset)) },
+            "jie" to { state, r, offset ->
+                when {
+                    state.valueOf(r) % 2 == 0 -> state.copy(state.jump(offset))
+                    else -> state.copy(state.nextInstruction)
+                }
+            },
+            "jio" to { state, r, offset ->
+                when {
+                    state.valueOf(r) == 1 -> state.copy(state.jump(offset))
+                    else -> state.copy(state.nextInstruction)
+                }
+            }
+        )
+
+        private fun operationFor(opcode: String) = operations[opcode]!!
+
         fun parse(line: String): Command {
             val opcode = line.substring(0, 3)
             return when (opcode) {
@@ -56,29 +78,8 @@ class Command(
                     register = line.substring(4, 5),
                     offset = line.substring(7).toInt()
                 )
-                else -> throw IllegalArgumentException("Unknown instruction: $line")
+                else -> throw IllegalArgumentException("Unknown operation: $line")
             }
         }
     }
 }
-
-private fun operationFor(opcode: String): Operation =
-    when (opcode) {
-        "hlf" -> { state, r, _ -> state.copy(r to state.valueOf(r) / 2, state.nextInstruction) }
-        "tpl" -> { state, r, _ -> state.copy(r to state.valueOf(r) * 3, state.nextInstruction) }
-        "inc" -> { state, r, _ -> state.copy(r to state.valueOf(r) + 1, state.nextInstruction) }
-        "jmp" -> { state, _, offset -> state.copy(state.jump(offset)) }
-        "jie" -> { state, r, offset ->
-            if (state.valueOf(r) % 2 == 0)
-                state.copy(state.jump(offset))
-            else
-                state.copy(state.nextInstruction)
-        }
-        "jio" -> { state, r, offset ->
-            if (state.valueOf(r) == 1)
-                state.copy(state.jump(offset))
-            else
-                state.copy(state.nextInstruction)
-        }
-        else -> throw IllegalArgumentException("Unknown operation: $opcode")
-    }

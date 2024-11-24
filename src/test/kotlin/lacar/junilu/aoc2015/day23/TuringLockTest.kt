@@ -41,22 +41,22 @@ class TuringLockTest {
             assertEquals(160, lock.run(puzzleInputDay23ForGithub).b)
         }
     }
-//
-//    @Nested
-//    inner class Examples {
-//        @Test
-//        fun `Part 1 example with four instructions`() {
-//            val program = listOf(
-//                Instruction("inc", "a"),
-//                Instruction("jio", "a", 2),
-//                Instruction("tpl", "a"),
-//                Instruction("inc", "a")
-//            )
-//
-//            val lock = TuringLock()
-//            assertEquals(2, lock.run(program).get("a"))
-//        }
-//    }
+
+    @Nested
+    inner class Examples {
+        @Test
+        fun `Part 1 example with four instructions`() {
+            val program = """
+                inc a
+                jio a, 2
+                tpl a
+                inc a
+            """.trimIndent().lines().map { Command.parse(it) }
+
+            val lock = TuringLock()
+            assertEquals(2, lock.run(program).a)
+        }
+    }
 }
 
 private val puzzleInputDay23ForGmail = puzzleInputDay23("day23")
