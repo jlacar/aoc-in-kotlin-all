@@ -2,9 +2,47 @@
 
 ## AI Assistant Notes
 
-The AI Assistant surprised me when it was able to suggest all the enum values for the instructions when all I typed in was `enum class Instruction {}`. I'm speculating that it used the link to the puzzle page that I always put in the header comment for every solution to get some context. Another possibility is that it used the puzzle input file that is in the `main/resources` folder of my project.
+I thought of using an enumeration to represent the instructions for the Turing lock and the AI Assistant surprised me by suggesting all the correct enum values.
 
-It was also able to generate code that got the correct answer, with a few minor tweaks.
+    enum class Instruction { // I just typed this header
+        HLF, TPL, INC, JMP, JIE, JIO;  // and the AI immediately gave this
+    }
+
+I think what surprised me the most was the amount of context the AI had used in giving that suggestion. I don't know if it used the link to the puzzle page that I always put in the header comment for every solution but that was the first thought that came to mind. 
+
+The JetBrains documentation I found said that AI Assistant uses files from the current project and that tabs you currently have open. I had the input data in a file in the `main/resources` folder of my project and I'm not sure if was open in one of the tabs at that point.
+
+When prompted, the AI Assistant generated some fairly decent code that, with a few minor tweaks, arrived at the correct answer to part 1 of the puzzle.
+
+### Explaining errors
+
+I made a mistake in the parsing code and got a `NumberFormatException` when trying to convert the offset to an `Int`.
+
+When asked to explain, part of the AI Assistant's explanation had this:
+
+> The problem likely arises from these lines:
+> 
+>      (some lines of code around the bug)
+>      ... line.substring(4, 5).toInt() ... // the bug!
+>      (some lines of code around the bug)
+> Here, the assumption that `line.substring(4, 5)` will always produce a valid integer, but if the input contains a "+" sign, it fails.
+> 
+> Instead, we need to handle cases where the substring might include a sign or the number might have multiple characters. We can use the `trim` method and the `toIntOrNull` method to safely parse integers.
+
+#### The Good
+
+AI Assistant was able to narrow in on the code that had the bug. This isn't surprising the context the AI used to generate an explanation includes the stack trace, which reference the line of code that produced the exception. It at least saved me the tedium of having to pore over the stack trace and find the exact line of code that threw the exception.
+
+#### The Not so Good
+
+The explanation the AI Assistant gave for the problem, unfortunately, was incorrect. The `toInt()` function has no problem with a "+" sign and will correctly interpret it. 
+
+One of its suggestions to use `trim` could have been a solution. The suggestion to use `toIntOrNull` wasn't really an option in the case though so I ignored it.
+
+The AI Assistant missed the real problem, which was an off-by-one error: I had used the wrong start index in the `substring()` call, which gave `" +12"` instead `"+12"`. The problem was the leading space, not the `"+"` sign, which the `toInt()` can handle just fine.
+
+
+In this case, the AI Assistant was still helpful in that it helped me to quickly identify where the bug was. However, it still needed me, the human programmer, to vet the validity of its explanation and make the correct decision on how to fix the bug.
 
 ## Design Notes
 
