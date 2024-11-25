@@ -7,44 +7,30 @@ package lacar.junilu.aoc2015.day23
  */
 class TuringLock(
     private val program: List<Instruction>,
-    private val registerSet: MutableMap<String, Int> = mutableMapOf(
-        "a" to 0,
-        "b" to 0,
-        "pc" to 0
-    )
+    private val registerSet: MutableMap<String, Int> = mutableMapOf("a" to 0, "b" to 0, "pc" to 0)
 ) {
     val a by registerSet
     val b by registerSet
     private var pc by registerSet
 
-    fun run() { while (hasNext()) executeNext() }
-
     fun initialize(a: Int): TuringLock = this.also { registerSet["a"] = a }
 
-    private fun hasNext() = pc < program.size
-    private fun valueOf(r: String) = registerSet[r]!!
-    private fun jump(offset: Int): Int = (pc + offset).also { pc = it }
-    private fun next() = jump(1)
-
-    val half = { r: String -> registerSet[r] = valueOf(r) / 2; next() }
-    val triple = { r: String -> registerSet[r] = valueOf(r) * 3; next() }
-    val increment = { r: String -> registerSet[r] = valueOf(r) + 1; next() }
-    val jumpTo = { offset: Int -> jump(offset) }
-    val jumpIfEven = { r: String, offset: Int -> if (valueOf(r) % 2 == 0) jump(offset) else next() }
-    val jumpIfOne = { r: String, offset: Int -> if (valueOf(r) == 1) jump(offset) else next() }
-
-    private fun executeNext(): Int {
-        val instruction = program[pc]
-        return when (instruction.mnemonic) {
-            "hlf" -> half(instruction.register)
-            "tpl" -> triple(instruction.register)
-            "inc" -> increment(instruction.register)
-            "jmp" -> jumpTo(instruction.offset)
-            "jie" -> jumpIfEven(instruction.register, instruction.offset)
-            "jio" -> jumpIfOne(instruction.register, instruction.offset)
-            else -> throw IllegalArgumentException("Unknown mnemonic: ${instruction.mnemonic}")
+    fun runProgram() {
+        while (pc in program.indices) {
+            val (mnemonic, register, offset) = program[pc]
+            pc += when (mnemonic) {
+                "hlf" -> { registerSet[register] = valueOf(register) / 2; 1 }
+                "tpl" -> { registerSet[register] = valueOf(register) * 3; 1 }
+                "inc" -> { registerSet[register] = valueOf(register) + 1; 1 }
+                "jmp" -> offset
+                "jie" -> if (valueOf(register) % 2 == 0) offset else 1
+                "jio" -> if (valueOf(register) == 1) offset else 1
+                else -> throw IllegalArgumentException("Unknown mnemonic: $mnemonic")
+            }
         }
     }
+
+    private fun valueOf(r: String) = registerSet[r]!!
 
     companion object {
         fun load(source: List<String>) = TuringLock(source.map { parse(it) })

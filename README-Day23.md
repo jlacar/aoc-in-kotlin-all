@@ -51,13 +51,13 @@ In this case, the AI Assistant was still helpful in that it helped me to quickly
 
 ## Design Notes
 
-### Using a Map to model the lock registers 
+### Initial Design - Using a Map to model the lock registers 
 
 I first considered creating a class to encapsulate the logic related to the registers, a and b, along with the program counter, (pc). 
 
     data class Registers(val a: Int, val b: Int, val pc: Int)
 
-Using this, however, got pretty complicated and unwieldy, with lots of code like this:
+However, the code got pretty complicated and unwieldy, with lots checks like this:
 
     return when (r) {
         "a" -> state.copy(a = newValue)
@@ -98,6 +98,12 @@ The reason behind all these was to limit the scope of having to know the literal
 I also added the `initialLockState()` function as another convenience and limit the scope of the literal map key values.
 
 Overall, I think I achieved my goal of encapsulating and limiting scope because there are no uses of the literal key values in the high level code at all.
+
+### Redesign - Moved responsibilities to TuringLock
+
+While the initial design worked, something about didn't seem right. First, it was quite complicated, even though I had managed to encapsulate the knowledge about the register implementation. The responsibility assignments seemed off though and I think I sensed a feature envy smell.
+
+
 
 ### Using `invoke()`
 
