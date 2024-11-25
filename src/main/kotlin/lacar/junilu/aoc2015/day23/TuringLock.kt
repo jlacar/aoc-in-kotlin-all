@@ -5,94 +5,65 @@ package lacar.junilu.aoc2015.day23
  *
  * https://adventofcode.com/2015/day/23
  */
-class TuringLock(private val initialState: LockState = initialLockState()) {
-    fun run(program: Program) = generateSequence(initialState) { state ->
-        when {
-            program.hasNext(state) -> program.executeNext(state)
-            else -> null
-        }
-    }.last()
-}
-
-/*
-   DEVELOPER NOTE: Reasons for the following extensions
-
-   1. Introduce domain semantics to the high level code and make it more intention-revealing.
-   2. Hide implementation details and limit scope of implementation knowledge, thus preventing
-      leaky abstractions. Knowledge of the literals used for the two registers, "a" and "b",
-      and the program counter, "pc", is confined to the implementation-level code below.
- */
-
-fun initialLockState(a: Int = 0, b: Int = 0, pc: Int = 0) = mapOf("a" to a, "b" to b, "pc" to pc)
-
-typealias Program = List<Instruction>
-fun Program.hasNext(state: LockState) = size > state.programCounter
-fun Program.executeNext(state: LockState): LockState = this[state.programCounter].execute(state)
-
-// convenience extensions
-typealias Register = Pair<String, Int>
-typealias LockState = Map<String, Int>
-fun LockState.copy(vararg newValues: Register) = this + newValues.toSet()
-fun LockState.jump(offset: Int) = "pc" to (programCounter + offset)
-fun LockState.valueOf(register: String) = this[register]!!
-val LockState.next: Register get() = this.jump(1)
-val LockState.a: Int get() = valueOf("a")
-val LockState.b: Int get() = valueOf("b")
-
-val LockState.programCounter: Int get() = valueOf("pc")
-
-typealias Operation = (LockState, String, Int) -> LockState
-
-class Instruction(
-    private val operation: Operation,
-    private val register: String = "",
-    private val offset: Int = 0
+class TuringLock(
+    private val program: List<Instruction>,
+    private val registerSet: MutableMap<String, Int> = mutableMapOf(
+        "a" to 0,
+        "b" to 0,
+        "pc" to 0
+    )
 ) {
-    fun execute(state: LockState): LockState = operation(state, register, offset)
+    val a by registerSet
+    val b by registerSet
+    private var pc by registerSet
+
+    fun run() { while (hasNext()) executeNext() }
+
+    fun initialize(a: Int): TuringLock = this.also { registerSet["a"] = a }
+
+    private fun hasNext() = pc < program.size
+    private fun valueOf(r: String) = registerSet[r]!!
+    private fun jump(offset: Int): Int = (pc + offset).also { pc = it }
+    private fun next() = jump(1)
+
+    val hlf = { r: String -> registerSet.put(r, valueOf(r) / 2); next() }
+    val tpl = { r: String -> registerSet.put(r, valueOf(r) * 3); next() }
+    val inc = { r: String -> registerSet.put(r, valueOf(r) + 1); next() }
+    val jmp = { offset: Int -> jump(offset) }
+    val jie = { r: String, offset: Int -> if (valueOf(r) % 2 == 0) jump(offset) else next() }
+    val jio = { r: String, offset: Int -> if (valueOf(r) == 1) jump(offset) else next() }
+
+    private fun executeNext(): Int {
+        val instruction = program[pc]
+        return when (instruction.mnemonic) {
+            "hlf" -> { hlf(instruction.register) }
+            "tpl" -> { tpl(instruction.register) }
+            "inc" -> { inc(instruction.register) }
+            "jmp" -> { jmp(instruction.offset) }
+            "jie" -> { jie(instruction.register, instruction.offset) }
+            "jio" -> { jio(instruction.register, instruction.offset) }
+            else -> throw IllegalArgumentException("Unknown mnemonic: ${instruction.mnemonic}")
+        }
+    }
 
     companion object {
-        private val operations: Map<String, Operation> = mapOf(
-            "hlf" to { state, r, _ -> state.copy(r to state.valueOf(r) / 2, state.next) },
-            "tpl" to { state, r, _ -> state.copy(r to state.valueOf(r) * 3, state.next) },
-            "inc" to { state, r, _ -> state.copy(r to state.valueOf(r) + 1, state.next) },
-            "jmp" to { state, _, offset -> state.copy(state.jump(offset)) },
-            "jie" to { state, r, offset ->
-                when {
-                    state.valueOf(r) % 2 == 0 -> state.copy(state.jump(offset))
-                    else -> state.copy(state.next)
-                }
-            },
-            "jio" to { state, r, offset ->
-                when {
-                    state.valueOf(r) == 1 -> state.copy(state.jump(offset))
-                    else -> state.copy(state.next)
-                }
-            }
-        )
+        fun load(source: List<String>) = TuringLock(source.map { parse(it) })
+    }
+}
 
-        private fun operationFor(opcode: String) = operations[opcode]!!
+data class Instruction(val mnemonic: String, val register: String = "", val offset: Int = 0)
 
-        fun parse(line: String): Instruction {
-            val opcode = line.substring(0, 3)
-            val args = line.substring(4)
-            val r = args.substring(0, 1)
-            return when (opcode) {
-                "hlf" -> Instruction(operationFor(opcode), register = r)
-                "tpl" -> Instruction(operationFor(opcode), register = r)
-                "inc" -> Instruction(operationFor(opcode), register = r)
-                "jmp" -> Instruction(operationFor(opcode), offset = args.toInt())
-                "jie" -> Instruction(
-                            operation = operationFor(opcode),
-                            register = r,
-                            offset = args.substring(3).toInt()
-                         )
-                "jio" -> Instruction(
-                            operation = operationFor(opcode),
-                            register = r,
-                            offset = args.substring(3).toInt()
-                         )
-                else -> throw IllegalArgumentException("Unknown operation: $line")
-            }
-        }
+private fun parse(line: String): Instruction {
+    val mnemonic = line.substring(0, 3)
+    val operands = line.substring(4)
+    val r = operands.substring(0, 1)
+    return when (mnemonic) {
+        "hlf" -> Instruction(mnemonic, register = r)
+        "tpl" -> Instruction(mnemonic, register = r)
+        "inc" -> Instruction(mnemonic, register = r)
+        "jmp" -> Instruction(mnemonic, offset = operands.toInt())
+        "jie" -> Instruction(mnemonic, register = r, offset = operands.substring(3).toInt())
+        "jio" -> Instruction(mnemonic, register = r, offset = operands.substring(3).toInt())
+        else -> throw IllegalArgumentException("Unknown instruction: $line")
     }
 }
