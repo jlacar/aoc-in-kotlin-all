@@ -22,6 +22,20 @@ class TuringLockTest {
     }
 
     @Nested
+    inner class AiGeneratedFunctional {
+        @Test
+        fun `Part 1 - AI Assistant Generated`() {
+            assertEquals(255, TuringLockFnl.finalState().b)
+        }
+
+        @Test
+        fun `Part 2 - AI Assistant Generated`() {
+            assertEquals(334,
+                TuringLockFnl.finalState(TuringLockFnl.defaultInitialState + ("a" to 1)).b)
+        }
+    }
+
+    @Nested
     inner class SolutionPart1 {
         @Test
         fun `Part 1 - gmail`() {

@@ -1,10 +1,5 @@
 package lacar.junilu.aoc2015.day23
 
-/**
- * AoC 2015 - Day 23: Opening the Turing Lock
- *
- * https://adventofcode.com/2015/day/23
- */
 class TuringLock(
     private val instructions: List<Instruction>,
     private val registerSet: MutableMap<String, Int> = mutableMapOf("a" to 0, "b" to 0, "pc" to 0)
