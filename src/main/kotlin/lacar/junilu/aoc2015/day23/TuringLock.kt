@@ -26,22 +26,22 @@ class TuringLock(
     private fun jump(offset: Int): Int = (pc + offset).also { pc = it }
     private fun next() = jump(1)
 
-    val hlf = { r: String -> registerSet.put(r, valueOf(r) / 2); next() }
-    val tpl = { r: String -> registerSet.put(r, valueOf(r) * 3); next() }
-    val inc = { r: String -> registerSet.put(r, valueOf(r) + 1); next() }
-    val jmp = { offset: Int -> jump(offset) }
-    val jie = { r: String, offset: Int -> if (valueOf(r) % 2 == 0) jump(offset) else next() }
-    val jio = { r: String, offset: Int -> if (valueOf(r) == 1) jump(offset) else next() }
+    val half = { r: String -> registerSet[r] = valueOf(r) / 2; next() }
+    val triple = { r: String -> registerSet[r] = valueOf(r) * 3; next() }
+    val increment = { r: String -> registerSet[r] = valueOf(r) + 1; next() }
+    val jumpTo = { offset: Int -> jump(offset) }
+    val jumpIfEven = { r: String, offset: Int -> if (valueOf(r) % 2 == 0) jump(offset) else next() }
+    val jumpIfOne = { r: String, offset: Int -> if (valueOf(r) == 1) jump(offset) else next() }
 
     private fun executeNext(): Int {
         val instruction = program[pc]
         return when (instruction.mnemonic) {
-            "hlf" -> { hlf(instruction.register) }
-            "tpl" -> { tpl(instruction.register) }
-            "inc" -> { inc(instruction.register) }
-            "jmp" -> { jmp(instruction.offset) }
-            "jie" -> { jie(instruction.register, instruction.offset) }
-            "jio" -> { jio(instruction.register, instruction.offset) }
+            "hlf" -> half(instruction.register)
+            "tpl" -> triple(instruction.register)
+            "inc" -> increment(instruction.register)
+            "jmp" -> jumpTo(instruction.offset)
+            "jie" -> jumpIfEven(instruction.register, instruction.offset)
+            "jio" -> jumpIfOne(instruction.register, instruction.offset)
             else -> throw IllegalArgumentException("Unknown mnemonic: ${instruction.mnemonic}")
         }
     }
