@@ -19,9 +19,9 @@ class TuringLock(
         while (pc in instructions.indices) {
             val (mnemonic, register, offset) = instructions[pc]
             pc += when (mnemonic) {
-                "hlf" -> { registerSet[register] = valueOf(register) / 2; 1 }
-                "tpl" -> { registerSet[register] = valueOf(register) * 3; 1 }
-                "inc" -> { registerSet[register] = valueOf(register) + 1; 1 }
+                "hlf" -> 1.also { registerSet[register] = valueOf(register) / 2 }
+                "tpl" -> 1.also { registerSet[register] = valueOf(register) * 3 }
+                "inc" -> 1.also { registerSet[register] = valueOf(register) + 1 }
                 "jmp" -> offset
                 "jie" -> if (valueOf(register) % 2 == 0) offset else 1
                 "jio" -> if (valueOf(register) == 1) offset else 1
