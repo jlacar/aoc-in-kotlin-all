@@ -17,7 +17,7 @@ class TuringLockTest {
 
     private fun runLockProgram(source: List<String>, a: Int = 0): TuringLock {
         val lock = TuringLock.load(source).initialize(a = a)
-        lock.runProgram()
+        lock.execute()
         return lock
     }
 

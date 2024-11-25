@@ -6,7 +6,7 @@ package lacar.junilu.aoc2015.day23
  * https://adventofcode.com/2015/day/23
  */
 class TuringLock(
-    private val program: List<Instruction>,
+    private val instructions: List<Instruction>,
     private val registerSet: MutableMap<String, Int> = mutableMapOf("a" to 0, "b" to 0, "pc" to 0)
 ) {
     val a by registerSet
@@ -15,9 +15,9 @@ class TuringLock(
 
     fun initialize(a: Int): TuringLock = this.also { registerSet["a"] = a }
 
-    fun runProgram() {
-        while (pc in program.indices) {
-            val (mnemonic, register, offset) = program[pc]
+    fun execute() {
+        while (pc in instructions.indices) {
+            val (mnemonic, register, offset) = instructions[pc]
             pc += when (mnemonic) {
                 "hlf" -> { registerSet[register] = valueOf(register) / 2; 1 }
                 "tpl" -> { registerSet[register] = valueOf(register) * 3; 1 }
@@ -30,7 +30,7 @@ class TuringLock(
         }
     }
 
-    private fun valueOf(r: String) = registerSet[r]!!
+    private fun valueOf(r: String) = registerSet[r] ?: throw IllegalArgumentException("Unknown register $r")
 
     companion object {
         fun load(source: List<String>) = TuringLock(source.map { parse(it) })
