@@ -16,17 +16,19 @@ class TuringLock(
     fun initialize(a: Int): TuringLock = this.also { registerSet["a"] = a }
 
     fun execute() {
-        while (pc in instructions.indices) {
-            val (mnemonic, register, offset) = instructions[pc]
-            pc += when (mnemonic) {
-                "hlf" -> 1.also { registerSet[register] = valueOf(register) / 2 }
-                "tpl" -> 1.also { registerSet[register] = valueOf(register) * 3 }
-                "inc" -> 1.also { registerSet[register] = valueOf(register) + 1 }
-                "jmp" -> offset
-                "jie" -> if (valueOf(register) % 2 == 0) offset else 1
-                "jio" -> if (valueOf(register) == 1) offset else 1
-                else -> throw IllegalArgumentException("Unknown mnemonic: $mnemonic")
-            }
+        while (pc in instructions.indices) { pc += nextInstructionOffset() }
+    }
+
+    private fun nextInstructionOffset(): Int {
+        val (mnemonic, register, offset) = instructions[pc]
+        return when (mnemonic) {
+            "hlf" -> 1.also { registerSet[register] = valueOf(register) / 2 }
+            "tpl" -> 1.also { registerSet[register] = valueOf(register) * 3 }
+            "inc" -> 1.also { registerSet[register] = valueOf(register) + 1 }
+            "jmp" -> offset
+            "jie" -> if (valueOf(register) % 2 == 0) offset else 1
+            "jio" -> if (valueOf(register) == 1) offset else 1
+            else -> throw IllegalArgumentException("Unknown mnemonic: $mnemonic")
         }
     }
 
