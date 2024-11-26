@@ -14,8 +14,9 @@ class TuringLockFnl(private val instructions: List<InstructionFnl>, val a: Int =
     companion object {
         private val defaultInitialState = mapOf("a" to 0, "b" to 0, "pc" to 0)
 
-        fun using(gmailProgram: List<String>, a: Int = 0) =
-            TuringLockFnl(InstructionFnl.parseAll(gmailProgram), a = a)
+        fun using(source: List<String>, a: Int = 0) = TuringLockFnl(parse(source), a = a)
+
+        private fun parse(source: List<String>) = source.map { InstructionFnl.parse(it) }
     }
 }
 
@@ -36,8 +37,6 @@ class InstructionFnl(private val mnemonic: String, val register: String = "", va
     }
 
     companion object {
-        fun parseAll(source: List<String>) = source.map { parse(it) }
-
         fun parse(line: String): InstructionFnl {
             val mnemonic = line.substring(0, 3)
             val operands = line.substring(4)
