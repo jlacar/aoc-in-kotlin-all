@@ -24,9 +24,9 @@ The tests are also organized so that I can run the puzzle solutions separately f
 
 These are links to notes on each of my solutions to [Advent of Code 2015](https://adventofcode.com/2015) using [Kotlin](https://kotlinlang.org).
 
-* [Day 1](README-Day01.md)
+* [Day 1](day01/README-Day01.md)
 * Day 2
-* [Day 3](README-Day03.md)
+* [Day 3](../../../../../../README-Day03.md)
 * Day 4
 * Day 5
 * Day 6
@@ -35,20 +35,20 @@ These are links to notes on each of my solutions to [Advent of Code 2015](https:
 * Day 9
 * Day 10
 * Day 11
-* [Day 12](README-Day12.md)
-* [Day 13](README-Day13.md)
-* [Day 14](README-Day14.md)
-* [Day 15](README-Day15.md)
-* [Day 16](README-Day16.md)
-* [Day 17](README-Day17.md)
-* [Day 18](README-Day18.md)
+* [Day 12](../../../../../../README-Day12.md)
+* [Day 13](../../../../../../README-Day13.md)
+* [Day 14](../../../../../../README-Day14.md)
+* [Day 15](../../../../../../README-Day15.md)
+* [Day 16](../../../../../../README-Day16.md)
+* [Day 17](../../../../../../README-Day17.md)
+* [Day 18](../../../../../../README-Day18.md)
 * Day 19
 * Day 20
 * Day 21
 * Day 22
 * Day 23
 * Day 24
-* [Day 25](README-Day25.md)
+* [Day 25](../../../../../../README-Day25.md)
 
 ## Utilities 
 
