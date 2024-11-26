@@ -1,54 +1,36 @@
 # Advent of Code 2015 - In Kotlin
 
-[Advent of Code](https://adventofcode.com) is an annual programming competition with a Christmas-y theme. It runs during Advent, from December 1st to the 25th.
-
-I'm backtracking to the first AoC set of problems, having already started solving some of the more recent years' puzzles. My goal is to get all fifty stars for each year and solve the puzzles using Kotlin.
-
-I've learned a few lessons since then and I'm applying those learnings here. Also taking some inspiration from [Todd Ginsberg](https://github.com/tginsberg) and the way he approaches solving these problems in Kotlin.
-
-## General approach
-
-I'll be doing Test-Driven Development to solve all of these puzzles, so there should be tests for every solution class. Following my practice in real-world development, I use the tests as a drawing board, a way to experiment with different options, and as a sandbox for experiments.
-
-I'm using the `Solution` interface to define the shape of a solution. The interface defines the `part1()` and `part2()` functions, with the return type specified as a generic parameter. Most of the solutions will be defined as `Solution<Int>` because most of the puzzle answers are numeric.
-
-A common pattern I'm using is that of the companion object as a builder or factory. I'll usually name the factory method as `using` because it reads very naturally when passed in the input. 
-
-You'll see an example of this in the Day 1 test:
-
-    private val day01 = Day01.using(readResource("day01"))
-
-The tests are also organized so that I can run the puzzle solutions separately from the examples. A test class will typically have nested `Examples` and `Solution` classes to house their respective set of tests.
+I'm solving these in 2024 to get ready for this year's event. I had the most difficulty with day 22.
 
 ## Solutions
 
-These are links to notes on each of my solutions to [Advent of Code 2015](https://adventofcode.com/2015) using [Kotlin](https://kotlinlang.org).
+Here are my notes on each of the puzzles and their solutions:
 
-* [Day 1](day01/README.md)
-* Day 2
-* [Day 3](../../../../../../README-Day03.md)
-* Day 4
-* Day 5
-* Day 6
-* Day 7
-* Day 8
-* Day 9
-* Day 10
-* Day 11
-* [Day 12](../../../../../../README-Day12.md)
-* [Day 13](../../../../../../README-Day13.md)
-* [Day 14](../../../../../../README-Day14.md)
-* [Day 15](../../../../../../README-Day15.md)
-* [Day 16](../../../../../../README-Day16.md)
-* [Day 17](../../../../../../README-Day17.md)
-* [Day 18](../../../../../../README-Day18.md)
-* Day 19
-* Day 20
-* Day 21
-* Day 22
-* Day 23
-* Day 24
-* [Day 25](../../../../../../README-Day25.md)
+* &#11088;&#11088; [Day 1](https://adventofcode.com/2015/day/1) - [(code)](day01/Day01.kt) - [(notes)](day01/README.md)
+* &#11088;&#11088; [Day 2](https://adventofcode.com/2015/day/2) - (code) - (notes)
+* &#11088;&#11088; [Day 3](https://adventofcode.com/2015/day/3) - (code) - (notes)
+* &#11088;&#11088; [Day 4](https://adventofcode.com/2015/day/4) - (code) - (notes)
+* &#11088;&#11088; [Day 5](https://adventofcode.com/2015/day/5) - (code) - (notes)
+* &#11088;&#11088; [Day 6](https://adventofcode.com/2015/day/6) - (code) - (notes)
+* &#11088;&#11088; [Day 7](https://adventofcode.com/2015/day/7) - (code) - (notes)
+* &#11088;&#11088; [Day 8](https://adventofcode.com/2015/day/8) - (code) - (notes)
+* &#11088;&#11088; [Day 9](https://adventofcode.com/2015/day/9) - (code) - (notes)
+* &#11088;&#11088; [Day 10](https://adventofcode.com/2015/day/10) - (code) - (notes)
+* &#11088;&#11088; [Day 11](https://adventofcode.com/2015/day/11) - (code) - (notes)
+* &#11088;&#11088; [Day 12](https://adventofcode.com/2015/day/12) - (code) - (notes)
+* &#11088;&#11088; [Day 13](https://adventofcode.com/2015/day/13) - (code) - (notes)
+* &#11088;&#11088; [Day 14](https://adventofcode.com/2015/day/14) - (code) - (notes)
+* &#11088;&#11088; [Day 15](https://adventofcode.com/2015/day/15) - (code) - (notes)
+* &#11088;&#11088; [Day 16](https://adventofcode.com/2015/day/16) - (code) - (notes)
+* &#11088;&#11088; [Day 17](https://adventofcode.com/2015/day/17) - (code) - (notes)
+* &#11088;&#11088; [Day 18](https://adventofcode.com/2015/day/18) - (code) - (notes)
+* &#11088;&#11088; [Day 19](https://adventofcode.com/2015/day/19) - (code) - (notes)
+* &#11088;&#11088; [Day 20](https://adventofcode.com/2015/day/20) - (code) - (notes)
+* &#11088;&#11088; [Day 21](https://adventofcode.com/2015/day/21) - (code) - (notes)
+* &#11088;&#11088; [Day 22](https://adventofcode.com/2015/day/22) - (code) - (notes)
+* &#11088;&#11088; [Day 23](https://adventofcode.com/2015/day/23) - (code) - (notes)
+* &#11035;&#11035; [Day 24](https://adventofcode.com/2015/day/24) - (code) - (notes)
+* &#11035;&#11035; [Day 25](https://adventofcode.com/2015/day/25) - (code) - (notes)
 
 ## Utilities 
 
