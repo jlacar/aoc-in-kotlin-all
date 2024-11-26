@@ -1,18 +1,21 @@
 package lacar.junilu.aoc2015.day23
 
-import lacar.junilu.readPuzzleInput
+class TuringLockFnl(private val instructions: List<InstructionFnl>, val a: Int = 0) {
+    private val initialState = when {
+        a == 0 -> defaultInitialState
+        else -> defaultInitialState + ("a" to a)
+    }
 
-class TuringLockFnl {
+    fun finalState() = generateSequence(initialState) { state ->
+            if (state["pc"]!! >= instructions.size) null
+            else instructions[state["pc"]!!].execute(state)
+        }.last()
+
     companion object {
-        val instructions = InstructionFnl.parseAll(readPuzzleInput("day23"))
+        private val defaultInitialState = mapOf("a" to 0, "b" to 0, "pc" to 0)
 
-        val defaultInitialState = mapOf("a" to 0, "b" to 0, "pc" to 0)
-
-        fun finalState(initialState: Map<String, Int> = defaultInitialState) =
-            generateSequence(initialState) { state ->
-                if (state["pc"]!! >= instructions.size) null
-                else instructions[state["pc"]!!].execute(state)
-            }.last()
+        fun using(gmailProgram: List<String>, a: Int = 0) =
+            TuringLockFnl(InstructionFnl.parseAll(gmailProgram), a = a)
     }
 }
 

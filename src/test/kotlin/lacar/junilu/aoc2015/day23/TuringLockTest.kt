@@ -25,13 +25,12 @@ class TuringLockTest {
     inner class AiGeneratedFunctional {
         @Test
         fun `Part 1 - AI Assistant Generated`() {
-            assertEquals(255, TuringLockFnl.finalState().b)
+            assertEquals(255, TuringLockFnl.using(gmailProgram).finalState().b)
         }
 
         @Test
         fun `Part 2 - AI Assistant Generated`() {
-            assertEquals(334,
-                TuringLockFnl.finalState(TuringLockFnl.defaultInitialState + ("a" to 1)).b)
+            assertEquals(334, TuringLockFnl.using(gmailProgram, a = 1).finalState().b)
         }
     }
 
