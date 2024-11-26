@@ -1,4 +1,4 @@
-package lacar.junilu
+package lacar.junilu.aoc2015.day01
 
 /**
  * AoC 2015 - Day 1: Not Quite Lisp

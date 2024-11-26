@@ -1,12 +1,13 @@
-package lacar.junilu
+package lacar.junilu.aoc2015.day01
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import lacar.junilu.readPuzzleInput
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val day01 = Day01(readPuzzleInput("day01").first())
+private val puzzleDay01 = Day01(readPuzzleInput("day01").first())
 
 class Day01Test {
 
@@ -14,12 +15,12 @@ class Day01Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(280, day01.lastFloor())
+            Assertions.assertEquals(280, puzzleDay01.lastFloor())
         }
 
         @Test
         fun part2() {
-            assertEquals(1797, day01.positionOfFirstTimeInBasement())
+            Assertions.assertEquals(1797, puzzleDay01.positionOfFirstTimeInBasement())
         }
     }
 
@@ -38,7 +39,7 @@ class Day01Test {
             ")())()), -3",
         )
         fun `Last floor should be`(input: String, expectedLevel: Int) {
-            assertEquals(expectedLevel, Day01(input).lastFloor())
+            Assertions.assertEquals(expectedLevel, Day01(input).lastFloor())
         }
 
         @ParameterizedTest(name = "{1} with directions {0}")
@@ -48,7 +49,7 @@ class Day01Test {
             "()))())(()), 3",
         )
         fun `Position for first time in basement should be`(input: String, expectedPosition: Int) {
-            assertEquals(expectedPosition, Day01(input).positionOfFirstTimeInBasement())
+            Assertions.assertEquals(expectedPosition, Day01(input).positionOfFirstTimeInBasement())
         }
     }
 }
