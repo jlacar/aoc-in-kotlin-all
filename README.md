@@ -6,16 +6,16 @@ I'm backtracking to the first AoC set of problems, having already started solvin
 
 ## Events
 
-* [AoC 2015](src/main/kotlin/lacar/junilu/aoc2015/README.md) - 46/50 &#11088;
-* [AoC 2016](src/main/kotlin/lacar/junilu/aoc2016/README.md) - 0/50 &#11088;
-* [AoC 2017](src/main/kotlin/lacar/junilu/aoc2017/README.md) - 0/50 &#11088;
-* [AoC 2018](src/main/kotlin/lacar/junilu/aoc2018/README.md) - 0/50 &#11088;
-* [AoC 2019](src/main/kotlin/lacar/junilu/aoc2019/README.md) - 0/50 &#11088;
-* [AoC 2020](src/main/kotlin/lacar/junilu/aoc2020/README.md) - 0/50 &#11088;
-* [AoC 2021](src/main/kotlin/lacar/junilu/aoc2021/README.md) - 0/50 &#11088;
-* [AoC 2022](src/main/kotlin/lacar/junilu/aoc2022/README.md) - 0/50 &#11088;
-* [AoC 2023](src/main/kotlin/lacar/junilu/aoc2023/README.md) - 0/50 &#11088;
 * [AoC 2024](src/main/kotlin/lacar/junilu/aoc2024/README.md) - 0/50 &#11088;
+* [AoC 2023](src/main/kotlin/lacar/junilu/aoc2023/README.md) - 18/50 &#11088;
+* [AoC 2022](src/main/kotlin/lacar/junilu/aoc2022/README.md) - 22/50 &#11088;
+* [AoC 2021](src/main/kotlin/lacar/junilu/aoc2021/README.md) - 16/50 &#11088;
+* [AoC 2020](src/main/kotlin/lacar/junilu/aoc2020/README.md) - 0/50 &#11088;
+* [AoC 2019](src/main/kotlin/lacar/junilu/aoc2019/README.md) - 0/50 &#11088;
+* [AoC 2018](src/main/kotlin/lacar/junilu/aoc2018/README.md) - 0/50 &#11088;
+* [AoC 2017](src/main/kotlin/lacar/junilu/aoc2017/README.md) - 0/50 &#11088;
+* [AoC 2016](src/main/kotlin/lacar/junilu/aoc2016/README.md) - 0/50 &#11088;
+* [AoC 2015](src/main/kotlin/lacar/junilu/aoc2015/README.md) - 46/50 &#11088;
 
 ## Developer Notes
 
