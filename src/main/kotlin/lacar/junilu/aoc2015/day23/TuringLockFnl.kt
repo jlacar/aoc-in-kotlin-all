@@ -1,5 +1,7 @@
 package lacar.junilu.aoc2015.day23
 
+private const val PROGRAM_COUNTER = "pc"
+
 class TuringLockFnl(private val instructions: List<InstructionFnl>, val a: Int = 0) {
     private val initialState = when {
         a == 0 -> defaultInitialState
@@ -7,12 +9,12 @@ class TuringLockFnl(private val instructions: List<InstructionFnl>, val a: Int =
     }
 
     fun finalState() = generateSequence(initialState) { state ->
-            if (state["pc"]!! >= instructions.size) null
-            else instructions[state["pc"]!!].execute(state)
+            if (state[PROGRAM_COUNTER]!! >= instructions.size) null
+            else instructions[state[PROGRAM_COUNTER]!!].execute(state)
         }.last()
 
     companion object {
-        private val defaultInitialState = mapOf("a" to 0, "b" to 0, "pc" to 0)
+        private val defaultInitialState = mapOf("a" to 0, "b" to 0, PROGRAM_COUNTER to 0)
 
         fun using(source: List<String>, a: Int = 0) = TuringLockFnl(parse(source), a = a)
 
@@ -24,13 +26,13 @@ val Map<String, Int>.b: Int get() = this["b"] ?: throw NoSuchElementException("N
 
 class InstructionFnl(private val mnemonic: String, val register: String = "", val offset: Int = 0) {
     fun execute(state: Map<String, Int>): Map<String, Int> {
-        val programCounter = state.getValue("pc")
+        val pc = state.getValue(PROGRAM_COUNTER)
         val value = state.getOrDefault(register, 0)
-        val nextInstruction = "pc" to (programCounter + 1)
+        val nextInstruction = PROGRAM_COUNTER to (pc + 1)
 
         fun nextState(vararg registers: Pair<String, Int>) = state + setOf(*registers)
         fun setRegisterTo(newValue: Int) = register to newValue
-        fun jumpToOffset(condition: Boolean = true) = "pc" to (programCounter + if (condition) offset else 1)
+        fun jumpToOffset(condition: Boolean = true) = PROGRAM_COUNTER to (pc + if (condition) offset else 1)
 
         return when (mnemonic) {
             "hlf" -> nextState(setRegisterTo(value / 2), nextInstruction)
