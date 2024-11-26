@@ -5,17 +5,22 @@ import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
 
-fun readPuzzleInput(name: String) = Path("src/main/resources/$name.txt").readLines()
+// region ================= General Purpose Output =====================
 
 fun Any?.println() = println(this)
 
 fun Any?.print() = print(this)
 
+// region ================= List Extensions ============================
+
+//**
 val <T> List<T>.head: T
     get() = first()
 
 val <T> List<T>.tail: List<T>
     get() = drop(1)
+
+// region ================= Statistical Functions ======================
 
 /**
  * Calculate permutations of the specified list.
@@ -59,44 +64,6 @@ fun <T> Iterable<T>.combinations(k: Int): Sequence<List<T>> =
         }
     }
 
-/**
- * Converts a string representing a key-value pair into a Pair<String, R>.
- *
- * Use this as a convenient way to create map entries whose values need to be converted
- *
- * Example:
- * <code>
- *      keyValuePair("a: 2", ": ", String::toInt)   // Pair("a", 2)
- * </code>
- */
-fun <R> keyValuePair(item: String, delimiters: String, transform: (String) -> R): Pair<String, R> {
-    val (name, value) = item.split(delimiters)
-    return name to transform(value)
-}
-
-/**
- * Converts a string to a map entry.
- *
- * Use this to
- */
-fun <R> toPropsMap(
-    list: String,
-    itemDelimiter: String,
-    keyValueDelimiter: String,
-    transform: (String) -> R
-): Map<String, R> =
-    list.split(itemDelimiter)
-        .associate { keyValuePair(it, keyValueDelimiter, transform) }
-
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
     .toString(16)
     .padStart(32, '0')
-
-fun comboDemo() {
-    val combos = listOf(1, 2, 3, 4).combinations(2)
-    combos.forEach { println("yielded : $it") }
-}
-
-fun main() {
-    comboDemo()
-}
