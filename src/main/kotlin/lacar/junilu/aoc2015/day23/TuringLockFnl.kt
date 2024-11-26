@@ -30,8 +30,14 @@ class InstructionFnl(private val mnemonic: String, val register: String = "", va
             "tpl" -> state + setOf(register to value * 3, "pc" to state.getValue("pc") + 1)
             "inc" -> state + setOf(register to value + 1, "pc" to state.getValue("pc") + 1)
             "jmp" -> state + ("pc" to state.getValue("pc") + offset)
-            "jie" -> if (value % 2 == 0) state + ("pc" to state.getValue("pc") + offset) else state + ("pc" to state.getValue("pc") + 1)
-            "jio" -> if (value == 1) state + ("pc" to state.getValue("pc") + offset) else state + ("pc" to state.getValue("pc") + 1)
+            "jie" -> when (value % 2) {
+                0 -> state + ("pc" to state.getValue("pc") + offset)
+                else -> state + ("pc" to state.getValue("pc") + 1)
+            }
+            "jio" -> when (value) {
+                1 -> state + ("pc" to state.getValue("pc") + offset)
+                else -> state + ("pc" to state.getValue("pc") + 1)
+            }
             else -> state
         }
     }
