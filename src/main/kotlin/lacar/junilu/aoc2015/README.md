@@ -24,7 +24,7 @@ The tests are also organized so that I can run the puzzle solutions separately f
 
 These are links to notes on each of my solutions to [Advent of Code 2015](https://adventofcode.com/2015) using [Kotlin](https://kotlinlang.org).
 
-* [Day 1](day01/README-Day01.md)
+* [Day 1](day01/README.md)
 * Day 2
 * [Day 3](../../../../../../README-Day03.md)
 * Day 4
