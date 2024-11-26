@@ -24,23 +24,22 @@ val Map<String, Int>.b: Int get() = this["b"] ?: throw NoSuchElementException("N
 
 class InstructionFnl(private val mnemonic: String, val register: String = "", val offset: Int = 0) {
     fun execute(state: Map<String, Int>): Map<String, Int> {
+        val programCounter = state.getValue("pc")
         val value = state.getOrDefault(register, 0)
-        val nextInstruction = "pc" to state.getValue("pc") + 1
-        val jumpToOffset = "pc" to state.getValue("pc") + offset
+        val nextInstruction = "pc" to (programCounter + 1)
+
+        fun nextState(vararg registers: Pair<String, Int>) = state + setOf(*registers)
+        fun setRegisterTo(newValue: Int) = register to newValue
+        fun jumpToOffset(condition: Boolean = true) = "pc" to (programCounter + if (condition) offset else 1)
+
         return when (mnemonic) {
-            "hlf" -> state + setOf(register to value / 2, nextInstruction)
-            "tpl" -> state + setOf(register to value * 3, nextInstruction)
-            "inc" -> state + setOf(register to value + 1, nextInstruction)
-            "jmp" -> state + jumpToOffset
-            "jie" -> when (value % 2) {
-                0 -> state + jumpToOffset
-                else -> state + nextInstruction
-            }
-            "jio" -> when (value) {
-                1 -> state + jumpToOffset
-                else -> state + nextInstruction
-            }
-            else -> state
+            "hlf" -> nextState(setRegisterTo(value / 2), nextInstruction)
+            "tpl" -> nextState(setRegisterTo(value * 3), nextInstruction)
+            "inc" -> nextState(setRegisterTo(value + 1), nextInstruction)
+            "jmp" -> nextState(jumpToOffset())
+            "jie" -> nextState(jumpToOffset(value % 2 == 0 ))
+            "jio" -> nextState(jumpToOffset(value == 1 ))
+            else -> throw IllegalArgumentException("Unknown mnemonic: $mnemonic")
         }
     }
 
