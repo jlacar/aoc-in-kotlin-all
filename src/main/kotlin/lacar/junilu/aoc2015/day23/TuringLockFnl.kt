@@ -25,18 +25,20 @@ val Map<String, Int>.b: Int get() = this["b"] ?: throw NoSuchElementException("N
 class InstructionFnl(private val mnemonic: String, val register: String = "", val offset: Int = 0) {
     fun execute(state: Map<String, Int>): Map<String, Int> {
         val value = state.getOrDefault(register, 0)
+        val nextInstruction = "pc" to state.getValue("pc") + 1
+        val jumpToOffset = "pc" to state.getValue("pc") + offset
         return when (mnemonic) {
-            "hlf" -> state + setOf(register to value / 2, "pc" to state.getValue("pc") + 1)
-            "tpl" -> state + setOf(register to value * 3, "pc" to state.getValue("pc") + 1)
-            "inc" -> state + setOf(register to value + 1, "pc" to state.getValue("pc") + 1)
-            "jmp" -> state + ("pc" to state.getValue("pc") + offset)
+            "hlf" -> state + setOf(register to value / 2, nextInstruction)
+            "tpl" -> state + setOf(register to value * 3, nextInstruction)
+            "inc" -> state + setOf(register to value + 1, nextInstruction)
+            "jmp" -> state + jumpToOffset
             "jie" -> when (value % 2) {
-                0 -> state + ("pc" to state.getValue("pc") + offset)
-                else -> state + ("pc" to state.getValue("pc") + 1)
+                0 -> state + jumpToOffset
+                else -> state + nextInstruction
             }
             "jio" -> when (value) {
-                1 -> state + ("pc" to state.getValue("pc") + offset)
-                else -> state + ("pc" to state.getValue("pc") + 1)
+                1 -> state + jumpToOffset
+                else -> state + nextInstruction
             }
             else -> state
         }
