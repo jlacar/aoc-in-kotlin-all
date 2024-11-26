@@ -2,13 +2,13 @@ package lacar.junilu.aoc2015.day23
 
 class TuringLock(
     private val instructions: List<Instruction>,
-    private val registerSet: MutableMap<String, Int> = mutableMapOf("a" to 0, "b" to 0, "pc" to 0)
+    private val registers: MutableMap<String, Int> = mutableMapOf("a" to 0, "b" to 0, "pc" to 0)
 ) {
-    val a by registerSet
-    val b by registerSet
-    private var pc by registerSet
+    val a by registers
+    val b by registers
+    private var pc by registers
 
-    fun initialize(a: Int): TuringLock = this.also { registerSet["a"] = a }
+    fun initialize(a: Int): TuringLock = this.also { registers["a"] = a }
 
     fun execute() {
         while (pc in instructions.indices) { pc += nextInstructionOffset() }
@@ -16,18 +16,23 @@ class TuringLock(
 
     private fun nextInstructionOffset(): Int {
         val (mnemonic, register, offset) = instructions[pc]
+        val value = valueOf(register)
+
+        fun setRegisterTo(newValue: Int) { registers[register] = newValue }
+        fun jumpToOffset(condition: Boolean = true) = if (condition) offset else 1
+
         return when (mnemonic) {
-            "hlf" -> 1.also { registerSet[register] = valueOf(register) / 2 }
-            "tpl" -> 1.also { registerSet[register] = valueOf(register) * 3 }
-            "inc" -> 1.also { registerSet[register] = valueOf(register) + 1 }
-            "jmp" -> offset
-            "jie" -> if (valueOf(register) % 2 == 0) offset else 1
-            "jio" -> if (valueOf(register) == 1) offset else 1
+            "hlf" -> 1.also { setRegisterTo(value / 2) }
+            "tpl" -> 1.also { setRegisterTo(value * 3) }
+            "inc" -> 1.also { setRegisterTo(value + 1) }
+            "jmp" -> jumpToOffset()
+            "jie" -> jumpToOffset(value % 2 == 0)
+            "jio" -> jumpToOffset(value == 1)
             else -> throw IllegalArgumentException("Unknown mnemonic: $mnemonic")
         }
     }
 
-    private fun valueOf(r: String) = registerSet[r] ?: throw IllegalArgumentException("Unknown register $r")
+    private fun valueOf(r: String) = registers[r] ?: throw IllegalArgumentException("Unknown register $r")
 
     companion object {
         fun load(source: List<String>) = TuringLock(source.map { parse(it) })
