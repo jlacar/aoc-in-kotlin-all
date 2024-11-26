@@ -1,9 +1,8 @@
 package lacar.junilu.aoc2015.day23
 
-class TuringLock(
-    private val instructions: List<Instruction>,
+class TuringLock(private val instructions: List<Instruction>) {
+
     private val registers: MutableMap<String, Int> = mutableMapOf("a" to 0, "b" to 0, "pc" to 0)
-) {
     val a by registers
     val b by registers
     private var pc by registers
@@ -16,7 +15,7 @@ class TuringLock(
 
     private fun nextInstructionOffset(): Int {
         val (mnemonic, register, offset) = instructions[pc]
-        val value = valueOf(register)
+        val value = if (register.isNotBlank()) valueOf(register) else 0
 
         fun setRegisterTo(newValue: Int) { registers[register] = newValue }
         fun jumpToOffset(condition: Boolean = true) = if (condition) offset else 1
