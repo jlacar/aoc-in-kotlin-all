@@ -1,13 +1,14 @@
-package lacar.junilu
+package lacar.junilu.aoc2015.day02
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import lacar.junilu.readPuzzleInput
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val day02 = Day02.using(readPuzzleInput("day02"))
-private val day02gh = Day02.using(readPuzzleInput("day02-gh"))
+private val day02 = Day02.using(readPuzzleInput("aoc2015/day02"))
+private val day02gh = Day02.using(readPuzzleInput("aoc2015/day02-gh"))
 
 class Day02Test {
 
@@ -15,14 +16,14 @@ class Day02Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(1588178, day02.part1())
-            assertEquals(1586300, day02gh.part1())
+            Assertions.assertEquals(1588178, day02.part1())
+            Assertions.assertEquals(1586300, day02gh.part1())
         }
 
         @Test
         fun part2() {
-            assertEquals(3783758, day02.part2())
-            assertEquals(3737498, day02gh.part2())
+            Assertions.assertEquals(3783758, day02.part2())
+            Assertions.assertEquals(3737498, day02gh.part2())
         }
     }
 
@@ -36,7 +37,7 @@ class Day02Test {
         )
         fun part1(w: Int, l: Int, h: Int, expectedArea: Int) {
             val dimensions = listOf(w, l, h)
-            assertEquals(expectedArea, Day02(listOf(dimensions)).part1())
+            Assertions.assertEquals(expectedArea, Day02(listOf(dimensions)).part1())
         }
 
         @ParameterizedTest(name = "{0}x{1}x{2} needs {3} length of ribbon")
@@ -46,7 +47,7 @@ class Day02Test {
         )
         fun part2(w: Int, l: Int, h: Int, expectedLength: Int) {
             val dimensions = listOf(w, l, h)
-            assertEquals(expectedLength, Day02(listOf(dimensions)).part2())
+            Assertions.assertEquals(expectedLength, Day02(listOf(dimensions)).part2())
         }
     }
 }

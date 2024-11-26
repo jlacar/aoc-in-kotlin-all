@@ -15,7 +15,7 @@ I've learned quite a few lessons since I started learning Kotlin by solving AoC 
 
 ## Acknowledgements
 
-I want to acknowledge and thank [Eric Wastl](was.tl), creator and maintainer of Advent of Code. I encourage you to donate and support Eric so he can continue the awesome work of bringing joy to countless developers every December. May his project continue to grow and prosper.
+I want to acknowledge and thank [Eric Wastl](https://was.tl), creator and maintainer of Advent of Code. I encourage you to donate and support Eric so he can continue the awesome work of bringing joy to countless developers every December. May his project continue to grow and prosper.
 
 ## Events
 
