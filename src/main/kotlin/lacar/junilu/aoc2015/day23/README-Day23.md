@@ -1,10 +1,16 @@
-# Day 23: Opening the Turing Lock
+_# Day 23: Opening the Turing Lock
+
+## Approaches
+
+### Using a `Map` to model the registers
+
+### Using a data class to model the registers
+
+## AI Assistant Notes
 
 I decided to see how the JetBrains AI Assistant might help me with this puzzle. Overall, I think it did a fairly decent job. There's clearly potential for the AI Assistant to significantly improve developer productivity. Some of the things it did also showed that a competent human programmer is still needed.
 
 When prompted, the AI Assistant generated some fairly decent code that, with a few tweaks and corrections, calculated the correct answer to part 1 of the puzzle.
-
-## AI Assistant Notes
 
 One of the useful things the AI Assistant did was coming up with elements of the solution that proved to be very useful.
 
