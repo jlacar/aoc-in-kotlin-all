@@ -56,8 +56,8 @@ Arlo also adds special characters to the prefix as "qualifiers". I'm going to us
 I've learned quite a few lessons since I started learning Kotlin by solving AoC puzzles. I couldn't have done it without help and inspiration from others though so I want to take a moment to acknowledge the folks who are much smarter and better than me in Kotlin and in programming in general.
 
 * [Todd Ginsberg](https://github.com/tginsberg) - I saw some posts from Todd on Reddit and the Kotlin programs he writes are generally very clear and elegant.
-* Andrew Pickett - I know Andrew from work. He's a beast. He does his AoC in Python as far as I can tell but his solutions are still good examples to learn from.
-* Stephan van Hulst - A fellow moderator at [CodeRanch](https://coderanch.com), Stephan is a great programmer and always has great takes on problems and how they might be solved in Kotlin or whatever language he's using at the moment.
+* [Andrew Pickett](https://github.com/andrewpickett) - I know Andrew from work. He's a beast. As far as I can tell, he got all the stars. If you don't know what that means, he's solved _ALL_ the puzzles from when Advent of Code started in 2015. So it bears saying again, when it comes to AoC, Andrew is a beast. He does his solutions in Python as far as I can tell but they are still really good examples to learn from.
+* Stephan van Hulst - Stephan is a fellow moderator at [CodeRanch](https://coderanch.com). He's a really good programmer. He always has good takes on problems and how they might be solved in Kotlin or whatever language he's using at the moment.
 * _(more to follow)_
 
 ## Acknowledgements
