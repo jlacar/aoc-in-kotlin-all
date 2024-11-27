@@ -51,6 +51,12 @@ Arlo also adds special characters to the prefix as "qualifiers". I'm going to us
 |      `::`      | Changes include broken tests                       |
 |      `**`      | No automated tests, or unfinished implementation   |
 
+#### Examples of semantic commit messages
+
+**Feature**
+
+
+
 ## Sources of inspiration
 
 I've learned quite a few lessons since I started learning Kotlin by solving AoC puzzles. I couldn't have done it without help and inspiration from others though so I want to take a moment to acknowledge the folks who are much smarter and better than me in Kotlin and in programming in general.
