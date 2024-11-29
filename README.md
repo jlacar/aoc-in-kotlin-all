@@ -15,7 +15,7 @@ I'm backtracking to the first AoC set of problems, having already started solvin
 * [AoC 2018](src/main/kotlin/lacar/junilu/aoc2018/README.md) - 0/50 &#11088;
 * [AoC 2017](src/main/kotlin/lacar/junilu/aoc2017/README.md) - 0/50 &#11088;
 * [AoC 2016](src/main/kotlin/lacar/junilu/aoc2016/README.md) - 0/50 &#11088;
-* [AoC 2015](src/main/kotlin/lacar/junilu/aoc2015/README.md) - 46/50 &#11088;
+* [AoC 2015](src/main/kotlin/lacar/junilu/aoc2015/README.md) - 48/50 &#11088;
 
 ## Developer Notes
 

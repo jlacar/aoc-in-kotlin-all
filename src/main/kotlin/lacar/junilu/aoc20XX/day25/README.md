@@ -1,4 +1,4 @@
-# Day X - (title)
+# AoC 20XX - Day X: (title)
 
 ## Notes
 

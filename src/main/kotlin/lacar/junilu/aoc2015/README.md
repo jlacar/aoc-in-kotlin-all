@@ -29,7 +29,7 @@ Here are my notes on each of the puzzles and their solutions:
 * &#11088;&#11088; [Day 21](https://adventofcode.com/2015/day/21) - (code) - (notes)
 * &#11088;&#11088; [Day 22](https://adventofcode.com/2015/day/22) - (code) - (notes)
 * &#11088;&#11088; [Day 23](https://adventofcode.com/2015/day/23) - (code) - (notes)
-* &#11035;&#11035; [Day 24](https://adventofcode.com/2015/day/24) - (code) - (notes)
+* &#11088;&#11088; [Day 24](https://adventofcode.com/2015/day/24) - [(code)](day24/Day24.kt) - [(notes)](day24/README.md)
 * &#11035;&#11035; [Day 25](https://adventofcode.com/2015/day/25) - (code) - (notes)
 
 ## Utilities 
