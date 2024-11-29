@@ -1,10 +1,8 @@
 package lacar.junilu.aoc2015.day24
 
 import lacar.junilu.combinations
-import lacar.junilu.println
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -39,10 +37,15 @@ class Day24Test {
     }
 
     @Nested
-    inner class `Solution - Part 1` {
+    inner class `Solutions` {
         @Test
-        fun `for GitHub input`() {
-            assertEquals(11266889531, Day24(puzzleInputForGitHub).smallestQuantumEntanglement())
+        fun `Part 1 for GitHub input`() {
+            assertEquals(11266889531, Day24(puzzleInputForGitHub).smallestQuantumEntanglement(3))
+        }
+
+        @Test
+        fun `Part 2 for GitHub input`() {
+            assertEquals(77387711, Day24(puzzleInputForGitHub).smallestQuantumEntanglement(4))
         }
 
         // Exploratory code was in main (34ba86877bc8bc19430ec888597a542532d8ebed)

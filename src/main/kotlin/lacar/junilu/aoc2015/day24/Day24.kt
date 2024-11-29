@@ -8,8 +8,8 @@ import lacar.junilu.combinations
  * https://adventofcode.com/2015/day/24
  */
 class Day24(private val weights: List<Int>) {
-    fun smallestQuantumEntanglement(): Long {
-        val balancedWeight = weights.sum() / 3
+    fun smallestQuantumEntanglement(numberOfGroups: Int): Long {
+        val balancedWeight = weights.sum() / numberOfGroups
 
         val smallestPossible = (2..weights.size).first { n ->
             weights.takeLast(n).sum() >= balancedWeight
