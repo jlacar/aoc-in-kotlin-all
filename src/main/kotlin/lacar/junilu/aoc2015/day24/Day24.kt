@@ -7,7 +7,7 @@ import lacar.junilu.combinations
  *
  * https://adventofcode.com/2015/day/24
  */
-class Day24(val weights: List<Int>) {
+class Day24(private val weights: List<Int>) {
     fun smallestQuantumEntanglement(): Long {
         val balancedWeight = weights.sum() / 3
 
