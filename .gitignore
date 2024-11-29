@@ -15,7 +15,7 @@ build/
 out/
 
 ### Source files
-**/src/main/resources/*.txt
+**/src/main/resources/**/*.txt
 !**/src/main/**/out/
 !**/src/test/**/out/
 
