@@ -1,8 +1,8 @@
-# Advent of Code in Kotlin - All events from 2015
+# Advent of Code in Kotlin - All Events
 
-[Advent of Code](https://adventofcode.com) is an annual programming competition with a Christmas-y theme. It runs during Advent, from December 1st to the 25th.
+[Advent of Code](https://adventofcode.com) is an annual programming competition with a Christmas-y theme. It runs from December 1st to the 25th.
 
-I'm backtracking to the first AoC set of problems, having already started solving some of the more recent years' puzzles. My goal is to get all fifty stars for each year and solve the puzzles using Kotlin. This repository is a record of this multi-year exercise.
+I'm slowly working my way through all the AoC problems starting for the first year it ran in 2015. My goal is to get all fifty stars for each year and solve the puzzles using Kotlin. This repository is a record of this multi-year exercise.
 
 ## Events
 
@@ -47,7 +47,7 @@ Arlo also adds special characters to the prefix as "qualifiers". I'm going to us
 
 | Qualifier Mark | Intention                                        |
 |:--------------:|:-------------------------------------------------|
-|      `++`      | Changes with new passing tests                   |"
+|      `++`      | Changes with new passing tests                   |
 |      `!!`      | Changes with existing tests passing              |
 |      `%%`      | Changes with broken tests                        |
 |      `**`      | No automated tests, or unfinished implementation |
