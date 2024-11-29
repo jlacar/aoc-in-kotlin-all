@@ -1,5 +1,7 @@
 # Day 24 - It Hangs in the Balance
 
+Puzzle Page: https://adventofcode.com/2015/day/24
+
 ## Approach
 
 ### Assumptions (verified with tests)
