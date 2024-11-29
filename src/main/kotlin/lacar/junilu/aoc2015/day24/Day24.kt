@@ -21,9 +21,9 @@ class Day24(private val weights: List<Int>) {
 
         return weights.combinations(smallestGroupSize)
             .filter { it.sum() == balancedWeight }
-            .minOf { quantumEntanglement(it) }
+            .minOf { it.quantumEntanglement() }
     }
 
-    private fun quantumEntanglement(groupWeights: List<Int>) =
-        groupWeights.map(Int::toLong).reduce(Long::times)
+    private fun List<Int>.quantumEntanglement() =
+        map(Int::toLong).reduce(Long::times)
 }
