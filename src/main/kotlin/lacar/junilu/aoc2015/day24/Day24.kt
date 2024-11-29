@@ -1,13 +1,29 @@
 package lacar.junilu.aoc2015.day24
 
+import lacar.junilu.combinations
+
 /**
  * AoC 2015 - Day 24: It Hangs in the Balance
  *
  * https://adventofcode.com/2015/day/24
  */
 class Day24(val weights: List<Int>) {
+    fun smallestQuantumEntanglement(): Long {
+        val balancedWeight = weights.sum() / 3
 
-    companion object {
-        fun using(input: List<String>) = Day24(input.map { it.toInt() })
+        val smallestPossible = (2..weights.size).first { n ->
+            weights.takeLast(n).sum() >= balancedWeight
+        }
+
+        val smallestGroupSize = (smallestPossible .. weights.size).first { groupSize ->
+            weights.combinations(groupSize).filter { it.sum() == balancedWeight }.any()
+        }
+
+        return weights.combinations(smallestGroupSize)
+            .filter { it.sum() == balancedWeight }
+            .minOf { quantumEntanglement(it) }
     }
+
+    private fun quantumEntanglement(groupWeights: List<Int>) =
+        groupWeights.map(Int::toLong).reduce(Long::times)
 }

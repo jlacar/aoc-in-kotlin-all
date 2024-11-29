@@ -62,6 +62,15 @@ fun <T> Iterable<T>.combinations(k: Int): Sequence<List<T>> =
         }
     }
 
+/**
+ * Returns the product of all elements that match the given [predicate].
+ * @param [predicate] function that determines if an element should be included in the product. The default always returns `true`.
+ * @throws NoSuchElementException if the list is empty.
+ */
+fun List<Int>.product(predicate: (Int) -> Boolean = { true }): Int {
+    return filter(predicate).reduce { acc, i -> acc * i }
+}
+
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
     .toString(16)
     .padStart(32, '0')
