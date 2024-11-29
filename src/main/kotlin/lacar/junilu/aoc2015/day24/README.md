@@ -30,8 +30,12 @@ Had to change return type to Long because Int wasn't big enough to hold the prod
 
 ## Discoveries
 
-### Know when to `fold`, know when to `reduce`
+### Look for ways to simplify chains of calls
 
-(AI) The `reduce` function uses the first element of the collection as the initial value for the accumulator. The `fold` function is passed the initial value.
+#### `reduce()` might be simpler than `fold()`
+
+(AI) The `reduce` function uses the first element of the collection as the initial value for the accumulator. The `fold` function needs to be passed the initial value.
+
+#### Combine `filter()` with any operation after it that takes a predicate 
 
 A call to `filter{ predicate }.any()` can be simplified to `any{ predicate }`
