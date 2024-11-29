@@ -1,24 +1,17 @@
 package lacar.junilu.aoc2015.day24
 
-import lacar.junilu.combinations
 import lacar.junilu.readPuzzleInput
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 private val puzzleInputForGitHub = readPuzzleInput("aoc2015/day24-gh").map { it.toInt() }
 
 class Day24Test {
-
-    private fun List<Int>.balancedWeight(compartments: Int = 3) = sum() / compartments
-    private val List<Int>.isValidInput get() = sum() % 3 == 0
-
-    private fun List<Int>.isBalancedWeightGroup(): Boolean {
-        val rest = this - this.toSet()
-        return this.sum() == balancedWeight() && rest.sum() == balancedWeight() * 2
-    }
 
     @Nested
     inner class Assumptions {
@@ -37,7 +30,7 @@ class Day24Test {
     }
 
     @Nested
-    inner class `Solutions` {
+    inner class Solutions {
         @Test
         fun `Part 1 for GitHub input`() {
             assertEquals(11266889531, Day24(puzzleInputForGitHub).smallestQuantumEntanglement(3))
@@ -51,20 +44,10 @@ class Day24Test {
         // Exploratory code was in main (34ba86877bc8bc19430ec888597a542532d8ebed)
     }
 
-    @Nested
-    inner class `Part 1 Example` {
-        private val numbers = listOf(1, 2, 3, 4, 5, 7, 8, 9, 10, 11).reversed()
-
-        @Test
-        fun `example list is valid`() {
-            assertTrue(numbers.isValidInput)
-        }
-
-        @Test
-        fun `combinations of 2 should not be empty`() {
-            numbers.combinations(2)
-                .filter { it.isBalancedWeightGroup() }
-                .forEach { println("$it ${it.sum()} ${numbers - it} ${(numbers - it).sum()}") }
-        }
+    @ParameterizedTest(name = "{0} compartments")
+    @CsvSource("3, 99", "4, 44")
+    fun `Part 1 and 2 - Example weights `(numberOfCompartments: Int, expectedQE: Long) {
+        val day24 = Day24((1..5).toList() + (7..11).toList())
+        assertEquals(expectedQE, day24.smallestQuantumEntanglement(numberOfCompartments))
     }
 }
