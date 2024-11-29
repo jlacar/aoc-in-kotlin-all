@@ -34,9 +34,9 @@ Here are my notes on each of the puzzles and their solutions:
 
 ## Utilities 
 
-A few of the problems required calculating permutations and combinations. I found [one implementation of combinations that was workable](https://inventwithpython.com/recursion/chapter6.html) written in Python. Converting to Kotlin was fairly straightforward. 
+A few of the problems required calculating permutations and combinations. I found [implementation of permutations and combinations that were workable](https://inventwithpython.com/recursion/chapter6.html) written in Python. Converting to Kotlin was fairly straightforward. 
 
-This is the stripped-down Python code, without the original print statements:
+This is the stripped-down Python code for permutations, without the original print statements:
 
     def getPerms(chars, indent=0):
         if len(chars) == 1:
@@ -63,7 +63,7 @@ I added a couple of List extension properties, `head` and `tail`. I got these fr
     val <T> List<T>.tail: List<T>
         get() = drop(1)
 
-I also made `permutations()` an extions function of `List<T>`:
+I also made `permutations()` an extionsion function of `List<T>`:
 
     fun <T> List<T>.permutations(): List<List<T>> { ... }
 
