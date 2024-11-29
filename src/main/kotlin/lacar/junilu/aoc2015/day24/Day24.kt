@@ -11,11 +11,11 @@ class Day24(private val weights: List<Int>) {
     fun smallestQuantumEntanglement(numberOfGroups: Int): Long {
         val balancedWeight = weights.sum() / numberOfGroups
 
-        val smallestPossible = (2..weights.size).first { n ->
+        val fewestPossiblePackages = (2..weights.size).first { n ->
             weights.takeLast(n).sum() >= balancedWeight
         }
 
-        val smallestGroupSize = (smallestPossible .. weights.size).first { groupSize ->
+        val smallestGroupSize = (fewestPossiblePackages .. weights.size).first { groupSize ->
             weights.combinations(groupSize).filter { it.sum() == balancedWeight }.any()
         }
 
