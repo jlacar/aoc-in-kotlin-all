@@ -1,4 +1,4 @@
-package lacar.junilu
+package lacar.junilu.aoc2015.day06
 
 import kotlin.math.max
 

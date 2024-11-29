@@ -1,4 +1,4 @@
-package lacar.junilu
+package lacar.junilu.aoc2015.day04
 
 import java.security.MessageDigest
 
