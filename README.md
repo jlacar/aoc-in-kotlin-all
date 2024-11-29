@@ -29,27 +29,28 @@ A note on my general approach to these problems. I'm not generally going for bre
 
 ### Semantic Commit Messages
 
-I'm using a modified form of [sematic commit messages](https://joshbuchea/semantic-commit-messages.md) that's greatly influenced by [Arlo Belshee's Commit Notation](https:github.com/arlobelshee/ArlosCommitNotation).
+I'm using a modified form of [sematic commit messages](https://joshbuchea/semantic-commit-messages.md) that's greatly influenced by [Arlo Belshee's Commit Notation](https://github.com/arlobelshee/ArlosCommitNotation).
 
-| Prefix  | Name          | Intention                                   |
-|:-------:|:--------------|:--------------------------------------------|
-| `f` `F` | Feature       | New feature or functionality                |
-| `b` `B` | Bugfix        | Bug fix                                     |
-| `r` `R` | Refactoring   | Refactoring code, both prod and test        |
-| `d` `D` | Documentation | Adding/changing documentation               |
-| `t` `T` | Test          | Adding missing tests, refactoring tests     |
-| `s` `S` | Style         | Formatting, project structure, organization |
-| `c` `C` | Chore         | Updating grunt tasks, etc.; no code changes |
+| Prefix  | Name            | Intention                                   |
+|:-------:|:----------------|:--------------------------------------------|
+| `f` `F` | Feature         | New feature or functionality                |
+| `b` `B` | Bugfix          | Bug fix                                     |
+| `r` `R` | Refactoring     | Refactoring code, both prod and test        |
+| `d` `D` | Documentation   | Adding/changing documentation               |
+| `t` `T` | Test            | Adding missing tests, refactoring tests     |
+| `s` `S` | Structure/Style | Formatting, project structure, organization |
+| `c` `C` | Chore           | Updating grunt tasks, etc.; no code changes |
 
 Arlo uses lowercase vs. Uppercase prefix to signal the risk level: lowercase indicates less risk involved than uppercase prefix.
 
 Arlo also adds special characters to the prefix as "qualifiers". I'm going to use these qualifiers:
 
-| Qualifier Mark | Intention                                          |
-|:--------------:|:---------------------------------------------------|
-|      `!!`      | Changes include tests for new behavior             |
-|      `::`      | Changes include broken tests                       |
-|      `**`      | No automated tests, or unfinished implementation   |
+| Qualifier Mark | Intention                                        |
+|:--------------:|:-------------------------------------------------|
+|      `++`      | Changes with new passing tests                   |"
+|      `!!`      | Changes with existing tests passing              |
+|      `%%`      | Changes with broken tests                        |
+|      `**`      | No automated tests, or unfinished implementation |
 
 ## Sources of inspiration
 
