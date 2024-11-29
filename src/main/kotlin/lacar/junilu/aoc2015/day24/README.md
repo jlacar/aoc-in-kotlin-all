@@ -2,6 +2,8 @@
 
 Puzzle Page: https://adventofcode.com/2015/day/24
 
+Code: [solution](Day24.kt) - [test](../../../../../../test/kotlin/lacar/junilu/aoc2015/day24/Day24Test.kt)
+
 ## Approach
 
 ### Assumptions (verified with tests)
