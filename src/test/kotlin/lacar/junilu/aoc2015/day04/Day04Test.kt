@@ -1,5 +1,6 @@
 package lacar.junilu
 
+import lacar.junilu.aoc2015.day04.Day04
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
