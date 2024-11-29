@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 private val puzzleDay01 = Day01(readPuzzleInput("aoc2015/day01").first())
 
-class Day01Test {
+class Day25Test {
 
     @Nested
     inner class Solution {
