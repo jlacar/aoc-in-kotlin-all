@@ -20,7 +20,7 @@ QE is calculated by multiplying all the numbers in the group.
 
 For Part 1, the number of compartments was hard-coded to 3.
 
-For Part 2, the number of compartments was parameterized. Adding a parameter with a default value of 3 made this easy.
+For Part 2, the number of compartments was parameterized. Adding a parameter with a default value of 3 made this easy. However, the default of 3 doesn't make much sense and the associated change to part 1 was small (only the call in the test was affected) so I decided to make the parameter mandatory.
 
 Had to change return type to Long because Int wasn't big enough to hold the product - negative QEs indicated overflow.
 
