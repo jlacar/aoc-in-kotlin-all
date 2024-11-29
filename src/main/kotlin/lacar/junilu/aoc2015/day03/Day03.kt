@@ -1,6 +1,4 @@
-package lacar.junilu
-
-private data class HouseLocation(val row: Int, val col: Int)
+package lacar.junilu.aoc2015.day03
 
 /**
  * AoC 2015 - Day 3: Perfectly Spherical Houses in a Vacuum
@@ -29,4 +27,7 @@ class Day03(private val directions: String) {
                 else -> currentLocation.copy(row = row - 1)
             }
         }.toSet()
+
 }
+
+data class HouseLocation(val row: Int, val col: Int)

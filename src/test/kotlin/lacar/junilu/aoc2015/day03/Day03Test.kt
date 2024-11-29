@@ -1,12 +1,13 @@
-package lacar.junilu
+package lacar.junilu.aoc2015.day03
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import lacar.junilu.readPuzzleInput
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val puzzleInputDay03 = readPuzzleInput("day03").first()
+private val puzzleInputDay03forGitHub = readPuzzleInput("aoc2015/day03-gh").first()
 
 class
 Day03Test {
@@ -15,12 +16,12 @@ Day03Test {
     inner class Solution {
         @Test
         fun part1() {
-            assertEquals(2565, Day03(puzzleInputDay03).housesSantaVisited())
+            Assertions.assertEquals(2565, Day03(puzzleInputDay03forGitHub).housesSantaVisited())
         }
 
         @Test
         fun part2() {
-            assertEquals(2639, Day03(puzzleInputDay03).housesSantaOrRobotSantaVisited())
+            Assertions.assertEquals(2639, Day03(puzzleInputDay03forGitHub).housesSantaOrRobotSantaVisited())
         }
     }
 
@@ -34,7 +35,7 @@ Day03Test {
             "^v^v^v^v^v, 2",
         )
         fun part1(directions: String, expectedCount: Int) {
-            assertEquals(expectedCount, Day03(directions).housesSantaVisited())
+            Assertions.assertEquals(expectedCount, Day03(directions).housesSantaVisited())
         }
 
         @ParameterizedTest(name = "{0} should visit {1} houses")
@@ -44,7 +45,7 @@ Day03Test {
             "^v^v^v^v^v, 11",
         )
         fun part2(directions: String, expectedCount: Int) {
-            assertEquals(expectedCount, Day03(directions).housesSantaOrRobotSantaVisited())
+            Assertions.assertEquals(expectedCount, Day03(directions).housesSantaOrRobotSantaVisited())
         }
     }
 }
