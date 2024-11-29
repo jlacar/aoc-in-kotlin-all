@@ -4,6 +4,7 @@ import lacar.junilu.combinations
 import lacar.junilu.println
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -44,36 +45,7 @@ class Day24Test {
             assertEquals(11266889531, Day24(puzzleInputForGitHub).smallestQuantumEntanglement())
         }
 
-        @Test
-        fun `explore solution`() {
-            "balanced weight: ${puzzleInputForGitHub.balancedWeight()}".println()
-
-            val groups = puzzleInputForGitHub.combinations(6)
-                .filter { it.sum() == puzzleInputForGitHub.balancedWeight() }
-
-            groups.minOf {
-                "size = ${it.size}, $it".println()
-                val longs = it.map(Int::toLong)
-                longs.reduce { acc, i -> acc * i }
-            }.also { "min = $it".println() }
-
-//            for (k in 9..12) {
-//                val groups = puzzleInput2015Day24.combinations(k)
-//                    .filter { it.sum() == puzzleInput2015Day24.balancedWeight }
-//                    .first()
-
-//                println("k = $k, smallest group: ${groups.size}")
-
-//                groups.map { it.map(Int::toLong).product() }
-//                    .min()
-//                    .println()
-//            }
-//                groups.minOf { it.product() }.let { println(it) }
-
-//                    .minOf { it.reduce { acc, l -> acc * l } }
-//                    .forEach { val rem = puzzleInput2015Day24 - it; "QE = ${it.product()} $it ${it.sum()} $rem ${rem.sum()}".println() }
-//                    .minOf { it.product() }
-        }
+        // Exploratory code was in main (34ba86877bc8bc19430ec888597a542532d8ebed)
     }
 
     @Nested
