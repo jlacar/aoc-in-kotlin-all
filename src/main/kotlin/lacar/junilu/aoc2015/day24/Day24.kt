@@ -16,7 +16,7 @@ class Day24(private val weights: List<Int>) {
         }
 
         val smallestGroupSize = (fewestPossiblePackages .. weights.size).first { groupSize ->
-            weights.combinations(groupSize).filter { it.sum() == balancedWeight }.any()
+            weights.combinations(groupSize).any { it.sum() == balancedWeight }
         }
 
         return weights.combinations(smallestGroupSize)
