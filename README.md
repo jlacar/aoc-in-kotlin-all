@@ -57,6 +57,7 @@ I've learned quite a few lessons since I started learning Kotlin by solving AoC 
 * [Todd Ginsberg](https://github.com/tginsberg) - I saw some posts from Todd on Reddit and the Kotlin programs he writes are generally very clear and elegant.
 * [Andrew Pickett](https://github.com/andrewpickett) - I know Andrew from work. He's a beast. As far as I can tell, he got all the stars. If you don't know what that means, he's solved _ALL_ the puzzles from when Advent of Code started in 2015. So it bears saying again, when it comes to AoC, Andrew is a beast. He does his solutions in Python as far as I can tell but they are still really good examples to learn from.
 * Stephan van Hulst - Stephan is a fellow moderator at [CodeRanch](https://coderanch.com). He's a really good programmer. He always has good takes on problems and how they might be solved in Kotlin or whatever language he's using at the moment.
+* Other folks who hang out in the [Programming Diversions forum at CodeRanch.com](https://coderanch.com/f/71/Programming): Liutauras Vilda, Tim Cooke, Mike Simmons, Piet Souris, and others who have provided feedback, insights, and inspiration.
 * _(more to follow)_
 
 ## Acknowledgements
