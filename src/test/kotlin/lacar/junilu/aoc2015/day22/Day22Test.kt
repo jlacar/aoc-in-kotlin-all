@@ -13,7 +13,7 @@ private object PuzzleInput {
     // using modified puzzle input format:
     // gmail = points: ??, damage: ??
     // github = points: ??, damage: ??
-    val bossFor = readPuzzleInput("day22").associate { line ->
+    val bossFor = readPuzzleInput("aoc2015/day22").associate { line ->
         val (bossId, bossProps) = line.split(" = ")
         val props = toPropsMap(bossProps, itemDelimiter = ", ", keyValueDelimiter = ": ", transform = String::toInt)
 

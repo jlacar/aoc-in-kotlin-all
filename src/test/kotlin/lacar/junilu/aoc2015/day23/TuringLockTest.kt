@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val gmailProgram = readPuzzleInput("day23")
-private val githubProgram = readPuzzleInput("day23-gh")
+private val gmailProgram = readPuzzleInput("aoc2015/day23")
+private val githubProgram = readPuzzleInput("aoc2015/day23-gh")
 
 /**
  * AoC 2015 - Day 23: Opening the Turing Lock

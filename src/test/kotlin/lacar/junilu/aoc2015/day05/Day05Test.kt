@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-private val puzzleInputDay05 = readPuzzleInput("day05")
+private val puzzleInputDay05 = readPuzzleInput("aoc2015/day05")
 
 class Day05Test {
     @Nested
