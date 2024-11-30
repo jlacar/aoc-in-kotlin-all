@@ -1,8 +1,9 @@
-# AoC 20XX Day X - (title)
+# AoC 20XX: Day X - (title)
+**!!! _CHANGE ME_ !!!**
 
-Puzzle Page: https://adventofcode.com/2015/day/1 **CHANGE ME**
+Puzzle Page: **!!! _CHANGE ME_ !!!** https://adventofcode.com/2015/day/1 
 
-Code: [solution](day1/Day01.kt) | test
+Code: [solution](day1/Day01.kt) | **!!! _CHANGE ME_ !!!** [test](../../../../../../test/kotlin/lacar/junilu/aoc2015/day01/Day01Test.kt)
 
 ## Approach
 
