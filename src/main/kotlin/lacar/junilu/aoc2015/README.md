@@ -30,7 +30,7 @@ Here are my notes on each of the puzzles and their solutions:
 * &#11088;&#11088; [Day 22](day22/.)
 * &#11088;&#11088; [Day 23](day23/.)
 * &#11088;&#11088; [Day 24](day24/.)
-* &#11035;&#11035; [Day 25](day25/.)
+* &#11088;&#11088; [Day 25](day25/.)
 
 ## Utilities 
 
