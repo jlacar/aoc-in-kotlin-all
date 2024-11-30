@@ -21,15 +21,13 @@ I'm slowly working my way through all the AoC problems starting for the first ye
 
 ### Some over-engineering expected
 
-I'm not much of a competitive programmer. I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I'm not playing [code golf](https://code.golf) with any of these solutions but I am striving for clean code where "clean" means it's easy to understand and work with. That includes having at least one automated test for each solution.
+I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than average. I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I generally don't play [code golf](https://code.golf) with any of these solutions but as I strive for clean code, where "clean" means it's easy to understand and work with, I often find that it's less confusing and helps me solve the problem faster. This includes writing at least one automated test for each solution.
 
-Having said that, you might note that I sometimes go overboard and end up with something that looks over-engineered, which it probably is. Feel free to add a comment or two to call out anything you might question as good practice. 
-
-A note on my general approach to these problems. I'm not generally going for brevity but rather clarity. Sometimes I end up with clear code that also brief. Oftentimes, I'll also refactor for clarity and end up with more lines than I started with. 
+Having said that, you might note that I sometimes go overboard and end up with something that looks over-engineered, which it probably is. My general approach to these problems is going for clarity rather brevity. Sometimes I refactor for clarity and get less code. Other times, I end up with more code than I started. Feel free to add a comment or two to call out anything you might question as good practice. If you have suggestions on alternative approaches, that would be even better and greatly appreciated.
 
 ### Semantic Commit Messages
 
-I'm using a modified form of [sematic commit messages](https://joshbuchea/semantic-commit-messages.md) that's greatly influenced by [Arlo Belshee's Commit Notation](https://github.com/arlobelshee/ArlosCommitNotation).
+I'm using a modified form of [semantic commit messages](https://joshbuchea/semantic-commit-messages.md) that's greatly influenced by [Arlo Belshee's Commit Notation](https://github.com/arlobelshee/ArlosCommitNotation).
 
 | Prefix  | Name            | Intention                                   |
 |:-------:|:----------------|:--------------------------------------------|
