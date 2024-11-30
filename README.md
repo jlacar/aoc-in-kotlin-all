@@ -2,7 +2,7 @@
 
 [Advent of Code](https://adventofcode.com) is an annual programming competition with a Christmas-y theme. It runs from December 1st to the 25th.
 
-I'm slowly working my way through all the AoC problems starting for the first year it ran in 2015. My goal is to get all fifty stars for each year and solve the puzzles using Kotlin. This repository is a record of this multi-year exercise.
+I'm slowly working my way through all the AoC puzzles starting from the first year it ran in 2015. My goal is to get all fifty stars for each year using Kotlin. This repository is a record of this multi-year exercise.
 
 ## Events
 
