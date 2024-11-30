@@ -7,11 +7,12 @@ package lacar.junilu.aoc2015.day25
  */
 
 object Day25 {
-    fun codeAt(row: Int, col: Int): Long = codes().take(ordinalFor(row, col)).last()
+    fun codeAt(row: Int, col: Int): Long = codes.take(ordinalFor(row, col)).last()
 
-    private fun codes(): Sequence<Long> = generateSequence(20151125) {
-        (it * 252533) % 33554393
-    }
+    private val codes: Sequence<Long>
+        get() = generateSequence(20151125) {
+            (it * 252533) % 33554393
+        }
 
     fun ordinalFor(row: Int, col: Int): Int =
         when {
