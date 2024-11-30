@@ -34,9 +34,11 @@ class Day25Test {
             5,   6,   51
             2,   9,   54
             6,   4,   40
+            4,   5,   33
             1,  10,   55""")
         fun ordinal(row: Int, col: Int, ord: Int) {
-            assertEquals(ord, Day25.ordinalFor(row, col))
+            assertEquals(ord, ordinalFor(row, col))
+            assertEquals(ord, recursiveOrdFor(row, col))
         }
 
         @ParameterizedTest
