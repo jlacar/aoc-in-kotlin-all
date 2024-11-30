@@ -7,8 +7,6 @@ package lacar.junilu.aoc2015.day25
  */
 
 object Day25 {
-    private val memo = mutableMapOf(Pair(1, 1) to 1)
-
     fun codeAt(row: Int, col: Int): Long = codes().take(ordinalFor(row, col)).last()
 
     private fun codes(): Sequence<Long> = generateSequence(20151125) {
