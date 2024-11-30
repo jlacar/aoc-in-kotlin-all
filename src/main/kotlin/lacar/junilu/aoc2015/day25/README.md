@@ -1,6 +1,6 @@
 # Aoc 2015: Day 25 - Let It Snow
 
-Puzzle Page: https://adventofcode/2015/day/25
+Puzzle Page: https://adventofcode.com/2015/day/25
 
 Code: [solution](Day25.kt) - [test](../../../../../../test/kotlin/lacar/junilu/aoc2015/day25/Day25Test.kt)
 
