@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-val puzzleInputDay11: String = readPuzzleInput("day11").first()
-val puzzleInputDay11Gh: String = readPuzzleInput("day11-gh").first()
+val puzzleInputDay11: String = readPuzzleInput("aoc2015/day11-gm").first()
+val puzzleInputDay11Gh: String = readPuzzleInput("aoc2015/day11-gh").first()
 
 class Day11Test {
     @Nested

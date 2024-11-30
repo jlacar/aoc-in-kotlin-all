@@ -3,8 +3,8 @@ package lacar.junilu
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-private val puzzleInputDay16 = readPuzzleInput("day16")
-private val puzzleInputDay16Gh = readPuzzleInput("day16-gh")
+private val puzzleInputDay16 = readPuzzleInput("aoc2015/day16-gm")
+private val puzzleInputDay16Gh = readPuzzleInput("aoc2015/day16-gh")
 
 class Day16Test {
     @Test

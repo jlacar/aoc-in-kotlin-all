@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val puzzleInputDay14 = readPuzzleInput("day14")
-private val puzzleInputDay14Gh = readPuzzleInput("day14-gh")
+private val puzzleInputDay14 = readPuzzleInput("aoc2015/day14-gm")
+private val puzzleInputDay14Gh = readPuzzleInput("aoc2015/day14-gh")
 
 class Day14Test {
     @Nested

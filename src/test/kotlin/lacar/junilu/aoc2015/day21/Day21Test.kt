@@ -23,14 +23,14 @@ class Day21Test {
     inner class Solution {
         @Test
         fun `Part 1 - SOLVED`() {
-            assertEquals(91, Day21(bossDay21("day21")).leastAmountOfGoldSpentToWin())
-            assertEquals(121, Day21(bossDay21("day21-gh")).leastAmountOfGoldSpentToWin())
+            assertEquals(91, Day21(bossDay21("aoc2015/day21-gm")).leastAmountOfGoldSpentToWin())
+            assertEquals(121, Day21(bossDay21("aoc2015/day21-gh")).leastAmountOfGoldSpentToWin())
         }
 
         @Test
         fun `Part 2 - SOLVED`() {
-            assertEquals(158, Day21(bossDay21("day21")).mostAmountOfGoldSpentJustToLose())
-            assertEquals(201, Day21(bossDay21("day21-gh")).mostAmountOfGoldSpentJustToLose())
+            assertEquals(158, Day21(bossDay21("aoc2015/day21-gm")).mostAmountOfGoldSpentJustToLose())
+            assertEquals(201, Day21(bossDay21("aoc2015/day21-gh")).mostAmountOfGoldSpentJustToLose())
         }
     }
 
