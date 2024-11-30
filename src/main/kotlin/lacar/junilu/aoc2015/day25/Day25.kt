@@ -13,7 +13,6 @@ object Day25 {
         get() = generateSequence(20151125) {
             (it * 252533) % 33554393
         }
-
 }
 
 // Similar to calculating the sum of the numbers from 1..N
@@ -30,4 +29,3 @@ fun recursiveOrdFor(row: Int, col: Int): Int =
         row > 1 && col == 1 -> ordinalFor(row - 1, 1) + row - 1
         else -> ordinalFor(row + col - 1, 1) + col - 1
     }
-

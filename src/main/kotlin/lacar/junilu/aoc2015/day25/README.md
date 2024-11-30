@@ -27,4 +27,4 @@ I used a parameterized test to make it easier to incrementally add different cas
 
 First approach I took was a recursive solution. I walked in the different cases starting with the degenerate case of (1, 1). Then I handled the case where row > 1 and column is 1. Finally, I worked out the case where both row and column are greater than 1. The `when` expression reflects this progression.
 
-Later on, after looking at Andrew Pickett's solution, I realized that calculating the ordinal was similar to the problem of getting the sum of the numbers from 1..N. This is a straightforward calculation with no recursion necessary. I used the formulas listed in the Geometry section above which I believe are different from the ones Andrew used.
+Later on, after looking at Andrew Pickett's solution, I realized that calculating the ordinal was similar to the problem of getting the sum of the numbers from 1..N. This is a straightforward calculation with no recursion necessary. I used the formulas listed in the Geometry section; not sure if they're the same as what Andrew used though.
