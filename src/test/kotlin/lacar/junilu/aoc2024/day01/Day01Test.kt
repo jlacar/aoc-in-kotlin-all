@@ -33,11 +33,11 @@ class Day01Test {
         }
 
         private fun splitIntoRawColumns(lines: List<String>): Pair<List<Int>, List<Int>> {
-            val rowPairs = lines.map { line ->
-                val (n1, n2) = line.split("   ")
-                Pair(n1.toInt(), n2.toInt())
+            val columnPairs = lines.map { line ->
+                val (n1, n2) = line.split("   ").map { it.toInt() }
+                Pair(n1, n2)
             }
-            return Pair(rowPairs.map { it.first }, rowPairs.map { it.second })
+            return Pair(columnPairs.map { it.first }, columnPairs.map { it.second })
         }
     }
 }
