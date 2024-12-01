@@ -13,6 +13,12 @@ class Day01Test {
         assertEquals(241, Day01.distance(instructions))
     }
 
+    @Test
+    fun `Solution - Part 2`() {
+        val instructions = readPuzzleInput("aoc2016/day01-gh").first()
+        assertEquals(116, Day01.distanceToBunnyHQ(instructions))
+    }
+
     @ParameterizedTest
     @CsvSource(useHeadersInDisplayName = true, textBlock = """
         start,  afterLeft
@@ -42,5 +48,10 @@ class Day01Test {
             { assertEquals(2, Day01.distance("R2, R2, R2")) },
             { assertEquals(12, Day01.distance("R5, L5, R5, R3")) },
         )
+    }
+
+    @Test
+    fun `Part 2 Example`() {
+        assertEquals(4, Day01.distanceToBunnyHQ("R8, R4, R4, R8"))
     }
 }
