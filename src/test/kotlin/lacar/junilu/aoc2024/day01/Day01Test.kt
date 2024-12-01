@@ -7,20 +7,20 @@ import org.junit.jupiter.api.Test
 class Day01Test {
     @Test
     fun `Solutions - Part 1`() {
-        val (column1gh, column2gh) = splitByColumn(puzzleInputGitHub)
-        assertEquals(2285373, Day01.totalDistance(column1gh, column2gh))
+        val (leftGh, rightGh) = splitByColumn(puzzleInputGitHub)
+        assertEquals(2285373, Day01.totalDistance(leftGh, rightGh))
 
-        val (column1gm, column2gm) = splitByColumn(puzzleInputGmail)
-        assertEquals(2031679, Day01.totalDistance(column1gm, column2gm))
+        val (leftGm, rightGm) = splitByColumn(puzzleInputGmail)
+        assertEquals(2031679, Day01.totalDistance(leftGm, rightGm))
     }
 
     @Test
     fun `Solutions - Part 2`() {
-        val (column1gh, column2gh) = splitByColumn(puzzleInputGitHub)
-        assertEquals(21142653, Day01.similarityScore(column1gh, column2gh))
+        val (leftGh, rightGh) = splitByColumn(puzzleInputGitHub)
+        assertEquals(21142653, Day01.similarityScore(leftGh, rightGh))
 
-        val (column1gm, column2gm) = splitByColumn(puzzleInputGmail)
-        assertEquals(19678534, Day01.similarityScore(column1gm, column2gm))
+        val (leftGm, rightGm) = splitByColumn(puzzleInputGmail)
+        assertEquals(19678534, Day01.similarityScore(leftGm, rightGm))
     }
 
     companion object {
@@ -29,8 +29,8 @@ class Day01Test {
 
         private fun splitByColumn(lines: List<String>): Pair<List<Int>, List<Int>> {
             val columnPairs = lines.map { line ->
-                val (n1, n2) = line.split("   ").map { it.toInt() }
-                Pair(n1, n2)
+                val (left, right) = line.split("   ").map { it.toInt() }
+                Pair(left, right)
             }
             return Pair(columnPairs.map { it.first }, columnPairs.map { it.second })
         }
