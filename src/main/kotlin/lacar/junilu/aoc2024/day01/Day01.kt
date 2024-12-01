@@ -6,9 +6,13 @@ import kotlin.math.abs
  * AoC 2024 - Day 1: Historian Hysteria
  */
 object Day01 {
-    fun totalDistance(column1: List<Int>, column2: List<Int>): Int =
-        (column1.indices).map { i -> abs(column1[i] - column2[i]) }.sum()
+    fun totalDistance(left: List<Int>, right: List<Int>): Int {
+        val leftSorted = left.sorted()
+        val rightSorted = right.sorted()
 
-    fun similarityScore(column1: List<Int>, column2: List<Int>): Int =
-        column1.map { n -> column2.count { it == n } * n }.sum()
+        return leftSorted.indices.map { i -> abs(leftSorted[i] - rightSorted[i]) }.sum()
+    }
+
+    fun similarityScore(left: List<Int>, right: List<Int>): Int =
+        left.map { n -> right.count { it == n } * n }.sum()
 }
