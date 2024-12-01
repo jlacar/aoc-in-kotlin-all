@@ -14,7 +14,7 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 * [AoC 2019](src/main/kotlin/lacar/junilu/aoc2019/README.md) - 0/50 &#11088;
 * [AoC 2018](src/main/kotlin/lacar/junilu/aoc2018/README.md) - 0/50 &#11088;
 * [AoC 2017](src/main/kotlin/lacar/junilu/aoc2017/README.md) - 0/50 &#11088;
-* [AoC 2016](src/main/kotlin/lacar/junilu/aoc2016/README.md) - 0/50 &#11088;
+* [AoC 2016](src/main/kotlin/lacar/junilu/aoc2016/README.md) - 2/50 &#11088;
 * [AoC 2015](src/main/kotlin/lacar/junilu/aoc2015/README.md) - 50/50 &#11088;
 
 ## Developer Notes
