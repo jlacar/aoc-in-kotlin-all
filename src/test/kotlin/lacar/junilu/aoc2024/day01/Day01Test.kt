@@ -28,15 +28,16 @@ class Day01Test {
         private val puzzleInputGmail = readPuzzleInput("aoc2024/day01-gm")
 
         private fun splitIntoSortedColumns(lines: List<String>): Pair<List<Int>, List<Int>> {
+            val (column1, column2) = splitIntoRawColumns(lines)
+            return Pair(column1.sorted(), column2.sorted())
+        }
+
+        private fun splitIntoRawColumns(lines: List<String>): Pair<List<Int>, List<Int>> {
             val rowPairs = lines.map { line ->
                 val (n1, n2) = line.split("   ")
                 Pair(n1.toInt(), n2.toInt())
             }
-
-            val column1 = rowPairs.map { it.first }
-            val column2 = rowPairs.map { it.second }
-
-            return Pair(column1.sorted(), column2.sorted())
+            return Pair(rowPairs.map { it.first }, rowPairs.map { it.second })
         }
     }
 }
