@@ -15,7 +15,6 @@ Keeping up and catching up with these guys isn't going to be easy but I'm lookin
 
 My first cut was a quick-and-dirty implementation, with no tests. The bulk of the work was in parsing the input.
 
-
 ### Part 1
 
 Goal: find the total distance between the two lists
@@ -34,3 +33,6 @@ This one didn't need the two columns to be sorted but that's what I used anyway.
 
 I'm experimenting with putting puzzle parsing logic in a companion object of the test class. We'll see how I like this approach after a few days worth of puzzles. Right now, it helps keep the solution code focused on the problem-solving.
 
+## Reflections
+
+[Liutauras Vilda pointed out on CodeRanch](https://coderanch.com/t/785796/Advent-Code#3581662) that the sorting of the lists in Part 1 were part of the problem statement. He's right so I moved the sorting out of the parsing logic and back into the solution logic.
