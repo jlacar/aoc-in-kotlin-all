@@ -6,7 +6,7 @@
 
 Here are my notes on each of the puzzles and their solutions:
 
-* &#11035;&#11035; [Day 1](day01/.) 
+* &#11088;&#11088; [Day 1](day01/.) 
 * &#11035;&#11035; [Day 2](day02/.) 
 * &#11035;&#11035; [Day 3](day03/.) 
 * &#11035;&#11035; [Day 4](day04/.) 
