@@ -21,48 +21,37 @@ object Day01 {
         val movesIt = input.split(", ").map { parse(it) }.iterator()
         val visited = mutableSetOf<Position>()
         val twiceVisited = mutableListOf<Position>()
+
         var location = Location(NORTH, Position(0, 0))
-        visited += location.position
+        visited.add(location.position)
         while (twiceVisited.isEmpty() && movesIt.hasNext()) {
             val (turn, displacement) = movesIt.next()
             val newDirection = when (turn) {
                 LEFT -> location.facing.left
                 RIGHT -> location.facing.right
             }
-            repeat (displacement) {
-                location = location.move(newDirection, 1)
-                if (visited.contains(location.position))
-                    twiceVisited.add(location.position)
-                else
-                    visited.add(location.position)
-            }
+            location = trackStepsTo(location, newDirection, displacement, visited, twiceVisited)
         }
         return twiceVisited.first().blocks
     }
 
-//        val visited = mutableSetOf<Position>()
-//        var location = Location(NORTH, Position(0, 0))
-//        visited.add(location.position)
-//
-//        visited().first { }
-//
-//        instructions.split(", ")
-//            .map { parse(it) }
-//            .forEach hqFound@{ (turn, displacement) ->
-//                val newDirection = when (turn) {
-//                    LEFT -> location.facing.left
-//                    RIGHT -> location.facing.right
-//                }
-//                repeat (displacement) {
-//                    location = location.move(newDirection, 1)
-//                    if (visited.contains(location.position))
-//                        return@hqFound
-//                    else
-//                        visited.add(location.position)
-//                }
-//            }
-//
-//        return location.position.blocks
+    private fun trackStepsTo(
+        location: Location,
+        newDirection: Direction,
+        displacement: Int,
+        visited: MutableSet<Position>,
+        twiceVisited: MutableList<Position>
+    ): Location {
+        var nextLocation = location
+        repeat(displacement) {
+            nextLocation = nextLocation.move(newDirection, 1)
+            if (visited.contains(nextLocation.position))
+                twiceVisited.add(nextLocation.position)
+            else
+                visited.add(nextLocation.position)
+        }
+        return nextLocation
+    }
 }
 
 data class Position(val x: Int, val y: Int) {
