@@ -10,9 +10,9 @@ object Day01 {
         val leftSorted = left.sorted()
         val rightSorted = right.sorted()
 
-        return leftSorted.indices.map { i -> abs(leftSorted[i] - rightSorted[i]) }.sum()
+        return leftSorted.indices.sumOf { i -> abs(leftSorted[i] - rightSorted[i]) }
     }
 
     fun similarityScore(left: List<Int>, right: List<Int>): Int =
-        left.map { n -> right.count { it == n } * n }.sum()
+        left.sumOf { n -> right.count { it == n } * n }
 }
