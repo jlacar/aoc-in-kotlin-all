@@ -36,3 +36,5 @@ I'm experimenting with putting puzzle parsing logic in a companion object of the
 ## Reflections
 
 [Liutauras Vilda pointed out on CodeRanch](https://coderanch.com/t/785796/Advent-Code#3581662) that the sorting of the lists in Part 1 were part of the problem statement. He's right so I moved the sorting out of the parsing logic and back into the solution logic.
+
+Still haven't built into muscle memory the refactoring of simplifying call chains like `map{ ... }.sum()` to `sumOf{ }`. Needed IDE to suggest it before I saw it. More practice is needed. :)
