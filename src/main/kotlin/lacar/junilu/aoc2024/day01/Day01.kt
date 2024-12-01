@@ -27,3 +27,8 @@ fun main() {
 
     sorted1.map { n -> sorted2.count { it == n } * n }.sum().println()
 }
+
+/*
+   Part 1 - 2285373
+   Part 2 - 21142653
+ */
