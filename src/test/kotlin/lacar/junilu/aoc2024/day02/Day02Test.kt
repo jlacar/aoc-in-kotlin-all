@@ -13,8 +13,8 @@ class Day02Test {
 
     @Test
     fun `Solution - Part 2`() {
-        assertEquals(561, Day02.howManyAreSafeWithDampener(puzzleInputGitHub))
-        assertEquals(349, Day02.howManyAreSafeWithDampener(puzzleInputGmail))
+        assertEquals(561, Day02.howManyAreSafe(puzzleInputGitHub, useDampener = true))
+        assertEquals(349, Day02.howManyAreSafe(puzzleInputGmail, useDampener = true))
     }
 
     private val exampleReports = parse("""
@@ -33,7 +33,7 @@ class Day02Test {
 
     @Test
     fun `Example - Part 2`() {
-        assertEquals(4, Day02.howManyAreSafeWithDampener(exampleReports))
+        assertEquals(4, Day02.howManyAreSafe(exampleReports, useDampener = true))
     }
 
     companion object {

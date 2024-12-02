@@ -6,11 +6,11 @@ import kotlin.math.abs
  * AoC 2024: Day 2 -
  */
 object Day02 {
-    fun howManyAreSafe(reports: List<List<Int>>) =
-        reports.count { it.isSafe() }
-
-    fun howManyAreSafeWithDampener(reports: List<List<Int>>) =
-        reports.count { it.isSafe() || it.canBeDampened() }
+    fun howManyAreSafe(reports: List<List<Int>>, useDampener: Boolean = false) =
+        when (useDampener) {
+            false -> reports.count { it.isSafe() }
+            true -> reports.count { it.isSafe() || it.canBeDampened() }
+        }
 
     private fun List<Int>.isSafe(): Boolean {
         val changes = windowed(2).map { pair -> pair.first() - pair.last() }
