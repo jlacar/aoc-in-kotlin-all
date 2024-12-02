@@ -58,4 +58,6 @@ However, the quick-and-dirty code also gave me a lot of opportunities to refacto
 
 **[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/900d476740de567b3d67c850b6480429aa19a23d) Note #5** - This one is courtesy of James Whiting from the FP Programming Community at work. He suggested using `zipWithNext()`, which works similarly to `windowed()`. I like how `zipWithNext()` works with two adjacent elements at a time and that the transformation function takes both elements of each pair as its parameters to which I gave more meaningful names, `thisLevel` and `nextLevel`. I learned something new today. Love it! :)
 
+**[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/368e38a2d27c7a8632ffd29e4845e5eccccac7d0) Note #6** - Reduced (I think) the noise from the explicit function type declarations in `isSafe()` and inlined the transform function for `zipWithNext()`. I feel like this improves readability.
+
 Please comment if you have any thoughts about these refactorings/tidyings. Thanks!
