@@ -40,3 +40,5 @@ For the dampening, I added a new function which allowed me to express the Part 2
 I have to admit, the quick-and-dirty solution took me longer than I thought it would, getting the second star at around 1:06am ET.
 
 However, the quick-and-dirty code also gave me a lot of opportunities to refactor to clear, expressive code. 
+
+After analyzing how `canBeDampened()` worked, I realized that a call to `isSafe()` was redundant and the Part 2 call could be simplified.
