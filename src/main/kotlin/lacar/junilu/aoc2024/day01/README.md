@@ -1,4 +1,4 @@
-# AoC 2024: Day 1 - Historian Hysteria
+# AoC 2024 - Day 1: Historian Hysteria
 
 Puzzle Page: https://adventofcode.com/2024/day/1
 

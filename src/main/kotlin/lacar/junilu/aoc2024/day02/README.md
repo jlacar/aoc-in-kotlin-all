@@ -1,10 +1,10 @@
-# AoC 2024: Day 2 - Red-Nosed Reports
+# AoC 2024 - Day 2: Red-Nosed Reports
 
 Puzzle Page: https://adventofcode.com/2024/day/2
 
 Code: [solution](Day02.kt) - [test](../../../../../../test/kotlin/lacar/junilu/aoc2024/day02/Day02Test.kt)
 
-## Approach
+## Approach~~
 
 This one ramped up the difficulty a couple of notches from Day 1, in my opinion. Quick-and-dirty again today. As these puzzles get more difficult, I'm sure I'll have to resort to a more test-first style to keep things straight in my head.
 

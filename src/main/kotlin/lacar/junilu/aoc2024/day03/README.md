@@ -1,6 +1,4 @@
-# AoC 2024 -  Day 3: (title)
-
-# AoC 2024: Day 2 - Red-Nosed Reports
+# AoC 2024 - Day 3: (title)
 
 Puzzle Page: https://adventofcode.com/2024/day/3
 
