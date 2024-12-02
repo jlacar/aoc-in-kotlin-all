@@ -1,7 +1,7 @@
 # AoC 2024 - Day 2: Red-Nosed Reports
 
 Puzzle Page: https://adventofcode.com/2024/day/2
-˚
+
 Code: [solution](Day02.kt) - [test](../../../../../../test/kotlin/lacar/junilu/aoc2024/day02/Day02Test.kt)
 
 ## Approach
