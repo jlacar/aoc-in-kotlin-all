@@ -4,11 +4,11 @@ Puzzle Page: https://adventofcode.com/2024/day/2
 
 Code: [solution](Day02.kt) - [test](../../../../../../test/kotlin/lacar/junilu/aoc2024/day02/Day02Test.kt)
 
-## Approach~~
+## Approach
 
 This one ramped up the difficulty a couple of notches from Day 1, in my opinion. Quick-and-dirty again today. As these puzzles get more difficult, I'm sure I'll have to resort to a more test-first style to keep things straight in my head.
 
-Both parts use `count()` and `any{}` quite a bit. A key operation to the solution was using the `windowed()` function which Kotlin conveniently provides it as part of its standard library.
+Both parts use `count()`, `all{}`. Part 2 uses `any{}`. The `windowed()` function was central to the solution since it's what I used to chunk the level changes in each report. Kotlin conveniently provides all these functions as part of its standard library.
 
 ### Part 1
 
@@ -54,4 +54,3 @@ However, the quick-and-dirty code also gave me a lot of opportunities to refacto
 **[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/45314991a52f19f3d1d432778499033d0720f483) Note #4** - The diff shows moving the `inRange` lambda down a couple of lines but my intent was really to move `decreasing` and `increasing` up closer to `changeInLevels` so the connection to `levels[1] - levels[0]` was easier to see. Might seem like a small nuance but I think it's an improvement in cohesion.
 
 Please comment if you have any thoughts about these refactorings/tidyings. Thanks!
-
