@@ -13,15 +13,14 @@ object Day02 {
         }
 
     private fun List<Int>.isSafe(): Boolean {
-        val changes = windowed(2).map { levels -> levels[1] - levels[0] }
-        return changes.areInSafeRange() && changes.areConsistent()
+        val changeInLevels: (List<Int>) -> Int = { levels -> levels[1] - levels[0] }
+        val inRange: (Int) -> Boolean = { abs(it) in 1..3 }
+        val decreasing: (Int) -> Boolean = { it < 0 }
+        val increasing: (Int) -> Boolean = { it > 0 }
+
+        val changes = windowed(2).map(changeInLevels)
+        return changes.all(inRange) && (changes.all(decreasing) || changes.all(increasing))
     }
-
-    private fun List<Int>.areInSafeRange() =
-        all { abs(it) in 1..3 }
-
-    private fun List<Int>.areConsistent() =
-        all { it < 0 } || all { it > 0 }
 
     private fun List<Int>.canBeDampened() =
         indices.map { (take(it) + drop(it + 1)) }.any { it.isSafe() }
