@@ -9,7 +9,7 @@ object Day02 {
     fun howManyAreSafe(reports: List<List<Int>>, useDampener: Boolean = false) =
         when (useDampener) {
             false -> reports.count { it.isSafe() }
-            true -> reports.count { it.isSafe() || it.canBeDampened() }
+            true -> reports.count { it.canBeDampened() }
         }
 
     private fun List<Int>.isSafe(): Boolean {
