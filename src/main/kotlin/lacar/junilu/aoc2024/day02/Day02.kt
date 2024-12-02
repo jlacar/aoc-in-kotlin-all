@@ -16,10 +16,10 @@ object Day02 {
         val changeInLevels: (Int, Int) -> Int = { thisLevel, nextLevel -> nextLevel - thisLevel }
         val decreasing: (Int) -> Boolean = { it < 0 }
         val increasing: (Int) -> Boolean = { it > 0 }
-        val inRange: (Int) -> Boolean = { abs(it) in 1..3 }
+        val inSafeRange: (Int) -> Boolean = { abs(it) in 1..3 }
 
         val changes = zipWithNext(changeInLevels)
-        return changes.all(inRange) && (changes.all(decreasing) || changes.all(increasing))
+        return changes.all(inSafeRange) && (changes.all(decreasing) || changes.all(increasing))
     }
 
     private fun List<Int>.canBeDampened() =
