@@ -18,19 +18,20 @@ The key ideas I wanted to express were that a report is safe if:
 - all changes between levels are in the same direction (changes are consistent) _and_
 - all changes between levels are by 1, 2, or 3 (expressed as range in Kotlin: `1..3`)
 
-The `windowed()` function makes it easy to compare successive chunks of a list. I used `windowed(2)` so I could compare each pair of numbers in a list.
+The `windowed()` function makes it easy to compare successive chunks of a list. I used `windowed(2)` so I could compare each pair of numbers in a report. In a late refactoring, I switched to using `zipWithNext()` which more specifically chunks the list into pairs of adjacent elements. Using the puzzle terms, it helps chunk a report into pairs of successive levels so we can easily calculate the level changes throughout each report. See Refactoring Note #5 below.
 
-IntelliJ IDEA has a very convenient intent of converting a parameter into a receiver so the code becomes very expressive:
+IntelliJ IDEA has a very convenient intent (`⌥ Option` + `↩ Enter` on Mac) for converting a parameter into a receiver. I been doing this often to make the code more expressive: 
 
-    report.isSafe()
-    changes.areConsistent()
-    changes.areInSafeRange()
+* `isSafe(report)` becomes `report.isSafe()`
+* `areConsistent(changes)` becomes `changes.areConsistent()`
+* `inSafeRange(changes)` becomes `changes.inSafeRange()`
+
+This is done with [extension functions](https://kotlinlang.org/docs/extensions.html).
 
 ### Part 2
 
-Initially, I created a separate function, `howManyAreSafeWithDampener()` for Part 2.
-
-By adding a `useDampener` parameter to `howManyAreSafe()`, I could eliminate the extra function and keep the original Part 1 call while allowing for the additional requirement in Part 2 to use the Problem Dampener.
+Initially, I created a separate function, `howManyAreSafeWithDampener()` for Part 2. I was able to eliminate it later by adding 
+a `useDampener` parameter to the Part 1 `howManyAreSafe()`. I gave it a default value of `false` so I didn't have to change any function calls for Part 1.
  
     report.howManyAreSafe()                    // Part 1 call
     report.howManyAreSafe(useDampener = true)  // Part 2 call 
@@ -38,6 +39,8 @@ By adding a `useDampener` parameter to `howManyAreSafe()`, I could eliminate the
 For the dampening, I added a new function which allowed me to express the Part 2 requirement clearly
 
     report.isSafe() || report.canBeDampened()
+
+Later, I simplified this because the `canBeDampened()` function eventually called `isSafe()` anyway. See Refactofing Note #1 below.
 
 ## Reflection
 
