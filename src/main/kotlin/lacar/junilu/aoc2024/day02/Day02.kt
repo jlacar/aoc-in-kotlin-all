@@ -13,12 +13,12 @@ object Day02 {
         }
 
     private fun List<Int>.isSafe(): Boolean {
-        val changeInLevels: (List<Int>) -> Int = { levels -> levels[1] - levels[0] }
+        val changeInLevels: (Int, Int) -> Int = { thisLevel, nextLevel -> nextLevel - thisLevel }
         val decreasing: (Int) -> Boolean = { it < 0 }
         val increasing: (Int) -> Boolean = { it > 0 }
         val inRange: (Int) -> Boolean = { abs(it) in 1..3 }
 
-        val changes = windowed(2).map(changeInLevels)
+        val changes = zipWithNext(changeInLevels)
         return changes.all(inRange) && (changes.all(decreasing) || changes.all(increasing))
     }
 
