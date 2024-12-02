@@ -23,5 +23,5 @@ object Day02 {
     }
 
     private fun List<Int>.canBeDampened() =
-        indices.map { (take(it) + drop(it + 1)) }.any { it.isSafe() }
+        indices.map { take(it) + drop(it + 1) }.any { it.isSafe() }
 }
