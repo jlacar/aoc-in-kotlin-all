@@ -3,7 +3,7 @@ package lacar.junilu.aoc2024.day02
 import kotlin.math.abs
 
 /**
- * AoC 2024: Day 2 -
+ * AoC 2024 - Day 2: Red-Nosed Reports
  */
 object Day02 {
     fun howManyAreSafe(reports: List<List<Int>>, useDampener: Boolean = false) =
