@@ -26,8 +26,7 @@ fun readPuzzleInput(relativePath: String): List<String> {
  * Converts a string representing a key-value pair into
  * a <code>Pair<String, R></code>.
  *
- * Use this as a convenient way to create map entries whose
- * values need to be converted to something other than a String.
+ * The transform function is applied to the value.
  *
  * Example:
  * <code>
@@ -46,10 +45,9 @@ fun <R> keyValuePair(input: String, delimiters: String, transform: (String) -> R
 }
 
 /**
- * Converts a string to a <code>Map<String, Pair<String, R>></code>,
- * where R is the type returned by the specified transform function.
- *
- * Use this to convert input that has a key and delimited values.
+ * Converts a string with multiple delimited key-value pairs
+ * into a <code>Map<String, R></code>, where R is the type
+ * returned by the specified transform function.
  *
  * Example:
  * <code>
