@@ -2,7 +2,9 @@
 
 ## Approach
 
-This one ramped up the level of difficulty a bit from Day 1 a couple of notches, in my opinion. Quick-and-dirty again today but as these puzzles get more difficult, I'm sure I'll have to resort to writing more tests first. Both parts use `count()` and `any{}` quite a bit. A key operation was `windowed()` and I'm glad Kotlin provides it as part of the standard library.
+This one ramped up the difficulty a couple of notches from Day 1, in my opinion. Quick-and-dirty again today. As these puzzles get more difficult, I'm sure I'll have to resort to a more test-first style to keep things straight in my head.
+
+Both parts use `count()` and `any{}` quite a bit. A key operation to the solution was using the `windowed()` function which Kotlin conveniently provides it as part of its standard library.
 
 ### Part 1
 
