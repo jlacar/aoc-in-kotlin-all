@@ -13,7 +13,7 @@ object Day02 {
         }
 
     private fun List<Int>.isSafe(): Boolean {
-        val changes = windowed(2).map { pair -> pair.first() - pair.last() }
+        val changes = windowed(2).map { levels -> levels[1] - levels[0] }
         return changes.areInSafeRange() && changes.areConsistent()
     }
 
