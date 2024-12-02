@@ -53,4 +53,6 @@ However, the quick-and-dirty code also gave me a lot of opportunities to refacto
 
 **[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/45314991a52f19f3d1d432778499033d0720f483) Note #4** - The diff shows moving the `inRange` lambda down a couple of lines but my intent was really to move `decreasing` and `increasing` up closer to `changeInLevels` so the connection to `levels[1] - levels[0]` was easier to see. Might seem like a small nuance but I think it's an improvement in cohesion.
 
+**[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/900d476740de567b3d67c850b6480429aa19a23d) Note #5** - This one is courtesy of James Whiting from the FP Programming Community at work. He suggested using `zipWithNext()`, which works similarly to `windowed()`. I like how `zipWithNext()` explicitly works with two adjacent elements at a time and that the transformation function takes both elements. This way, I could give more meaningful names like `thisLevel` and `nextLevel`. Learned something new today. Love it!
+
 Please comment if you have any thoughts about these refactorings/tidyings. Thanks!
