@@ -1,46 +1,46 @@
 # AoC 2024 - Day 2: Red-Nosed Reports
 
 Puzzle Page: https://adventofcode.com/2024/day/2
-
+˚
 Code: [solution](Day02.kt) - [test](../../../../../../test/kotlin/lacar/junilu/aoc2024/day02/Day02Test.kt)
 
 ## Approach
 
-This one ramped up the difficulty a couple of notches from Day 1, in my opinion. Quick-and-dirty again today. As these puzzles get more difficult, I'm sure I'll have to resort to a more test-first style to keep things straight in my head.
+This one ramped up the difficulty a couple of notches from Day 1, in my opinion. Quick-and-dirty again today. As these puzzles get more difficult, I'm sure I'll have to resort to a more test-first style to keep things straight in my head. The upside to doing a quick-and-dirty solution is that it gives me many opportunities to tidy up and refactor the code to a better, cleaner, and clearer state.
 
-Both parts use `count()`, `all{}`. Part 2 uses `any{}`. The `windowed()` function was central to the solution since it's what I used to chunk the level changes in each report. Kotlin conveniently provides all these functions as part of its standard library.
+Both parts use `count()`, `all{}`. Part 2 uses `any{}`. The `windowed()` function, and later on `zipWithNext()`, was central to the solution since it's what I used to chunk the level changes in each report. Kotlin conveniently provides all these functions as part of its standard library.
 
 ### Part 1
 
-Once again, I found that Kotlin makes it really easy to express an idea directly in code.
+Once again, Kotlin made it easy to express abstract ideas clearly and succinctly.
 
-The key ideas I wanted to express were that a report is safe if: 
-- all changes between levels are in the same direction (changes are consistent) _and_
-- all changes between levels are by 1, 2, or 3 (expressed as range in Kotlin: `1..3`)
+The key ideas taken from the puzzle description revolve around what makes a report "safe":
+- all changes between levels are either **all increasing** or **all decreasing** _and_
+- all changes between levels are by 1, 2, or 3 (expressed as a range in Kotlin: `1..3`)
 
-The `windowed()` function makes it easy to compare successive chunks of a list. I used `windowed(2)` so I could compare each pair of numbers in a report. In a late refactoring, I switched to using `zipWithNext()` which more specifically chunks the list into pairs of adjacent elements. Using the puzzle terms, it helps chunk a report into pairs of successive levels so we can easily calculate the level changes throughout each report. See Refactoring Note #5 below.
+The `windowed()` function is the workhorse for chunking the report into pairs of adjacent levels. I initially used `windowed(2)` for this but in a later refactoring switched to `zipWithNext()` which chunks the list into pairs of adjacent elements. See Refactoring Note #5 below.
 
-IntelliJ IDEA has a very convenient intent (`⌥ Option` + `↩ Enter` on Mac) for converting a parameter into a receiver. I been doing this often to make the code more expressive: 
+IntelliJ IDEA has a very convenient intent (`⌥ Option` + `↩ Enter` on Mac) for converting a parameter into a receiver. I've used this often to make the code more expressive:
 
 * `isSafe(report)` becomes `report.isSafe()`
 * `areConsistent(changes)` becomes `changes.areConsistent()`
 * `inSafeRange(changes)` becomes `changes.inSafeRange()`
 
-This is done with [extension functions](https://kotlinlang.org/docs/extensions.html).
+This is achieved with [extension functions](https://kotlinlang.org/docs/extensions.html).
 
 ### Part 2
 
-Initially, I created a separate function, `howManyAreSafeWithDampener()` for Part 2. I was able to eliminate it later by adding 
-a `useDampener` parameter to the Part 1 `howManyAreSafe()`. I gave it a default value of `false` so I didn't have to change any function calls for Part 1.
+Initially, I created a separate function, `howManyAreSafeWithDampener()`, for Part 2. I eliminated it later by adding 
+a `useDampener` parameter to `howManyAreSafe()` from Part 1. A default value of `false` kept the Part 1 calls unchanged.
  
     report.howManyAreSafe()                    // Part 1 call
     report.howManyAreSafe(useDampener = true)  // Part 2 call 
 
-For the dampening, I added a new function which allowed me to express the Part 2 requirement clearly
+To handle "dampening" of an otherwise unsafe report, I created a new function, `canBeDampened()`, which let me express the Part 2 intent clearly
 
     report.isSafe() || report.canBeDampened()
 
-Later, I simplified this because the `canBeDampened()` function eventually called `isSafe()` anyway. See Refactofing Note #1 below.
+This was further simplified in a later refactoring. See Refactofing Note #1 below.
 
 ## Reflection
 
@@ -50,7 +50,7 @@ However, the quick-and-dirty code also gave me a lot of opportunities to refacto
 
 **[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/23c254f935139ccddced9f022d7a54c3b0b99ebd) Note #1** - After analyzing how `canBeDampened()` worked, I realized that a call to `isSafe()` was redundant and the Part 2 call could be simplified. The `indices.map` operation in `canBeDampened()` will operate on the original list on its last iteration, with nothing removed from it. This favors input that has many unsafe reports because the `any` call will terminate when the first safe subset is found. I don't think the difference in time to run is that significant with this puzzle input.
 
-**[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/73a52a51d13aade522098186968169ae185a76af) Note #2** - Renamed `pair` to `levels` to align better with the term used in the puzzle text. I think `levels[1] - levels[0]` connects better to the `windowed(2)`, `decreasing`, and `increasing` concepts. 
+**[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/73a52a51d13aade522098186968169ae185a76af) Note #2** - Renamed `pair` to `levels` to align better with the term used in the puzzle text. I think `levels[1] - levels[0]` connects better to the `windowed(2)`, `decreasing`, and `increasing` concepts. This refactored again later. See Refactoring Note #5 below.
 
 **[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/eed5fb34899a527fea672132051577808487cc5f) Note #3** - This one is a little more tricky. Not sure if it increases clarity since it results in more lines of code in `isSafe()`. It does, however, reduce the scope of the predicate expressions and keeps them in the only place they're used. I think this refactoring increases cohesion since everything that's related to each other are all in the `isSafe()` function scope. 
 
