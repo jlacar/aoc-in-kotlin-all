@@ -5,7 +5,7 @@ package lacar.junilu.aoc2024.day03
  */
 object Day03 {
 
-    fun part1(input: List<String>): Int = input.sumOf { line -> part1Sum(line) }
+    fun part1(input: List<String>): Int = part1Sum(input.joinToString(""))
 
     private fun part1Sum(line: String): Int =
         """mul\((\d+,\d+)\)""".toRegex()
@@ -21,12 +21,7 @@ object Day03 {
         return Pair(n1, n2)
     }
 
-    fun part2(input: List<String>): Int =
-        input.fold(Pair(0, true)) { acc, line ->
-            val (runningSum, enabled) = acc
-            val (currentSum, nextEnabled) = part2Sum(line, enabled)
-            Pair(runningSum + currentSum, nextEnabled)
-        }.first
+    fun part2(input: List<String>): Int = part2Sum(input.joinToString("")).first
 
     private fun part2Sum(input: String, startEnabled: Boolean = true): Pair<Int, Boolean> {
         val operands = mutableListOf<Pair<Int, Int>>()
