@@ -7,10 +7,12 @@ object Day03 {
     fun part1(input: String): Int =
         """mul\((\d+,\d+)\)""".toRegex()
         .findAll(input)
-        .map { it.groupValues[1] }      // (ds,ds)
-        .map { it.toPair() }            // Pair<Int, Int>
+        .map { it.groupValues[1].toPair() }
         .sumOf { (n1, n2) -> n1 * n2 }
 
+    /**
+     * Convert a string of the form "digits,digits" to a Pair<Int, Int>.
+     */
     private fun String.toPair(): Pair<Int, Int> {
         val (n1, n2) = split(",").map(String::toInt)
         return Pair(n1, n2)
