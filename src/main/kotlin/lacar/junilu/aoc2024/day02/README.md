@@ -48,7 +48,7 @@ I have to admit, the quick-and-dirty solution took me longer than I thought it w
 
 However, the quick-and-dirty code also gave me a lot of opportunities to refactor to clear, expressive code. 
 
-**[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/23c254f935139ccddced9f022d7a54c3b0b99ebd) Note #1** - After analyzing how `canBeDampened()` worked, I realized that a call to `isSafe()` was redundant and the Part 2 call could be simplified. The `indices.map` operation in `canBeDampened()` will operate on the original list on its last iteration, with nothing removed from it. This favors input that has many unsafe reports because the `any` call will terminate when the first safe subset is found. I don't think the difference in time to run is that significant with this puzzle input.
+**[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/23c254f935139ccddced9f022d7a54c3b0b99ebd) Note #1** - After analyzing how `canBeDampened()` worked, I realized that calling `isSafe()` on the full report in Part 2 is redundant because if a full report is safe, then removing its first element will give a subset that is also safe. That is, any safe report can also be "dampened" to smaller safe report simply by removing its first level.
 
 **[Refactoring](https://github.com/jlacar/aoc-in-kotlin-all/commit/73a52a51d13aade522098186968169ae185a76af) Note #2** - Renamed `pair` to `levels` to align better with the term used in the puzzle text. I think `levels[1] - levels[0]` connects better to the `windowed(2)`, `decreasing`, and `increasing` concepts. This was refactored further later. See Refactoring Note #5 below.
 
