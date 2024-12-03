@@ -17,16 +17,23 @@ object Day03 {
     }
 
     fun part2(input: String): Int {
-        val zero = Pair(0, 0)
-        var emit = true
-        return """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
+        val operands = mutableListOf<Pair<Int, Int>>()
+        """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
             .findAll(input)
-            .map {
-                when (it.groupValues[0]) {
-                    "do()" -> zero.also { emit = true }
-                    "don't()" -> zero.also { emit = false }
-                    else -> if (emit) it.groupValues[1].toPair() else zero
-                }
-            }.sumOf { (n1, n2) -> n1 * n2 }
+            .fold(true) { emit, match -> addToIf(operands, emit, match) }
+        return operands.sumOf { (n1, n2) -> n1 * n2 }
+    }
+
+    private fun addToIf(
+        operands: MutableList<Pair<Int, Int>>,
+        emit: Boolean,
+        match: MatchResult
+    ) = when (match.groupValues[0]) {
+            "do()" -> true
+            "don't()" -> false
+            else -> {
+                if (emit) operands.add(match.groupValues[1].toPair())
+                emit
+            }
     }
 }
