@@ -5,9 +5,14 @@ package lacar.junilu.aoc2024.day03
  */
 object Day03 {
 
-    fun part1(input: List<String>): Int = """mul\((\d+,\d+)\)""".toRegex()
-        .findAll(input.joinToString(""))
-        .sumOf { it.groupValues[1].mulValue }
+    fun part1(input: String): Int = mulRegex.findAll(input).sumOf { mulResult(it) }
+
+    private val mulRegex = """mul\((?<op1>\d+),(?<op2>\d+)\)""".toRegex()
+
+    private fun mulResult(match: MatchResult) =
+        listOf("op1", "op2")
+            .map { name -> match.groups[name]!!.value.toInt() }
+            .reduce { a, b -> a * b }
 
     private val String.mulValue: Int get() = split(",")
         .map(String::toInt)
