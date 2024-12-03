@@ -5,13 +5,10 @@ package lacar.junilu.aoc2024.day03
  */
 object Day03 {
 
-    fun part1(input: List<String>): Int = part1Sum(input.joinToString(""))
-
-    private fun part1Sum(line: String): Int =
-        """mul\((\d+,\d+)\)""".toRegex()
-            .findAll(line)
-            .map { it.groupValues[1].toPair() }
-            .sumOf { (n1, n2) -> n1 * n2 }
+    fun part1(input: List<String>): Int = """mul\((\d+,\d+)\)""".toRegex()
+        .findAll(input.joinToString(""))
+        .map { it.groupValues[1].toPair() }
+        .sumOf { (n1, n2) -> n1 * n2 }
 
     /**
      * Convert a string of the form "digits,digits" to a Pair<Int, Int>.
@@ -21,14 +18,12 @@ object Day03 {
         return Pair(n1, n2)
     }
 
-    fun part2(input: List<String>): Int = part2Sum(input.joinToString("")).first
-
-    private fun part2Sum(input: String, startEnabled: Boolean = true): Pair<Int, Boolean> {
+    fun part2(input: List<String>): Int {
         val operands = mutableListOf<Pair<Int, Int>>()
         val endEnabled = """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
-            .findAll(input)
-            .fold(startEnabled) { enabled, match -> addTo(operands, match, enabled) }
-        return Pair(operands.sumOf { (n1, n2) -> n1 * n2 }, endEnabled)
+                .findAll(input.joinToString(""))
+                .fold(true) { enabled, match -> addTo(operands, match, enabled) }
+        return Pair(operands.sumOf { (n1, n2) -> n1 * n2 }, endEnabled).first
     }
 
     private fun addTo(
@@ -36,11 +31,11 @@ object Day03 {
         match: MatchResult,
         enabled: Boolean
     ) = when (match.groupValues[0]) {
-            "do()" -> true
-            "don't()" -> false
-            else -> {
-                if (enabled) operands.add(match.groupValues[1].toPair())
-                enabled
-            }
+        "do()" -> true
+        "don't()" -> false
+        else -> {
+            if (enabled) operands.add(match.groupValues[1].toPair())
+            enabled
+        }
     }
 }
