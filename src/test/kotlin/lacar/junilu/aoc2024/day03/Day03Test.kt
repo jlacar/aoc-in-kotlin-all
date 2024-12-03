@@ -11,7 +11,7 @@ class Day03Test {
     fun `Solution - Part 1`() {
         val n = puzzleInputGitHub.sumOf { line ->
             val matches = parse(line)
-            matches.sumOf { (n1, n2) -> n1.toLong() * n2.toLong() }.also { it.println() }
+            matches.sumOf { (n1, n2) -> n1 * n2 }
         }
         assertEquals(173731097, n)
     }
