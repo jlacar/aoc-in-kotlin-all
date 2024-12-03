@@ -26,4 +26,7 @@ This was a bit of challenge for me to keep with a functional style. I didn't ful
 
 ## Reflections
 
+Comparing my approach to how others solved this puzzle, I clearly need to remember to try to reuse the Part 1 solution for Part 2. 
+
+Not surprisingly, [Todd Ginsberg](https://github.com/tginsberg/advent-2024-kotlin/tree/main) took a straightforward and simple approach (as did Tim Cooke from CodeRanch) to the problem and much of the simplicity and elegance of his solution comes from reusing the Part 1 solution after breaking down the Part 2 problem into Part 1 problems. Todd describes his approach in detail in this [blog post](https://todd.ginsberg.com/post/advent-of-code/2024/day3/).
 
