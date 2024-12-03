@@ -19,6 +19,21 @@ object Day03 {
 
     fun part2(input: String): Int {
         val regex = """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
-        return 0
+        val matches = regex.findAll(input)
+
+        var emit = true
+        val pairs = mutableListOf<Pair<Int, Int>>()
+        matches.forEach { match ->
+            when (match.groupValues[0]) {
+                "do()" -> emit = true
+                "don't()" -> emit = false
+                else -> if (emit) {
+                    val (n1, n2) = match.groupValues[0].drop(4).dropLast(1).split(",").map(String::toInt)
+                    pairs.add(Pair(n1, n2))
+                }
+            }
+        }
+
+        return pairs.toList().sumOf { (n1, n2) -> n1 * n2 }
     }
 }
