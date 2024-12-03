@@ -20,14 +20,14 @@ object Day03 {
         val operands = mutableListOf<Pair<Int, Int>>()
         """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
             .findAll(input)
-            .fold(true) { emit, match -> addToIf(operands, emit, match) }
+            .fold(true) { emit, match -> addTo(operands, match, emit) }
         return operands.sumOf { (n1, n2) -> n1 * n2 }
     }
 
-    private fun addToIf(
+    private fun addTo(
         operands: MutableList<Pair<Int, Int>>,
-        emit: Boolean,
-        match: MatchResult
+        match: MatchResult,
+        emit: Boolean
     ) = when (match.groupValues[0]) {
             "do()" -> true
             "don't()" -> false
