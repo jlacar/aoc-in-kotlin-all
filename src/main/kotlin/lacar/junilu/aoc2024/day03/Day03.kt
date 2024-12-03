@@ -9,12 +9,14 @@ object Day03 {
         val matches = regex.findAll(input)
 
         val ops = matches.map { it.groupValues[1] }
-        val pairs = ops.map {
-            val (n1, n2) = it.split(",").map(String::toInt)
-            Pair(n1, n2)
-        }
+        val pairs = ops.map { it.toPair() }
 
         return pairs.sumOf { (n1, n2) -> n1 * n2 }
+    }
+
+    private fun String.toPair(): Pair<Int, Int> {
+        val (n1, n2) = split(",").map(String::toInt)
+        return Pair(n1, n2)
     }
 
     fun part2(input: String): Int {
@@ -22,18 +24,17 @@ object Day03 {
         val matches = regex.findAll(input)
 
         var emit = true
-        val pairs = mutableListOf<Pair<Int, Int>>()
-        matches.forEach { match ->
+        return matches.map { match ->
+            val zero = Pair(0, 0)
             when (match.groupValues[0]) {
-                "do()" -> emit = true
-                "don't()" -> emit = false
+                "do()" -> zero.also { emit = true }
+                "don't()" -> zero.also { emit = false }
                 else -> if (emit) {
-                    val (n1, n2) = match.groupValues[0].drop(4).dropLast(1).split(",").map(String::toInt)
-                    pairs.add(Pair(n1, n2))
+                    match.groupValues[1].toPair()
+                } else {
+                    zero
                 }
             }
-        }
-
-        return pairs.toList().sumOf { (n1, n2) -> n1 * n2 }
+        }.sumOf { (n1, n2) -> n1 * n2 }
     }
 }
