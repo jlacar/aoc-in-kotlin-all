@@ -16,23 +16,13 @@ object Day03 {
     fun part2(input: List<String>): Int {
         val mulValues = mutableListOf(0)
         """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
-                .findAll(input.joinToString(""))
-                .fold(true) { enabled, match ->
-                    addTo(mulValues, match, enabled)
-                }
+            .findAll(input.joinToString(""))
+            .fold(true) { enabled, match ->
+                addTo(mulValues, match, enabled)
+            }
         return mulValues.sum()
     }
 
-    /**
-     * Add an eligible mulValue from the given match result to the
-     * specified list of mulValues if the enabled flag is true,
-     * otherwise it will not be ignored.
-     *
-     * The given match can also be "do()" or "don't()" in which
-     * case the enabled flag will be set accordingly.
-     *
-     * @return the enabled flag to use with the next mulValue
-     */
     private fun addTo(
         mulValues: MutableList<Int>,
         match: MatchResult,
