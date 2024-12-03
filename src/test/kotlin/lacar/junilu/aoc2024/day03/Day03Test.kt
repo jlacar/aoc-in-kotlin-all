@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test
 class Day03Test {
     @Test
     fun `Solution - Part 1`() {
-        val matches = parse(puzzleInputGitHub)
-        val n = matches.sumOf { (n1, n2) -> n1 * n2 }
-        assertEquals(173731097, n)
+        assertEquals(173731097, Day03.part1(puzzleInputGitHub))
     }
 
     @Test
