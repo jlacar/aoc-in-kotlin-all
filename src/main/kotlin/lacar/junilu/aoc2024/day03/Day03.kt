@@ -2,6 +2,8 @@ package lacar.junilu.aoc2024.day03
 
 /**
  * AoC 2024 - Day 3: Mull It Over
+ *
+ * https://adventofcode.com/2024/day/3
  */
 object Day03 {
 
