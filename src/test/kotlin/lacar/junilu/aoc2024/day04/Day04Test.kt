@@ -1,7 +1,7 @@
 package lacar.junilu.aoc2024.day04
 
 import lacar.junilu.readPuzzleInput
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class Day04Test {
@@ -48,22 +48,5 @@ class Day04Test {
             M.S..
         """.trimIndent().lines()
         assertEquals(2, Day04.part2(test))
-    }
-
-    @Test
-    fun `column-wise traversal`() {
-        val rows = """
-            ABC
-            ABC
-            ABC
-        """.trimIndent().lines()
-
-        val cols = """
-            AAA
-            BBB
-            CCC
-        """.trimIndent().lines()
-
-        assertEquals(cols, Day04.columns(rows))
     }
 }

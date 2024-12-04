@@ -9,8 +9,8 @@ object Day04 {
 
     fun part1(lines: List<String>) =
         xmasIn(lines) +
-        xmasIn(columns(lines)) +
-        xmasIn(diagonals(lines))
+        xmasIn(lines.columns()) +
+        xmasIn(lines.diagonals())
 
     private val xmas = "XMAS".toRegex()
 
@@ -19,9 +19,17 @@ object Day04 {
             xmas.findAll(line).count() + xmas.findAll(line.reversed()).count()
         }
 
-    private fun diagonals(lines: List<String>): List<String> {
-        val dcs = diagonalCoordinates(lines)
-        return dcs.map { dc -> dc.map { (row, col) -> lines[row][col] }.joinToString("") }
+    private fun List<String>.columns(): List<String> {
+        val rowMax = indices.last
+        val colMax = first().lastIndex
+        return (0..rowMax).map { r ->
+            (0..colMax).map { c -> this[c][r] }.joinToString("")
+        }
+    }
+
+    private fun List<String>.diagonals(): List<String> {
+        val dcs = diagonalCoordinates(this)
+        return dcs.map { dc -> dc.map { (row, col) -> this[row][col] }.joinToString("") }
     }
 
     private fun diagonalCoordinates(lines: List<String>): List<List<Pair<Int, Int>>> {
@@ -30,14 +38,6 @@ object Day04 {
                 (1..last - 3).map { first -> (first..last).map { col -> Pair(last - col + first, col) } } +
                 (0..last - 3).map { first -> (0..last - first).map { col -> Pair(first + col, col) } } +
                 (3..last).map { first -> (0..first).map { col -> Pair(first - col, col) } }
-    }
-
-    fun columns(lines: List<String>): List<String> {
-        val rowMax = lines.indices.last
-        val colMax = lines.first().lastIndex
-        return (0..rowMax).map { r ->
-            (0..colMax).map { c -> lines[c][r] }.joinToString("")
-        }
     }
 
     fun part2(lines: List<String>): Int =
@@ -51,8 +51,8 @@ object Day04 {
     private fun xDiagonals(lines: List<String>, mid: Int): List<String> {
         val indices1 = listOf(0 to mid - 1, 1 to mid, 2 to mid + 1)
         val indices2 = listOf(0 to mid + 1, 1 to mid, 2 to mid - 1)
-        val s1 = indices1.map { (r, c) -> lines[r][c] }.joinToString("").also { println(it) }
-        val s2 = indices2.map { (r, c) -> lines[r][c] }.joinToString("").also { println(it) }
+        val s1 = indices1.map { (r, c) -> lines[r][c] }.joinToString("")
+        val s2 = indices2.map { (r, c) -> lines[r][c] }.joinToString("")
         return listOf(s1, s1.reversed(), s2, s2.reversed())
     }
 }
