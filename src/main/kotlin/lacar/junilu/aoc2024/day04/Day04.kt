@@ -9,8 +9,8 @@ object Day04 {
 
     fun part1(lines: List<String>) =
         xmasIn(lines) +
-        xmasIn(lines.columns()) +
-        xmasIn(lines.diagonals())
+                xmasIn(lines.columns()) +
+                xmasIn(lines.diagonals())
 
     private val xmas = "XMAS".toRegex()
 
@@ -49,10 +49,11 @@ object Day04 {
         }
 
     private fun xDiagonals(lines: List<String>, mid: Int): List<String> {
-        val indices1 = listOf(0 to mid - 1, 1 to mid, 2 to mid + 1)
-        val indices2 = listOf(0 to mid + 1, 1 to mid, 2 to mid - 1)
-        val s1 = indices1.map { (r, c) -> lines[r][c] }.joinToString("")
-        val s2 = indices2.map { (r, c) -> lines[r][c] }.joinToString("")
-        return listOf(s1, s1.reversed(), s2, s2.reversed())
+        val diagonalDn = listOf(0 to mid - 1, 1 to mid, 2 to mid + 1)
+            .map { (r, c) -> lines[r][c] }.joinToString("")
+        val diagonalUp = listOf(0 to mid + 1, 1 to mid, 2 to mid - 1)
+            .map { (r, c) -> lines[r][c] }.joinToString("")
+
+        return listOf(diagonalDn, diagonalDn.reversed(), diagonalUp, diagonalUp.reversed())
     }
 }
