@@ -6,10 +6,11 @@ package lacar.junilu.aoc2024.day04
  * https://adventofcode.com/2024/day/4
  */
 object Day04 {
-    fun xmasCount(lines: List<String>) =
+
+    fun part1(lines: List<String>) =
         xmasIn(lines) +
-                xmasIn(columns(lines)) +
-                xmasIn(diagonals(lines))
+        xmasIn(columns(lines)) +
+        xmasIn(diagonals(lines))
 
     private val xmas = "XMAS".toRegex()
 
@@ -19,16 +20,16 @@ object Day04 {
         }
 
     private fun diagonals(lines: List<String>): List<String> {
-        val indices = diagonalIndices(lines)
-        return indices.map { d -> d.map { (r, c) -> lines[r][c] }.joinToString("") }
+        val dcs = diagonalCoordinates(lines)
+        return dcs.map { dc -> dc.map { (row, col) -> lines[row][col] }.joinToString("") }
     }
 
-    private fun diagonalIndices(lines: List<String>): List<List<Pair<Int, Int>>> {
-        val max = lines.lastIndex
-        return (1..max - 3).map { start -> (start..max).map { col -> Pair(col - start, col) } } +
-                (0..max - 3).map { start -> (0..max - start).map { col -> Pair(start + col, col) } } +
-                (3..max).map { start -> (0..start).map { col -> Pair(start - col, col) } } +
-                (1..max - 3).map { start -> (start..max).map { col -> Pair(max - col + start, col) } }
+    private fun diagonalCoordinates(lines: List<String>): List<List<Pair<Int, Int>>> {
+        val last = lines.lastIndex
+        return (1..last - 3).map { first -> (first..last).map { col -> Pair(col - first, col) } } +
+                (1..last - 3).map { first -> (first..last).map { col -> Pair(last - col + first, col) } } +
+                (0..last - 3).map { first -> (0..last - first).map { col -> Pair(first + col, col) } } +
+                (3..last).map { first -> (0..first).map { col -> Pair(first - col, col) } }
     }
 
     fun columns(lines: List<String>): List<String> {
@@ -47,9 +48,9 @@ object Day04 {
             xDiagonals(lines, midX).all { it == "MAS" || it == "SAM" }
         }
 
-    private fun xDiagonals(lines: List<String>, middle: Int): List<String> {
-        val indices1 = listOf(0 to middle - 1, 1 to middle, 2 to middle + 1)
-        val indices2 = listOf(0 to middle + 1, 1 to middle, 2 to middle - 1)
+    private fun xDiagonals(lines: List<String>, mid: Int): List<String> {
+        val indices1 = listOf(0 to mid - 1, 1 to mid, 2 to mid + 1)
+        val indices2 = listOf(0 to mid + 1, 1 to mid, 2 to mid - 1)
         val s1 = indices1.map { (r, c) -> lines[r][c] }.joinToString("").also { println(it) }
         val s2 = indices2.map { (r, c) -> lines[r][c] }.joinToString("").also { println(it) }
         return listOf(s1, s1.reversed(), s2, s2.reversed())

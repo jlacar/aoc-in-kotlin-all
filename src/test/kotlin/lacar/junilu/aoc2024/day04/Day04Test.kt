@@ -6,35 +6,40 @@ import org.junit.jupiter.api.Test
 
 class Day04Test {
 
-    private val example1Input = """
-        MMMSXXMASM
-        MSAMXMSMSA
-        AMXSXMAAMM
-        MSAMASMSMX
-        XMASAMXAMM
-        XXAMMXXAMA
-        SMSMSASXSS
-        SAXAMASAAA
-        MAMMMXMMMM
-        MXMXAXMASX""".trimIndent().lines()
-
-    @Test
-    fun `Example - Part 1`() {
-        assertEquals(18, Day04.xmasCount(example1Input))
-    }
-
     @Test
     fun `Solution - Part 1`() {
-        assertEquals(2507, Day04.xmasCount(puzzleInputGitHub))
+        assertEquals(2507, Day04.part1(puzzleInputGitHub))
     }
 
     @Test
     fun `Solution - Part 2`() {
-        assertEquals(0, Day04.part2(puzzleInputGitHub))
+        assertEquals(1969, Day04.part2(puzzleInputGitHub))
+    }
+
+    companion object {
+        private val puzzleInputGitHub = readPuzzleInput("aoc2024/day04-gh")
     }
 
     @Test
-    fun `Example - Part 2`() {
+    fun `Example - Part 1 & 2`() {
+        val example1Input = """
+            MMMSXXMASM
+            MSAMXMSMSA
+            AMXSXMAAMM
+            MSAMASMSMX
+            XMASAMXAMM
+            XXAMMXXAMA
+            SMSMSASXSS
+            SAXAMASAAA
+            MAMMMXMMMM
+            MXMXAXMASX""".trimIndent().lines()
+
+        assertEquals(18, Day04.part1(example1Input))
+        assertEquals(9, Day04.part2(example1Input))
+    }
+
+    @Test
+    fun `Small X-MAS`() {
         val test = """
             M.S..
             .A...
@@ -42,11 +47,11 @@ class Day04Test {
             .A...
             M.S..
         """.trimIndent().lines()
-        assertEquals(9, Day04.part2(example1Input))
+        assertEquals(2, Day04.part2(test))
     }
 
     @Test
-    fun column() {
+    fun `column-wise traversal`() {
         val rows = """
             ABC
             ABC
@@ -60,9 +65,5 @@ class Day04Test {
         """.trimIndent().lines()
 
         assertEquals(cols, Day04.columns(rows))
-    }
-
-    companion object {
-        private val puzzleInputGitHub = readPuzzleInput("aoc2024/day04-gh")
     }
 }
