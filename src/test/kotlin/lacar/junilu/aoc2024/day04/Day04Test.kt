@@ -29,6 +29,23 @@ class Day04Test {
     }
 
     @Test
+    fun `Solution - Part 2`() {
+        assertEquals(0, Day04.part2(puzzleInputGitHub))
+    }
+
+    @Test
+    fun `Example - Part 2`() {
+        val test = """
+            M.S..
+            .A...
+            M.S..
+            .A...
+            M.S..
+        """.trimIndent().lines()
+        assertEquals(9, Day04.part2(example1Input))
+    }
+
+    @Test
     fun column() {
         val rows = """
             ABC
