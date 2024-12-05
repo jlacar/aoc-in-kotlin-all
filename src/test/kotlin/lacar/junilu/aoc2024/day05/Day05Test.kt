@@ -7,16 +7,6 @@ import org.junit.jupiter.api.Test
 class Day05Test {
 
     @Test
-    fun `Example - Part 1`() {
-        assertEquals(143, usingExampleInput.solve(Day05.part1))
-    }
-
-    @Test
-    fun `Example - Part 2`() {
-        assertEquals(123, usingExampleInput.solve(Day05.part2))
-    }
-
-    @Test
     fun `Solution - Part 1`() {
         assertEquals(5166, usingInputForGithub.solve(Day05.part1))
         assertEquals(4959, usingInputForGmail.solve(Day05.part1))
@@ -26,6 +16,12 @@ class Day05Test {
     fun `Solution - Part 2`() {
         assertEquals(4679, usingInputForGithub.solve(Day05.part2))
         assertEquals(4655, usingInputForGmail.solve(Day05.part2))
+    }
+
+    @Test
+    fun `Example - Part 1 & 2`() {
+        assertEquals(143, usingExampleInput.solve(Day05.part1))
+        assertEquals(123, usingExampleInput.solve(Day05.part2))
     }
 
     companion object {
@@ -63,7 +59,5 @@ class Day05Test {
         61,13,29
         97,13,75,29,47
         """.trimIndent())
-
-
     }
 }
