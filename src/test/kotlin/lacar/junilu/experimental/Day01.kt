@@ -7,8 +7,14 @@ class Day01 {
         val part1 = solution { lines ->
             val props = parse(lines)
 
-            // this gives the answer to part 1
+            // answer to part 1
             props.values.reduce { a, b -> a + b }.sum()
+        }
+
+        val part2 = solution { lines ->
+
+            // answer to part 2 uses part 1
+            part1(lines) as Int - (parse(lines)["everything"]?.sum() ?: 0)
         }
 
         private fun parse(lines: List<String>): Map<String, List<Int>> =

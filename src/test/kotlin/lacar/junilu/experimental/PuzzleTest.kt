@@ -5,10 +5,18 @@ import org.junit.jupiter.api.Test
 
 class PuzzleTest {
     @Test
-    fun `solve provides answer to puzzle part 1`() {
+    fun `solution provides answer to puzzle part 1`() {
         val lifeTheUniverseAndEverything = Puzzle.using("dsl/hitchhiker")
-            .answerTo(Day01.part1)
+            .solve(Day01.part1)
 
         assertEquals(42, lifeTheUniverseAndEverything)
+    }
+
+    @Test
+    fun `solution provides answer to puzzle part 2`() {
+        val lifeAndTheUniverseWithoutEverything = Puzzle.using("dsl/hitchhiker")
+            .solve(Day01.part2)
+
+        assertEquals(42, lifeAndTheUniverseWithoutEverything)
     }
 }
