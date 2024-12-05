@@ -10,18 +10,18 @@ import java.rmi.UnexpectedException
  */
 object Day05 {
     val part1 get() = solution { input ->
-        val (orderingRules, updatePages) = parse(input)
+        val (rules, pages) = parse(input)
 
         // What do you get if you add up the middle page number from those correctly-ordered updates?
-        updatePages.filter { it.isInRightOrder(orderingRules) }.sumOf { it.middleNumber() }
+        pages.filter { it.isInRightOrder(rules) }.sumOf { it.middleNumber() }
     }
 
     val part2 get() = solution { input ->
-        val (orderingRules, updatePages) = parse(input)
+        val (rules, pages) = parse(input)
 
         // What do you get if you add up the middle page numbers after correctly ordering just those updates?
-        updatePages.filterNot { it.isInRightOrder(orderingRules) }
-            .map { it.fixOrder(orderingRules) }
+        pages.filterNot { it.isInRightOrder(rules) }
+            .map { it.sortedWith(UpdatePageComparator(rules)) }
             .sumOf { it.middleNumber() }
     }
 
@@ -47,14 +47,6 @@ private fun List<Int>.getOrderedPairs() = mapIndexed { index, page ->
     val rest = this.subList(index + 1, this.size)
     List(rest.size) { page }.zip(rest)
 }.flatten()
-
-private fun List<Int>.fixOrder(orderingRules: List<Pair<Int, Int>>): List<Int> {
-    val inOrder = getOrderedPairs().filter { orderingRules.contains(it) }
-    val fixedOrder = getOrderedPairs().filterNot { orderingRules.contains(it) }.map { it.swap() }
-    val unsortedPages = (inOrder + fixedOrder).map { it.toList() }.flatten().toSet()
-
-    return unsortedPages.sortedWith(UpdatePageComparator(orderingRules))
-}
 
 private fun List<Int>.middleNumber() = get(lastIndex/2)
 
