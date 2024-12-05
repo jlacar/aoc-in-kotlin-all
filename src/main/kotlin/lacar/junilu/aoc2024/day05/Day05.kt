@@ -13,34 +13,34 @@ object Day05 {
         val (orderingRules, updatePages) = parse(input)
 
         // What do you get if you add up the middle page number from those correctly-ordered updates?
-        updatePages.filter { pages -> pages.isOrderRight(orderingRules) }.sumOf { it.middleNumber() }
+        updatePages.filter { it.isInRightOrder(orderingRules) }.sumOf { it.middleNumber() }
     }
 
     val part2 get() = solution { input ->
         val (orderingRules, updatePages) = parse(input)
 
         // What do you get if you add up the middle page numbers after correctly ordering just those updates?
-        updatePages.filterNot { pages -> pages.isOrderRight(orderingRules) }
+        updatePages.filterNot { it.isInRightOrder(orderingRules) }
             .map { it.fixOrder(orderingRules) }
             .sumOf { it.middleNumber() }
-
     }
 
     private fun parse(input: List<String>): Pair<List<Pair<Int, Int>>, List<List<Int>>> {
-        val (first, second) = input.joinToString("\n").split("\n\n")
+        val (firstSection, secondSection) = input.joinToString("\n").split("\n\n")
 
-        val pageOrderingRules = first.lines()
+        val orderingRules = firstSection.lines()
             .map { it.split("|").map(String::trim) }
             .map { (left, right) -> Pair(left.toInt(), right.toInt()) }
 
-        val pages = second.lines().map { it.trim().split(",").map(String::toInt) }
+        val updatePages = secondSection.lines().map { it.trim().split(",").map(String::toInt) }
 
-        return Pair(pageOrderingRules, pages)
+        return Pair(orderingRules, updatePages)
     }
 }
 
-// Extensions for page update lists
-private fun List<Int>.isOrderRight(orderingRules: List<Pair<Int, Int>>) =
+// region ===== Extensions for page update lists =====
+
+private fun List<Int>.isInRightOrder(orderingRules: List<Pair<Int, Int>>) =
     getOrderedPairs().all { orderingRules.contains(it) }
 
 private fun List<Int>.getOrderedPairs() = mapIndexed { index, page ->
@@ -51,21 +51,26 @@ private fun List<Int>.getOrderedPairs() = mapIndexed { index, page ->
 private fun List<Int>.fixOrder(orderingRules: List<Pair<Int, Int>>): List<Int> {
     val inOrder = getOrderedPairs().filter { orderingRules.contains(it) }
     val fixedOrder = getOrderedPairs().filterNot { orderingRules.contains(it) }.map { it.swap() }
-    val flattened = (inOrder + fixedOrder).map { it.toList() }.flatten().toSet()
+    val unsortedPages = (inOrder + fixedOrder).map { it.toList() }.flatten().toSet()
 
-    return flattened.sortedWith(PageComparator(orderingRules))
+    return unsortedPages.sortedWith(UpdatePageComparator(orderingRules))
 }
 
-private class PageComparator(val orderingRules: List<Pair<Int, Int>>) : Comparator<Int> {
+private fun List<Int>.middleNumber() = get(lastIndex/2)
+
+// region ===== Update Page comparator and helpers =====
+
+private class UpdatePageComparator(val orderingRules: List<Pair<Int, Int>>) : Comparator<Int> {
+
     private fun orderOf(page1: Int, page2: Int): Int {
-        val rule = orderingRules.firstOrNull() { it == Pair(page1, page2) || it == Pair(page2, page1) } ?: throw NoSuchElementException()
+        val pagePair = Pair(page1, page2)
+        val rule = orderingRules.firstOrNull { it == pagePair || it == pagePair.swap() } ?: throw NoSuchElementException()
         return when (page1) {
             rule.first -> -1
             rule.second -> 1
-            else -> throw UnexpectedException("Invalid rule")
+            else -> throw UnexpectedException("Invalid rule! Comparing $page1 to $page2 against $rule")
         }
     }
-
     override fun compare(n1: Int?, n2: Int?) = when {
         n1 == null && n2 == null -> 0
         n1 == null -> -1
@@ -75,5 +80,3 @@ private class PageComparator(val orderingRules: List<Pair<Int, Int>>) : Comparat
 }
 
 private fun Pair<Int, Int>.swap() = Pair(this.second, this.first)
-
-private fun List<Int>.middleNumber() = get(lastIndex/2)
