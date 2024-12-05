@@ -1,6 +1,8 @@
 package lacar.junilu.aoc2024.day05
 
+import lacar.junilu.experimental.Puzzle
 import lacar.junilu.experimental.solution
+import lacar.junilu.println
 import java.rmi.UnexpectedException
 
 /**
@@ -8,6 +10,14 @@ import java.rmi.UnexpectedException
  *
  * https://adventofcode.com/2024/day/5
  */
+
+fun main() {
+    val aoc2024 = Puzzle.using("aoc2024/day05-gh")
+
+    "Day 5 Part 1 answer is ${aoc2024.solve(Day05.part1)}".println()
+    "Day 5 Part 2 answer is ${aoc2024.solve(Day05.part2)}".println()
+}
+
 object Day05 {
     val part1 get() = solution { input ->
         val (rules, pages) = parse(input)
