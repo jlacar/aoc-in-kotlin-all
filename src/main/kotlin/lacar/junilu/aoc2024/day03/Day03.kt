@@ -20,10 +20,10 @@ object Day03 {
         .map(String::toInt)
         .reduce { acc, n -> acc * n }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: String): Int {
         val mulValues = mutableListOf(0)
         """mul\((\d+,\d+)\)|(don't\(\))|(do\(\))""".toRegex()
-            .findAll(input.joinToString(""))
+            .findAll(input)
             .fold(true) { enabled, match ->
                 addTo(mulValues, match, enabled)
             }

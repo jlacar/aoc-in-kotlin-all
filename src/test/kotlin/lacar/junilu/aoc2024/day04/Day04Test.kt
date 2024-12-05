@@ -9,15 +9,18 @@ class Day04Test {
     @Test
     fun `Solution - Part 1`() {
         assertEquals(2507, Day04.part1(puzzleInputGitHub))
+        assertEquals(2593, Day04.part1(puzzleInputGmail))
     }
 
     @Test
     fun `Solution - Part 2`() {
         assertEquals(1969, Day04.part2(puzzleInputGitHub))
+        assertEquals(1950, Day04.part2(puzzleInputGmail))
     }
 
     companion object {
         private val puzzleInputGitHub = readPuzzleInput("aoc2024/day04-gh")
+        private val puzzleInputGmail = readPuzzleInput("aoc2024/day04-gm")
     }
 
     @Test

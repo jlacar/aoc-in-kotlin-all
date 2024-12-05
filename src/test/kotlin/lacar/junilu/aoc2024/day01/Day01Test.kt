@@ -27,12 +27,11 @@ class Day01Test {
         private val puzzleInputGitHub = readPuzzleInput("aoc2024/day01-gh")
         private val puzzleInputGmail = readPuzzleInput("aoc2024/day01-gm")
 
-        private fun splitByColumn(lines: List<String>): Pair<List<Int>, List<Int>> {
-            val columnPairs = lines.map { line ->
+        private fun splitByColumn(lines: List<String>): Pair<List<Int>, List<Int>> =
+            lines.map { line ->
                 val (left, right) = line.split("   ").map { it.toInt() }
                 Pair(left, right)
-            }
-            return Pair(columnPairs.map { it.first }, columnPairs.map { it.second })
-        }
+            }.unzip()
+
     }
 }
