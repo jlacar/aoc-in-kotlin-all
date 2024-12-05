@@ -53,7 +53,6 @@ private fun List<Int>.middleNumber() = get(lastIndex/2)
 // region ===== Update Page comparator and helpers =====
 
 private class UpdatePageComparator(val orderingRules: List<Pair<Int, Int>>) : Comparator<Int> {
-
     private fun orderOf(page1: Int, page2: Int): Int {
         val pagePair = Pair(page1, page2)
         val rule = orderingRules.firstOrNull { it == pagePair || it == pagePair.swap() } ?: throw NoSuchElementException()
@@ -63,6 +62,7 @@ private class UpdatePageComparator(val orderingRules: List<Pair<Int, Int>>) : Co
             else -> throw UnexpectedException("Invalid rule! Comparing $page1 to $page2 against $rule")
         }
     }
+
     override fun compare(n1: Int?, n2: Int?) = when {
         n1 == null && n2 == null -> 0
         n1 == null -> -1
