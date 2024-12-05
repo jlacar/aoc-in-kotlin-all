@@ -1,5 +1,6 @@
 package lacar.junilu.aoc2024.day02
 
+import lacar.junilu.experimental.Puzzle
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -12,12 +13,29 @@ class Day02Test {
     }
 
     @Test
-    fun `Solution - Part 2`() {
-        assertEquals(561, Day02.howManyAreSafe(puzzleInputGitHub, useDampener = true))
-        assertEquals(349, Day02.howManyAreSafe(puzzleInputGmail, useDampener = true))
+    fun `Solution - Part 1 Puzzle DSL`() {
+        assertEquals(516, usingGitHubInput.solve(Day02.part1))
+        assertEquals(282, usingGitHubInput.solve(Day02.part2))
     }
 
-    private val exampleReports = parse("""
+    @Test
+    fun `Solution - Part 2`() {
+        assertEquals(561, usingGitHubInput.solve(Day02.part2))
+        assertEquals(349, usingGmailInput.solve(Day02.part2))
+    }
+
+    @Test
+    fun `Example - Part 1 & 2`() {
+        assertEquals(2, usingExampleInput.solve(Day02.part1))
+        assertEquals(4, usingExampleInput.solve(Day02.part2))
+    }
+
+    @Test
+    fun `Example - Part 2`() {
+    }
+
+    companion object {
+        private val exampleReports = parse("""
         7 6 4 2 1
         1 2 7 8 9
         9 7 6 2 1
@@ -26,17 +44,11 @@ class Day02Test {
         1 3 6 7 9
     """.trimIndent().lines())
 
-    @Test
-    fun `Example - Part 1`() {
-        assertEquals(2, Day02.howManyAreSafe(exampleReports))
-    }
+        private val usingGitHubInput = Puzzle.using("aoc2024/day02-gh")
+        private val usingGmailInput = Puzzle.using("aoc2024/day02-gm")
 
-    @Test
-    fun `Example - Part 2`() {
-        assertEquals(4, Day02.howManyAreSafe(exampleReports, useDampener = true))
-    }
+        private val usingExampleInput = Puzzle.using(exampleReports)
 
-    companion object {
         private val puzzleInputGitHub = parse(readPuzzleInput("aoc2024/day02-gh"))
         private val puzzleInputGmail = parse(readPuzzleInput("aoc2024/day02-gm"))
 

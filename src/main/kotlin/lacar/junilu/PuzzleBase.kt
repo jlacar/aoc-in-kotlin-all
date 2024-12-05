@@ -2,6 +2,7 @@ package lacar.junilu
 
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
+import lacar.junilu.RelativePathNormalizer.normalized
 
 /**
  * Returns the puzzle input read from the specified path
@@ -15,11 +16,24 @@ import kotlin.io.path.readLines
  * @since AoC 2015
  */
 fun readPuzzleInput(relativePath: String): List<String> {
-    val inputFilePath = when (relativePath.first()) {
-        '/' -> relativePath.drop(1)
-        else -> relativePath
-    }
-    return Path("src/main/resources/$inputFilePath.txt").readLines()
+    val inputFilePath = relativePath.normalized()
+    return Path("src/main/resources/$inputFilePath").readLines()
+}
+
+object RelativePathNormalizer {
+    fun String.normalized() = dropLeadingSlash().addExtension()
+
+    private fun String.dropLeadingSlash() =
+        when (startsWith("/")) {
+            false -> this
+            true -> this.drop(1)
+        }
+
+    private fun String.addExtension() =
+        when (endsWith(".txt")) {
+            false -> plus(".txt")
+            true -> this
+        }
 }
 
 /**
