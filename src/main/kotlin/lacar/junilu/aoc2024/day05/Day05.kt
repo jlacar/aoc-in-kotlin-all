@@ -1,6 +1,7 @@
 package lacar.junilu.aoc2024.day05
 
 import lacar.junilu.experimental.solution
+import lacar.junilu.println
 
 /**
  * AoC 2024 - Day 5: Print Queue
@@ -12,7 +13,10 @@ object Day05 {
         val (orderingRules, updatePages) = parse(input)
 
         // What do you get if you add up the middle page number from those correctly-ordered updates?
-        updatePages.filter { it.isOrderRight() }.sumOf { it.middleNumber() }
+        updatePages.filter { pages ->
+                pages.isOrderRight(orderingRules).also { if (it) "right order: $pages".println() }
+            }
+            .sumOf { it.middleNumber() }
     }
 
     val part2 get() = solution {
@@ -33,7 +37,13 @@ object Day05 {
 }
 
 // Extensions for page update lists
-private fun List<Int>.isOrderRight(): Boolean = true
+private fun List<Int>.isOrderRight(orderingRules: List<Pair<Int, Int>>): Boolean {
+    val orderedPairs = mapIndexed { index, page ->
+        val rest = this.subList(index+1, this.size)
+        List(rest.size) { page }.zip(rest)
+    }.flatten()
+    return orderedPairs.all { orderingRules.contains(it) }
+}
 
 private fun List<Int>.middleNumber() = get(lastIndex/2)
 
