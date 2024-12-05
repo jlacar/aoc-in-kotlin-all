@@ -5,33 +5,32 @@ import kotlin.math.abs
 
 /**
  * AoC 2024 - Day 1: Historian Hysteria
+ *
+ * https://adventofcode.com/2024/day/1
  */
 object Day01 {
 
-    /* What is the total distance between your lists? */
     val part1 get() = solution { input ->
         val (left, right) = toColumns(input)
 
-        // answer:
+        // What is the total distance between your lists?
         val leftSorted = left.sorted()
         val rightSorted = right.sorted()
         leftSorted.indices.sumOf { i -> abs(leftSorted[i] - rightSorted[i]) }
     }
 
-    /* What is the total similarity score? */
     val part2 get() = solution { input ->
         val (left, right) = toColumns(input)
 
-        // answer:
+        // What is the total similarity score?
         left.sumOf { n -> right.count { it == n } * n }
     }
 
-    // parse Input
-    private fun toColumns(input: List<String>): Pair<List<Int>, List<Int>> {
-        val (left, right) = input.map { it.split("   ") }
-            .map { (left, right) -> left.toInt() to right.toInt() }
-            .unzip()
-
-        return Pair(left, right)
-    }
+    /**
+     * Separate input into two columns of numbers.
+     */
+    private fun toColumns(input: List<String>) = input
+        .map { s -> s.split(" ".repeat(3)) }
+        .map { (left, right) -> left.toInt() to right.toInt() }
+        .unzip()
 }
