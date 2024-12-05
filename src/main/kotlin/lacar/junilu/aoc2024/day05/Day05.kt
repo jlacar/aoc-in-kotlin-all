@@ -41,12 +41,7 @@ object Day05 {
 // region ===== Extensions for page update lists =====
 
 private fun List<Int>.isInRightOrder(orderingRules: List<Pair<Int, Int>>) =
-    getOrderedPairs().all { orderingRules.contains(it) }
-
-private fun List<Int>.getOrderedPairs() = mapIndexed { index, page ->
-    val rest = this.subList(index + 1, this.size)
-    List(rest.size) { page }.zip(rest)
-}.flatten()
+    equals(sortedWith(UpdatePageComparator(orderingRules)))
 
 private fun List<Int>.middleNumber() = get(lastIndex/2)
 
