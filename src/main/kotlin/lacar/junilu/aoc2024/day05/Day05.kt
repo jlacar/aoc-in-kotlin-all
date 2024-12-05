@@ -11,6 +11,7 @@ import lacar.junilu.println
 object Day05 {
     val part1 get() = solution { input ->
         val (rules, pages) = parse(input)
+        "Rules: $rules\nPages: $pages".println()
 
         // What do you get if you add up the middle page number from those correctly-ordered updates?
         -1
@@ -20,9 +21,15 @@ object Day05 {
         TODO("Not implemented")
     }
 
-    private fun parse(input: List<String>): Pair<Int, Int> {
+    private fun parse(input: List<String>): Pair<List<Pair<Int, Int>>, List<List<Int>>> {
         val (first, second) = input.joinToString("\n").split("\n\n")
-        "First section: $first\nSecond section: $second".println()
-        return Pair(0, 0)
+
+        val pageOrderingRules = first.lines()
+            .map { it.split("|").map(String::trim) }
+            .map { (left, right) -> Pair(left.toInt(), right.toInt()) }
+
+        val pages = second.lines().map { it.trim().split(",").map(String::toInt) }
+
+        return Pair(pageOrderingRules, pages)
     }
 }

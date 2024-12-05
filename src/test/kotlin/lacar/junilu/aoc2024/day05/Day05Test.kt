@@ -24,7 +24,8 @@ class Day05Test {
     companion object {
         val usingInputForGithub = Puzzle.using("aoc2024/day05-gh")
 
-        val usingExampleInput = Puzzle.usingText("""
+        val usingExampleInput = Puzzle.usingText(
+        """
         47|53
         97|13
         97|61
@@ -52,7 +53,7 @@ class Day05Test {
         75,29,13
         75,97,47,61,53
         61,13,29
-        97,13,75,29,47            
+        97,13,75,29,47
         """.trimIndent())
     }
 }
