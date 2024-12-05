@@ -12,13 +12,18 @@ class Day05Test {
     }
 
     @Test
+    fun `Example - Part 2`() {
+        assertEquals(123, usingExampleInput.solve(Day05.part2))
+    }
+
+    @Test
     fun `Solution - Part 1`() {
-        assertEquals(-1, usingInputForGithub.solve(Day05.part1))
+        assertEquals(5166, usingInputForGithub.solve(Day05.part1))
     }
 
     @Test
     fun `Solution - Part 2`() {
-        assertEquals(-1, usingInputForGithub.solve(Day05.part2))
+        assertEquals(4679, usingInputForGithub.solve(Day05.part2))
     }
 
     companion object {
