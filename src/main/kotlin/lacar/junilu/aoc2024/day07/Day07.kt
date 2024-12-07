@@ -1,14 +1,6 @@
 package lacar.junilu.aoc2024.day07
 
 class Day07(private val equations: Map<Int, List<Int>>) {
-    private lateinit var mockCalibrationResults: List<Int>
-    private lateinit var testPart1Results: Iterator<Int>
-
-    constructor(equations: Map<Int, List<Int>>, testCalibrationResults: List<Int>) : this(equations) {
-        mockCalibrationResults = testCalibrationResults
-        testPart1Results = mockCalibrationResults.iterator()
-    }
-
     // What is their total calibration result?
     fun part1() = equations.map { (testValue, operands) ->
         calibrationResult(testValue, operands)
@@ -25,7 +17,6 @@ class Day07(private val equations: Map<Int, List<Int>>) {
 
     companion object {
         fun using(lines: List<String>) = Day07(parse(lines))
-
         private fun parse(lines: List<String>) = lines.associate { equation ->
             val (testValue, operands) = equation.split(": ")
             testValue.toInt() to operands.split(" ").map { it.toInt() }
@@ -35,5 +26,16 @@ class Day07(private val equations: Map<Int, List<Int>>) {
             parse(text.lines()),
             mockCalibrationResults
         )
+
+    }
+
+    // region: ===== Test-related infrastructure =====
+
+    private lateinit var mockCalibrationResults: List<Int>
+    private lateinit var testPart1Results: Iterator<Int>
+
+    constructor(equations: Map<Int, List<Int>>, testCalibrationResults: List<Int>) : this(equations) {
+        mockCalibrationResults = testCalibrationResults
+        testPart1Results = mockCalibrationResults.iterator()
     }
 }

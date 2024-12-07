@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class Day07Test {
     @Test
-    fun `Example - Part 1`() {
+    fun `Example - Part 1 - Using mock calibration results`() {
         assertEquals(3749, Day07.testUsing(example, mockExampleResults).part1())
     }
 
