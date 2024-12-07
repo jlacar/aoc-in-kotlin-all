@@ -13,8 +13,8 @@ object Day01 {
     fun distance(instructions: String): Int {
         val start = Location(NORTH, Position(0, 0))
         return instructions.split(", ")
-            .fold(start) { location, instruction -> location.move(instruction) }
-            .position.blocks
+            .fold(start) { location, instruction -> location.nextMove(instruction) }
+            .position.manhattan
     }
 
     fun distanceToBunnyHQ(input: String): Int {
@@ -32,7 +32,7 @@ object Day01 {
             }
             location = trackStepsTo(location, newDirection, displacement, visited, twiceVisited)
         }
-        return twiceVisited.first().blocks
+        return twiceVisited.first().manhattan
     }
 
     private fun trackStepsTo(
@@ -44,7 +44,7 @@ object Day01 {
     ): Location {
         var nextLocation = location
         repeat(displacement) {
-            nextLocation = nextLocation.move(newDirection, 1)
+            nextLocation = nextLocation.nextMove(newDirection, 1)
             if (visited.contains(nextLocation.position))
                 twiceVisited.add(nextLocation.position)
             else
@@ -54,29 +54,33 @@ object Day01 {
     }
 }
 
-data class Position(val x: Int, val y: Int) {
-    val blocks: Int get() = Math.abs(x) + Math.abs(y)
+data class Position(val col: Int, val row: Int) {
+    val manhattan: Int get() = Math.abs(col) + Math.abs(row)
 }
 
 data class Location(val facing: Direction, val position: Position) {
-    fun move(instruction: String): Location {
+    fun nextMove(instruction: String): Location {
         val (turn, displacement) = parse(instruction)
         val newDirection = when (turn) {
             LEFT -> facing.left
             RIGHT -> facing.right
         }
-        return move(newDirection, displacement)
+        return nextMove(newDirection, displacement)
     }
 
-    fun move(direction: Direction, displacement: Int): Location {
-        val (currentX, currentY) = position
+    fun nextMove(direction: Direction, displacement: Int): Location {
+        val (thisCol, thisRow) = position
         return Location(direction, when (direction) {
-            NORTH -> position.copy(y = currentY + displacement)
-            SOUTH -> position.copy(y = currentY - displacement)
-            EAST -> position.copy(x = currentX + displacement)
-            WEST -> position.copy(x = currentX - displacement)
+            NORTH -> position.copy(row = thisRow + displacement)
+            SOUTH -> position.copy(row = thisRow - displacement)
+            EAST -> position.copy(col = thisCol + displacement)
+            WEST -> position.copy(col = thisCol - displacement)
         })
     }
+
+    fun nextMove(displacement: Int): Location = nextMove(this.facing, displacement)
+
+    fun isWithin(range: IntRange): Boolean = (position.row in range) && (position.col in range)
 }
 
 fun parse(instruction: String) = Pair(
