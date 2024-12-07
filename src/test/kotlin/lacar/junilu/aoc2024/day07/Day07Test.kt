@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class Day07Test {
     @Test
     fun `Example - Part 1`() {
-        assertEquals(3749, Day07.using(example).part1())
+        assertEquals(3749, Day07.testUsing(example, mockExampleResults).part1())
     }
 
     @Test
@@ -21,9 +21,10 @@ class Day07Test {
     }
 
     companion object {
-        val inputForGitHub = readPuzzleInput("aoc2024/day07-gh")
+        private val inputForGitHub = readPuzzleInput("aoc2024/day07-gh")
 
-        val example = """
+        private val mockExampleResults = listOf(190, 3267, 0, 0, 0, 0, 0, 0, 292)
+        private val example = """
             190: 10 19
             3267: 81 40 27
             83: 17 5
@@ -33,6 +34,6 @@ class Day07Test {
             192: 17 8 14
             21037: 9 7 18 13
             292: 11 6 16 20
-            """.trimIndent().lines()
+            """.trimIndent()
     }
 }
