@@ -11,7 +11,7 @@ import lacar.junilu.aoc2016.day01.Turn.*
 
 object Day01 {
     fun distance(instructions: String): Int {
-        val start = Location(NORTH, Position(0, 0))
+        val start = Location(Position(0, 0), facing = NORTH)
         return instructions.split(", ")
             .fold(start) { location, instruction -> location.nextMove(instruction) }
             .position.manhattan
@@ -22,7 +22,7 @@ object Day01 {
         val visited = mutableSetOf<Position>()
         val twiceVisited = mutableListOf<Position>()
 
-        var location = Location(NORTH, Position(0, 0))
+        var location = Location(Position(0, 0), facing = NORTH)
         visited.add(location.position)
         while (twiceVisited.isEmpty() && movesIt.hasNext()) {
             val (turn, displacement) = movesIt.next()
@@ -58,7 +58,7 @@ data class Position(val col: Int, val row: Int) {
     val manhattan: Int get() = Math.abs(col) + Math.abs(row)
 }
 
-data class Location(val facing: Direction, val position: Position) {
+data class Location(val position: Position, val symbol: Char = '.', val facing: Direction = NORTH) {
     fun nextMove(instruction: String): Location {
         val (turn, displacement) = parse(instruction)
         val newDirection = when (turn) {
@@ -70,17 +70,39 @@ data class Location(val facing: Direction, val position: Position) {
 
     fun nextMove(direction: Direction, displacement: Int): Location {
         val (thisCol, thisRow) = position
-        return Location(direction, when (direction) {
-            NORTH -> position.copy(row = thisRow + displacement)
-            SOUTH -> position.copy(row = thisRow - displacement)
-            EAST -> position.copy(col = thisCol + displacement)
-            WEST -> position.copy(col = thisCol - displacement)
-        })
+        return Location(
+            when (direction) {
+                NORTH -> position.copy(row = thisRow + displacement)
+                SOUTH -> position.copy(row = thisRow - displacement)
+                EAST -> position.copy(col = thisCol + displacement)
+                WEST -> position.copy(col = thisCol - displacement)
+            }, facing = direction
+        )
     }
 
     fun nextMove(displacement: Int): Location = nextMove(this.facing, displacement)
 
     fun isWithin(range: IntRange): Boolean = (position.row in range) && (position.col in range)
+}
+
+data class Grid(val locations: List<List<Location>>) {
+    fun display(format: (Char) -> Char = { it }): Grid =
+        locations.reversed().forEach { row ->
+            row.forEach { location ->
+                print(format(location.symbol))
+            }
+            println()
+        }.let { this }
+
+    companion object {
+        fun parse(lines: List<String>) = Grid(
+            lines.reversed().mapIndexed { y: Int, row: String ->
+                row.mapIndexed { x: Int, ch: Char ->
+                    Location(Position(row = y, col = x), symbol = ch)
+                }
+            }
+        )
+    }
 }
 
 fun parse(instruction: String) = Pair(

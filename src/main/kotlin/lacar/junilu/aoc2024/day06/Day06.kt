@@ -74,7 +74,7 @@ object Day06 {
         obstacles: Set<Position>
     ): MutableSet<Position> {
         val visited = mutableSetOf<Position>()
-        var currentLoc = Location(facing = Direction.NORTH, start)
+        var currentLoc = Location(start, facing = Direction.NORTH)
         while (currentLoc.isWithin(bounds)) {
             visited.add(currentLoc.position)
             val nextLoc = currentLoc.nextMove(1)
@@ -110,7 +110,7 @@ object Day06 {
     ): Boolean {
         val blockedPath = obstacles + blocker
 
-        var currentLoc = Location(facing = Direction.NORTH, start)
+        var currentLoc = Location(start, facing = Direction.NORTH)
         val cornersTurned = mutableListOf<Location>()
 
         while (!inLoop(cornersTurned) && currentLoc.isWithin(bounds)) {
