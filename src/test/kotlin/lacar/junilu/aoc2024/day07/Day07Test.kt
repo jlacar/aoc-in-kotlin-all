@@ -19,17 +19,20 @@ class Day07Test {
 
     @Test
     fun `Solution - Part 1`() {
-        assertEquals(0, Day07.using(inputForGitHub).part1())
+        assertEquals(20281182715321, Day07.using(inputForGmail).part1())
+        assertEquals(303766878298, Day07.using(inputForGitHub).part1())
         // > 303766878298
     }
 
     @Test
     fun `Solution - Part 2`() {
+        assertEquals(0, Day07.using(inputForGmail).part2())
         assertEquals(0, Day07.using(inputForGitHub).part2())
     }
 
     companion object {
         private val inputForGitHub = readPuzzleInput("aoc2024/day07-gh")
+        private val inputForGmail = readPuzzleInput("aoc2024/day07-gm")
 
         private val mockExampleResults = listOf<Long>(190, 3267, 0, 0, 0, 0, 0, 0, 292)
         private val example = """
