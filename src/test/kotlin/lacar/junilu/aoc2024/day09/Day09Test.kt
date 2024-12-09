@@ -2,6 +2,7 @@ package lacar.junilu.aoc2024.day09
 
 import lacar.junilu.aoc2024.day09.Day09.AmphiFile
 import lacar.junilu.println
+import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -25,12 +26,42 @@ class Day09Test {
     }
 
     @Test
+    fun `Example - Part 1`() {
+        assertEquals(1928, Day09.using(exampleInput).part1())
+    }
+
+    @Test
+    fun `Example - Part 2`() {
+        assertEquals(2858, Day09.using(inputForGitHub).part2())
+    }
+
+    @Test
+    fun `Solution - Part 1`() {
+        assertEquals(6216544403458, Day09.using(inputForGitHub).part1())
+    }
+
+    @Test
     fun `checkSum calculation`() {
         val compacted = "0099811188827773336446555566..............".dropLastWhile { it == '.' }.map { c ->
             AmphiFile(id = c - '0', blocks = 1).also { it.println()}
         }
 
         assertEquals(1928, compacted.checkSum())
+    }
+
+    @Test
+    fun `block with free space gets skipped by checkSum calculation`() {
+        val compactedDiskMap = listOf(
+            AmphiFile(id = 0, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 2, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 2, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 1, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 1, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 1, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 2, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 2, blocks = 1, freeSpace = 0),
+            AmphiFile(id = 2, blocks = 1, freeSpace = 0),
+        )
     }
 
     @Test
@@ -44,5 +75,6 @@ class Day09Test {
 
     companion object {
         private val exampleInput = "2333133121414131402"
+        private val inputForGitHub = readPuzzleInput("aoc2024/day09-gh").first()
     }
 }
