@@ -11,7 +11,7 @@ class Day01Test {
     @Test
     fun `Solution - Part 1`() {
         val instructions = readPuzzleInput("aoc2016/day01-gh").first()
-        assertEquals(241, Day01.distance(instructions))
+        assertEquals(241, Day01.distanceTraveled(instructions))
     }
 
     @Test
@@ -45,9 +45,9 @@ class Day01Test {
     @Test
     fun `Part 1 Examples`() {
         assertAll(
-            { assertEquals(5, Day01.distance("R2, L3")) },
-            { assertEquals(2, Day01.distance("R2, R2, R2")) },
-            { assertEquals(12, Day01.distance("R5, L5, R5, R3")) },
+            { assertEquals(5, Day01.distanceTraveled("R2, L3")) },
+            { assertEquals(2, Day01.distanceTraveled("R2, R2, R2")) },
+            { assertEquals(12, Day01.distanceTraveled("R5, L5, R5, R3")) },
         )
     }
 

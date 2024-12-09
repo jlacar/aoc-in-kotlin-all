@@ -5,6 +5,7 @@ import lacar.junilu.common.Direction.*
 import lacar.junilu.common.Turn.*
 import lacar.junilu.common.Location
 import lacar.junilu.common.Point
+import lacar.junilu.common.Point.Companion.ORIGIN
 
 /**
  * AoC 2016: Day 1 - No Time for a Taxicab
@@ -13,8 +14,8 @@ import lacar.junilu.common.Point
  */
 
 object Day01 {
-    fun distance(instructions: String): Int {
-        val start = Location(Point(0, 0), facing = NORTH)
+    fun distanceTraveled(instructions: String): Int {
+        val start = Location(ORIGIN, facing = NORTH)
         return instructions.split(", ")
             .fold(start) { location, instruction -> location.nextMove(instruction) }
             .point.manhattan
@@ -25,7 +26,7 @@ object Day01 {
         val visited = mutableSetOf<Point>()
         val twiceVisited = mutableListOf<Point>()
 
-        var location = Location(Point(0, 0), facing = NORTH)
+        var location = Location(ORIGIN, facing = NORTH)
         visited.add(location.point)
         while (twiceVisited.isEmpty() && movesIt.hasNext()) {
             val (turn, displacement) = movesIt.next()
@@ -61,4 +62,3 @@ fun parse(instruction: String) = Pair(
     if (instruction.take(1) == "L") LEFT else RIGHT,
     instruction.drop(1).toInt()
 )
-
