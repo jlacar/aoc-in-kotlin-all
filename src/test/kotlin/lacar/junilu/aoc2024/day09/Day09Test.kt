@@ -1,6 +1,7 @@
 package lacar.junilu.aoc2024.day09
 
 import lacar.junilu.aoc2024.day09.Day09.AmphiFile
+import lacar.junilu.println
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -8,6 +9,15 @@ class Day09Test {
     @Test
     fun `using first example`() {
 
+    }
+
+    @Test
+    fun `checkSum calculation`() {
+        val compacted = "0099811188827773336446555566..............".dropLastWhile { it == '.' }.map { c ->
+            AmphiFile(id = c - '0', blocks = 1).also { it.println()}
+        }
+
+        assertEquals(1928, compacted.checkSum())
     }
 
     @Test
