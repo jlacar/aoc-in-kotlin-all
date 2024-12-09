@@ -1,8 +1,8 @@
 package lacar.junilu.aoc2024.day06
 
-import lacar.junilu.aoc2016.day01.Direction
-import lacar.junilu.aoc2016.day01.Location
-import lacar.junilu.aoc2016.day01.Position
+import lacar.junilu.common.Direction
+import lacar.junilu.common.Location
+import lacar.junilu.common.Point
 import lacar.junilu.experimental.solution
 import lacar.junilu.print
 import lacar.junilu.println
@@ -40,17 +40,17 @@ object Day06 {
         val (obstacles, start) = parse(lines)
         val bounds = lines.indices
 
-        if (hasLoop(bounds, obstacles, Position(0, 0), start)) 1 else 0
+        if (hasLoop(bounds, obstacles, Point(0, 0), start)) 1 else 0
 //        countLoops(bounds, obstacles, start)
     }
 
-    private fun printMap(bounds: IntRange, obstacles: Set<Position>, start: Position, currentLocation: Location? = null) {
-        val loc = currentLocation?.position ?: Position(-1, -1)
+    private fun printMap(bounds: IntRange, obstacles: Set<Point>, start: Point, currentLocation: Location? = null) {
+        val loc = currentLocation?.point ?: Point(-1, -1)
 
         println("map:")
         bounds.reversed().forEach { row ->
             bounds.forEach { col ->
-                val pos = Position(col, row)
+                val pos = Point(col, row)
                 when (pos) {
                     loc -> when (currentLocation!!.facing) {
                         Direction.NORTH -> "^"
@@ -70,15 +70,15 @@ object Day06 {
 
     private fun trackPositions(
         bounds: IntRange,
-        start: Position,
-        obstacles: Set<Position>
-    ): MutableSet<Position> {
-        val visited = mutableSetOf<Position>()
+        start: Point,
+        obstacles: Set<Point>
+    ): MutableSet<Point> {
+        val visited = mutableSetOf<Point>()
         var currentLoc = Location(start, facing = Direction.NORTH)
         while (currentLoc.isWithin(bounds)) {
-            visited.add(currentLoc.position)
+            visited.add(currentLoc.point)
             val nextLoc = currentLoc.nextMove(1)
-            if (nextLoc.position in obstacles) {
+            if (nextLoc.point in obstacles) {
                 currentLoc = currentLoc.nextMove("R1")
             } else {
                 currentLoc = nextLoc
@@ -89,8 +89,8 @@ object Day06 {
 
     private fun countLoops(
         bounds: IntRange,
-        oldObstacles: Set<Position>,
-        start: Position
+        oldObstacles: Set<Point>,
+        start: Point
     ): Int {
         val newObstacles = trackPositions(
             bounds = bounds,
@@ -104,9 +104,9 @@ object Day06 {
 
     fun hasLoop(
         bounds: IntRange,
-        obstacles: Set<Position>,
-        blocker: Position,
-        start: Position
+        obstacles: Set<Point>,
+        blocker: Point,
+        start: Point
     ): Boolean {
         val blockedPath = obstacles + blocker
 
@@ -115,7 +115,7 @@ object Day06 {
 
         while (!inLoop(cornersTurned) && currentLoc.isWithin(bounds)) {
             val nextLoc = currentLoc.nextMove(1)
-            if (nextLoc.position in blockedPath) {
+            if (nextLoc.point in blockedPath) {
                 cornersTurned.add(currentLoc)
                 currentLoc = currentLoc.nextMove("R1")
             } else {
@@ -139,7 +139,7 @@ object Day06 {
     }
 
     private fun checkBounds(outOfBounds: Location) {
-        val (col, row) = outOfBounds.position
+        val (col, row) = outOfBounds.point
         (when (outOfBounds.facing) {
             Direction.NORTH -> { if (row == 130) "ok" else "BAD"}
             Direction.SOUTH -> { if (row == -1) "ok" else "BAD"}
@@ -148,17 +148,17 @@ object Day06 {
         } + " $outOfBounds").println()
     }
 
-    private fun parse(lines: List<String>): Pair<Set<Position>, Position> {
-        val obstacles = mutableSetOf<Position>()
+    private fun parse(lines: List<String>): Pair<Set<Point>, Point> {
+        val obstacles = mutableSetOf<Point>()
         val max = lines.lastIndex
 
-        lateinit var guard: Position
+        lateinit var guard: Point
         lines.forEachIndexed { y, line ->
             line.forEachIndexed { col, ch ->
                 val row = max - y
                 when (ch) {
-                    '#' -> obstacles.add(Position(col, row))
-                    '^' -> guard = Position(col, row)
+                    '#' -> obstacles.add(Point(col, row))
+                    '^' -> guard = Point(col, row)
                     else -> {}
                 }
             }

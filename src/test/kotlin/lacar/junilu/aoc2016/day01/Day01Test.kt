@@ -1,5 +1,6 @@
 package lacar.junilu.aoc2016.day01
 
+import lacar.junilu.common.Direction
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
