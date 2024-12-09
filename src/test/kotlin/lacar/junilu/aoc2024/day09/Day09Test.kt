@@ -7,8 +7,21 @@ import org.junit.jupiter.api.Test
 
 class Day09Test {
     @Test
-    fun `using first example`() {
+    fun `parsing first example`() {
+        val diskMap = listOf(
+                AmphiFile(id = 0, blocks = 2, freeSpace = 3),
+                AmphiFile(id = 1, blocks = 3, freeSpace = 3),
+                AmphiFile(id = 2, blocks = 1, freeSpace = 3),
+                AmphiFile(id = 3, blocks = 3, freeSpace = 1),
+                AmphiFile(id = 4, blocks = 2, freeSpace = 1),
+                AmphiFile(id = 5, blocks = 4, freeSpace = 1),
+                AmphiFile(id = 6, blocks = 4, freeSpace = 1),
+                AmphiFile(id = 7, blocks = 3, freeSpace = 1),
+                AmphiFile(id = 8, blocks = 4, freeSpace = 0),
+                AmphiFile(id = 9, blocks = 2, freeSpace = 0),
+            )
 
+        assertEquals(diskMap, Day09.using(exampleInput).diskMap)
     }
 
     @Test
