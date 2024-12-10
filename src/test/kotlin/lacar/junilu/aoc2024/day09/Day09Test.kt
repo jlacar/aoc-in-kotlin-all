@@ -1,10 +1,8 @@
 package lacar.junilu.aoc2024.day09
 
 import lacar.junilu.aoc2024.day09.Day09.AmphiFile
-import lacar.junilu.println
 import lacar.junilu.readPuzzleInput
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class Day09Test {
@@ -38,24 +36,14 @@ class Day09Test {
 
     @Test
     fun `Solution - Part 1`() {
-        // TODO Disable debugging println()s!
+        assertEquals(6320029754031, Day09.using(inputForGmail).part1())
         assertEquals(6216544403458, Day09.using(inputForGitHub).part1())
     }
 
-    @Disabled
     @Test
     fun `Solution - Part 2`() {
-        // TODO Disable debugging println()s!
-        assertEquals(0, Day09.using(inputForGitHub).part2()) // 6238497485089 is too high
-    }
-
-    @Test
-    fun `checkSum calculation`() {
-        val compacted = "0099811188827773336446555566..............".dropLastWhile { it == '.' }.map { c ->
-            AmphiFile(id = c - '0', blocks = 1).also { it.println()}
-        }
-
-        assertEquals(1928, compacted.checkSum())
+        assertEquals(6347435485773, Day09.using(inputForGmail).part2()) // 6238497485089 is too high
+        assertEquals(6237075041489, Day09.using(inputForGitHub).part2()) // 6238497485089 is too high
     }
 
     @Test
@@ -85,5 +73,6 @@ class Day09Test {
     companion object {
         private val exampleInput = "2333133121414131402"
         private val inputForGitHub = readPuzzleInput("aoc2024/day09-gh").first()
+        private val inputForGmail = readPuzzleInput("aoc2024/day09-gm").first()
     }
 }

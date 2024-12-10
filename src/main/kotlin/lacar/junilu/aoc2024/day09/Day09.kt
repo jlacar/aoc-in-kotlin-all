@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2024.day09
 
-import lacar.junilu.println
+import lacar.junilu.tail
 import lacar.junilu.aoc2024.day09.Day09.AmphiFile as AmphiFile1
 
 class Day09(val diskMap: List<AmphiFile>) {
@@ -12,15 +12,23 @@ class Day09(val diskMap: List<AmphiFile>) {
 
     // Moving whole files instead of single blocks, what is the resulting filesystem checksum?
     fun part2(): Long = diskMap.compactByFile()
-//        .checkSum()
-        .also { it.joinToString(",\n").println() }.checkSum()
+        .checkSum()
+//        .also { it.joinToString(",\n").println() }.checkSum()
 
     data class AmphiFile(val id: Int, val blocks: Int, val freeSpace: Int = 0) {
         val totalSpace: Int get() = blocks + freeSpace
+        fun hasSpaceFor(blocks: Int) = freeSpace >= blocks
     }
 
     private fun AmphiFile.spreadToSingles(): List<AmphiFile> =
         List(blocks) { copy(blocks = 1, freeSpace = 0) } + List(freeSpace) { FreeSpace }
+
+    fun List<AmphiFile>.checkSum(): Long = asSequence().mapIndexed { index, file ->
+        when (file.freeSpace) {
+            0 -> index.toLong() * file.id
+            else -> 0
+        }
+    }.sum()
 
     private fun List<AmphiFile>.compactByBlock(): List<AmphiFile> {
         val singles = map { it.spreadToSingles() }.flatten()
@@ -44,35 +52,39 @@ class Day09(val diskMap: List<AmphiFile>) {
         return compacted.dropLast(singles.size - moveIndex)
     }
 
-    private fun List<AmphiFile>.compactByFile(): List<AmphiFile> =
-        (last().id downTo 1).fold(this) { acc, fileId ->
-            acc.moveToFreeSpace(fileId)
-        }.map { it.spreadToSingles() }.flatten()
+    // Version 2.0 - AI-assisted with tweaks to get it right. See original in README
+    private fun List<Day09.AmphiFile>.compactByFile(): List<Day09.AmphiFile> {
+        val filesIdsDescending = this.tail.map { it.id }.sortedDescending()
+        val compacted = this.toMutableList()
 
-    private fun List<AmphiFile>.moveToFreeSpace(moveId: Int): List<AmphiFile> {
-        val moveIndex = indexOfFirst { it.id == moveId }
-        val fileToMove = get(moveIndex)
-        val toLeft = take(moveIndex)
+        for (fileId in filesIdsDescending) {
+            val fileIndex = compacted.indexOfFirst { it.id == fileId }
+            val file = compacted[fileIndex]
 
-        val indexOfFree = toLeft.indexOfFirst { it.freeSpace >= fileToMove.blocks }
-        if (indexOfFree < 0) return this
+            // Find a suitable span of free space
+            val spaceIndex = compacted.indexOfFirst {
+                it.hasSpaceFor(file.blocks) && compacted.indexOf(it) < fileIndex
+            }
+            if (spaceIndex < 0) continue
 
-        val fileWithFreeSpace = get(indexOfFree)
-        val adjustedPred = toLeft.last().copy(freeSpace = toLeft.last().freeSpace + fileToMove.totalSpace)
+            // Turn original file position into free space and combined it with its predecessors free space
+            val predecessor = compacted[fileIndex - 1]
+            compacted[fileIndex - 1] = predecessor.copy(freeSpace = predecessor.freeSpace + file.totalSpace)
+            compacted.removeAt(fileIndex)
 
-        return this.take(indexOfFree) +
-                fileWithFreeSpace.copy(freeSpace = 0) +
-                fileToMove.copy(freeSpace = fileWithFreeSpace.freeSpace - fileToMove.blocks) +
-                toLeft.drop(indexOfFree + 1).dropLast(1) +
-                adjustedPred +
-                subList(moveIndex + 1, size)
+            // Zero out target's free space and insert file after target with an remaining free space from target
+            val target = compacted[spaceIndex]
+            compacted[spaceIndex] = target.copy(freeSpace = 0)
+            compacted.add(spaceIndex + 1, file.copy(freeSpace = target.freeSpace - file.blocks))
+        }
+
+        return compacted.map { it.spreadToSingles() }.flatten()
     }
 
     companion object {
         val FreeSpace = AmphiFile(-1, blocks = 0, freeSpace = 1)
 
         private fun Char.asInt() = this - '0'
-
         fun using(input: String) = Day09(
             (input + "0").chunked(size = 2).mapIndexed { id, fileDesc ->
                 val (blocks, freeSpace) = fileDesc.toCharArray()
@@ -82,9 +94,3 @@ class Day09(val diskMap: List<AmphiFile>) {
     }
 }
 
-fun List<Day09.AmphiFile>.checkSum(): Long = asSequence().mapIndexed { index, file ->
-    when (file.freeSpace) {
-        0 -> index.toLong() * if (file.id >= 0) file.id.toLong() else 0L
-        else -> 0
-    }
-}.sum()
