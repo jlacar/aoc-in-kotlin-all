@@ -84,13 +84,13 @@ class Day09(val diskMap: List<AmphiFile>) {
     companion object {
         val FreeSpace = AmphiFile(-1, blocks = 0, freeSpace = 1)
 
-        private fun Char.asInt() = this - '0'
         fun using(input: String) = Day09(
-            (input + "0").chunked(size = 2).mapIndexed { id, fileDesc ->
-                val (blocks, freeSpace) = fileDesc.toCharArray()
-                AmphiFile1(id = id, blocks = blocks.asInt(), freeSpace = freeSpace.asInt())
-            }
+            (input + "0")
+                .chunked(2)
+                .mapIndexed { id, fileDesc ->
+                    val (blocks, freeSpace) = fileDesc.map { it - '0' }
+                    AmphiFile1(id = id, blocks = blocks, freeSpace = freeSpace)
+                }
         )
     }
 }
-
