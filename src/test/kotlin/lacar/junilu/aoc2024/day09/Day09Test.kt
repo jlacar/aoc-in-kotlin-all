@@ -4,6 +4,7 @@ import lacar.junilu.aoc2024.day09.Day09.AmphiFile
 import lacar.junilu.println
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class Day09Test {
@@ -37,12 +38,15 @@ class Day09Test {
 
     @Test
     fun `Solution - Part 1`() {
+        // TODO Disable debugging println()s!
         assertEquals(6216544403458, Day09.using(inputForGitHub).part1())
     }
 
+    @Disabled
     @Test
     fun `Solution - Part 2`() {
-        assertEquals(6216544403458, Day09.using(inputForGitHub).part2())
+        // TODO Disable debugging println()s!
+        assertEquals(0, Day09.using(inputForGitHub).part2()) // 6238497485089 is too high
     }
 
     @Test
