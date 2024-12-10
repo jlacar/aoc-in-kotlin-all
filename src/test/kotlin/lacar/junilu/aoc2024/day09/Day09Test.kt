@@ -32,12 +32,17 @@ class Day09Test {
 
     @Test
     fun `Example - Part 2`() {
-        assertEquals(2858, Day09.using(inputForGitHub).part2())
+        assertEquals(2858, Day09.using(exampleInput).part2())
     }
 
     @Test
     fun `Solution - Part 1`() {
         assertEquals(6216544403458, Day09.using(inputForGitHub).part1())
+    }
+
+    @Test
+    fun `Solution - Part 2`() {
+        assertEquals(6216544403458, Day09.using(inputForGitHub).part2())
     }
 
     @Test
