@@ -1,19 +1,31 @@
 package lacar.junilu.common
 
 import lacar.junilu.aoc2016.day01.*
+import lacar.junilu.println
 import kotlin.math.abs
 import kotlin.math.sqrt
 
 data class Grid(val locations: List<List<Location>>) {
+
     fun displayString() = locations.reversed().map { row ->
         row.map { it.symbol }.joinToString("")
     }.joinToString("\n")
 
+    fun getAll(symbol: Char) = locations.flatten().filter { it.symbol == symbol }
+
     fun isInbounds(point: Point) =
-        point.row in locations.indices &&
-        point.col in locations[0].indices
+        point.row in locations.indices && point.col in locations[0].indices
 
     fun isInbounds(location: Location) = isInbounds(location.point)
+
+    fun locationAt(point: Point) = locations[point.row][point.col]
+
+    fun neighbors(location: Location): List<Location> = location.point
+        .allAdjacent()
+        .filter { isInbounds(it) }
+        .map { point -> locationAt(point) }
+
+    private fun isRegular(): Boolean = locations.all { line -> line.size == locations.first().size }
 
     companion object {
         fun parse(lines: List<String>) = Grid(
@@ -22,11 +34,23 @@ data class Grid(val locations: List<List<Location>>) {
                     Location(Point(row = y, col = x), symbol = ch)
                 }
             }
-        )
+        ).also {
+            check(it.isRegular()) {
+                val display = lines.mapIndexed { lineNo: Int, s: String ->
+                    "$lineNo: [$s]"
+                }.joinToString("\n", prefix = "\n")
+                "Grid input is not regular: $display".println()
+            }
+        }
     }
 }
 
 data class Location(val point: Point, val symbol: Char = '.', val facing: Direction = Direction.NORTH) {
+
+    constructor(x: Int, y: Int, symbol: Char) : this(
+        point = Point(col = x, row = y),
+        symbol = symbol
+    )
 
     fun nextMove(instruction: String): Location {
         val (turn, displacement) = parse(instruction)
@@ -66,7 +90,7 @@ enum class Direction {
 
 data class LineSegment(val p1: Point, val p2: Point) {
     constructor(x1: Int, y1: Int, x2: Int, y2: Int) : this(Point(x1, y1), Point(x2, y2))
-    constructor(point: Point, x: Int, y: Int ) : this(point, Point(x, y))
+    constructor(point: Point, x: Int, y: Int) : this(point, Point(x, y))
 
     private val distance = DirectedSegment(p1, p2)
 
@@ -111,6 +135,18 @@ data class Point(val col: Int, val row: Int) {
             false -> DirectedSegment(this, other).manhattan.toDouble()
             true -> DirectedSegment(this, other).direct
         }
+
+    fun allAdjacent(): List<Point> {
+        val result = Direction.entries.map { this.shift(it) }
+        return result
+    }
+
+    fun shift(direction: Direction) = when (direction) {
+        Direction.NORTH -> this.copy(row = row + 1)
+        Direction.SOUTH -> this.copy(row = row - 1)
+        Direction.EAST -> this.copy(col = col + 1)
+        Direction.WEST -> this.copy(col = col - 1)
+    }
 
     val manhattan: Int get() = DirectedSegment(ORIGIN, this).manhattan
 
