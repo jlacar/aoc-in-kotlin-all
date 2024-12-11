@@ -1,25 +1,17 @@
 package lacar.junilu.aoc2024.day11
 
-import lacar.junilu.println
-
 class Day11(val stones: List<Long>) {
 
-    fun part1(blinks: Int): List<Long> {
-        var lineOfStones = buildList { addAll(stones) }
-
-        repeat(blinks) { blink ->
-//            "$blink: $lineOfStones".println()
-            lineOfStones = lineOfStones.map {
+    fun part1(blinks: Int): List<Long> =
+        (1..blinks).fold(stones) { acc: List<Long>, _ ->
+            acc.map { numberOnStone ->
                 when {
-                    it == 0L -> listOf(1L)
-                    it.hasEvenDigits() -> it.splitInTwo()
-                    else -> listOf(it * 2024)
+                    numberOnStone == 0L -> listOf(1L)
+                    numberOnStone.hasEvenDigits() -> numberOnStone.splitInTwo()
+                    else -> listOf(numberOnStone * 2024)
                 }
             }.flatten()
         }
-//        "$blinks: $lineOfStones".println()
-        return lineOfStones
-    }
 
     private fun Long.hasEvenDigits() = this.toString().length % 2 == 0
 
