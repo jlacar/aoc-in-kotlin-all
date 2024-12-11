@@ -1,8 +1,7 @@
 package lacar.junilu.aoc2024.day11
 
-import lacar.junilu.println
 import lacar.junilu.readPuzzleInput
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -30,8 +29,8 @@ class Day11Test {
 
     @Test
     fun `Solution - Part 2`() {
-//        assertEquals(218956, puzzleUsingGmailInput.part1(75))
-        assertEquals(0L, puzzleUsingGitHubInput.part1(75))
+        assertEquals(259593838049805L, puzzleUsingGmailInput.part1(75))
+        assertEquals(220566831337810L, puzzleUsingGitHubInput.part1(75))
     }
 
     companion object {
