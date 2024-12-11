@@ -5,16 +5,29 @@ import lacar.junilu.common.Location
 
 class Day10(val map: Grid) {
 
-    fun part1(): Int = map.getAll(TRAIL_HEAD).sumOf { it.score() }
+    fun part1(): Int = map.getAll(TRAIL_HEAD)
+        .sumOf { it.score() }
 
     private fun Location.score(): Int = map.getAll(TRAIL_END)
         .count { trailEnd -> this hasTrailUpTo trailEnd }
+
+    fun part2(): Int = map.getAll(TRAIL_HEAD)
+        .sumOf { it.rating() }
+
+    private fun Location.rating(): Int = map.getAll(TRAIL_END)
+        .sumOf { trailEnd -> this distinctTrailsUpTo trailEnd }
 
     private infix fun Location.hasTrailUpTo(otherLevel: Location): Boolean {
         if (this isNotLowerThan otherLevel) return false
         if (this isAdjacentTo otherLevel && this isOneBelow otherLevel) return true
         val allOneBelow = map.neighbors(otherLevel).filter { it isOneBelow otherLevel }
         return allOneBelow.any { this hasTrailUpTo it }
+    }
+
+    private infix fun Location.distinctTrailsUpTo(trailEnd: Location): Int {
+        var uniqueTrails = 0
+        //
+        return uniqueTrails
     }
 
     private infix fun Location.isLowerThan(other: Location) = this.symbol < other.symbol
