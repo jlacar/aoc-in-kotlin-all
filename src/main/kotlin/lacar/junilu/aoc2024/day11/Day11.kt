@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2024.day11
 
-class Day11(val stones: List<Long>) {
+class Day11(private val stones: List<Long>) {
 
     fun part1(blinks: Int): List<Long> =
         (1..blinks).fold(stones) { acc: List<Long>, _ ->
