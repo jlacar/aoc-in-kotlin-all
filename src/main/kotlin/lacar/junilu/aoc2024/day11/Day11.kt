@@ -2,16 +2,20 @@ package lacar.junilu.aoc2024.day11
 
 class Day11(private val stones: List<Long>) {
 
-    fun part1(blinks: Int): List<Long> =
-        (1..blinks).fold(stones) { acc: List<Long>, _ ->
-            acc.map { numberOnStone ->
+    fun part1(blinks: Int): Long {
+        var count = 0L
+        generateSequence(stones.asSequence()) { acc ->
+            val next = acc.map { numberOnStone ->
                 when {
-                    numberOnStone == 0L -> listOf(1L)
-                    numberOnStone.hasEvenDigits() -> numberOnStone.splitInTwo()
-                    else -> listOf(numberOnStone * 2024)
+                    numberOnStone == 0L -> listOf(1L).asSequence()
+                    numberOnStone.hasEvenDigits() -> numberOnStone.splitInTwo().asSequence()
+                    else -> listOf(numberOnStone * 2024).asSequence()
                 }
             }.flatten()
-        }
+            next
+        }.drop(blinks).first().forEach { count++ }
+        return count
+    }
 
     private fun Long.hasEvenDigits() = this.toString().length % 2 == 0
 
