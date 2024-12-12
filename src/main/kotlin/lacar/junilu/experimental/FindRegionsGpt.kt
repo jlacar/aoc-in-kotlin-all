@@ -1,18 +1,16 @@
 package lacar.junilu.experimental
 
-class FindRegionsGpt {
-}
-
 data class Region(val symbol: Char, val size: Int, val cells: List<Pair<Int, Int>>)
 
 //fun findRegions(grid: Array<CharArray>): List<Region> {
 fun findRegions(grid: List<String>): List<Region> {
     val rows = grid.size
-    val cols = grid[0].lastIndex
+    val cols = grid.first().length
+
     val visited = Array(rows) { BooleanArray(cols) } // Track visited cells
     val regions = mutableListOf<Region>() // List to store all regions
 
-    // Directions for moving: up, down, left, right
+    // Directions for moving: up, down, left, right (4-directional)
     val directions = listOf(Pair(-1, 0), Pair(1, 0), Pair(0, -1), Pair(0, 1))
 
     fun isValidCell(r: Int, c: Int, symbol: Char): Boolean {
