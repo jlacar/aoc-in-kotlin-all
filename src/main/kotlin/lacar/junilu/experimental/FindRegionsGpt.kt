@@ -53,19 +53,18 @@ fun findRegions(grid: List<String>): List<Region> {
 }
 
 fun main() {
-//    val grid = arrayOf(
-//        "AABCC".toCharArray(),
-//        "AABCE".toCharArray(),
-//        "DDBCC".toCharArray(),
-//        "AABCE".toCharArray(),
-//        "AABCE".toCharArray()
-//    )
     val grid = """
-        AABCC
-        AABCE
-        DDBCC
-        AABCE        
+        OOOOO
+        OXOXO
+        OOOOO
+        OXOXO
+        OOOOO        
         """.trimIndent().lines()
+//        AABCC
+//        AABCE
+//        DDBCC
+//        AABCE
+//        """.trimIndent().lines()
 
     val regions = findRegions(grid)
     regions.forEach { region ->
