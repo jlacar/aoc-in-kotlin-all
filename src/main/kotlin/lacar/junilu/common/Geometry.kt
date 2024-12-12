@@ -11,12 +11,14 @@ data class Grid(val locations: List<List<Location>>) {
         row.map { it.symbol }.joinToString("")
     }.joinToString("\n")
 
+    fun getDistinctSymbols() = locations.flatten().map { it.symbol }.distinct()
+
     fun getAll(symbol: Char) = locations.flatten().filter { it.symbol == symbol }
 
     fun isInbounds(point: Point) =
         point.row in locations.indices && point.col in locations[0].indices
 
-    fun isInbounds(location: Location) = isInbounds(location.point)
+//    fun isInbounds(location: Location) = isInbounds(location.point)
 
     fun locationAt(point: Point) = locations[point.row][point.col]
 
@@ -26,6 +28,11 @@ data class Grid(val locations: List<List<Location>>) {
         .map { point -> locationAt(point) }
 
     private fun isRegular(): Boolean = locations.all { line -> line.size == locations.first().size }
+
+    fun getRegions(): List<Region> {
+        TODO("Not yet implemented")
+//        return emptyList()
+    }
 
     companion object {
         fun parse(lines: List<String>) = Grid(
@@ -43,6 +50,10 @@ data class Grid(val locations: List<List<Location>>) {
             }
         }
     }
+}
+
+data class Region(val Locations: List<Location>, private val map: Grid) {
+
 }
 
 data class Location(val point: Point, val symbol: Char = '.', val facing: Direction = Direction.NORTH) {
