@@ -20,6 +20,6 @@ class RegionTest {
     @Test
     fun `countRegions gives correct number of regions`() {
         val regions = smallFiveGrid.getRegions()
-//        assertEquals(5, Region.countRegions(smallFiveRegions))
+        assertEquals(5, regions.size)
     }
 }

@@ -30,8 +30,7 @@ data class Grid(val locations: List<List<Location>>) {
     private fun isRegular(): Boolean = locations.all { line -> line.size == locations.first().size }
 
     fun getRegions(): List<Region> {
-        TODO("Not yet implemented")
-//        return emptyList()
+        return emptyList()
     }
 
     companion object {
