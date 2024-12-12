@@ -1,7 +1,7 @@
 package lacar.junilu.aoc2024.day11
 
 class Day11(private val stones: List<Long>) {
-    fun part1(blinks: Int): Long = stones.map { number -> Memoized.stoneCount(number, blinks) }.sum()
+    fun part1(blinks: Int): Long = stones.sumOf { number -> Memoized.stoneCount(number, blinks) }
 
     companion object {
         fun using(line: String) = Day11(
