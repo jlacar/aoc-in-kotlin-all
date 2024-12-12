@@ -29,8 +29,9 @@ data class Grid(val locations: List<List<Location>>) {
 
     private fun isRegular(): Boolean = locations.all { line -> line.size == locations.first().size }
 
-    fun getRegions(): List<Region> {
-        return emptyList()
+    fun getRegions(): List<Region> = getDistinctSymbols().map { symbol ->
+        val locs = getAll(symbol)
+        Region(locs, this)
     }
 
     companion object {

@@ -12,7 +12,7 @@ class RegionTest {
             AAAA
             BBCD
             BBCC
-            EEEC        
+            EEEC
             """.trimIndent().lines()
         )
     }
