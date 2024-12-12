@@ -12,16 +12,16 @@ class Day11(private val stones: List<Long>) {
 
 private object Memoized {
     private val memo = mutableMapOf<Pair<Long, Int>, Long>()
-    fun stoneCount(stone: Long, blinks: Int): Long = memo.getOrPut(Pair(stone, blinks)) {
+    fun stoneCount(number: Long, blinks: Int): Long = memo.getOrPut(Pair(number, blinks)) {
         when (blinks) {
             0 -> 1L
             else -> when {
-                stone == 0L -> stoneCount(1L, blinks - 1)
-                stone.hasEvenDigits() -> {
-                    val (left, right) = stone.splitInTwo()
+                number == 0L -> stoneCount(1L, blinks - 1)
+                number.hasEvenDigits() -> {
+                    val (left, right) = number.splitInTwo()
                     stoneCount(left, blinks - 1) + stoneCount(right, blinks - 1)
                 }
-                else -> stoneCount(stone * 2024L, blinks - 1)
+                else -> stoneCount(number * 2024L, blinks - 1)
             }
         }
     }
