@@ -52,25 +52,23 @@ data class Grid(val locations: List<List<Location>>) {
 
 data class Region(val locations: List<Location>, private val map: Grid) {
     companion object {
-        fun allIn(grid: Grid): List<Region> {
-            val symbols = grid.getDistinctSymbols()
-            return symbols.flatMap { symbol ->
+        fun allIn(grid: Grid): List<Region> = grid
+            .getDistinctSymbols().flatMap { symbol ->
                 val allSameSymbol = grid.getAll(symbol).map { it.point }
-                val adjacentGroups = allSameSymbol.findAdjacentGroups()
+                val clusters = allSameSymbol.findClusters()
 
-                adjacentGroups.fold(adjacentGroups) { acc, next ->
-                    val (connected, disconnected) = acc.partition { it.intersect(next).isNotEmpty() }
+                clusters.fold(clusters) { acc, nextCluster ->
+                    val (connected, disconnected) = acc.partition { it.intersect(nextCluster).isNotEmpty() }
                     val gatheredClusters = connected.reduce { gathered, cluster -> gathered + cluster }
                     listOf(gatheredClusters) + disconnected
                 }
-                .map { it.toLocationsOn(grid) }
-                .map { Region(it, grid) }
+                    .map { it.toLocationsOn(grid) }
+                    .map { Region(it, grid) }
             }
-        }
 
         private fun Set<Point>.toLocationsOn(grid: Grid) = map { grid.locationAt(it) }
 
-        private fun List<Point>.findAdjacentGroups() =
+        private fun List<Point>.findClusters() =
             fold(emptyList<Set<Point>>()) { acc, point ->
                 val cluster = setOf(point) + filter { it.isAdjacentTo(point) }.toSet()
                 acc + listOf(cluster)
