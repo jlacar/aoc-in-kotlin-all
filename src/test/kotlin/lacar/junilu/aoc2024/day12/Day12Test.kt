@@ -20,5 +20,6 @@ class Day12Test {
     @Test
     fun `Solution - Part 1`() {
         assertEquals(1370100, Day12.using(readPuzzleInput("aoc2024/day12-gh")).part1())
+        assertEquals(1363484, Day12.using(readPuzzleInput("aoc2024/day12-gm")).part1())
     }
 }
