@@ -54,42 +54,27 @@ data class Region(val locations: List<Location>, private val map: Grid) {
     companion object {
         fun allIn(grid: Grid): List<Region> {
             val symbols = grid.getDistinctSymbols()
-            val blah = symbols.flatMap { symbol ->
+            return symbols.flatMap { symbol ->
                 val allSameSymbol = grid.getAll(symbol).map { it.point }
+                val adjacentGroups = allSameSymbol.findAdjacentGroups()
 
-                val groups = allSameSymbol.fold(emptyList<Set<Point>>()) { acc, point ->
-                    val cluster = setOf(point) + allSameSymbol.filter { it.isAdjacentTo(point) }.toSet()
-                    acc + listOf(cluster)
-                }.also {
-                    println("symbol $symbol has ${it.size} groups")
-                    it.forEach { println(it) }
+                adjacentGroups.fold(adjacentGroups) { acc, next ->
+                    val (connected, disconnected) = acc.partition { it.intersect(next).isNotEmpty() }
+                    val gatheredClusters = connected.reduce { gathered, cluster -> gathered + cluster }
+                    listOf(gatheredClusters) + disconnected
                 }
-
-                groups.fold(groups) { acc, next ->
-                    val (connected, notConnected) = acc.partition { it.intersect(next).isNotEmpty() }
-                    val r = connected.reduce { region, set -> region + set }
-                    listOf(r) + notConnected
-                }.map {
-                    it.map { grid.locationAt(it) }.toSet()
-                }.map { Region(it.toList(), grid).also { "Region[locations:${it.locations}]".println() } }
+                .map { it.toLocationsOn(grid) }
+                .map { Region(it, grid) }
             }
-            return blah
         }
 
-//            fun List<Location>.collectContiguous(): List<Region> {
-//                val soloSets = map { grid.neighbors(it) { l -> l.symbol == it.symbol }.toSet() + it }
-//                return soloSets.fold(soloSets.drop(1).toMutableList()) { acc, next ->
-//                    val neighbor = acc.firstOrNull { next.intersect(it).isNotEmpty() }
-//                    if (neighbor == null) {
-//                        acc.add(next)
-//                    } else {
-//                        acc.remove(neighbor)
-//                        acc.add(neighbor + next)
-//                    }
-//                    acc
-//                }.map { Region(it.toList(), grid) }
-//            }
-//            return grid.getDistinctSymbols().flatMap { grid.getAll(it).collectContiguous() }
+        private fun Set<Point>.toLocationsOn(grid: Grid) = map { grid.locationAt(it) }
+
+        private fun List<Point>.findAdjacentGroups() =
+            fold(emptyList<Set<Point>>()) { acc, point ->
+                val cluster = setOf(point) + filter { it.isAdjacentTo(point) }.toSet()
+                acc + listOf(cluster)
+            }
     }
 }
 
@@ -122,6 +107,8 @@ data class Location(val point: Point, val symbol: Char = '.', val facing: Direct
     }
 
     fun nextMove(displacement: Int): Location = nextMove(this.facing, displacement)
+
+    fun isAdjacentTo(other: Location) = point.isAdjacentTo(other.point)
 
     fun isWithin(range: IntRange): Boolean = (point.row in range) && (point.col in range)
     fun lineSegmentTo(other: Location): LineSegment = LineSegment(this.point, other.point)

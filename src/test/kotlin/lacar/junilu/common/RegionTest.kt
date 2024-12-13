@@ -7,7 +7,7 @@ class RegionTest {
 
     companion object {
         @JvmStatic
-        private val smallFiveGrid = Grid.parse(
+        val smallFiveGrid = Grid.parse(
             """
             AAAA
             BBCD
@@ -17,7 +17,7 @@ class RegionTest {
         )
 
         @JvmStatic
-        private val fiveRegionTwoSymbolGrid = Grid.parse(
+        val fiveRegionTwoSymbolGrid = Grid.parse(
             """
             OOOOO
             OXOXO
@@ -27,7 +27,7 @@ class RegionTest {
             """.trimIndent().lines())
 
         @JvmStatic
-        private val large11RegionGrid = Grid.parse(
+        val large11RegionGrid = Grid.parse(
             """
             RRRRIICCFF
             RRRRIICCCF
