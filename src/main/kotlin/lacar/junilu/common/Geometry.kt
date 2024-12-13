@@ -22,17 +22,15 @@ data class Grid(val locations: List<List<Location>>) {
 
     fun locationAt(point: Point) = locations[point.row][point.col]
 
-    fun neighbors(location: Location): List<Location> = location.point
+    fun neighbors(location: Location, predicate: (Location) -> Boolean = { true } ): List<Location> =
+        location.point
         .allAdjacent()
-        .filter { isInbounds(it) }
+        .filter { isInbounds(it) && predicate(locationAt(it)) }
         .map { point -> locationAt(point) }
 
     private fun isRegular(): Boolean = locations.all { line -> line.size == locations.first().size }
 
-    fun getRegions(): List<Region> = getDistinctSymbols().map { symbol ->
-        val locs = getAll(symbol)
-        Region(locs, this)
-    }
+    fun getRegions(): List<Region> = Region.allIn(this)
 
     companion object {
         fun parse(lines: List<String>) = Grid(
@@ -52,8 +50,47 @@ data class Grid(val locations: List<List<Location>>) {
     }
 }
 
-data class Region(val Locations: List<Location>, private val map: Grid) {
+data class Region(val locations: List<Location>, private val map: Grid) {
+    companion object {
+        fun allIn(grid: Grid): List<Region> {
+            val symbols = grid.getDistinctSymbols()
+            val blah = symbols.flatMap { symbol ->
+                val allSameSymbol = grid.getAll(symbol).map { it.point }
 
+                val groups = allSameSymbol.fold(emptyList<Set<Point>>()) { acc, point ->
+                    val cluster = setOf(point) + allSameSymbol.filter { it.isAdjacentTo(point) }.toSet()
+                    acc + listOf(cluster)
+                }.also {
+                    println("symbol $symbol has ${it.size} groups")
+                    it.forEach { println(it) }
+                }
+
+                groups.fold(groups) { acc, next ->
+                    val (connected, notConnected) = acc.partition { it.intersect(next).isNotEmpty() }
+                    val r = connected.reduce { region, set -> region + set }
+                    listOf(r) + notConnected
+                }.map {
+                    it.map { grid.locationAt(it) }.toSet()
+                }.map { Region(it.toList(), grid).also { "Region[locations:${it.locations}]".println() } }
+            }
+            return blah
+        }
+
+//            fun List<Location>.collectContiguous(): List<Region> {
+//                val soloSets = map { grid.neighbors(it) { l -> l.symbol == it.symbol }.toSet() + it }
+//                return soloSets.fold(soloSets.drop(1).toMutableList()) { acc, next ->
+//                    val neighbor = acc.firstOrNull { next.intersect(it).isNotEmpty() }
+//                    if (neighbor == null) {
+//                        acc.add(next)
+//                    } else {
+//                        acc.remove(neighbor)
+//                        acc.add(neighbor + next)
+//                    }
+//                    acc
+//                }.map { Region(it.toList(), grid) }
+//            }
+//            return grid.getDistinctSymbols().flatMap { grid.getAll(it).collectContiguous() }
+    }
 }
 
 data class Location(val point: Point, val symbol: Char = '.', val facing: Direction = Direction.NORTH) {
@@ -151,6 +188,8 @@ data class Point(val col: Int, val row: Int) {
         val result = Direction.entries.map { this.shift(it) }
         return result
     }
+
+    fun isAdjacentTo(other: Point) = Direction.entries.any { shift(it) == other }
 
     fun shift(direction: Direction) = when (direction) {
         Direction.NORTH -> this.copy(row = row + 1)

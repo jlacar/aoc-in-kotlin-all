@@ -32,6 +32,7 @@ I'm using a modified form of [semantic commit messages](https://joshbuchea/seman
 | Prefix  | Name            | Intention                                   |
 |:-------:|:----------------|:--------------------------------------------|
 | `f` `F` | Feature         | New feature or functionality                |
+| `g` `G` | Feature (Gen)   | New feature or functionality using GenAI    |
 | `b` `B` | Bugfix          | Bug fix                                     |
 | `r` `R` | Refactoring     | Refactoring code, both prod and test        |
 | `d` `D` | Documentation   | Adding/changing documentation               |
@@ -46,6 +47,8 @@ Arlo also adds special characters to the prefix as "qualifiers". I'm going to us
 | Qualifier Mark | Intention                                        |
 |:--------------:|:-------------------------------------------------|
 |      `++`      | Changes with new passing tests                   |
+|      `^^`      | Changes made with assistance from AI             |
+|      `!!`      | Changes with existing tests passing              |
 |      `!!`      | Changes with existing tests passing              |
 |      `%%`      | Changes with broken tests                        |
 |      `**`      | No automated tests, or unfinished implementation |

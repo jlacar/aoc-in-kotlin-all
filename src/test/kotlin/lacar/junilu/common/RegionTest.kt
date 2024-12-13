@@ -24,17 +24,29 @@ class RegionTest {
             OOOOO
             OXOXO
             OOOOO
-            """.trimIndent().lines()
-        )
+            """.trimIndent().lines())
+
+        @JvmStatic
+        private val large11RegionGrid = Grid.parse(
+            """
+            RRRRIICCFF
+            RRRRIICCCF
+            VVRRRCCFFF
+            VVRCCCJFFF
+            VVVVCJJCFE
+            VVIVCCJJEE
+            VVIIICJJEE
+            MIIIIIJJEE
+            MIIISIJEEE
+            MMMISSJEEE
+            """.trimIndent().lines())
     }
 
     @Test
     fun `getRegions gives correct number of regions`() {
-        val smallFiveRegions = smallFiveGrid.getRegions()
-        assertEquals(5, smallFiveRegions.size)
-
-        val fiveRegionTwoSymbolRegions = fiveRegionTwoSymbolGrid.getRegions()
-        assertEquals(5, fiveRegionTwoSymbolRegions.size)
+        assertEquals(5, smallFiveGrid.getRegions().size)
+        assertEquals(5, fiveRegionTwoSymbolGrid.getRegions().size)
+        assertEquals(11, large11RegionGrid.getRegions().size)
     }
 
 //    @Test
