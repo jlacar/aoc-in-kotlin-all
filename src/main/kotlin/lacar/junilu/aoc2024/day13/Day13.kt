@@ -1,13 +1,11 @@
 package lacar.junilu.aoc2024.day13
 
-import lacar.junilu.print
-import lacar.junilu.println
 import lacar.junilu.toPropsMap
 
 class Day13(private val clawMachines: List<Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>>) {
 
     fun part1(): Int {
-        return clawMachines.count { it.canWinPrize() }
+        return clawMachines.filter { it.canWinPrize() }.sumOf { it.tokensToWin() }
     }
 
     private fun Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>.canWinPrize(): Boolean {
@@ -25,7 +23,15 @@ class Day13(private val clawMachines: List<Triple<Pair<Int, Int>, Pair<Int, Int>
     }
 
     private fun Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>.tokensToWin(): Int {
-        return 1
+        val (xa, ya) = first
+        val (xb, yb) = second
+        val (xp, yp) = third
+
+        val determinant = xa * yb - xb * ya
+        val pushesA = (yb * xp - xb * yp) / determinant
+        val pushesB = (xa * yp - ya * xp) / determinant
+
+        return 3 * pushesA + pushesB
     }
 
     companion object {
