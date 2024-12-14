@@ -7,8 +7,8 @@ import kotlin.test.assertEquals
 class Day13Test {
     @Test
     fun `Example - Part 1 `() {
-        assertEquals(2, Day13.using(fourClawMachines).part1())
-//        assertEquals(480, Day13.using(fourClawMachines).part1())
+//        assertEquals(2, Day13.using(fourClawMachines).part1())
+        assertEquals(480, Day13.using(fourClawMachines).part1())
     }
 
     @Test

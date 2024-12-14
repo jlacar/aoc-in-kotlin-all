@@ -11,23 +11,17 @@ class Day13(private val clawMachines: List<Triple<Pair<Int, Int>, Pair<Int, Int>
     }
 
     private fun Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>.canWinPrize(): Boolean {
-        val (buttonA, buttonB, prize) = this
-        val slopeA = buttonA.let { (runA, riseA) -> riseA.toDouble() / runA.toDouble() }
-        val slopeB = buttonB.let { (runB, riseB) -> riseB.toDouble() / runB.toDouble() }
-        val slopeP = prize.let{ (runP, riseP) -> riseP.toDouble() / runP.toDouble() }
+        val (xa, ya) = first
+        val (xb, yb) = second
+        val (xp, yp) = third
 
-        val sorted = listOf(slopeA, slopeB, slopeP).sorted()
-        return (sorted[1] == slopeP)
-                .also {
-                    (if (it) "might win - " else "CAN'T win - ").print()
-                    sorted.forEach { when (it) {
-                        slopeA -> " A: $it".print()
-                        slopeB -> " B: $it".print()
-                        slopeP -> " P: $it".print()
-                        else -> {}
-                    }}
-                    " - [A: $first, B: $second P: $third ]".println()
-                }
+        val determinant = xa * yb - xb * ya
+        return when (determinant) {
+            0 -> false
+            else -> (yb * xp - xb * yp).let {
+                (it % determinant == 0) && (it / determinant in 1..100)
+            }
+        }
     }
 
     private fun Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>.tokensToWin(): Int {

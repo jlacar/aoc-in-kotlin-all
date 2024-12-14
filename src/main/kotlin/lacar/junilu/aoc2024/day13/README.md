@@ -18,4 +18,11 @@ Line geometry.
 
 Slope of Prize needs to be between the slopes of A and B for any combination of pressing A+B to get to P
 
+Tries at evaluating whether prize can be won:
+1. Check slopes. If A < P < B or B < P < A.
+2. Check combos or rise/run using integer % *
+3. Solve for two unknowns (#A pushed, #B pushed) from two equations - got an assist from ChatGPT on the equations.
+
+Last approach solved Part 1.
+
 ## 
