@@ -1,12 +1,37 @@
 package lacar.junilu.aoc2024.day13
 
+import lacar.junilu.print
+import lacar.junilu.println
 import lacar.junilu.toPropsMap
 
 class Day13(private val clawMachines: List<Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>>) {
 
-    fun part1() = clawMachines.size.also {
-        println("Total Claw Machines: $it")
-        println(clawMachines.joinToString("\n"))
+    fun part1(): Int {
+        return clawMachines.count { it.canWinPrize() }
+    }
+
+    private fun Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>.canWinPrize(): Boolean {
+        val (buttonA, buttonB, prize) = this
+        val slopeA = buttonA.let { (runA, riseA) -> riseA.toDouble() / runA.toDouble() }
+        val slopeB = buttonB.let { (runB, riseB) -> riseB.toDouble() / runB.toDouble() }
+        val slopeP = prize.let{ (runP, riseP) -> riseP.toDouble() / runP.toDouble() }
+
+        val sorted = listOf(slopeA, slopeB, slopeP).sorted()
+        return (sorted[1] == slopeP)
+                .also {
+                    (if (it) "might win - " else "CAN'T win - ").print()
+                    sorted.forEach { when (it) {
+                        slopeA -> " A: $it".print()
+                        slopeB -> " B: $it".print()
+                        slopeP -> " P: $it".print()
+                        else -> {}
+                    }}
+                    " - [A: $first, B: $second P: $third ]".println()
+                }
+    }
+
+    private fun Triple<Pair<Int, Int>, Pair<Int, Int>, Pair<Int, Int>>.tokensToWin(): Int {
+        return 1
     }
 
     companion object {
@@ -44,3 +69,4 @@ class Day13(private val clawMachines: List<Triple<Pair<Int, Int>, Pair<Int, Int>
         )
     }
 }
+

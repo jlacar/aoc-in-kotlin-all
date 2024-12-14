@@ -1,15 +1,25 @@
 package lacar.junilu.aoc2024.day13
 
+import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class Day13Test {
     @Test
     fun `Example - Part 1 `() {
-        assertEquals(4, Day13.using(fourClawMachines).part1())
+        assertEquals(2, Day13.using(fourClawMachines).part1())
+//        assertEquals(480, Day13.using(fourClawMachines).part1())
+    }
+
+    @Test
+    fun `Solution - Part 1`() {
+        assertEquals(0, puzzleUsingGitHubInput.part1())
     }
 
     companion object {
+        private val puzzleUsingGitHubInput = Day13.using(readPuzzleInput("aoc2024/day13-gh"))
+//        private val puzzleUsingGmailInput = Day13.using(readPuzzleInput("aoc2024/day13-gm"))
+
         private val fourClawMachines = """
             Button A: X+94, Y+34
             Button B: X+22, Y+67

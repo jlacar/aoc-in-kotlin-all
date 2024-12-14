@@ -147,6 +147,8 @@ data class DirectedSegment(val start: Point, val end: Point) {
     val direct: Double get() = sqrt(rise.toDouble() * rise + run.toDouble() * run)
     val manhattan: Int get() = abs(rise) + abs(run)
 
+    fun slope(): Double = rise.toDouble() / run.toDouble()
+
     fun reversed(): DirectedSegment = DirectedSegment(start = end, end = start)
 
     fun moveTo(newStart: Point) = DirectedSegment(
