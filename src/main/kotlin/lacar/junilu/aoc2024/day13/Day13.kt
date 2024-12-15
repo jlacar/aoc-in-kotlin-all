@@ -7,17 +7,15 @@ private typealias Button = Pair<Long, Long>
 private typealias Prize = Pair<Long, Long>
 private typealias ClawMachine = Triple<Button, Button, Prize>
 
-class Day13(private val clawMachines: List<ClawMachine>, correction: Long = 0) {
+class Day13(private val clawMachines: List<ClawMachine>, limitPushes: Boolean = true) {
 
     private val inLimits: (Long) -> Boolean =
-        when (correction) {
-            0L -> { n: Long -> n in 1L..100L }
-            else -> { _ -> true }
+        when (limitPushes) {
+            true -> { n: Long -> n in 1L..100L }
+            false -> { _ -> true }
         }
 
-    fun tokensToWinAllPrizes(): Long {
-        return clawMachines.sumOf { it.tokensToWin() }
-    }
+    fun tokensToWinAllPrizes(): Long = clawMachines.sumOf { it.tokensToWin() }
 
     private val noSolution = Pair(0L, 0L)
 
@@ -91,7 +89,7 @@ class Day13(private val clawMachines: List<ClawMachine>, correction: Long = 0) {
                         toPrize(prize, correction)
                     )
                 },
-            correction
+                correction == 0L
         )
     }
 }
