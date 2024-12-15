@@ -5,20 +5,33 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class Day13Test {
-    @Test
-    fun `Example - Part 1 `() {
-//        assertEquals(2, Day13.using(fourClawMachines).part1())
-        assertEquals(480, Day13.using(fourClawMachines).part1())
-    }
+    private val part2Correction = 10_000_000_000_000L
 
     @Test
     fun `Solution - Part 1`() {
-        assertEquals(0, puzzleUsingGitHubInput.part1())
+        assertEquals(37128L, Day13.using(puzzleInputForGitHub).part1())
+        assertEquals(30973L, Day13.using(puzzleInputForGmail).part1())
+    }
+
+    @Test
+    fun `Solution - Part 2`() {
+        assertEquals(74914228471331L, Day13.using(puzzleInputForGitHub, part2Correction).part2())
+        assertEquals(95688837203288L, Day13.using(puzzleInputForGmail, part2Correction).part2())
+    }
+
+    @Test
+    fun `Example - Part 1 `() {
+        assertEquals(480L, Day13.using(fourClawMachines).part1())
+    }
+
+    @Test
+    fun `Example - Part 2 `() {
+        assertEquals(875318608908L, Day13.using(fourClawMachines, part2Correction).part2())
     }
 
     companion object {
-        private val puzzleUsingGitHubInput = Day13.using(readPuzzleInput("aoc2024/day13-gh"))
-//        private val puzzleUsingGmailInput = Day13.using(readPuzzleInput("aoc2024/day13-gm"))
+        private val puzzleInputForGmail = readPuzzleInput("aoc2024/day13-gm")
+        private val puzzleInputForGitHub = readPuzzleInput("aoc2024/day13-gh")
 
         private val fourClawMachines = """
             Button A: X+94, Y+34
