@@ -9,24 +9,24 @@ class Day13Test {
 
     @Test
     fun `Solution - Part 1`() {
-        assertEquals(37128L, Day13.using(puzzleInputForGitHub).part1())
-        assertEquals(30973L, Day13.using(puzzleInputForGmail).part1())
+        assertEquals(37128L, Day13.using(puzzleInputForGitHub).tokensToWinAllPrizes())
+        assertEquals(30973L, Day13.using(puzzleInputForGmail).tokensToWinAllPrizes())
     }
 
     @Test
     fun `Solution - Part 2`() {
-        assertEquals(74914228471331L, Day13.using(puzzleInputForGitHub, part2Correction).part2())
-        assertEquals(95688837203288L, Day13.using(puzzleInputForGmail, part2Correction).part2())
+        assertEquals(74914228471331L, Day13.using(puzzleInputForGitHub, part2Correction).tokensToWinAllPrizes())
+        assertEquals(95688837203288L, Day13.using(puzzleInputForGmail, part2Correction).tokensToWinAllPrizes())
     }
 
     @Test
     fun `Example - Part 1 `() {
-        assertEquals(480L, Day13.using(fourClawMachines).part1())
+        assertEquals(480L, Day13.using(fourClawMachines).tokensToWinAllPrizes())
     }
 
     @Test
     fun `Example - Part 2 `() {
-        assertEquals(875318608908L, Day13.using(fourClawMachines, part2Correction).part2())
+        assertEquals(875318608908L, Day13.using(fourClawMachines, part2Correction).tokensToWinAllPrizes())
     }
 
     companion object {
