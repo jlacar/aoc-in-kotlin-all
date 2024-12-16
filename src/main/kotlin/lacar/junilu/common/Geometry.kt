@@ -5,11 +5,13 @@ import lacar.junilu.println
 import kotlin.math.abs
 import kotlin.math.sqrt
 
-data class Grid(val locations: List<List<Location>>) {
+data class Grid(val locations: List<List<Location>>, val originInFirst: Boolean = false) {
 
-    fun displayString() = locations.reversed().map { row ->
-        row.map { it.symbol }.joinToString("")
-    }.joinToString("\n")
+    fun displayString() =
+        (if (originInFirst) locations else locations.reversed())
+        .map { row ->
+            row.map { it.symbol }.joinToString("")
+        }.joinToString("\n")
 
     fun getDistinctSymbols() = locations.flatten().map { it.symbol }.distinct()
 
@@ -39,7 +41,8 @@ data class Grid(val locations: List<List<Location>>) {
                     row.mapIndexed { x: Int, ch: Char ->
                         Location(Point(row = y, col = x), symbol = ch)
                     }
-                }
+                },
+            originInFirst
         ).also {
             check(it.isRegular()) {
                 val display = lines.mapIndexed { lineNo: Int, s: String ->

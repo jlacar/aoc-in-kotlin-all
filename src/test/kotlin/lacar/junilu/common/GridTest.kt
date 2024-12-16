@@ -6,56 +6,74 @@ import org.junit.jupiter.api.Test
 class GridTest {
     companion object {
         @JvmStatic
-        val smallFiveGrid = Grid.parse(
-            """
+        val smallFiveSymbolGridText = """
             AAAA
             BBCD
             BBCC
             EEEC
-            """.trimIndent().lines()
-        )
-    }
-
-    @Test
-    fun `displayString gives lines joined with newline`() {
-        val originalString = """
-            12345..678
-            9..123..45
-            6.7...8.9.
             """.trimIndent()
 
-        assertEquals(originalString, Grid.parse(originalString.lines()).displayString())
-    }
+        @JvmStatic
+        val originAtTopText = """
+            0000
+            1111
+            2222
+            3333
+            """.trimIndent()
 
-    @Test
-    fun `parse originInFirst is false by default and uses bottom line as origin`() {
-        val originAtBottom = Grid.parse("""
+        @JvmStatic
+        val originAtBottomText = """
             3333
             2222
             1111
             0000
-            """.trimIndent().lines()
+            """.trimIndent()
+    }
+
+    // region ===== tests for Grid.parse()
+
+    @Test
+    fun `parse originInFirst is false by default and uses bottom line as origin`() {
+        val originAtBottom = Grid.parse(
+            originAtBottomText.lines()
+            //, use default value for originInFirst
         )
+
         assertEquals("0000", originAtBottom.locations[0].map { it.symbol }.joinToString(""))
         assertEquals("3333", originAtBottom.locations.last().map { it.symbol }.joinToString(""))
     }
 
     @Test
-    fun `parse originInFirst uses top line as origin when set to true`() {
-        val originInFirst = Grid.parse("""
-            0000
-            1111
-            2222
-            3333
-            """.trimIndent().lines(),
-            originInFirst = true
-        )
-        assertEquals("0000", originInFirst.locations[0].map { it.symbol }.joinToString(""))
-        assertEquals("3333", originInFirst.locations.last().map { it.symbol }.joinToString(""))
+    fun `parse uses top line as origin when originInFirst is true`() {
+        val grid = Grid.parse(originAtTopText.lines(), originInFirst = true)
+
+        assertEquals("0000", grid.locations[0].map { it.symbol }.joinToString(""))
+        assertEquals("3333", grid.locations.last().map { it.symbol }.joinToString(""))
+    }
+
+    // region ===== tests for Grid.displayString()
+
+    @Test
+    fun `displayString shows origin line at top when originInFirst is true`() {
+        val grid = Grid.parse(originAtTopText.lines(), originInFirst = true)
+
+        assertEquals(originAtTopText, grid.displayString())
     }
 
     @Test
+    fun `displayString shows origin line at bottom when originInFirst is false`() {
+        val gridDefault = Grid.parse(originAtBottomText.lines()) // default is false
+        val gridExplicit = Grid.parse(originAtBottomText.lines(), originInFirst = false)
+
+        assertEquals(originAtBottomText, gridDefault.displayString())
+        assertEquals(gridDefault.displayString(), gridExplicit.displayString())
+    }
+
+    // region ===== tests for other Grid methods: getDistinctSymbols()
+
+    @Test
     fun `getDistinctSymbols returns distinct symbols`() {
-        assertEquals(5, smallFiveGrid.getDistinctSymbols().size)
+        val grid = Grid.parse(smallFiveSymbolGridText.lines())
+        assertEquals(5, grid.getDistinctSymbols().size)
     }
 }
