@@ -5,13 +5,13 @@ import lacar.junilu.println
 
 // region ===== Puzzle's Ubiquitous Language
 
-private data class Position(val point: Point) {
+data class Position(val point: Point) {
     val col get() = point.col
     val row get() = point.row
     override fun toString() = "Position[col=$col, row=$row]"
 }
 
-private data class Velocity(val props: Pair<Int, Int>) {
+data class Velocity(val props: Pair<Int, Int>) {
     val dx get() = props.first
     val dy get() = props.second
     override fun toString() = "Velocity[dx=$dx, dy=$dy]"
