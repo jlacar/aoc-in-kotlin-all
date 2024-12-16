@@ -15,16 +15,15 @@ class Day13(private val clawMachines: List<ClawMachine>, limitPushes: Boolean = 
             false -> { _ -> true }
         }
 
+    // For Parts 1 & 2, with and without a limit to # of button pushes, respectively.
     fun tokensToWinAllPrizes(): Long = clawMachines.sumOf { it.tokensToWin() }
-
-    private val noSolution = Pair(0L, 0L)
 
     private fun ClawMachine.tokensToWin(): Long =
         when (val pushes = buttonPushesToWin()) {
-            noSolution -> 0L
+            NO_SOLUTION -> 0L
             else -> {
                 val (pushesA, pushesB) = pushes
-                3 * pushesA + pushesB
+                TOKENS_A * pushesA + TOKENS_B * pushesB
             }
         }
 
@@ -39,25 +38,45 @@ class Day13(private val clawMachines: List<ClawMachine>, limitPushes: Boolean = 
         val (pX, pY) = prize
 
         return when (val determinant = aX * bY - bX * aY) {
-            0L -> noSolution // no unique solution
+            0L -> NO_SOLUTION // no unique solution
             else -> {
                 val a = (bY * pX - bX * pY)
                 val b = (aX * pY - aY * pX)
                 if (a % determinant != 0L || b % determinant != 0L) {
-                    noSolution // not whole # of pushes
+                    NO_SOLUTION // not whole # of pushes
                 } else {
                     val pushesA = a / determinant
                     val pushesB = b / determinant
                     if (inLimits(pushesA) && inLimits(pushesB))
                         Pair(pushesA, pushesB)
                     else
-                        noSolution // not within limit of pushes
+                        NO_SOLUTION // not within limit of pushes
                 }
             }
         }
     }
 
     companion object {
+        private val NO_SOLUTION = Pair(0L, 0L)
+        private const val TOKENS_A = 3
+        private const val TOKENS_B = 1
+
+        fun using(lines: List<String>, correction: Long = 0L) = Day13(
+            clawMachinesFrom(lines, correction),
+            correction == 0L
+        )
+
+        private fun clawMachinesFrom(lines: List<String>, correction: Long) = lines
+            .chunked(4)
+            .map { it.take(3) }
+            .map { (buttonA, buttonB, prize) ->
+                ClawMachine(
+                    toButton(buttonA),
+                    toButton(buttonB),
+                    toPrize(prize, correction)
+                )
+            }
+
         private fun toButton(buttonStr: String): Button {
             val props = toPropsMap(
                 input = buttonStr.drop(10).trim(),
@@ -77,19 +96,5 @@ class Day13(private val clawMachines: List<ClawMachine>, limitPushes: Boolean = 
 
             return Pair(props["X"]!! + correction, props["Y"]!! + correction)
         }
-
-        fun using(lines: List<String>, correction: Long = 0L) = Day13(
-            lines
-                .chunked(4)
-                .map { it.take(3) }
-                .map { (buttonA, buttonB, prize) ->
-                    Triple(
-                        toButton(buttonA),
-                        toButton(buttonB),
-                        toPrize(prize, correction)
-                    )
-                },
-                correction == 0L
-        )
     }
 }

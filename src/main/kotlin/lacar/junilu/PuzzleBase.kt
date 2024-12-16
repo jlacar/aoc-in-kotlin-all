@@ -53,7 +53,7 @@ object RelativePathNormalizer {
  *
  * @since AoC 2015
  */
-fun <R> keyValuePair(input: String, delimiters: String, transform: (String) -> R): Pair<String, R> {
+inline fun <R> keyValuePair(input: String, delimiters: String, transform: (String) -> R): Pair<String, R> {
     val (name, value) = input.split(delimiters)
     return name to transform(value)
 }
@@ -80,7 +80,7 @@ fun <R> keyValuePair(input: String, delimiters: String, transform: (String) -> R
  *
  * @see 2015 Day 15
  */
-fun <R> toPropsMap(
+inline fun <R> toPropsMap(
     input: String,
     itemDelimiter: String,
     keyValueDelimiter: String,
