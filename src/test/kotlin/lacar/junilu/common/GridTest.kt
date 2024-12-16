@@ -40,23 +40,28 @@ class GridTest {
             CCC
             """.trimIndent()
 
-        assertEquals(Grid.parse(text.lines()), text.toGrid())
+        // expected and actual calls below are equivalent
+        assertEquals(
+            Grid.parse(text.lines()),  // this is equivalent
+            text.toGrid()              // to this
+        )
+        assertEquals(
+            Grid.parse(text.lines(), originInFirst = true),
+            text.toGrid(originInFirst = true)
+        )
     }
 
     @Test
-    fun `parse originInFirst is false by default and uses bottom line as origin`() {
-        val originAtBottom = Grid.parse(
-            originAtBottomText.lines()
-            //, use default value for originInFirst
-        )
+    fun `parse uses bottom line as origin with originInFirst set to false by default`() {
+        val originAtBottom = originAtBottomText.toGrid( /* use default for originInFirst */ )
 
         assertEquals("0000", originAtBottom.locations[0].map { it.symbol }.joinToString(""))
         assertEquals("3333", originAtBottom.locations.last().map { it.symbol }.joinToString(""))
     }
 
     @Test
-    fun `parse uses top line as origin when originInFirst is true`() {
-        val grid = Grid.parse(originAtTopText.lines(), originInFirst = true)
+    fun `parse uses top line as origin when originInFirst set to true`() {
+        val grid = originAtTopText.toGrid(originInFirst = true)
 
         assertEquals("0000", grid.locations[0].map { it.symbol }.joinToString(""))
         assertEquals("3333", grid.locations.last().map { it.symbol }.joinToString(""))
