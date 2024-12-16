@@ -5,6 +5,11 @@ import lacar.junilu.println
 import kotlin.math.abs
 import kotlin.math.sqrt
 
+// region ===== Grid
+
+fun String.toGrid(originInFirst: Boolean = false) =
+    Grid.parse(lines = this.lines(), originInFirst = originInFirst)
+
 data class Grid(val locations: List<List<Location>>, val originInFirst: Boolean = false) {
 
     fun displayString() =

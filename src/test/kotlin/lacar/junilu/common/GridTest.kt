@@ -33,6 +33,17 @@ class GridTest {
     // region ===== tests for Grid.parse()
 
     @Test
+    fun `toGrid extension function parses String receiver as a Grid`() {
+        val text = """
+            AAA
+            BBB
+            CCC
+            """.trimIndent()
+
+        assertEquals(Grid.parse(text.lines()), text.toGrid())
+    }
+
+    @Test
     fun `parse originInFirst is false by default and uses bottom line as origin`() {
         val originAtBottom = Grid.parse(
             originAtBottomText.lines()
