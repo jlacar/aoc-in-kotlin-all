@@ -2,13 +2,16 @@ package lacar.junilu.aoc2024.day13
 
 import lacar.junilu.toPropsMap
 
-// region ===== Ubiquitous Language of this Puzzle
+// region ===== Ubiquitous Language for this Puzzle
+
 private typealias Button = Pair<Long, Long>
 private typealias Prize = Pair<Long, Long>
 private typealias ClawMachine = Triple<Button, Button, Prize>
 private val ClawMachine.buttonA: Button get() = first
 private val ClawMachine.buttonB: Button get() = second
 private val ClawMachine.prize: Prize get() = third
+
+// region ===== Puzzle solution
 
 class Day13(private val clawMachines: List<ClawMachine>, limitPushes: Boolean = true) {
 
