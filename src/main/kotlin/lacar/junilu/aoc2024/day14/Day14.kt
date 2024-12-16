@@ -25,10 +25,13 @@ private val Robot.velocity get() = second
 
 class Day14(private var robots: List<Robot>) {
 
-    fun part1(): Int {
-        robots.forEach { "${it.position}, ${it.velocity}".println() }
-        return 0
+    fun part1(): Int = robots.move(100).safetyFactor()
+
+    private fun List<Robot>.move(times: Int): List<Robot> {
+        return this
     }
+
+    private fun List<Robot>.safetyFactor(): Int = 0
 
     companion object {
 
