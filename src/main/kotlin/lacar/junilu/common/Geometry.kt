@@ -22,23 +22,24 @@ data class Grid(val locations: List<List<Location>>) {
 
     fun locationAt(point: Point) = locations[point.row][point.col]
 
-    fun neighbors(location: Location, predicate: (Location) -> Boolean = { true } ): List<Location> =
+    fun neighbors(location: Location, predicate: (Location) -> Boolean = { true }): List<Location> =
         location.point
-        .allAdjacent()
-        .filter { isInbounds(it) && predicate(locationAt(it)) }
-        .map { point -> locationAt(point) }
+            .allAdjacent()
+            .filter { isInbounds(it) && predicate(locationAt(it)) }
+            .map { point -> locationAt(point) }
 
     private fun isRegular(): Boolean = locations.all { line -> line.size == locations.first().size }
 
     fun getRegions(): List<Region> = Region.allIn(this)
 
     companion object {
-        fun parse(lines: List<String>) = Grid(
-            lines.reversed().mapIndexed { y: Int, row: String ->
-                row.mapIndexed { x: Int, ch: Char ->
-                    Location(Point(row = y, col = x), symbol = ch)
+        fun parse(lines: List<String>, originInFirst: Boolean = false) = Grid(
+            (if (originInFirst) lines else lines.reversed())
+                .mapIndexed { y: Int, row: String ->
+                    row.mapIndexed { x: Int, ch: Char ->
+                        Location(Point(row = y, col = x), symbol = ch)
+                    }
                 }
-            }
         ).also {
             check(it.isRegular()) {
                 val display = lines.mapIndexed { lineNo: Int, s: String ->

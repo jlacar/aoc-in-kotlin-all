@@ -28,6 +28,33 @@ class GridTest {
     }
 
     @Test
+    fun `parse originInFirst is false by default and uses bottom line as origin`() {
+        val originAtBottom = Grid.parse("""
+            3333
+            2222
+            1111
+            0000
+            """.trimIndent().lines()
+        )
+        assertEquals("0000", originAtBottom.locations[0].map { it.symbol }.joinToString(""))
+        assertEquals("3333", originAtBottom.locations.last().map { it.symbol }.joinToString(""))
+    }
+
+    @Test
+    fun `parse originInFirst uses top line as origin when set to true`() {
+        val originInFirst = Grid.parse("""
+            0000
+            1111
+            2222
+            3333
+            """.trimIndent().lines(),
+            originInFirst = true
+        )
+        assertEquals("0000", originInFirst.locations[0].map { it.symbol }.joinToString(""))
+        assertEquals("3333", originInFirst.locations.last().map { it.symbol }.joinToString(""))
+    }
+
+    @Test
     fun `getDistinctSymbols returns distinct symbols`() {
         assertEquals(5, smallFiveGrid.getDistinctSymbols().size)
     }
