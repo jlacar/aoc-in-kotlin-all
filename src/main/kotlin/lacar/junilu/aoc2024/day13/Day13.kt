@@ -11,7 +11,7 @@ class Day13(private val clawMachines: List<ClawMachine>, limitPushes: Boolean = 
 
     private val inLimits: (Long) -> Boolean =
         when (limitPushes) {
-            true -> { n: Long -> n in 1L..100L }
+            true -> { n: Long -> n in 0L..100L }
             false -> { _ -> true }
         }
 
