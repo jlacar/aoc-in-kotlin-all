@@ -1,40 +1,41 @@
 package lacar.junilu.aoc2024.day01
 
-import lacar.junilu.experimental.Puzzle
+import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class Day01Test {
     @Test
-    fun `Solution - Part 1 using Puzzle DSL`() {
-        assertEquals(2285373, usingInputForGithub.solve(Day01.part1))
-        assertEquals(2031679, usingInputForGmail.solve(Day01.part1))
+    fun `Solution - Part 1 - total distance`() {
+        assertEquals(2285373, usingInputForGithub.totalDistance())
+        assertEquals(2031679, usingInputForGmail.totalDistance())
     }
 
     @Test
-    fun `Solution - Part 2 using Puzzle DSL`() {
-        assertEquals(21142653, usingInputForGithub.solve(Day01.part2))
-        assertEquals(19678534, usingInputForGmail.solve(Day01.part2))
+    fun `Solution - Part 2 - total similarity`() {
+        assertEquals(21142653, usingInputForGithub.totalSimilarity())
+        assertEquals(19678534, usingInputForGmail.totalSimilarity())
     }
 
     @Test
     fun `Example - Part 1 and Part 2`() {
-        assertEquals(11, usingExampleInput.solve(Day01.part1))
-        assertEquals(31, usingExampleInput.solve(Day01.part2))
+        assertEquals(11, usingExampleInput.totalDistance())
+        assertEquals(31, usingExampleInput.totalSimilarity())
     }
 
     companion object {
-        private val usingInputForGithub = Puzzle.using("aoc2024/day01-gh")
-        private val usingInputForGmail = Puzzle.using("aoc2024/day01-gm")
+        private val usingInputForGithub = Day01.using(readPuzzleInput("aoc2024/day01-gh"))
+        private val usingInputForGmail = Day01.using(readPuzzleInput("aoc2024/day01-gm"))
 
-        private val usingExampleInput = Puzzle.usingText("""
-                3   4
-                4   3
-                2   5
-                1   3
-                3   9
-                3   3            
-            """.trimIndent()
+        private val usingExampleInput = Day01.using(
+            """
+            3   4
+            4   3
+            2   5
+            1   3
+            3   9
+            3   3
+            """.trimIndent().lines()
         )
     }
 }

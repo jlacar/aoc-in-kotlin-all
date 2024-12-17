@@ -1,6 +1,5 @@
 package lacar.junilu.aoc2024.day01
 
-import lacar.junilu.experimental.solution
 import kotlin.math.abs
 
 /**
@@ -8,29 +7,23 @@ import kotlin.math.abs
  *
  * https://adventofcode.com/2024/day/1
  */
-object Day01 {
+class Day01(columns: Pair<List<Int>, List<Int>>) {
+    private val leftColumn = columns.first.sorted()
+    private val rightColumn = columns.second.sorted()
 
-    val part1 get() = solution { input ->
-        val (left, right) = toColumns(input)
+    fun totalDistance(): Int = leftColumn.zip(rightColumn)
+        .sumOf { (left, right) -> abs(left - right) }
 
-        // What is the total distance between your lists?
-        val leftSorted = left.sorted()
-        val rightSorted = right.sorted()
-        leftSorted.indices.sumOf { i -> abs(leftSorted[i] - rightSorted[i]) }
+    fun totalSimilarity(): Int = leftColumn.sumOf { left ->
+        left * rightColumn.count { right -> left == right }
     }
 
-    val part2 get() = solution { input ->
-        val (left, right) = toColumns(input)
-
-        // What is the total similarity score?
-        left.sumOf { n -> right.count { it == n } * n }
+    companion object {
+        fun using(input: List<String>) = Day01(
+            input
+            .map { s -> s.split(" ".repeat(3)).map(String::toInt) }
+            .map { (left, right) -> left to right }
+            .unzip()
+        )
     }
-
-    /**
-     * Separate input into two columns of numbers.
-     */
-    private fun toColumns(input: List<String>) = input
-        .map { s -> s.split(" ".repeat(3)) }
-        .map { (left, right) -> left.toInt() to right.toInt() }
-        .unzip()
 }
