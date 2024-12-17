@@ -1,7 +1,6 @@
 package lacar.junilu.aoc2024.day14
 
 import lacar.junilu.common.Point
-import lacar.junilu.println
 
 // region ===== Puzzle's Ubiquitous Language
 
@@ -21,19 +20,48 @@ private typealias Robot = Pair<Position, Velocity>
 private val Robot.position get() = first
 private val Robot.velocity get() = second
 
+private typealias Quadrant = Pair<IntRange, IntRange>
+private val Quadrant.columnIndices get() = first
+private val Quadrant.rowIndices get() = second
+
 // region ===== Solution
 
 class Day14(private var robots: List<Robot>) {
 
     fun part1(): Int = robots.move(100).safetyFactor()
 
-    private fun List<Robot>.move(times: Int): List<Robot> {
-        return this
+    private fun List<Robot>.safetyFactor() =
+        quadrants().map { q -> count { q.contains(it) } }.reduce { a, b -> a * b }
+
+    private fun List<Robot>.move(times: Int) = map { it.move(times) }
+
+    private fun Robot.move(times: Int): Robot {
+        fun wrap(max: Int, pos: Int, diff: Int) = ((pos + diff) % max + max) % max
+
+        val newCol = wrap(COLUMNS, position.col, times * velocity.dx)
+        val newRow = wrap(ROWS, position.row, times * velocity.dy)
+        return Robot(Position(Point(newCol, newRow)), velocity)
     }
 
-    private fun List<Robot>.safetyFactor(): Int = 0
+    private fun Quadrant.contains(robot: Robot): Boolean =
+        robot.position.col in columnIndices &&
+        robot.position.row in rowIndices
+
+    private fun quadrants(): List<Quadrant> {
+        val medianCol = COLUMNS / 2
+        val medianRow = ROWS / 2
+
+        val upper = 0..<medianRow
+        val lower = (medianRow + 1)..<ROWS
+        val left = 0..<medianCol
+        val right = (medianCol + 1)..<COLUMNS
+
+        return listOf( left to upper, right to upper, left to lower, right to lower )
+    }
 
     companion object {
+        const val COLUMNS = 101
+        const val ROWS = 103
 
         fun using(lines: List<String>): Day14 {
             fun String.toIntPair(): Pair<Int, Int> {

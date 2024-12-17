@@ -5,6 +5,19 @@ import lacar.junilu.println
 import kotlin.math.abs
 import kotlin.math.sqrt
 
+/**
+ * Calculates the next position when moving diff
+ * positions from pos, with wrapping.
+ *
+ * @param max  the number of positions, with the
+ *             last position index being max-1
+ * @param pos  the current position
+ * @param diff the number of positions to move,
+ *             positive moves in the direction of 0 to max
+ *             negative moves in the direction of max to 0
+ */
+fun wrap(max: Int, pos: Int, diff: Int) = ((pos + diff) % max + max) % max
+
 // region ===== Grid
 
 fun String.toGrid(originInFirst: Boolean = false) =
