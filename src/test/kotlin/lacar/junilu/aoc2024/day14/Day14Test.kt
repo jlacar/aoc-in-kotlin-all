@@ -8,7 +8,7 @@ class Day14Test {
     @Test
     fun `Solution - Part 1`() {
         assertEquals(229868730, usingGmailInput.part1())
-        assertEquals(229868730, usingGitHubInput.part1())
+        assertEquals(211773366, usingGitHubInput.part1())
     }
 
     companion object {
@@ -16,20 +16,3 @@ class Day14Test {
         val usingGitHubInput = Day14.using(readPuzzleInput("aoc2024/day14-gh"))
     }
 }
-/*
--------------------------------------------------------------------------------------------------------
-|                                                 |*|                                                 |
-                                                  ***
-                                                  ***
-          *
-         ***
-        *****
-       *******
-        *****
-       *******
-      *********
-     ***********
-    *************
-   ***************
-
- */

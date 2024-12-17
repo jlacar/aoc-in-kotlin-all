@@ -17,10 +17,12 @@ data class Velocity(val props: Pair<Int, Int>) {
 }
 
 private typealias Robot = Pair<Position, Velocity>
+
 private val Robot.position get() = first
 private val Robot.velocity get() = second
 
 private typealias Quadrant = Pair<IntRange, IntRange>
+
 private val Quadrant.columnIndices get() = first
 private val Quadrant.rowIndices get() = second
 
@@ -28,10 +30,11 @@ private val Quadrant.rowIndices get() = second
 
 class Day14(private var robots: List<Robot>) {
 
-    fun part1(): Int = robots.move(100).safetyFactor()
-
-    private fun List<Robot>.safetyFactor() =
-        quadrants().map { q -> count { q.contains(it) } }.reduce { a, b -> a * b }
+    fun part1(): Int = quadrants()
+        .map { q -> robots
+            .move(100)
+            .count { q.contains(it) }
+        }.reduce { a, b -> a * b }
 
     private fun List<Robot>.move(times: Int) = map { it.move(times) }
 
@@ -45,7 +48,7 @@ class Day14(private var robots: List<Robot>) {
 
     private fun Quadrant.contains(robot: Robot): Boolean =
         robot.position.col in columnIndices &&
-        robot.position.row in rowIndices
+                robot.position.row in rowIndices
 
     private fun quadrants(): List<Quadrant> {
         val medianCol = COLUMNS / 2
@@ -56,7 +59,7 @@ class Day14(private var robots: List<Robot>) {
         val left = 0..<medianCol
         val right = (medianCol + 1)..<COLUMNS
 
-        return listOf( left to upper, right to upper, left to lower, right to lower )
+        return listOf(left to upper, right to upper, left to lower, right to lower)
     }
 
     companion object {
@@ -73,7 +76,7 @@ class Day14(private var robots: List<Robot>) {
                 lines.map { line ->
                     val (p, v) = line.split(" ")
                     val (px, py) = p.toIntPair()
-                    Robot(Position(Point(col=px, row=py)), Velocity(v.toIntPair()))
+                    Robot(Position(Point(col = px, row = py)), Velocity(v.toIntPair()))
                 }
             )
         }
@@ -81,7 +84,8 @@ class Day14(private var robots: List<Robot>) {
 }
 
 fun main() {
-    val puzzle = Day14.using("""
+    val puzzle = Day14.using(
+        """
         p=0,4 v=3,-3
         p=6,3 v=-1,-3
         p=10,3 v=-1,2
@@ -94,7 +98,8 @@ fun main() {
         p=7,3 v=-1,2
         p=2,4 v=2,-3
         p=9,5 v=-3,-3        
-        """.trimIndent().lines())
+        """.trimIndent().lines()
+    )
 
     check(puzzle.part1() == 0)
 }
