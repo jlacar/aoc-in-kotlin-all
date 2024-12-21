@@ -31,7 +31,7 @@ class Day14(private var robots: List<Robot>) {
             bots.map { it.move(1) }
         }
         .mapIndexed { sec, map -> Pair(sec, map) }
-        .first { it.second.mightHaveTree() }
+        .first { (_, map) -> map.mightHaveTree() }
         .also {
             it.second.display()
             "second = ${it.first}\n".println()
