@@ -5,6 +5,7 @@ import lacar.junilu.common.wrap
 import lacar.junilu.println
 
 private typealias Quadrant = Pair<IntRange, IntRange>
+
 private val Quadrant.columnIndices get() = first
 private val Quadrant.rowIndices get() = second
 
@@ -20,20 +21,19 @@ class Day14(private var robots: List<Robot>) {
 
         fun isIn(quadrant: Quadrant) =
             col in quadrant.columnIndices &&
-            row in quadrant.rowIndices
+                    row in quadrant.rowIndices
     }
 
     fun part1(): Int {
         val afterMove = robots.map { it.move(100) }
-        return quadrants().map { quadrant -> afterMove
-            .count { it.isIn(quadrant) } }
-            .reduce(Int::times)
+        return quadrants().map { quadrant ->
+            afterMove.count { it.isIn(quadrant) }
+        }.reduce(Int::times)
     }
 
     fun part2(): Int = generateSequence(robots) { bots ->
             bots.map { it.move(1) }
-        }
-        .mapIndexed { sec, map -> Pair(sec, map) }
+        }.mapIndexed { sec, map -> Pair(sec, map) }
         .first { (_, map) -> map.mightHaveTree() }
         .also { (secs, map) ->
             map.display()
