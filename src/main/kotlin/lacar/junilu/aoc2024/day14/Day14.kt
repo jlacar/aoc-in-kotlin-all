@@ -23,40 +23,37 @@ class Day14(private var robots: List<Robot>) {
             row in quadrant.rowIndices
     }
 
-    fun part1(): Int = quadrants()
-        .map { it.safetyFactor(100) }
-        .reduce(Int::times)
-
-    private fun Quadrant.safetyFactor(times: Int) = robots
-        .map { it.move(times) }
-        .count { it.isIn(this) }
+    fun part1(): Int {
+        val afterMove = robots.map { it.move(100) }
+        return quadrants().map { quadrant -> afterMove
+            .count { it.isIn(quadrant) } }
+            .reduce(Int::times)
+    }
 
     fun part2(): Int = generateSequence(robots) { bots ->
             bots.map { it.move(1) }
         }
         .mapIndexed { sec, map -> Pair(sec, map) }
         .first { (_, map) -> map.mightHaveTree() }
-        .also {
-            it.second.display()
-            "second = ${it.first}\n".println()
+        .also { (secs, map) ->
+            map.display()
+            "second = $secs\n".println()
         }.first
 
+    private fun List<Robot>.rows() =
+        (0..<ROWS).map { row -> filter { it.row == row } }
+
     private fun List<Robot>.mightHaveTree(): Boolean =
-        (0..<ROWS).any { row ->
-           val botsInRow = filter { it.row == row }
-           consecutiveBots.containsMatchIn(botsInRow.plot(row))
-        }
+        rows().any { row -> consecutiveBots.containsMatchIn(row.plot()) }
 
     private val consecutiveBots = "@{10,}".toRegex()
-    private fun List<Robot>.plot(row: Int) =
+    private fun List<Robot>.plot() =
         (0..<COLUMNS).map { col ->
-            if (count { it.col == col && it.row == row } > 0) '@' else '.'
+            if (count { it.col == col } > 0) '@' else '.'
         }.joinToString("")
 
     private fun List<Robot>.display() {
-        (0..<ROWS).forEach { row ->
-            plot(row).println()
-        }
+        rows().forEach { it.plot().println() }
         "".println()
     }
 
