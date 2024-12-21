@@ -1,51 +1,68 @@
 package lacar.junilu.aoc2024.day14
 
-import lacar.junilu.common.Point
 import lacar.junilu.common.wrap
-
-// region ===== Puzzle's Ubiquitous Language
-
-data class Position(val point: Point) {
-    val col get() = point.col
-    val row get() = point.row
-    override fun toString() = "Position[col=$col, row=$row]"
-}
-
-data class Velocity(val props: Pair<Int, Int>) {
-    val dx get() = props.first
-    val dy get() = props.second
-    override fun toString() = "Velocity[dx=$dx, dy=$dy]"
-}
-
-private typealias Robot = Pair<Position, Velocity>
-
-private val Robot.position get() = first
-private val Robot.velocity get() = second
+import lacar.junilu.common.findInts
+import lacar.junilu.println
+import lacar.junilu.readPuzzleInput
 
 private typealias Quadrant = Pair<IntRange, IntRange>
-
 private val Quadrant.columnIndices get() = first
 private val Quadrant.rowIndices get() = second
 
-// region ===== Solution
-
 class Day14(private var robots: List<Robot>) {
 
-    fun part1(): Int = quadrants()
-        .map { q -> robots
-            .map { it.move(100) }
-            .count { q.contains(it) }
-        }.reduce { a, b -> a * b }
+    data class Robot(val col: Int, val row: Int, val dx: Int, val dy: Int) {
+        override fun toString() = "Robot[col=$col, row=$row, dx=$dx, dy=$dy]"
 
-    private fun Robot.move(times: Int): Robot {
-        val newCol = wrap(COLUMNS, position.col, times * velocity.dx)
-        val newRow = wrap(ROWS, position.row, times * velocity.dy)
-        return Robot(Position(Point(newCol, newRow)), velocity)
+        fun move(times: Int) = copy(
+            col = wrap(max = COLUMNS, pos = col, diff = dx * times),
+            row = wrap(max = ROWS, pos = row, diff = dy * times)
+        )
+
+        fun isIn(quadrant: Quadrant) = col in quadrant.columnIndices && row in quadrant.rowIndices
     }
 
-    private fun Quadrant.contains(robot: Robot): Boolean =
-        robot.position.col in columnIndices &&
-        robot.position.row in rowIndices
+    fun part1(): Int = quadrants()
+        .map { quadrant -> robots
+            .map { it.move(100) }
+            .count { it.isIn(quadrant) }
+        }.reduce(Int::times)
+
+    fun part2() {
+        generateSequence(robots) { bots ->
+            bots.map { it.move(1) }
+        }.mapIndexed { gen, map -> Pair(gen, map) }
+        .filter { it.second.mightHaveTree() }
+        .take(1).forEach {
+            it.second.display()
+            "s = ${it.first}\n".println()
+        } // 7344
+    }
+
+    private fun List<Robot>.mightHaveTree(): Boolean {
+        val tree = "@{10,}".toRegex()
+        for (row in 0..<ROWS) {
+            val botsInRow = filter { it.row == row }
+            val s = (0..<COLUMNS).map { col ->
+                if (botsInRow.count { it.col == col } > 0) '@' else '.'
+            }.joinToString("")
+            if (tree.containsMatchIn(s)) return true
+        }
+        return false
+    }
+
+    private fun List<Robot>.display() {
+        (0..<ROWS).forEach { row ->
+            (0..<COLUMNS).forEach { col ->
+                if (count { it.row == row && it.col == col } > 0)
+                    print("*")
+                else
+                    print(".")
+            }
+            "".println()
+        }
+        "".println()
+    }
 
     private fun quadrants(): List<Quadrant> {
         val medianCol = COLUMNS / 2
@@ -64,18 +81,17 @@ class Day14(private var robots: List<Robot>) {
         const val ROWS = 103
 
         fun using(lines: List<String>): Day14 {
-            fun String.toIntPair(): Pair<Int, Int> {
-                val (x, y) = drop(2).split(",")
-                return Pair(x.toInt(), y.toInt())
-            }
-
             return Day14(
                 lines.map { line ->
-                    val (p, v) = line.split(" ")
-                    val (px, py) = p.toIntPair()
-                    Robot(Position(Point(col = px, row = py)), Velocity(v.toIntPair()))
+                    val (col, row, dx, dy) = line.findInts()
+                    Robot(col = col, row = row, dx = dx, dy = dy)
                 }
             )
         }
     }
+}
+
+fun main() {
+    Day14.using(readPuzzleInput("aoc2024/day14-gh")).part2()  // 7344
+    Day14.using(readPuzzleInput("aoc2024/day14-gm")).part2()  // 7861
 }
