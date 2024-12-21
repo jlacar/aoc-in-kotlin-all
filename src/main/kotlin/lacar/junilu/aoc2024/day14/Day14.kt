@@ -1,9 +1,8 @@
 package lacar.junilu.aoc2024.day14
 
-import lacar.junilu.common.wrap
 import lacar.junilu.common.findInts
+import lacar.junilu.common.wrap
 import lacar.junilu.println
-import lacar.junilu.readPuzzleInput
 
 private typealias Quadrant = Pair<IntRange, IntRange>
 private val Quadrant.columnIndices get() = first
@@ -23,43 +22,39 @@ class Day14(private var robots: List<Robot>) {
     }
 
     fun part1(): Int = quadrants()
-        .map { quadrant -> robots
-            .map { it.move(100) }
-            .count { it.isIn(quadrant) }
+        .map { quadrant ->
+            safetyFactor(quadrant)
         }.reduce(Int::times)
 
-    fun part2() {
-        generateSequence(robots) { bots ->
-            bots.map { it.move(1) }
-        }.mapIndexed { gen, map -> Pair(gen, map) }
-        .filter { it.second.mightHaveTree() }
-        .take(1).forEach {
-            it.second.display()
-            "s = ${it.first}\n".println()
-        } // 7344
-    }
+    private fun safetyFactor(quadrant: Quadrant) = robots
+        .map { it.move(100) }
+        .count { it.isIn(quadrant) }
 
-    private fun List<Robot>.mightHaveTree(): Boolean {
-        val tree = "@{10,}".toRegex()
-        for (row in 0..<ROWS) {
-            val botsInRow = filter { it.row == row }
-            val s = (0..<COLUMNS).map { col ->
-                if (botsInRow.count { it.col == col } > 0) '@' else '.'
-            }.joinToString("")
-            if (tree.containsMatchIn(s)) return true
+    fun part2(): Int = generateSequence(robots) { bots ->
+            bots.map { it.move(1) }
         }
-        return false
-    }
+        .mapIndexed { sec, map -> Pair(sec, map) }
+        .first { it.second.mightHaveTree() }
+        .also {
+            it.second.display()
+            "second = ${it.first}\n".println()
+        }.first
+
+    private fun List<Robot>.mightHaveTree(): Boolean =
+        (0..<ROWS).any { row ->
+           val botsInRow = filter { it.row == row }
+           consecutiveBots.containsMatchIn(botsInRow.plot(row))
+        }
+
+    private val consecutiveBots = "@{10,}".toRegex()
+    private fun List<Robot>.plot(row: Int) =
+        (0..<COLUMNS).map { col ->
+            if (count { it.col == col && it.row == row } > 0) '@' else '.'
+        }.joinToString("")
 
     private fun List<Robot>.display() {
         (0..<ROWS).forEach { row ->
-            (0..<COLUMNS).forEach { col ->
-                if (count { it.row == row && it.col == col } > 0)
-                    print("*")
-                else
-                    print(".")
-            }
-            "".println()
+            plot(row).println()
         }
         "".println()
     }
@@ -89,9 +84,4 @@ class Day14(private var robots: List<Robot>) {
             )
         }
     }
-}
-
-fun main() {
-    Day14.using(readPuzzleInput("aoc2024/day14-gh")).part2()  // 7344
-    Day14.using(readPuzzleInput("aoc2024/day14-gm")).part2()  // 7861
 }

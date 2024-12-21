@@ -11,6 +11,12 @@ class Day14Test {
         assertEquals(211773366, usingGitHubInput.part1())
     }
 
+    @Test
+    fun `Solution - Part 2`() {
+        assertEquals(7861, usingGmailInput.part2())
+        assertEquals(7344, usingGitHubInput.part2())
+    }
+
     companion object {
         val usingGmailInput = Day14.using(readPuzzleInput("aoc2024/day14-gm"))
         val usingGitHubInput = Day14.using(readPuzzleInput("aoc2024/day14-gh"))
