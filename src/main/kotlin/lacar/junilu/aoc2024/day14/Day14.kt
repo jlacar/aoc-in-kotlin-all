@@ -18,10 +18,14 @@ class Day14(private var robots: List<Robot>) {
             row = wrap(max = ROWS, pos = row, diff = dy * times)
         )
 
-        fun isIn(quadrant: Quadrant) = col in quadrant.columnIndices && row in quadrant.rowIndices
+        fun isIn(quadrant: Quadrant) =
+            col in quadrant.columnIndices &&
+            row in quadrant.rowIndices
     }
 
-    fun part1(): Int = quadrants().map { it.safetyFactor(100) }.reduce(Int::times)
+    fun part1(): Int = quadrants()
+        .map { it.safetyFactor(100) }
+        .reduce(Int::times)
 
     private fun Quadrant.safetyFactor(times: Int) = robots
         .map { it.move(times) }
