@@ -21,14 +21,11 @@ class Day14(private var robots: List<Robot>) {
         fun isIn(quadrant: Quadrant) = col in quadrant.columnIndices && row in quadrant.rowIndices
     }
 
-    fun part1(): Int = quadrants()
-        .map { quadrant ->
-            safetyFactor(quadrant)
-        }.reduce(Int::times)
+    fun part1(): Int = quadrants().map { it.safetyFactor(100) }.reduce(Int::times)
 
-    private fun safetyFactor(quadrant: Quadrant) = robots
-        .map { it.move(100) }
-        .count { it.isIn(quadrant) }
+    private fun Quadrant.safetyFactor(times: Int) = robots
+        .map { it.move(times) }
+        .count { it.isIn(this) }
 
     fun part2(): Int = generateSequence(robots) { bots ->
             bots.map { it.move(1) }
