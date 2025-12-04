@@ -24,23 +24,24 @@ fun String.toGrid(originInFirst: Boolean = false) =
     Grid.parse(lines = this.lines(), originInFirst = originInFirst)
 
 data class Grid(val locations: List<List<Location>>, val originInFirst: Boolean = false) {
-
+    val locationsSet = locations.flatten()
     fun displayString() =
         (if (originInFirst) locations else locations.reversed())
-        .map { row ->
-            row.map { it.symbol }.joinToString("")
-        }.joinToString("\n")
+            .map { row ->
+                row.map { it.symbol }.joinToString("")
+            }.joinToString("\n")
 
-    fun getDistinctSymbols() = locations.flatten().map { it.symbol }.distinct()
+    fun allDistinctSymbols() = locationsSet.map { it.symbol }.distinct()
 
-    fun getAll(symbol: Char) = locations.flatten().filter { it.symbol == symbol }
+    fun findAll(symbol: Char) = locationsSet.filter { it.symbol == symbol }
 
     fun isInbounds(point: Point) =
         point.row in locations.indices && point.col in locations[0].indices
 
-//    fun isInbounds(location: Location) = isInbounds(location.point)
-
     fun locationAt(point: Point) = locations[point.row][point.col]
+
+    fun symbolAt(point: Point) = (locations[point.row][point.col]).symbol
+    fun locationOf(symbol: Char) = locationsSet.first { it.symbol == symbol }
 
     fun neighbors(location: Location, predicate: (Location) -> Boolean = { true }): List<Location> =
         location.point
@@ -70,13 +71,14 @@ data class Grid(val locations: List<List<Location>>, val originInFirst: Boolean 
             }
         }
     }
+
 }
 
 data class Region(val locations: List<Location>, private val map: Grid) {
     companion object {
         fun allIn(grid: Grid): List<Region> = grid
-            .getDistinctSymbols().flatMap { symbol ->
-                val allSameSymbol = grid.getAll(symbol).map { it.point }
+            .allDistinctSymbols().flatMap { symbol ->
+                val allSameSymbol = grid.findAll(symbol).map { it.point }
                 val clusters = allSameSymbol.findClusters()
 
                 clusters.fold(clusters) { acc, nextCluster ->
@@ -132,6 +134,48 @@ data class Location(val point: Point, val symbol: Char = '.', val facing: Direct
 
     fun isWithin(range: IntRange): Boolean = (point.row in range) && (point.col in range)
     fun lineSegmentTo(other: Location): LineSegment = LineSegment(this.point, other.point)
+}
+
+data class Cursor(val grid: Grid, val position: Point = Point.ORIGIN) {
+    enum class Move {
+        UP, DOWN, LEFT, RIGHT, SELECT
+    }
+
+    fun positionAt(symbol: Char): Cursor {
+        val loc = grid.locationsSet.firstOrNull { it.symbol == symbol }
+            ?: throw NoSuchElementException("'$symbol' not found.")
+        return copy(position = loc.point)
+    }
+
+    fun select(nextKey: Char, avoiding: Char, moves: List<Move>) =
+        Pair(
+            copy(position = grid.locationOf(nextKey).point),
+            moves + movesTo(nextKey, avoiding) + Move.SELECT
+        )
+
+    private fun movesTo(nextKey: Char, avoiding: Char): List<Move> {
+        if (nextKey == grid.symbolAt(position))
+            return emptyList()
+
+        val (thisCol, thisRow) = position
+        val (nextCol, nextRow) = grid.locationOf(nextKey).point
+        val (_, avoidRow) = grid.locationOf(avoiding).point
+
+        val columnsToMove = abs(thisCol - nextCol)
+        val rowsToMove = abs(thisRow - nextRow)
+
+        val horizontal = if (thisCol < nextCol) Move.RIGHT else Move.LEFT
+        val vertical = if (thisRow < nextRow) Move.UP else Move.DOWN
+
+        val moves: (Int) -> Move = when {
+            nextRow == thisRow -> { _ -> horizontal }
+            nextCol == thisCol -> { _ -> vertical }
+            avoidRow == thisRow -> { i -> if (i < rowsToMove) vertical else horizontal }
+            else -> { i -> if (i < columnsToMove) horizontal else vertical }
+        }
+
+        return List(columnsToMove + rowsToMove, moves)
+    }
 }
 
 enum class Turn { LEFT, RIGHT; }

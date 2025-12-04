@@ -5,16 +5,16 @@ import lacar.junilu.common.Location
 
 class Day10(val map: Grid) {
 
-    fun part1(): Int = map.getAll(TRAIL_HEAD)
+    fun part1(): Int = map.findAll(TRAIL_HEAD)
         .sumOf { it.score() }
 
-    private fun Location.score(): Int = map.getAll(TRAIL_END)
+    private fun Location.score(): Int = map.findAll(TRAIL_END)
         .count { trailEnd -> this hasTrailUpTo trailEnd }
 
-    fun part2(): Int = map.getAll(TRAIL_HEAD)
+    fun part2(): Int = map.findAll(TRAIL_HEAD)
         .sumOf { it.rating() }
 
-    private fun Location.rating(): Int = map.getAll(TRAIL_END)
+    private fun Location.rating(): Int = map.findAll(TRAIL_END)
         .sumOf { trailEnd -> this distinctTrailsUpTo trailEnd }
 
     private infix fun Location.hasTrailUpTo(otherLevel: Location): Boolean {

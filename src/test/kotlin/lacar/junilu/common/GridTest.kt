@@ -85,11 +85,11 @@ class GridTest {
         assertEquals(gridDefault.displayString(), gridExplicit.displayString())
     }
 
-    // region ===== tests for other Grid methods: getDistinctSymbols()
+    // region ===== tests for other Grid methods: allDistinctSymbols()
 
     @Test
-    fun `getDistinctSymbols returns distinct symbols`() {
+    fun `allDistinctSymbols returns all distinct symbols in grid`() {
         val grid = Grid.parse(smallFiveSymbolGridText.lines())
-        assertEquals(5, grid.getDistinctSymbols().size)
+        assertEquals(5, grid.allDistinctSymbols().size)
     }
 }
