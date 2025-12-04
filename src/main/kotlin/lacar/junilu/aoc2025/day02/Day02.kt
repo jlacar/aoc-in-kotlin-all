@@ -5,11 +5,9 @@ package lacar.junilu.aoc2025.day02
  */
 class Day02(val idRanges: List<LongRange>) {
 
-    fun LongRange.invalidIds(predicate: (Long) -> Boolean) = filter(predicate)
+    fun part1() = idRanges.sumOf { range -> range.filter { it.repeats(2) }.sum() }
 
-    fun part1() = idRanges.sumOf { it.invalidIds { it.repeats(2) }.sum() }
-
-    fun part2() = idRanges.sumOf { it.invalidIds { it.hasAnyRepeats() }.sum() }
+    fun part2() = idRanges.sumOf { range -> range.filter { it.hasAnyRepeats() }.sum() }
 
     companion object {
         fun using(input: String): Day02 {
