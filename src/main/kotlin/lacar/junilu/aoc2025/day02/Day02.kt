@@ -25,12 +25,11 @@ class Day02(val idRanges: List<LongRange>) {
     }
 }
 
-private fun Long.hasAnyRepeats() = (2..this.toString().length).any { repeats(it) }
+private fun Long.hasAnyRepeats() = (2..this.toString().length).any { n -> repeats(n) }
+
+private fun List<String>.areRepeated() = all { it == first() }
 
 private fun Long.repeats(times: Int): Boolean {
     val s = toString()
-    if (s.length % times != 0) return false
-    val chunks = s.chunked(s.length / times)
-    val first = chunks.first()
-    return chunks.all { it == first }
+    return if (s.length % times == 0) s.chunked(s.length / times).areRepeated() else false
 }
