@@ -11,21 +11,21 @@ class Day01(val offsets: List<Int>) {
 
     private val startingPoint = 50
 
-    private fun nextPoint(current: Int, offset: Int) =
-        ((current + offset) % 100 + 100) % 100
+    fun solvePart1() = allPoints().count { it == 0 }
+
+    fun solvePart2(): Int = offsets.fold(listOf(Pair(startingPoint, 0))) { acc, offset ->
+        acc + nextPointWithZeroCount(acc.last().first, offset)
+    }.sumOf { it.second }
 
     private fun allPoints() = offsets.fold(listOf(startingPoint)) { acc, offset ->
         acc + nextPoint(acc.last(), offset)
     }
 
-    fun solvePart1() = allPoints().count { it == 0 }
+    private fun nextPoint(current: Int, offset: Int) =
+        ((current + offset) % 100 + 100) % 100
 
     private fun nextPointWithZeroCount(current: Int, offset: Int) =
         Pair(nextPoint(current, offset), zeroCount(current, offset))
-
-    fun solvePart2(): Int = offsets.fold(listOf(Pair(startingPoint, 0))) { acc, offset ->
-        acc + nextPointWithZeroCount(acc.last().first, offset)
-    }.sumOf { it.second }
 
     companion object {
         fun using(input: List<String>): Day01 {
@@ -46,3 +46,4 @@ class Day01(val offsets: List<Int>) {
         }
     }
 }
+

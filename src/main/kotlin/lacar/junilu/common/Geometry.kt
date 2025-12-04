@@ -26,10 +26,9 @@ fun String.toGrid(originInFirst: Boolean = false) =
 data class Grid(val locations: List<List<Location>>, val originInFirst: Boolean = false) {
     val locationsSet = locations.flatten()
     fun displayString() =
-        (if (originInFirst) locations else locations.reversed())
-            .map { row ->
-                row.map { it.symbol }.joinToString("")
-            }.joinToString("\n")
+        (if (originInFirst) locations else locations.reversed()).joinToString("\n") { row ->
+            row.map { it.symbol }.joinToString("")
+        }
 
     fun allDistinctSymbols() = locationsSet.map { it.symbol }.distinct()
 
