@@ -1,13 +1,11 @@
 package lacar.junilu.aoc2025.day02
 
-private typealias IdFilter = (Long) -> Boolean
-
 /**
  * AoC 2025: Day 02 - Gift Shop
  */
 class Day02(val idRanges: List<LongRange>) {
 
-    fun LongRange.invalidIds(selector: IdFilter) = filter(selector)
+    fun LongRange.invalidIds(predicate: (Long) -> Boolean) = filter(predicate)
 
     fun part1() = idRanges.sumOf { it.invalidIds { it.repeats(2) }.sum() }
 
