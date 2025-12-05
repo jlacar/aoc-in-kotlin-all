@@ -7,4 +7,6 @@ class Day05(val ranges: List<LongRange>, val ids: List<Long>) {
     fun part2(): Long = ranges.combineOverlapping().sumOf { it.count() }
 }
 
+// Developer Note: The standard Iterable<T>.count() uses Ints and will overflow.
+// Adding this to preserve semantics but get around the type limitation
 private fun LongRange.count() = endInclusive - start + 1
