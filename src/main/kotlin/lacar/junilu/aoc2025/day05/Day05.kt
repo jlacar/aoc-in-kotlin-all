@@ -6,19 +6,7 @@ class Day05(val ranges: List<LongRange>, val ids: List<Long>) {
 
     fun part1(): Int = ids.count { id -> ranges.any { id in it } }
 
-    fun part2(): Long {
-        val sortedRanges = ranges.sortedBy { it.first }
-        return sortedRanges.fold(listOf(sortedRanges.first())) { acc, range ->
-            val prev = acc.last()
-            when {
-                (range.intersects(prev)) -> when {
-                    range.last > prev.last -> acc.dropLast(1) + listOf(prev.first..range.last)
-                    else -> acc
-                }
-                else -> acc + listOf(range)
-            }
-        }.sumOf { it.last - it.first + 1 }
-    }
+    fun part2(): Long = ranges.combineOverlapping().sumOf { it.last - it.first + 1 }
 
     companion object {
         fun using(lines: List<String>): Day05 {
@@ -30,6 +18,20 @@ class Day05(val ranges: List<LongRange>, val ids: List<Long>) {
             lines.map { it.toLong() }
 
         private fun idRangesFrom(lines: List<String>): List<LongRange> =
-            lines.map { it.split("-").map { it.toLong() }.let { (a, b) -> a..b } }
+            lines.map { it.split("-").map { it.toLong() }.let { (start, end) -> start..end } }
     }
 }
+
+private fun List<LongRange>.combineOverlapping() =
+    sortedBy { it.first }.let { sorted ->
+        sorted.fold(listOf(sorted.first())) { acc, range ->
+            val prev = acc.last()
+            when {
+                (range.intersects(prev)) -> when {
+                    range.last > prev.last -> acc.dropLast(1) + listOf(prev.first..range.last)
+                    else -> acc
+                }
+                else -> acc + listOf(range)
+            }
+        }
+    }
