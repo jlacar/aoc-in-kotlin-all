@@ -32,5 +32,5 @@ class Day05Test {
         val puzzle = Day05.using(readPuzzleInput("aoc2025/day05-gh"))
 
         assertEquals(840, puzzle.part1())
-        assertEquals(359913027576322, puzzle.part2())    }
+        assertEquals(359913027576322L, puzzle.part2())    }
 }
