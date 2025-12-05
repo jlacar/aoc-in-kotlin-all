@@ -7,26 +7,21 @@ import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
 
 class Day01Test {
-
     @ParameterizedTest
     @CsvSource(
-        "9, 0, -948",
-        "9, 52, -948",
+        "9, 0, -999",
+        "9, 49, -948",
+        "10, 48, -948",
+        "10, 47, -948",
         "0, 52, 47",
-        "0, 52, 47",
-        "0, 52, -51",
-        "0, 52, 47",
-        "0, 52, -51",
-        "1, 52, 147",
-        "1, 52, -151",
         "1, 52, 48",
+        "1, 52, 49",
+        "1, 52, 147",
+        "2, 52, 148",
+        "0, 52, -51",
         "1, 52, -52",
+        "1, 52, -151",
         "2, 52, -152",
-        "1, 50, -68",
-        "1, 50, -50",
-        "1, 50, -149",
-        "2, 50, -150",
-        "1, 95, 60",
         "1, 14, -82",
         "10,50, 1000",
         "1,  0, 100",
@@ -42,10 +37,9 @@ class Day01Test {
         "2,  0, 299",
         "2,  0, -200",
         "2,  0, -299",
-        "3,  69, -319",
     )
-    fun wraps(expected: Int, current: Int, rotation: Int) {
-        assertEquals(expected, Day01.zeroCount(current, rotation))
+    fun `Times pointed at zero`(expected: Int, starting: Int, rotation: Int) {
+        assertEquals(expected, Day01.zeroCount(starting, rotation))
     }
 
     private fun puzzle(fileName: String) = Day01.using(readPuzzleInput(fileName))
