@@ -6,6 +6,7 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 
 ## Events
 
+* [AoC 2025](src/main/kotlin/lacar/junilu/aoc2025/README.md) - 10/24 &#11088;
 * [AoC 2024](src/main/kotlin/lacar/junilu/aoc2024/README.md) - 8/50 &#11088;
 * [AoC 2023](src/main/kotlin/lacar/junilu/aoc2023/README.md) - 18/50 &#11088;
 * [AoC 2022](src/main/kotlin/lacar/junilu/aoc2022/README.md) - 22/50 &#11088;
@@ -21,9 +22,11 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 
 ### Some over-engineering expected
 
-I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than average. I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I generally don't play [code golf](https://code.golf) with any of these solutions but as I strive for clean code, where "clean" means it's easy to understand and work with, I often find that it's less confusing and helps me solve the problem faster. This includes writing at least one automated test for each solution.
+I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than average. I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I generally don't play [code golf](https://code.golf) with any of these solutions. However, I strive for clean code, where "clean" means it's easy to understand and work with. I often find that keeping the code as clean as I can as I go makes it  less confusing for me and overall it helps me solve the problem faster. This includes writing at least one automated test for each solution.
 
-Having said that, you might note that I sometimes go overboard and end up with something that looks over-engineered, which it probably is. My general approach to these problems is going for clarity rather brevity. Sometimes I refactor for clarity and get less code. Other times, I end up with more code than I started. Feel free to add a comment or two to call out anything you might question as good practice. If you have suggestions on alternative approaches, that would be even better and greatly appreciated.
+Having said that, I still manage to go overboard sometimes and end up with code that looks over-engineered, which it probably is. 
+
+My general approach to solving these problems is to prefer clarity rather brevity. Sometimes I refactor for clarity and get less code. Other times, I'll end up with more code. Feel free to add a comment or two to call out anything you might question as good practice. If you have suggestions for alternative approaches, that would be even better and greatly appreciated.
 
 ### Semantic Commit Messages
 
