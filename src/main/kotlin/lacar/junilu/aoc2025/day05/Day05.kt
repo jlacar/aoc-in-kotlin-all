@@ -1,7 +1,6 @@
 package lacar.junilu.aoc2025.day05
 
 import lacar.junilu.common.intersects
-import java.util.BitSet
 
 class Day05(val ranges: List<LongRange>, val ids: List<Long>) {
 
