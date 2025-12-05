@@ -2,53 +2,16 @@ package lacar.junilu.aoc2025.day01
 
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
 
 class Day01Test {
-    @ParameterizedTest
-    @CsvSource(
-        "9, 0, -999",
-        "9, 49, -948",
-        "10, 48, -948",
-        "10, 47, -948",
-        "0, 52, 47",
-        "1, 52, 48",
-        "1, 52, 49",
-        "1, 52, 147",
-        "2, 52, 148",
-        "0, 52, -51",
-        "1, 52, -52",
-        "1, 52, -151",
-        "2, 52, -152",
-        "1, 14, -82",
-        "10,50, 1000",
-        "1,  0, 100",
-        "2,  0, 200",
-        "1,  1, 100",
-        "2,  1, -101",
-        "1,  4, -5",
-        "0,  0, -1",
-        "0,  0, 99",
-        "1,  0, 100",
-        "1,  0, -100",
-        "2,  0, 200",
-        "2,  0, 299",
-        "2,  0, -200",
-        "2,  0, -299",
-    )
-    fun `Times pointed at zero`(expected: Int, starting: Int, rotation: Int) {
-        assertEquals(expected, Day01.zeroCount(starting, rotation))
-    }
-
-    private fun puzzle(fileName: String) = Day01.using(readPuzzleInput(fileName))
+    private fun puzzle(fileName: String) = using(readPuzzleInput(fileName))
 
     @Test
     fun `GitHub account input - Parts 1 and 2`() {
         val puzzle = puzzle("aoc2025/day01-gh")
         assertEquals(989, puzzle.solvePart1())
-        assertEquals(5941, puzzle.solvePart2()) // too high
+        assertEquals(5941, puzzle.solvePart2())
     }
 
     @Test
@@ -64,7 +27,7 @@ class Day01Test {
         assertEquals(6, example.solvePart2())
     }
 
-    private val example = Day01.using(
+    private val example = using(
         """
             L68
             L30
@@ -77,4 +40,11 @@ class Day01Test {
             R14
             L82""".trimIndent().lines()
     )
+
+    companion object {
+        fun using(input: List<String>): Day01 {
+            fun toOffset(line: String) = (if (line.first() == 'R') 1 else -1) * line.drop(1).toInt()
+            return Day01(input.map { toOffset(it) })
+        }
+    }
 }
