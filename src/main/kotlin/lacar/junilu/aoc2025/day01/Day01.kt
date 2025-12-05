@@ -22,15 +22,15 @@ class Day01(val offsets: List<Int>) {
     fun solvePart2() = offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
         val (current, zeroes) = acc
         val next = current.rotate(offset)
-        next to zeroes + zeroCount(current, offset)
+        next to zeroes + current.timesRotatedToZero(offset)
     }.zeroes
 }
 
 private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
 
-private fun zeroCount(current: Int, offset: Int): Int {
+private fun Int.timesRotatedToZero(offset: Int): Int {
     val turningLeft = offset < 0
-    val clicksToZero = if (current == 0) 100 else if (turningLeft) current else 100 - current
+    val clicksToZero = if (this == 0) 100 else if (turningLeft) this else 100 - this
     val fullRevolutions = (abs(offset) - clicksToZero) / 100
 
     return when {
