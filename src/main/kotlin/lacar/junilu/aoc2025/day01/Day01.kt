@@ -9,18 +9,16 @@ import kotlin.math.abs
  * https://adventofcode.com/2025/day/1
  */
 class Day01(val offsets: List<Int>) {
-    private val Pair<Int, Int>.zeroes get() = second
-
-    private val startingPoint = 50
-
     fun solvePart1() = rotateAndCountZeroes(countIntermediate = false)
     fun solvePart2() = rotateAndCountZeroes(countIntermediate = true)
 
     private fun rotateAndCountZeroes(countIntermediate: Boolean): Int =
-        offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
+        offsets.fold(Pair(50, 0)) { acc, offset ->
             val (current, zeroes) = acc
             current.rotate(offset) to zeroes + current.timesRotatedToZero(offset, countIntermediate)
         }.zeroes
+
+    private val Pair<Int, Int>.zeroes get() = second
 }
 
 private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
