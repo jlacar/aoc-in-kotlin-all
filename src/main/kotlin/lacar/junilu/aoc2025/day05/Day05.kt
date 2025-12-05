@@ -1,11 +1,10 @@
 package lacar.junilu.aoc2025.day05
 
-import lacar.junilu.common.intersects
+import lacar.junilu.common.combineOverlapping
 
 class Day05(val ranges: List<LongRange>, val ids: List<Long>) {
 
     fun part1(): Int = ids.count { id -> ranges.any { id in it } }
-
     fun part2(): Long = ranges.combineOverlapping().sumOf { it.last - it.first + 1 }
 
     companion object {
@@ -21,17 +20,3 @@ class Day05(val ranges: List<LongRange>, val ids: List<Long>) {
             lines.map { it.split("-").map { it.toLong() }.let { (start, end) -> start..end } }
     }
 }
-
-private fun List<LongRange>.combineOverlapping() =
-    sortedBy { it.first }.let { sorted ->
-        sorted.fold(listOf(sorted.first())) { acc, range ->
-            val prev = acc.last()
-            when {
-                (range.intersects(prev)) -> when {
-                    range.last > prev.last -> acc.dropLast(1) + listOf(prev.first..range.last)
-                    else -> acc
-                }
-                else -> acc + listOf(range)
-            }
-        }
-    }

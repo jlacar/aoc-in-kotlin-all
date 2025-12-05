@@ -5,6 +5,27 @@ import lacar.junilu.println
 import kotlin.math.abs
 import kotlin.math.sqrt
 
+// region ===== Ranges
+
+fun LongRange.intersects(other: LongRange) = this.first <= other.last && other.first <= this.last
+
+fun List<LongRange>.combineOverlapping() =
+    sortedBy { it.first }.let { sorted ->
+        sorted.fold(listOf(sorted.first())) { acc, range ->
+            val prev = acc.last()
+            when {
+                (range.intersects(prev)) -> when {
+                    range.last > prev.last -> acc.dropLast(1) + listOf(prev.first..range.last)
+                    else -> acc
+                }
+                else -> acc + listOf(range)
+            }
+        }
+    }
+
+
+// region ===== Wrapping
+
 /**
  * Calculates the next position when moving diff
  * positions from pos, with wrapping.
