@@ -30,11 +30,11 @@ private fun nextPoint(current: Int, offset: Int) = wrap(max = 100, pos = current
 
 private fun zeroCount(current: Int, offset: Int): Int {
     val turningLeft = offset < 0
-    val clicks = abs(offset)
     val clicksToZero = if (current == 0) 100 else if (turningLeft) current else 100 - current
-    return if (clicksToZero > clicks) 0
-    else 1 + when {
-        turningLeft -> (clicks - clicksToZero) / 100
-        else -> (offset - clicksToZero) / 100
+    val fullRevolutions = (abs(offset) - clicksToZero) / 100
+
+    return when {
+        clicksToZero > abs(offset) -> 0
+        else -> 1 + fullRevolutions
     }
 }
