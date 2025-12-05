@@ -13,28 +13,31 @@ class Day01(val offsets: List<Int>) {
 
     private val startingPoint = 50
 
-    fun solvePart1() = offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
-        val (current, zeroes) = acc
-        val next = current.rotate(offset)
-        next to zeroes + if (next == 0) 1 else 0
-    }.zeroes
+    fun solvePart1() = rotateAndCountZeroes(countIntermediate = false)
+    fun solvePart2() = rotateAndCountZeroes(countIntermediate = true)
 
-    fun solvePart2() = offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
-        val (current, zeroes) = acc
-        val next = current.rotate(offset)
-        next to zeroes + current.timesRotatedToZero(offset)
-    }.zeroes
+    private fun rotateAndCountZeroes(countIntermediate: Boolean): Int =
+        offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
+            val (current, zeroes) = acc
+            current.rotate(offset) to zeroes + current.timesRotatedToZero(offset, countIntermediate)
+        }.zeroes
 }
 
 private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
 
-private fun Int.timesRotatedToZero(offset: Int): Int {
-    val turningLeft = offset < 0
-    val clicksToZero = if (this == 0) 100 else if (turningLeft) this else 100 - this
-    val fullRevolutions = (abs(offset) - clicksToZero) / 100
-
+private fun Int.timesRotatedToZero(offset: Int, countIntermediate: Boolean): Int {
     return when {
-        clicksToZero > abs(offset) -> 0
-        else -> 1 + fullRevolutions
+        countIntermediate -> {
+            val turningLeft = offset < 0
+            val clicksToZero = if (this == 0) 100 else if (turningLeft) this else 100 - this
+            val fullRevolutions = (abs(offset) - clicksToZero) / 100
+
+            when {
+                clicksToZero > abs(offset) -> 0
+                else -> 1 + fullRevolutions
+            }
+        }
+        rotate(offset) == 0 -> 1
+        else -> 0
     }
 }
