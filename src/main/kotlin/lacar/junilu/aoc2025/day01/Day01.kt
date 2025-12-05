@@ -28,9 +28,6 @@ class Day01(val offsets: List<Int>) {
 
     private fun nextPoint(current: Int, offset: Int) = wrap(max = 100, pos = current, diff = offset)
 
-    private fun nextPointWithZeroCount(current: Int, offset: Int) =
-        Pair(nextPoint(current, offset), zeroCount(current, offset))
-
     companion object {
         fun using(input: List<String>): Day01 {
             fun toOffset(line: String) = (if (line.first() == 'R') 1 else -1) * line.drop(1).toInt()
