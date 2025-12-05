@@ -14,7 +14,7 @@ fun List<LongRange>.combineOverlapping() =
         sorted.fold(listOf(sorted.first())) { acc, range ->
             val prev = acc.last()
             when {
-                (range.intersects(prev)) -> when {
+                range.intersects(prev) -> when {
                     range.last > prev.last -> acc.dropLast(1) + listOf(prev.first..range.last)
                     else -> acc
                 }
