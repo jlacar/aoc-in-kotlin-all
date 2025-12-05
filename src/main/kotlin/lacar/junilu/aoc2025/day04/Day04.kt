@@ -9,12 +9,15 @@ private fun cleanUp(rolls: List<String>) = generateSequence(Pair(rolls, 0)) { pr
     val before = prev.first
     val width = before.first().length
     val after = pad(before).windowed(3) { (rowBefore, currentRow, rowBelow) ->
-        val above = rowBefore.windowed(3)
-        val beside = currentRow.windowed(3)
-        val below = rowBelow.windowed(3)
+        fun tryToRemove(it: Int): Char {
+            val above = rowBefore.windowed(3)
+            val beside = currentRow.windowed(3)
+            val below = rowBelow.windowed(3)
+            return if (hasTooMany(above[it], below[it], beside[it])) '@' else 'X'
+        }
         (0..<width).map {
             when (currentRow[it + 1]) {
-                '@' -> if (hasTooMany(above[it], below[it], beside[it])) '@' else 'X'
+                '@' -> tryToRemove(it)
                 else -> '.'
             }
         }.joinToString("")
