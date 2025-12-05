@@ -15,18 +15,18 @@ class Day01(val offsets: List<Int>) {
 
     fun solvePart1() = offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
         val (current, zeroes) = acc
-        val next = nextPoint(current, offset)
+        val next = current.rotate(offset)
         next to zeroes + if (next == 0) 1 else 0
     }.zeroes
 
     fun solvePart2() = offsets.fold(Pair(startingPoint, 0)) { acc, offset ->
         val (current, zeroes) = acc
-        val next = nextPoint(current, offset)
+        val next = current.rotate(offset)
         next to zeroes + zeroCount(current, offset)
     }.zeroes
 }
 
-private fun nextPoint(current: Int, offset: Int) = wrap(max = 100, pos = current, diff = offset)
+private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
 
 private fun zeroCount(current: Int, offset: Int): Int {
     val turningLeft = offset < 0
