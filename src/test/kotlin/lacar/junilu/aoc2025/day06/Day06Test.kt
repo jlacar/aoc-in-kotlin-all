@@ -16,7 +16,7 @@ class Day06Test {
     }
 
     @Test
-    fun `Examples Part 1`() {
+    fun `Example - Parts 1 and 2`() {
         val input = """
             123 328  51 64 
              45 64  387 23 
@@ -51,9 +51,12 @@ class Day06Test {
         ): List<List<Long>> {
             return ops
                 .map { (op, index) -> numbers.map { it.substring(index, index + op.length - 1) } }
-                .map { ss ->
-                    (0..ss.first().lastIndex)
-                        .map { i -> ss.map { it[i] }.joinToString("").trim().toLong() }
+                .map { nums ->
+                    (0..nums.first().lastIndex).map { col ->
+                        nums.map { it[col] }
+                            .joinToString("").trim()
+                            .toLong()
+                    }
                 }
         }
 
