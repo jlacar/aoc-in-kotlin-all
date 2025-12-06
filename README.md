@@ -22,11 +22,11 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 
 ### Some over-engineering expected
 
-I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than an average would. 
+I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average. I generally don't play [code golf](https://code.golf) with any of these solutions.
 
-I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I generally don't play [code golf](https://code.golf) with any of these solutions. However, I strive for clean code, where "clean" means easy to understand and work with. Keeping the code as clean as it can be as I go makes it less confusing in the long run and helps me solve the problem faster. I will write at least one automated test for each solution.
+I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Keeping the code as clean as it can be as I go helps me keep from getting confused and helps me solve the problem faster in the long run.
 
-That said, I still manage to go overboard sometimes and end up with code that looks over-engineered, which it probably is.
+That said, I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is.
 
 My general approach to solving these problems is to prefer clarity rather brevity. Sometimes I refactor for clarity and get less code. Other times, I'll end up with more code. 
 
