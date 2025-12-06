@@ -5,6 +5,12 @@ import lacar.junilu.println
 import kotlin.math.abs
 import kotlin.math.sqrt
 
+// region ===== Lists
+
+fun <T> List<List<T>>.transpose(): List<List<T>> =
+    List(this[0].size) { i -> List(this.size) { j -> this[j][i] } }
+
+
 // region ===== Ranges
 
 fun LongRange.intersects(other: LongRange) = this.first <= other.last && other.first <= this.last
