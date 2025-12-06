@@ -22,13 +22,13 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 
 ### Some over-engineering expected
 
-I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average. I generally don't play [code golf](https://code.golf) with any of these solutions.
+I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average. 
 
 I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Keeping the code as clean as it can be as I go helps me keep from getting confused and helps me solve the problem faster in the long run.
 
 That said, I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is.
 
-My general approach to solving these problems is to prefer clarity rather brevity. Sometimes I refactor for clarity and get less code. Other times, I'll end up with more code. 
+My general approach is to prefer clarity over brevity. Sometimes I refactor for clarity and get less code. Other times, I'll end up with more code. I never intentionally play [code golf](https://code.golf) with any of these solutions so if you see something that's brief but not clear or looks too clever but cryptic, please drop a comment and let me know.
 
 Feel free to comment and point out anything that might be a questionable or problematic practice in Kotlin. 
 
