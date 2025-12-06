@@ -40,9 +40,9 @@ class Day01Test {
         assertEquals(3, example.solvePart1())
         assertEquals(6, example.solvePart2())
     }
+}
 
-    private fun using(input: List<String>): Day01 {
-        fun toOffset(line: String) = (if (line.first() == 'R') 1 else -1) * line.drop(1).toInt()
-        return Day01(input.map { toOffset(it) })
-    }
+private fun using(input: List<String>): Day01 {
+    fun toOffset(line: String) = (if (line.first() == 'R') 1 else -1) * line.drop(1).toInt()
+    return Day01(input.map { toOffset(it) })
 }
