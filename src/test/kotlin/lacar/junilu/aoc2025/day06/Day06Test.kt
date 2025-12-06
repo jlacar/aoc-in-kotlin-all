@@ -31,8 +31,8 @@ class Day06Test {
         val spaces = "\\s+".toRegex()
 
         fun parseNumbers(lines: List<String>) =
-            lines.map { line ->
-            line.trim().split(spaces)
+            lines.map { line -> line.trim()
+                .split(spaces)
                 .map { it.toLong() }
             }.transpose()
 
