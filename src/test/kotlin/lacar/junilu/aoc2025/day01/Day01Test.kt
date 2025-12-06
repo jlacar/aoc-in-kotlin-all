@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class Day01Test {
-    private fun puzzle(fileName: String) = using(readPuzzleInput(fileName))
-
     @Test
     fun `GitHub account input - Parts 1 and 2`() {
         val puzzle = puzzle("aoc2025/day01-gh")
@@ -21,14 +19,12 @@ class Day01Test {
         assertEquals(5831, puzzle.solvePart2())
     }
 
+    private fun puzzle(fileName: String) = using(readPuzzleInput(fileName))
+
     @Test
     fun `Examples - Parts 1 and 2`() {
-        assertEquals(3, example.solvePart1())
-        assertEquals(6, example.solvePart2())
-    }
-
-    private val example = using(
-        """
+        val example = using(
+            """
             L68
             L30
             R48
@@ -39,12 +35,14 @@ class Day01Test {
             L99
             R14
             L82""".trimIndent().lines()
-    )
+        )
 
-    companion object {
-        fun using(input: List<String>): Day01 {
-            fun toOffset(line: String) = (if (line.first() == 'R') 1 else -1) * line.drop(1).toInt()
-            return Day01(input.map { toOffset(it) })
-        }
+        assertEquals(3, example.solvePart1())
+        assertEquals(6, example.solvePart2())
+    }
+
+    private fun using(input: List<String>): Day01 {
+        fun toOffset(line: String) = (if (line.first() == 'R') 1 else -1) * line.drop(1).toInt()
+        return Day01(input.map { toOffset(it) })
     }
 }
