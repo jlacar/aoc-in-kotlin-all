@@ -1,47 +1,34 @@
 package lacar.junilu.aoc2025.day07
 
 import java.util.BitSet
-import java.util.LinkedList
-
-private fun BitSet.split(index: Int) {
-    set(index - 1)
-    set(index + 1)
-    clear(index)
-}
 
 class Day07(val lines: List<String>) {
 
     private val width = lines.first().length
 
-    private fun newBitSet(): BitSet = BitSet(width)
+    private val manifold = lines.drop(2).chunked(2)
 
     fun beamSplits(): Int {
-        fun String.findAllSplitters(): BitSet = newBitSet()
-            .also { bits -> forEachIndexed { i, ch -> if (ch == '^') bits.set(i) } }
+        val beamSource = BitSet(width).also { it.set(lines.first().indexOf('S')) }
 
-        val initialBeam = newBitSet().also { it.set(lines.first().indexOf('S')) }
-
-        val levels = lines.drop(2).chunked(2)
-
-        return levels.fold(Pair(initialBeam, 0)) { acc, (nextLevel, _) ->
-            val (beamsIn, totalSplits) = acc
-            val splitters = nextLevel.findAllSplitters()
-            val beamsOut = newBitSet().apply { or(beamsIn) }
-            val splits = (0 until width).fold(totalSplits) { acc, i ->
-                if (beamsIn.get(i) && splitters.get(i)) {
-                    beamsOut.split(i)
-                    acc + 1
-                } else {
-                    acc
-                }
+        return manifold.fold (Pair(beamSource, 0)) { acc, (splitters, _) ->
+            val (activeBeams, totalSplits) = acc
+            val splits = splitters.mapIndexed { i, ch ->
+                if (ch == '^' && activeBeams.get(i)) {
+                    activeBeams.set(i - 1)
+                    activeBeams.set(i + 1)
+                    activeBeams.clear(i)
+                    1
+                } else 0
             }
-            Pair(beamsOut, splits)
+            Pair(activeBeams, totalSplits + splits.sum())
         }.second
     }
 
-    fun beamTimeLines(): Long = lines.drop(2).chunked(2).fold (
-            LongArray(width).also { it[lines.first().indexOf('S')] = 1L}
-        ) { timeLines, (splitters, _) ->
+    fun beamTimeLines(): Long {
+        val beamSource = LongArray(width).also { it[lines.first().indexOf('S')] = 1L }
+
+        return manifold.fold(beamSource) { timeLines, (splitters, _) ->
             splitters.forEachIndexed { i, ch ->
                 if (ch == '^') {
                     timeLines[i - 1] += timeLines[i]
@@ -51,6 +38,7 @@ class Day07(val lines: List<String>) {
             }
             timeLines
         }.sum()
+    }
 }
 
 /*
