@@ -12,7 +12,7 @@ Here are my notes on each of the puzzles and their solutions:
 * &#11088;&#11088; [Day 4](day04/.) 
 * &#11088;&#11088; [Day 5](day05/.) 
 * &#11088;&#11088; [Day 6](day06/.) 
-* &#11035;&#11035; Day 7 - day07/. 
+* &#11088;&#11088; [Day 7](day07/.) 
 * &#11035;&#11035; Day 8 - day08/. 
 * &#11035;&#11035; Day 9 - day09/. 
 * &#11035;&#11035; Day 10 - day10/.
