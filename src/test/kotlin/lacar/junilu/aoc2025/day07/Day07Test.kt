@@ -1,6 +1,5 @@
 package lacar.junilu.aoc2025.day07
 
-import lacar.junilu.aoc2024.day03.Day03Test.Companion.puzzleInputGitHub
 import lacar.junilu.readPuzzleInput
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -10,7 +9,8 @@ class Day07Test {
     fun `GitHub input solutions`() {
         val puzzle = Day07(readPuzzleInput("aoc2025/day07-gh"))
 
-        assertEquals(1566, puzzle.timesBeamSplit())
+        assertEquals(1566, puzzle.beamSplits())
+        assertEquals(0, puzzle.beamTimeLines())
     }
 
     @Test
@@ -34,7 +34,8 @@ class Day07Test {
             .^.^.^.^.^...^.
             ...............""".trimIndent().lines())
 
-        assertEquals(21, example.timesBeamSplit())
+        assertEquals(21, example.beamSplits())
+        assertEquals(40, example.beamTimeLines())
     }
 }
 
