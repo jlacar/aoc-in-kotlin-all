@@ -9,20 +9,18 @@ class Day07(val lines: List<String>) {
     private val manifold = lines.drop(2).chunked(2)
 
     fun beamSplits(): Int {
-        val sourceBeam = BooleanArray(width).also { it[lines.first().indexOf('S')] = true }
+        val beams = BooleanArray(width).also { it[lines.first().indexOf('S')] = true }
 
-        return manifold.fold (Pair(sourceBeam, 0)) { acc, (splitters, _) ->
-            val (beams, totalSplits) = acc
-            val splits = splitters.mapIndexed { i, ch ->
+        return manifold.fold (0) { totalSplits, (splitters, _) ->
+            splitters.mapIndexed { i, ch ->
                 if (ch.isSplitter() && beams[i]) {
                     beams[i - 1] = true
                     beams[i] = false
                     beams[i + 1] = true
                     1
                 } else 0
-            }
-            Pair(beams, totalSplits + splits.sum())
-        }.second
+            }.sum() + totalSplits
+        }
     }
 
     fun beamTimeLines(): Long {
