@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2025.day07
 
-import java.util.BitSet
+private fun Char.isSplitter() = this == '^'
 
 class Day07(val lines: List<String>) {
 
@@ -9,19 +9,19 @@ class Day07(val lines: List<String>) {
     private val manifold = lines.drop(2).chunked(2)
 
     fun beamSplits(): Int {
-        val beamSource = BitSet(width).also { it.set(lines.first().indexOf('S')) }
+        val sourceBeam = BooleanArray(width).also { it[lines.first().indexOf('S')] = true }
 
-        return manifold.fold (Pair(beamSource, 0)) { acc, (splitters, _) ->
-            val (activeBeams, totalSplits) = acc
+        return manifold.fold (Pair(sourceBeam, 0)) { acc, (splitters, _) ->
+            val (beams, totalSplits) = acc
             val splits = splitters.mapIndexed { i, ch ->
-                if (ch == '^' && activeBeams.get(i)) {
-                    activeBeams.set(i - 1)
-                    activeBeams.set(i + 1)
-                    activeBeams.clear(i)
+                if (ch.isSplitter() && beams[i]) {
+                    beams[i - 1] = true
+                    beams[i] = false
+                    beams[i + 1] = true
                     1
                 } else 0
             }
-            Pair(activeBeams, totalSplits + splits.sum())
+            Pair(beams, totalSplits + splits.sum())
         }.second
     }
 
