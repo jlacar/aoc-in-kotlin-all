@@ -30,7 +30,7 @@ class Day07(val lines: List<String>) {
 
         return manifold.fold(beamSource) { timeLines, (splitters, _) ->
             splitters.forEachIndexed { i, ch ->
-                if (ch == '^') {
+                if (ch.isSplitter()) {
                     timeLines[i - 1] += timeLines[i]
                     timeLines[i + 1] += timeLines[i]
                     timeLines[i] = 0
