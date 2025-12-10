@@ -10,7 +10,7 @@ class Day07Test {
         val puzzle = Day07(readPuzzleInput("aoc2025/day07-gh"))
 
         assertEquals(1566, puzzle.beamSplits())
-        assertEquals(0, puzzle.beamTimeLines())
+        assertEquals(5921061943075, puzzle.beamTimeLines())
     }
 
     @Test

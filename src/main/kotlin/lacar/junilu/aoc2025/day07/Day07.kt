@@ -9,12 +9,6 @@ private fun BitSet.split(index: Int) {
     clear(index)
 }
 
-private data class Node(val level: Int, val index: Int)
-
-private data class Edge(val from: Node, val to: Node)
-
-private data class Beam(val source: Node, val index: Int)
-
 class Day07(val lines: List<String>) {
 
     private val width = lines.first().length
@@ -45,110 +39,42 @@ class Day07(val lines: List<String>) {
         }.second
     }
 
-    private val source = Node(0, lines.first().indexOf('S'))
-
-    private val splitters = lines.drop(2).chunked(2).flatMapIndexed { level, (line, _) ->
-        line.mapIndexedNotNull { index, ch -> if (ch == '^') Node(level + 1, index) else null }
-    }
-
-    private val levels = splitters.map { it.level }.distinct().sorted()
-    private val terminalLevel = levels.last() + 1
-
-    private fun traceBeamsThroughLevels(): Pair<List<Beam>, List<Edge>> {
-        val sourceBeam = listOf(Beam(source = source, index = source.index))
-
-        val trace = levels.fold(Pair(sourceBeam, emptyList<Edge>())) { acc, level ->
-            val (beamsIn, edges) = acc
-            val beamIndices = beamsIn.map { it.index }.distinct()
-
-            val splittersHitByBeam = splitters
-                .filter { it.level == level && it.index in beamIndices }
-
-            val newEdges = splittersHitByBeam.flatMap { to ->
-                beamsIn.filter { it.index == to.index }.distinct().map { beam ->
-                    Edge(beam.source, to)
+    fun beamTimeLines(): Long = lines.drop(2).chunked(2).fold (
+            LongArray(width).also { it[lines.first().indexOf('S')] = 1L}
+        ) { timeLines, (splitters, _) ->
+            splitters.forEachIndexed { i, ch ->
+                if (ch == '^') {
+                    timeLines[i - 1] += timeLines[i]
+                    timeLines[i + 1] += timeLines[i]
+                    timeLines[i] = 0
                 }
             }
-
-            val (beamsSplit, beamsNotSplit) = beamsIn.partition { beam -> beam.index in splittersHitByBeam.map { it.index } }
-
-            val newBeams = beamsSplit.flatMap { beam ->
-                val splitter = Node(level, beam.index)
-                listOf(Beam(splitter, beam.index - 1), Beam(splitter, beam.index + 1))
-            }
-
-            Pair(beamsNotSplit + newBeams, edges + newEdges)
-        }
-
-        val (beamsOut, edges) = trace
-        val terminalEdges = beamsOut.distinct().map { Edge(it.source, Node(terminalLevel, it.index)) }
-
-        return Pair(beamsOut,edges + terminalEdges)
-    }
-
-    private fun graphFrom(edges: List<Edge>) = edges.groupBy({ it.from }, { it.to })
-
-    fun beamTimeLines(): Int {
-        val graph = graphFrom(traceBeamsThroughLevels().second)
-
-        return lines.first().indices.sumOf { index ->
-            graph.findAllPaths(source, Node(terminalLevel, index)).size
-        }
-    }
-}
-
-private typealias Path = List<Node>
-private typealias Graph = Map<Node, Path>
-
-private val memo = mutableMapOf<Pair<Node, Node>, List<Path>>()
-
-private fun Graph.findAllPaths(start: Node, end: Node): List<Path> {
-
-    fun dfs(current: Node, end: Node, currentPath: LinkedList<Node>, allPaths: MutableList<Path>) {
-        currentPath.addLast(current)
-
-        if (current == end) {
-            allPaths.add(currentPath.toList())
-        } else {
-            for (next in getOrDefault(current, emptyList())) {
-                dfs(next, end, currentPath, allPaths)
-            }
-        }
-
-        currentPath.removeLast()
-    }
-
-    val cachedResult = memo[Pair(start, end)]
-    if (cachedResult != null) {
-        return cachedResult
-    }
-
-    val allPaths = mutableListOf<Path>()
-    val currentPath = LinkedList<Node>()
-
-    dfs(start, end, currentPath, allPaths)
-
-    memo[Pair(start, end)] = allPaths
-    return allPaths
+            timeLines
+        }.sum()
 }
 
 /*
 
-.......S.......
-.......|.......  1
-......|^|......  2
-......|.|......
-.....|^|^|.....  4
-.....|.|.|.....
-....|^|^|^|....  6
-....|.|.|.|....
-...|^|^|||^|...  6+2
-...|.|.|||.|...
-..|^|^|||^|^|..
-..|.|.|||.|.|..
-.|^|||^||.||^|.
-.|.|||.||.||.|.
-|^|^|^|^|^|||^|
-|.|.|.|.|.|||.|
+```
+The Manifold:    Beams            Levels and # of beams
+
+.......S.......  .......S.......  L0 = 1
+.......|.......  .......1.......
+......|^|......  ......1^1......  L1 = 1,1 = 2
+......|.|......  ......|.|......
+.....|^|^|.....  .....1^2^1.....  L2 = 1,2,1 = 4
+.....|.|.|.....  .....|.|.|.....
+....|^|^|^|....  ....1^3^3^1....  L3 = 1,3,3,1 = 8
+....|.|.|.|....  ....|.|.|.|....
+...|^|^|||^|...  ...1^4^3|1^1...  L4 = 1,4,3,3,1,1 = 13
+...|.|.|||.|...  ...|.|.|||.|...
+..|^|^|||^|^|..  ..1^5^4|4^2^1..  L5 = 1,5,4,3,4,2,1 = 20
+..|.|.|||.|.|..  ..|.|.|||.|.|..
+.|^|||^||.||^|.  .1^1|4^7|.|1^1.  L6 = 1,1,5,4,7,4,2,1,1 = 26
+.|.|||.||.||.|.  .|.|||.||.||.|.
+|^|^|^|^|^|||^|  1^2^A^B^B^||1^1  L7 = 1,2,10,11,11,2,1,1,1 = 40
+|.|.|.|.|.|||.|  |.|.|.|.|.|||.|
+                 1 2 A B B 211 1
+```
 
  */
