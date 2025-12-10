@@ -5,18 +5,18 @@ private fun Char.isSplitter() = this == '^'
 class Day07(val lines: List<String>) {
 
     private val width = lines.first().length
+    private val source = lines.first().indexOf('S')
 
     private val manifold = lines.drop(2).chunked(2)
 
     fun beamSplits(): Int {
-        val beams = BooleanArray(width).also { it[lines.first().indexOf('S')] = true }
-
+        val beams = BooleanArray(width).also { it[source] = true }
         return manifold.fold (0) { totalSplits, (splitters, _) ->
             splitters.mapIndexed { i, ch ->
                 if (ch.isSplitter() && beams[i]) {
                     beams[i - 1] = true
-                    beams[i] = false
                     beams[i + 1] = true
+                    beams[i] = false
                     1
                 } else 0
             }.sum() + totalSplits
@@ -24,8 +24,7 @@ class Day07(val lines: List<String>) {
     }
 
     fun beamTimeLines(): Long {
-        val beamSource = LongArray(width).also { it[lines.first().indexOf('S')] = 1L }
-
+        val beamSource = LongArray(width).also { it[source] = 1L }
         return manifold.fold(beamSource) { timeLines, (splitters, _) ->
             splitters.forEachIndexed { i, ch ->
                 if (ch.isSplitter()) {
