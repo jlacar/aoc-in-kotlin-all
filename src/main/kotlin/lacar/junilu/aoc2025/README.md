@@ -1,6 +1,6 @@
 # Advent of Code 2025 - In Kotlin
 
-- Some intro notes here - 
+Starting this year, the event will only go for twelve days instead of the usual twenty-five as in the past.
 
 ## Solutions
 
@@ -21,7 +21,9 @@ Here are my notes on each of the puzzles and their solutions:
 
 ## Reflections
 
-This year, instead of using a companion object in the solution class to parse the text input as I have in the past years, I'm moving the parsing logic into the test class. My reasoning is that the parsing logic is a separate concern from the solution logic. The shape of the input data should be loosely coupled to the solution. The parsing logic will act as a layer of abstraction between the solution and the source input data, transforming it from the incoming shape to the desired shape. 
+I'm rethinking my approach to organizing the input parsing logic this year. In the past, I have used a companion object in the solution class to encapsulate the parsing logic. This year, I'm going to try putting the logic to parse the input in the test class instead.
+
+My reasoning is that the parsing logic is a separate concern from calculating the solution. The shape of the input data can change independently from the solution. If we consider the Ports and Adapters (Hexagonal) architecture, the parsing logic will reside in an Adapter class that knows how to convert the raw input data to the shape expected by the solution code.
 
 
 
