@@ -24,9 +24,9 @@ We need to find how many distinct timelines the beams can take to exit the manif
 
 It took me a while to figure out Part 2. At first, I tried using a directed acyclic graph (DAG) to represent the manifold and then finding the shortest paths between the source beam and the end of the manifold. I used a depth-first search (DFS) and memoization, which worked for the example input. With the real puzzle input, however, the program quickly ran out of memory. 
 
-My biggest mistake was jumping to conclusions too quickly. When I read "paths" I immediately thought of graphs, nodes, edges, and graph traversal algorithms. At that point, I had already fallen into the rabbit hole and it took a couple of days before I was heading to a dead end.
+My biggest mistake was jumping to conclusions too quickly. When I read "paths" I immediately thought of graphs, nodes, edges, and graph traversal algorithms. At that point, I had already fallen into the rabbit hole and it took a couple of days for me to realize this line of thinking was a dead end.
 
-I should have looked at the example input more closely and gotten a clear understanding of how the number of paths increased when a beam hit a splitter. When I finally sat down to do that on Day 10, I was already three days behind in the competition. I quickly realized that the number of paths increases by two for each beam that hits a splitter.
+In retrospect, I should have looked at the example input more closely and gotten a clear understanding of how the number of paths increased when a beam hit a splitter. When I finally sat down to do that on Day 10, I was already three days behind in the competition.
 
 Here's how I drew it out:
 
@@ -51,13 +51,15 @@ The Manifold     Beams            Levels and # of beams
 ...............  |.|.|.|.|.|||.|
                  1 2 A B B 211 1
 ```
-Levels 2 and 3 are where I had my key insight, and the other levels provided additional confirmation of what I discovered. On level 2, the two beams coming in are split resulting in four beams. With each of the splits, one beam moves to the outside while the other moves toward the inside of the manifold. 
+Levels 2 and 3 are where I had my key insight, with the other levels providing confirmation of what I discovered. 
 
-The beams on the outside are still part of one path. However, the beams going inside pass through the same space and essentially combine into a single beam. We can think of this as being part of multiple paths through the same space.
+On level 2, the two beams coming in are split, resulting in four beams. With each of the splits, one beam moves to the outside while the other moves inside the manifold. 
 
-The same logic applies to level 3. The inside paths are the combination of beams from upper levels that are moving through the same space. The outside paths are still part of only one possible path. 
+The beams on the outside are still part of a single path. However, the beams going inside pass through the same space and essentially combine into a single beam. We can think of this as multiple paths through the same space.
 
-The thought occurred to me that this looked a lot like Pascal's triangle:
+The same logic applies to level 3: The inside paths are the combination of beams from upper levels that are moving through the same space. The outside paths are still part of only one possible path. 
+
+It occurred to me that this looked a lot like Pascal's triangle:
 ```text
      1 
     1 1
@@ -68,6 +70,6 @@ The thought occurred to me that this looked a lot like Pascal's triangle:
 
 The difference being that a beam could fall straight through several levels before it is combined with other beams.
 
-The key insight was that a beam combines with other beams falling through the same space in the manifold. The splitting and combining of beams is what dictates how many additional paths are through a particular horizontal offset at any given level in the manifold.
+The key insight was that a beam combines with other beams falling through the same space in the manifold. The splitting and combining of beams is what dictates how many additional paths there are through a particular horizontal offset at any given level in the manifold.
 
 This is why Level 4 is different from Pascal's triangle because there is a space where a third splitter should be if we were to get the same numbers as Pascal's triangle. 
