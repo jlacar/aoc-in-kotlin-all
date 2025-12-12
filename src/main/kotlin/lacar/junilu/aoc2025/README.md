@@ -14,18 +14,18 @@ Here are my notes on each of the puzzles and their solutions:
 * &#11088;&#11088; [Day 6](day06/.) 
 * &#11088;&#11088; [Day 7](day07/.) 
 * &#11088;&#11088; [Day 8](day08/.) 
-* &#11088;&#x2693; [Day 9](day09/.) 
+* &#11088;&#x2615; [Day 9](day09/.) 
 * &#x2615;&#x2615; Day 10 - day10/.
 * &#x2603;&#x2603; Day 11 - day11/.
 * &#x2603;&#x2603; Day 12 - day12/.
                  
 **_Legend_:**
 * &#11088; - Solved
-* &#x2692; - Working on it  &#x1F6A7; &#x1F6E0;
-* &#x2615; - Analyzing  &#x1F4AD;
+* &#x1F6E0; - Working on it
+* &#x2615; - Pondering...
 * &#x2603; - Chillin'
-* &#x26D4; - Not accessible yet
-* 
+* &#x26D4; - Not yet available
+
 ## Reflections
 
 I'm rethinking my approach to organizing the input parsing logic this year. In the past, I have used a companion object in the solution class to encapsulate the parsing logic. This year, I'm going to try putting the logic to parse the input in the test class instead.
