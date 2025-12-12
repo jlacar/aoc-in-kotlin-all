@@ -6,11 +6,15 @@ Code: [solution](Day01.kt) | [test](../../../../../../test/kotlin/lacar/junilu/a
 
 ## Overview
 
-This problem involves a circular list of consecutive numbers and calculating wrapping indices, framed as a safe dial with a fixed number of positions (0 to 99), increasing clockwise.
+This problem involves a circular list of consecutive numbers and calculating wrapping indices. These are framed in the context of a safe with a circular dial and a fixed number of positions (0 to 99), with the numbers increasing as we go clockwise around the dial.
 
 ## Parsing the input
 
-Each line in the input is treated as a separate instruction that indicates the direction and number of positions to rotate the dial. Each instruction starts with a letter indicating the direction in which the dial should be turned. "L" indicates turning the dial clockwise, going in the direction of descending position numbers. "R" indicates turning the dial counterclockwise, going in the direction of ascending position numbers. The direction indicator is followed by a number specifying the number of positions or clicks to turn to get to the next number in the combination. The number can be greater than 99, in which case the dial will be turned at least one full revolution.
+Each line in the input is treated as a separate instruction that tells us the direction and number of positions to rotate the dial. 
+
+An instruction starting with an "L" means we need to turn the dial clockwise, moving through descending positions. An "R" means we need to turn the dial counterclockwise, moving through ascending positions.
+
+The direction is followed by a number which specifies the number of positions or clicks of the dial to turn to get to the next number in the combination. This number can be greater than 99, in which case the dial will be turned at least one full revolution.
 
 To facilitate calculation, a left rotation is converted to a negative number and a right rotation to a positive number and the list of instructions is passed to the solution class as a `List<Int>`.
 
