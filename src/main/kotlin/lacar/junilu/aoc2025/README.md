@@ -21,8 +21,8 @@ Here are my notes on each of the puzzles and their solutions:
                  
 **_Legend_:**
 * &#11088; - Solved
-* &#x2693; - Working on it
-* &#x2615; - Analyzing
+* &#x2692; - Working on it  &#x1F6A7; &#x1F6EO;
+* &#x2615; - Analyzing  &#x1F4AD;
 * &#x2603; - Chillin'
 * &#x26D4; - Not accessible yet
 * 
