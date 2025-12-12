@@ -1,10 +1,10 @@
 # Advent of Code 2025 - In Kotlin
 
-Starting this year, the event will only go for twelve days instead of the usual twenty-five as in the past.
+Starting this year, the event will only go for twelve days instead of twenty-five as it has since it started.
 
 ## Solutions
 
-Here are my notes on each of the puzzles and their solutions:
+Progress and links:
 
 * &#11088;&#11088; [Day 1](day01/.) 
 * &#11088;&#11088; [Day 2](day02/.) 
@@ -15,9 +15,9 @@ Here are my notes on each of the puzzles and their solutions:
 * &#11088;&#11088; [Day 7](day07/.) 
 * &#11088;&#11088; [Day 8](day08/.) 
 * &#11088;&#x2615; [Day 9](day09/.) 
-* &#x2615;&#x2615; Day 10 - day10/.
-* &#x2603;&#x2603; Day 11 - day11/.
-* &#x2603;&#x2603; Day 12 - day12/.
+* &#x2615;&#x2615; Day 10
+* &#x2603;&#x2603; Day 11
+* &#x2603;&#x2603; Day 12
                  
 **_Legend_:**
 * &#11088; - Solved
