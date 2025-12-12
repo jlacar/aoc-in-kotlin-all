@@ -19,9 +19,11 @@ Here are my notes on each of the puzzles and their solutions:
 * &#x26A0;&#x26A0; Day 11 - day11/.
 * &#x263E;&#x263E; Day 12 - day12/.
 * &#x2603;&#x2603;
-* &#x2610;&#x2610;
-* &#x2612;&#x2612;
-* &#x2611;&#x2611;
+* &#x26D1;&#x26D1;
+* &#x274E;&#x274E;
+* &#x274C;&#x274C;
+* &#x2615;&#x2615;
+* &#x2460;&#x2461;
 * 
 ## Reflections
 
