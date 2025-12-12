@@ -15,16 +15,16 @@ Progress and links:
 * &#11088;&#11088; [Day 7](day07/.) 
 * &#11088;&#11088; [Day 8](day08/.) 
 * &#11088;&#x2615; [Day 9](day09/.) 
-* &#x2615;&#x2615; Day 10
-* &#x2603;&#x2603; Day 11
-* &#x2603;&#x2603; Day 12
+* &#x2615;&#x26D4; Day 10
+* &#x2603;&#x26D4; Day 11
+* &#x2603;&#x26D4; Day 12
                  
 **_Legend_:**
 * &#11088; - Solved
 * &#x1F6E0; - Working on it
 * &#x2615; - Pondering...
 * &#x2603; - Chillin'
-* &#x26D4; - Not yet available
+* &#x26D4; - Not yet accessible
 
 ## Reflections
 
