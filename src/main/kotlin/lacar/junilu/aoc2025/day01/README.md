@@ -10,15 +10,13 @@ This problem involves a circular list of consecutive numbers and calculating wra
 
 ## Parsing the input
 
-Each line in the input is treated as a separate instruction that tells us the direction and number of positions to rotate the dial. 
+Each line in the input is treated as a separate instruction that tells us how to turn the dial to the next number in the combination. 
 
-An instruction starting with an "L" means we need to turn the dial clockwise, moving through descending positions. An "R" means we need to turn the dial counterclockwise, moving through ascending positions.
+An instruction starting with an "L" means we need to turn the dial clockwise, moving through positions in descending order. An "R" means we need to turn the dial counterclockwise, moving through positions in ascending order.
 
-The direction is followed by a number which specifies the number of positions or clicks of the dial to turn to get to the next number in the combination. This number can be greater than 99, in which case the dial will be turned at least one full revolution.
+The number after the letter tells us how many positions or clicks to turn the dial to get to the next number in the combination. This can be greater than 99, in which case the dial will be turned at least one full revolution. To facilitate calculation, a left rotation is converted to a negative number and a right rotation to a positive number. The parsed instructions are passed to the solution class as a `List<Int>`.
 
-To facilitate calculation, a left rotation is converted to a negative number and a right rotation to a positive number and the list of instructions is passed to the solution class as a `List<Int>`.
-
-For both parts, the dial will start at position 50.
+For both parts of the puzzle, we are to assume the dial starts at position 50 before executing the instructions.
 
 ## Part 1
 
