@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2015.day24
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Nested
@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-private val puzzleInputForGitHub = readPuzzleInput("aoc2015/day24-gh").map { it.toInt() }
+private val puzzleInputForGitHub = readPuzzleLines("aoc2015/day24-gh").map { it.toInt() }
 
 class Day24Test {
 

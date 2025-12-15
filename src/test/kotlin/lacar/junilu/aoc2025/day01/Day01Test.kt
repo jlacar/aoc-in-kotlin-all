@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2025.day01
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -19,7 +19,7 @@ class Day01Test {
         assertEquals(5831, puzzle.solvePart2())
     }
 
-    private fun puzzle(fileName: String) = using(readPuzzleInput(fileName))
+    private fun puzzle(fileName: String) = using(readPuzzleLines(fileName))
 
     @Test
     fun `Examples - Parts 1 and 2`() {

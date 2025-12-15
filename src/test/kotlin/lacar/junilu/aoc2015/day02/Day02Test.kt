@@ -1,14 +1,14 @@
 package lacar.junilu.aoc2015.day02
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val day02 = Day02.using(readPuzzleInput("aoc2015/day02"))
-private val day02gh = Day02.using(readPuzzleInput("aoc2015/day02-gh"))
+private val day02 = Day02.using(readPuzzleLines("aoc2015/day02"))
+private val day02gh = Day02.using(readPuzzleLines("aoc2015/day02-gh"))
 
 class Day02Test {
 

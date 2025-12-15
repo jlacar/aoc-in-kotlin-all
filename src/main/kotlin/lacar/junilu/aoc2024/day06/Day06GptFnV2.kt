@@ -1,10 +1,10 @@
 package lacar.junilu.aoc2024.day06
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 
 fun main() {
 
-    val map = readPuzzleInput("aoc2024/day06-gh")
+    val map = readPuzzleLines("aoc2024/day06-gh")
 
 //    val map = listOf(
 //        "....#.....",

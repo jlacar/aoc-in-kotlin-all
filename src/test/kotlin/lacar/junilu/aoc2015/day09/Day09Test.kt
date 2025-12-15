@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 
-private val puzzleInputDay09 = readPuzzleInput("aoc2015/day09")
+private val puzzleInputDay09 = readPuzzleLines("aoc2015/day09")
 
 class Day09Test {
     @Nested

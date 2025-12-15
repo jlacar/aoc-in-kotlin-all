@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 private fun bossDay21(fileName: String): Player {
-    val bossProperties = toPropsMap(readPuzzleInput(fileName).first(),
+    val bossProperties = toPropsMap(readPuzzleLines(fileName).first(),
         itemDelimiter = ", ",
         keyValueDelimiter = ": ",
         transform = String::toInt)

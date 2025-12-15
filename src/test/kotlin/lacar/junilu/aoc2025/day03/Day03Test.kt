@@ -1,13 +1,13 @@
 package lacar.junilu.aoc2025.day03
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class Day03Test {
     @Test
     fun `Github input solutions`() {
-        val puzzle = Day03(readPuzzleInput("aoc2025/day03-gh"))
+        val puzzle = Day03(readPuzzleLines("aoc2025/day03-gh"))
 
         assertEquals(17278L, puzzle.part1())
         assertEquals(171528556468625L, puzzle.part2())

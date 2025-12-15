@@ -2,7 +2,7 @@ package lacar.junilu.aoc2025.day09
 
 import lacar.junilu.common.Point2D
 import lacar.junilu.common.findInts
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
@@ -26,7 +26,7 @@ class Day09Test {
 
     @org.junit.jupiter.api.Test
     fun `GitHub input solutions - Parts 1 & 2`() {
-        val puzzle = using(readPuzzleInput("aoc2025/day09-gh"))
+        val puzzle = using(readPuzzleLines("aoc2025/day09-gh"))
 
         assertEquals(4777409595, puzzle.maxRectangularArea())
     }

@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2024.day13
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -30,8 +30,8 @@ class Day13Test {
     }
 
     companion object {
-        private val puzzleInputForGmail = readPuzzleInput("aoc2024/day13-gm")
-        private val puzzleInputForGitHub = readPuzzleInput("aoc2024/day13-gh")
+        private val puzzleInputForGmail = readPuzzleLines("aoc2024/day13-gm")
+        private val puzzleInputForGitHub = readPuzzleLines("aoc2024/day13-gh")
 
         private val fourClawMachines = """
             Button A: X+94, Y+34

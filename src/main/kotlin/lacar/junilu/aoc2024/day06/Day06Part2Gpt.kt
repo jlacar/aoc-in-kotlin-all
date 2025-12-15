@@ -1,7 +1,7 @@
 package lacar.junilu.aoc2024.day06
 
 import lacar.junilu.experimental.solution
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 
 class Day06Part2Gpt {
     val part2 get() = solution { lines ->
@@ -87,7 +87,7 @@ class Day06Part2Gpt {
 
 fun main() {
 
-    val map = readPuzzleInput("aoc2024/day06-gm")
+    val map = readPuzzleLines("aoc2024/day06-gm")
 
 //        listOf(
 //        "....#.....",

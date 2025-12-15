@@ -1,7 +1,7 @@
 package lacar.junilu.aoc2024.day09
 
 import lacar.junilu.aoc2024.day09.Day09.AmphiFile
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -72,7 +72,7 @@ class Day09Test {
 
     companion object {
         private val exampleInput = "2333133121414131402"
-        private val inputForGitHub = readPuzzleInput("aoc2024/day09-gh").first()
-        private val inputForGmail = readPuzzleInput("aoc2024/day09-gm").first()
+        private val inputForGitHub = readPuzzleLines("aoc2024/day09-gh").first()
+        private val inputForGmail = readPuzzleLines("aoc2024/day09-gm").first()
     }
 }

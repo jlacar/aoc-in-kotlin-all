@@ -1,12 +1,12 @@
 package lacar.junilu.aoc2015.day23
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private val gmailProgram = readPuzzleInput("aoc2015/day23")
-private val githubProgram = readPuzzleInput("aoc2015/day23-gh")
+private val gmailProgram = readPuzzleLines("aoc2015/day23")
+private val githubProgram = readPuzzleLines("aoc2015/day23-gh")
 
 /**
  * AoC 2015 - Day 23: Opening the Turing Lock

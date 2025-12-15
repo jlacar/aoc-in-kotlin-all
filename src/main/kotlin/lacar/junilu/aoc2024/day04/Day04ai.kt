@@ -1,7 +1,7 @@
 package lacar.junilu.aoc2024.day04
 
 import lacar.junilu.println
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 
 /**
  * AoC 2024 Day 4 -
@@ -94,10 +94,10 @@ fun main() {
     Day04ai.countXmasOccurrences(grid).also { "test grid count of XMAS: $it".println() }
     Day04ai.countXmasPatterns(grid).also { "test grid count of X-MAS: $it".println() }
 
-    Day04ai.countXmasOccurrences(readPuzzleInput("aoc2024/day04-gh")).also {
+    Day04ai.countXmasOccurrences(readPuzzleLines("aoc2024/day04-gh")).also {
         "Solution Part 1: $it".println()
     }
-    Day04ai.countXmasPatterns(readPuzzleInput("aoc2024/day04-gh")).also {
+    Day04ai.countXmasPatterns(readPuzzleLines("aoc2024/day04-gh")).also {
         "Solution Part 2: $it".println()
     }
 }

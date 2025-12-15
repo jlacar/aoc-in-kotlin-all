@@ -1,7 +1,7 @@
 package lacar.junilu.aoc2015.day22
 
 import lacar.junilu.aoc2015.day22.Spell.*
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import lacar.junilu.toPropsMap
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
@@ -13,7 +13,7 @@ private object PuzzleInput {
     // using modified puzzle input format:
     // gmail = points: ??, damage: ??
     // github = points: ??, damage: ??
-    val bossFor = readPuzzleInput("aoc2015/day22").associate { line ->
+    val bossFor = readPuzzleLines("aoc2015/day22").associate { line ->
         val (bossId, bossProps) = line.split(" = ")
         val props = toPropsMap(bossProps, itemDelimiter = ", ", keyValueDelimiter = ": ", transform = String::toInt)
 

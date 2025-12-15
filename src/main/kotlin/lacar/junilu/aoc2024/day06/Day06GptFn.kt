@@ -1,7 +1,5 @@
 package lacar.junilu.aoc2024.day06
 
-import lacar.junilu.readPuzzleInput
-
 fun main() {
 
 //    val map = readPuzzleInput("aoc2024/day06-gh")

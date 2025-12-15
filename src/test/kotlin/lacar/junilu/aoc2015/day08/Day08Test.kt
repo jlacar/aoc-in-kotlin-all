@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-private val puzzleInputDay08 = readPuzzleInput("aoc2015/day08")
+private val puzzleInputDay08 = readPuzzleLines("aoc2015/day08")
 
 class Day08Test {
     @Nested

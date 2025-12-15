@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2025.day04
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -8,7 +8,7 @@ class Day04Test {
 
     @Test
     fun `Github input solutions`() {
-        val puzzle = Day04(readPuzzleInput("aoc2025/day04-gh"))
+        val puzzle = Day04(readPuzzleLines("aoc2025/day04-gh"))
 
         assertEquals(1395, puzzle.part1())
         assertEquals(8451, puzzle.part2())

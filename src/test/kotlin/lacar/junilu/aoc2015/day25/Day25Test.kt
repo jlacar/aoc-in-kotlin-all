@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2015.day25
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -11,7 +11,7 @@ class Day25Test {
 
     @Test
     fun `get fifty stars for AoC 2015`() {
-        val puzzleInput = readPuzzleInput("aoc2015/day25-gh").first()
+        val puzzleInput = readPuzzleLines("aoc2015/day25-gh").first()
         val (r, c) = puzzleInput.drop(80).split(", ")
         val row = r.toInt()
         val col = c.split(" ")[1].dropLast(1).toInt()

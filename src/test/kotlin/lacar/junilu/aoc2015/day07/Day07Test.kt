@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-private val puzzleInputDay07 = readPuzzleInput("aoc2015/day07")
+private val puzzleInputDay07 = readPuzzleLines("aoc2015/day07")
 
 class Day07Test {
 

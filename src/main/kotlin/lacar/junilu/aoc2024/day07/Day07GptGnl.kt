@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2024.day07
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 
 fun main() {
 //    val input = listOf(
@@ -15,7 +15,7 @@ fun main() {
 //        "292: 11 6 16 20"
 //    )
 
-    val input = readPuzzleInput("aoc2024/day07-gh")
+    val input = readPuzzleLines("aoc2024/day07-gh")
 
     // Specify which operators to use
     val operators = listOf<(Long, Long) -> Long>(

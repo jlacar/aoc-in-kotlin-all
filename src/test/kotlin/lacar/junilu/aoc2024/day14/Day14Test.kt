@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2024.day14
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -39,7 +39,7 @@ class Day14Test {
     }
 
     companion object {
-        val usingGmailInput = Day14.using(readPuzzleInput("aoc2024/day14-gm"))
-        val usingGitHubInput = Day14.using(readPuzzleInput("aoc2024/day14-gh"))
+        val usingGmailInput = Day14.using(readPuzzleLines("aoc2024/day14-gm"))
+        val usingGitHubInput = Day14.using(readPuzzleLines("aoc2024/day14-gh"))
     }
 }

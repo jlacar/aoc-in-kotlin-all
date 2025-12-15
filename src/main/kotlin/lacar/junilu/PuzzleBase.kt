@@ -1,12 +1,12 @@
 package lacar.junilu
 
 import kotlin.io.path.Path
-import kotlin.io.path.readLines
 import lacar.junilu.RelativePathNormalizer.normalized
+import kotlin.io.path.readLines
+import kotlin.io.path.readText
 
 /**
- * Returns the puzzle input read from the specified path
- * as a list of String, one for each line in the file.
+ * Returns a list of Strings read from the puzzle input located at the specified coordinates.
  *
  * Assumes the file has a ".txt" extension and is
  * in `src/main/resources` or a subdirectory. If the
@@ -15,25 +15,20 @@ import lacar.junilu.RelativePathNormalizer.normalized
  *
  * @since AoC 2015
  */
-fun readPuzzleInput(relativePath: String): List<String> {
-    val inputFilePath = relativePath.normalized()
-    return Path("src/main/resources/$inputFilePath").readLines()
-}
+fun readPuzzleLines(relativePath: String, dir: String = "src/main/resources"): List<String> =
+    Path("$dir/${relativePath.normalized()}").readLines()
+
+fun readPuzzleText(relativePath: String, dir: String = "src/main/resources"): String =
+    Path("$dir/${relativePath.normalized()}").readText()
 
 object RelativePathNormalizer {
     fun String.normalized() = dropLeadingSlash().addExtension()
 
     private fun String.dropLeadingSlash() =
-        when (startsWith("/")) {
-            false -> this
-            true -> this.drop(1)
-        }
+        if (startsWith("/")) this.drop(1) else this
 
     private fun String.addExtension() =
-        when (endsWith(".txt")) {
-            false -> plus(".txt")
-            true -> this
-        }
+        if (endsWith(".txt")) this else plus(".txt")
 }
 
 /**

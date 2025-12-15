@@ -1,6 +1,6 @@
 package lacar.junilu.aoc2024.day07
 
-import lacar.junilu.readPuzzleInput
+import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -31,8 +31,8 @@ class Day07Test {
     }
 
     companion object {
-        private val inputForGitHub = readPuzzleInput("aoc2024/day07-gh")
-        private val inputForGmail = readPuzzleInput("aoc2024/day07-gm")
+        private val inputForGitHub = readPuzzleLines("aoc2024/day07-gh")
+        private val inputForGmail = readPuzzleLines("aoc2024/day07-gm")
 
         private val mockExampleResults = listOf<Long>(190, 3267, 0, 0, 0, 0, 0, 0, 292)
         private val example = """
