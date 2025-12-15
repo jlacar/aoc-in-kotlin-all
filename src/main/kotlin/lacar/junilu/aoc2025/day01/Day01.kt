@@ -23,9 +23,6 @@ private val Pair<Int, Int>.zeroes get() = second
 private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
 
 private fun Int.timesRotatedToZero(offset: Int): Int {
-    val turningLeft = offset < 0
-    val clicksToZero = if (this == 0) 100 else if (turningLeft) this else 100 - this
-    val fullRevolutions = (abs(offset) - clicksToZero) / 100
-
-    return if (clicksToZero > abs(offset)) 0 else 1 + fullRevolutions
+    val clicksToZero = if (this == 0) 100 else if (offset < 0) this else 100 - this
+    return if (clicksToZero > abs(offset)) 0 else 1 + (abs(offset) - clicksToZero) / 100
 }
