@@ -17,9 +17,9 @@ class Day01(val offsets: List<Int>) {
             val (current, zeroes) = acc
             current.rotate(offset) to zeroes + current.timesRotatedToZero(offset, includeIntermediate)
         }.zeroes
-
-    private val Pair<Int, Int>.zeroes get() = second
 }
+
+private val Pair<Int, Int>.zeroes get() = second
 
 private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
 
