@@ -9,33 +9,23 @@ import kotlin.math.abs
  * https://adventofcode.com/2025/day/1
  */
 class Day01(val offsets: List<Int>) {
-    fun solvePart1() = timesRotatedToZero(includeIntermediate = false)
-    fun solvePart2() = timesRotatedToZero(includeIntermediate = true)
+    fun timesToZero() = offsets.runningFold(50) { current, offset ->
+        current.rotate(offset)
+    }.count { it == 0 }
 
-    private fun timesRotatedToZero(includeIntermediate: Boolean): Int =
-        offsets.fold(Pair(50, 0)) { acc, offset ->
-            val (current, zeroes) = acc
-            current.rotate(offset) to zeroes + current.timesRotatedToZero(offset, includeIntermediate)
-        }.zeroes
+    fun timesAtZero() = offsets.runningFold(Pair(50, 0)) { (current, _), offset ->
+        Pair(current.rotate(offset), current.timesRotatedToZero(offset))
+    }.sumOf { it.zeroes }
 }
 
 private val Pair<Int, Int>.zeroes get() = second
 
 private fun Int.rotate(offset: Int) = wrap(max = 100, pos = this, diff = offset)
 
-private fun Int.timesRotatedToZero(offset: Int, includeIntermediate: Boolean): Int {
-    return when {
-        includeIntermediate -> {
-            val turningLeft = offset < 0
-            val clicksToZero = if (this == 0) 100 else if (turningLeft) this else 100 - this
-            val fullRevolutions = (abs(offset) - clicksToZero) / 100
+private fun Int.timesRotatedToZero(offset: Int): Int {
+    val turningLeft = offset < 0
+    val clicksToZero = if (this == 0) 100 else if (turningLeft) this else 100 - this
+    val fullRevolutions = (abs(offset) - clicksToZero) / 100
 
-            when {
-                clicksToZero > abs(offset) -> 0
-                else -> 1 + fullRevolutions
-            }
-        }
-        rotate(offset) == 0 -> 1
-        else -> 0
-    }
+    return if (clicksToZero > abs(offset)) 0 else 1 + fullRevolutions
 }

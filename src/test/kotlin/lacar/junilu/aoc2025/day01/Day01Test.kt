@@ -8,15 +8,15 @@ class Day01Test {
     @Test
     fun `GitHub account input - Parts 1 and 2`() {
         val puzzle = puzzle("aoc2025/day01-gh")
-        assertEquals(989, puzzle.solvePart1())
-        assertEquals(5941, puzzle.solvePart2())
+        assertEquals(989, puzzle.timesToZero())
+        assertEquals(5941, puzzle.timesAtZero())
     }
 
     @Test
     fun `GMail account input - Parts 1 and 2`() {
         val puzzle = puzzle("aoc2025/day01-gm")
-        assertEquals(1031, puzzle.solvePart1())
-        assertEquals(5831, puzzle.solvePart2())
+        assertEquals(1031, puzzle.timesToZero())
+        assertEquals(5831, puzzle.timesAtZero())
     }
 
     private fun puzzle(fileName: String) = using(readPuzzleLines(fileName))
@@ -37,8 +37,8 @@ class Day01Test {
             L82""".trimIndent().lines()
         )
 
-        assertEquals(3, example.solvePart1())
-        assertEquals(6, example.solvePart2())
+        assertEquals(3, example.timesToZero())
+        assertEquals(6, example.timesAtZero())
     }
 }
 
