@@ -27,7 +27,7 @@ Where appropriate, I used a `dropEnds()` utility function to remove enclosing pa
 
 ## Part 1
 
-Had to think backwards on this. Instead of figuring out how to turn the appropriate lights on to match the given pattern, I reversed the goal and looked for the combination that would turn all the lights in the pattern OFF.
+Had to think backwards on this. Instead of figuring out how to turn the appropriate lights ON to match the required pattern, I looked for the combination that would turn all the lights in the required pattern OFF. Since it's a toggle operation, the order in which the buttons are pressed doesn't matter: the same combination of buttons that needed to be pressed to configure the lights to the required pattern is the same if we went the other way, turning all the lights OFF when starting with the required pattern.
 
 ## Part 2
 
