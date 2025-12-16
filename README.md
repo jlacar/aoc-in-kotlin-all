@@ -6,7 +6,7 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 
 ## Events
 
-* [AoC 2025](src/main/kotlin/lacar/junilu/aoc2025/README.md) - 17/24 &#11088;
+* [AoC 2025](src/main/kotlin/lacar/junilu/aoc2025/README.md) - 18/24 &#11088;
 * [AoC 2024](src/main/kotlin/lacar/junilu/aoc2024/README.md) - 8/50 &#11088;
 * [AoC 2023](src/main/kotlin/lacar/junilu/aoc2023/README.md) - 18/50 &#11088;
 * [AoC 2022](src/main/kotlin/lacar/junilu/aoc2022/README.md) - 22/50 &#11088;
