@@ -46,12 +46,11 @@ data class Machine(val lights: LightPattern, val buttons: List<LightPattern>, va
 }
 
 private fun LightPattern.toggleAll(buttons: List<LightPattern>): LightPattern {
-    return buttons.fold(this) { pattern, button -> pattern.toggle(button) }
+    return buttons.fold(this) { pattern, button -> pattern.toggleWith(button) }
 }
 
-private fun LightPattern.toggle(button: LightPattern): LightPattern =
-    button.map { light -> if (light in this) -1 else light }
-.filter { it >= 0 }.toSet() + (this - button)
+private fun LightPattern.toggleWith(button: LightPattern): LightPattern =
+    (this subtract (button intersect this)) union (button subtract this)
 
 private fun String.toLightPattern() = this.mapIndexed { index, ch ->
     if (ch == '#') index else -1
