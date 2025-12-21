@@ -16,13 +16,14 @@ class Day10Test {
             [.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}""".trimIndent().lines())
 
         assertEquals(7, example.part1())
+        assertEquals(33, example.part2())
     }
 
     @Test
-    fun `GitHub input solution - Part 1`() {
+    fun `GitHub input solution - Parts 1 & 2`() {
         val puzzle = using(readPuzzleLines("aoc2025/day10-gh"))
 
         assertEquals(432, puzzle.part1())
+        assertEquals(0, puzzle.part2())
     }
-
 }

@@ -10,7 +10,9 @@ import lacar.junilu.common.findInts
  * Puzzle page: https://adventofcode.com/2025/day/10
  */
 class Day10(val machines: List<Machine>) {
-    fun part1() = machines.sumOf { it.fewestConfigurationSteps() }
+    fun part1() = machines.sumOf { it.fewestStepsToConfigureIndicatorLights() }
+
+    fun part2() = machines.sumOf { it.fewestStepsToConfigureJoltageCounters() }
 
     companion object {
         fun using(input: List<String>) = Day10(
@@ -19,15 +21,39 @@ class Day10(val machines: List<Machine>) {
     }
 }
 
-typealias LightPattern = Set<Int>
+typealias ConfigurationPattern = Set<Int>
 
-data class Machine(val lights: LightPattern, val buttons: List<LightPattern>, val joltages: List<Int>) {
-    fun fewestConfigurationSteps(): Int =
-        (1..buttons.size).first { n ->
-            buttons.combinations(n).map { wires ->
+data class Machine(val lights: ConfigurationPattern, val buttons: List<ConfigurationPattern>, val joltages: List<Int>) {
+    fun fewestStepsToConfigureIndicatorLights(): Int =
+        (1..buttons.size).first { k ->
+            buttons.combinations(k).map { wires ->
                 lights.toggleAll(wires)
             }.any { it.isEmpty() }
         }
+
+    fun fewestStepsToConfigureJoltageCounters(): Int =
+        optimalJoltageSetupSteps(joltages, buttons, 0, Integer.MAX_VALUE)
+
+    private fun optimalJoltageSetupSteps(
+        joltages: List<Int>,
+        buttons: List<ConfigurationPattern>,
+        steps: Int,
+        fewest: Int
+    ): Int {
+        if (steps >= fewest) return fewest
+        if (joltages.all { it == 0 }) return steps
+        if (buttons.isEmpty()) return fewest
+
+        val wires = buttons.first()
+        return (wires.minOf { joltages[it] } downTo 0).minOf { k ->
+            optimalJoltageSetupSteps(
+                joltages = joltages.mapIndexed { i, remaining -> if (i in wires) remaining - k else remaining },
+                buttons = buttons.drop(1),
+                steps = steps + k,
+                fewest = fewest
+            )
+        }
+    }
 
     companion object {
         fun from(description: String) = description.split(" ")
@@ -45,11 +71,11 @@ data class Machine(val lights: LightPattern, val buttons: List<LightPattern>, va
     }
 }
 
-private fun LightPattern.toggleAll(buttons: List<LightPattern>): LightPattern {
+private fun ConfigurationPattern.toggleAll(buttons: List<ConfigurationPattern>): ConfigurationPattern {
     return buttons.fold(this) { pattern, button -> pattern.toggleWith(button) }
 }
 
-private fun LightPattern.toggleWith(button: LightPattern): LightPattern =
+private fun ConfigurationPattern.toggleWith(button: ConfigurationPattern): ConfigurationPattern =
     (this subtract (button intersect this)) union (button subtract this)
 
 private fun String.toLightPattern() = this.mapIndexed { index, ch ->
