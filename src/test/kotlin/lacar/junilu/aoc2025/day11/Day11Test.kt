@@ -7,8 +7,8 @@ import kotlin.test.assertEquals
 class Day11Test {
 
     @Test
-    fun `Examples - Part 1 & 2`() {
-        val example =
+    fun `Example - Part 1`() {
+        val example = using(
             """
             aaa: you hhh
             you: bbb ccc
@@ -19,11 +19,30 @@ class Day11Test {
             fff: out
             ggg: out
             hhh: ccc fff iii
-            iii: out""".trimIndent().lines()
+            iii: out""".trimIndent().lines())
 
-        val puzzle = using(example)
+        assertEquals(5, example.part1())
+    }
 
-        assertEquals(5, puzzle.part1())
+    @Test
+    fun `Example - Part 2`() {
+        val example = using(
+            """
+            svr: aaa bbb
+            aaa: fft
+            fft: ccc
+            bbb: tty
+            tty: ccc
+            ccc: ddd eee
+            ddd: hub
+            hub: fff
+            eee: dac
+            dac: fff
+            fff: ggg hhh
+            ggg: out
+            hhh: out""".trimIndent().lines())
+
+        assertEquals(2, example.part2())
     }
 
     @Test
@@ -31,13 +50,12 @@ class Day11Test {
         val puzzle = using(readPuzzleLines("aoc2025/day11-gh"))
 
         assertEquals(500, puzzle.part1())
+        assertEquals(0, puzzle.part2())
     }
 
     private fun using(input: List<String>) = Day11(
-        input.map {
-            it.split(": ").let { (fromDevice, toDevices) ->
-                fromDevice to toDevices.split(" ")
-            }
-        }.toMap()
+        input
+            .map { it.split(": ") }
+            .associate { (device, outputs) -> device to outputs.split(" ") }
     )
 }
