@@ -3,8 +3,12 @@ package lacar.junilu.aoc2025.day08
 import lacar.junilu.common.Point3D
 
 private typealias JunctionBox = Point3D
-private typealias Circuit = Set<JunctionBox>
 
+/**
+ * AoC 2025 Day 8 - Playground
+ *
+ * Puzzle page: https://adventofcode.com/2025/day/8
+ */
 class Day08(val boxes: List<JunctionBox>) {
 
     fun part1(takeCount: Int): Int {
@@ -54,7 +58,9 @@ class Day08(val boxes: List<JunctionBox>) {
                 lastPair.toMutableSet()
             }
 
-        return lastTwoBoxes.fold(1L) { acc, next -> acc * next.x }
+        return lastTwoBoxes
+            .map { it.x.toLong() }
+            .reduce { acc, x -> acc * x }
     }
 
     private fun boxPairs() = boxes.flatMapIndexed { index, box1 ->
