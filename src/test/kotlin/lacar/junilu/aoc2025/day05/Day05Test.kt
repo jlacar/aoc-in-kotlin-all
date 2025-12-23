@@ -2,9 +2,25 @@ package lacar.junilu.aoc2025.day05
 
 import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 class Day05Test {
+    @Test
+    fun `Solutions for Github input`() {
+        val solution = using(readPuzzleLines("aoc2025/day05-gh"))
+
+        assertEquals(840, solution.part1())
+        assertEquals(359913027576322L, solution.part2())
+    }
+
+    @Test
+    fun `Solutions for Gmail input`() {
+        val solution = using(readPuzzleLines("aoc2025/day05-gm"))
+
+        assertEquals(509, solution.part1())
+        assertEquals(336790092076620L, solution.part2())
+    }
+
     @Test
     fun `Example - Part 1 & 2`() {
         val input = """
@@ -26,23 +42,19 @@ class Day05Test {
         assertEquals(14, example.part2())
     }
 
-    @Test
-    fun `Github input solutions`() {
-        val puzzle = using(readPuzzleLines("aoc2025/day05-gh"))
-
-        assertEquals(840, puzzle.part1())
-        assertEquals(359913027576322L, puzzle.part2())    }
-
-    companion object {
-        fun using(lines: List<String>): Day05 {
-            val blank = lines.indexOfFirst { it.isBlank() }
-            return Day05(idRangesFrom(lines.take(blank)), idsFrom(lines.drop(blank + 1)))
-        }
-
-        private fun idsFrom(lines: List<String>): List<Long> =
-            lines.map { it.toLong() }
-
-        private fun idRangesFrom(lines: List<String>): List<LongRange> =
-            lines.map { it.split("-").map { it.toLong() }.let { (start, end) -> start..end } }
-    }
 }
+
+// region Parsing input
+
+private fun using(lines: List<String>): Day05 {
+    val blank = lines.indexOfFirst { it.isBlank() }
+    return Day05(idRangesFrom(lines.take(blank)), idsFrom(lines.drop(blank + 1)))
+}
+
+private fun idsFrom(lines: List<String>): List<Long> =
+    lines.map { it.toLong() }
+
+private fun idRangesFrom(lines: List<String>): List<LongRange> =
+    lines.map { it.split("-").map { it.toLong() }.let { (start, end) -> start..end } }
+
+// endregion
