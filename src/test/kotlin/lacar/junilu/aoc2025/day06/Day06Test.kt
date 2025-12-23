@@ -2,17 +2,25 @@ package lacar.junilu.aoc2025.day06
 
 import lacar.junilu.common.transpose
 import lacar.junilu.readPuzzleLines
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Day06Test {
 
     @Test
-    fun `Github input solutions - Parts 1 and 2`() {
+    fun `Solutions for Github input`() {
         val input = readPuzzleLines("aoc2025/day06-gh")
 
         assertEquals(4693159084994, parseForPart1(input).solve())
         assertEquals(11643736116335, parseForPart2(input).solve())
+    }
+
+    @Test
+    fun `Solutions for Gmail input`() {
+        val input = readPuzzleLines("aoc2025/day06-gm")
+
+        assertEquals(5346286649122, parseForPart1(input).solve())
+        assertEquals(10389131401929, parseForPart2(input).solve())
     }
 
     @Test
@@ -49,8 +57,9 @@ class Day06Test {
         fun parseNumbers(
             numbers: List<String>, ops: List<Pair<String, Int>>
         ): List<List<Long>> {
+            val maxLength = numbers.maxOf { it.length }
             return ops
-                .map { (op, index) -> numbers.map { it.substring(index, index + op.length - 1) } }
+                .map { (op, index) -> numbers.map { it.padEnd(maxLength, ' ').substring(index, index + op.length - 1) } }
                 .map { nums ->
                     (0..nums.first().lastIndex).map { col ->
                         nums.map { it[col] }

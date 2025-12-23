@@ -1,9 +1,9 @@
 package lacar.junilu.aoc2025.day06
 
 /**
- * AoC 2025: Day 06 - Trash Compactor
+ * AoC 2025 Day 06 - Trash Compactor
  *
- * https://adventofcode.com/2025/day/6
+ * Puzzle page: https://adventofcode.com/2025/day/6
  */
 class Day06(val numbers: List<List<Long>>, val operations: List<String>) {
     fun solve(): Long = operations.mapIndexed { index, operation ->
