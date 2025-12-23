@@ -2,6 +2,11 @@ package lacar.junilu.aoc2025.day07
 
 private fun Char.isSplitter() = this == '^'
 
+/**
+ * AoC 2025 Day 07 - Laboratories
+ *
+ * Puzzle page: https://adventofcode.com/2025/day/7
+ */
 class Day07(val lines: List<String>) {
 
     private val width = lines.first().length
