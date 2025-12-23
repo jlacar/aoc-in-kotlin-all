@@ -4,16 +4,16 @@ import lacar.junilu.common.wrap
 import kotlin.math.abs
 
 /**
- * AoC 2025: Day 01 - Secret Entrance
+ * AoC 2025 Day 01 - Secret Entrance
  *
- * https://adventofcode.com/2025/day/1
+ * Puzzle page: https://adventofcode.com/2025/day/1
  */
 class Day01(val offsets: List<Int>) {
-    fun timesToZero() = offsets.runningFold(50) { current, offset ->
+    fun zeroesInCombination() = offsets.runningFold(50) { current, offset ->
         current.rotate(offset)
     }.count { it == 0 }
 
-    fun timesAtZero() = offsets.runningFold(Pair(50, 0)) { (current, _), offset ->
+    fun timesTurnedToZero() = offsets.runningFold(Pair(50, 0)) { (current, _), offset ->
         Pair(current.rotate(offset), current.timesRotatedToZero(offset))
     }.sumOf { it.zeroes }
 }

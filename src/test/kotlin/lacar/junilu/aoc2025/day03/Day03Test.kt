@@ -2,15 +2,23 @@ package lacar.junilu.aoc2025.day03
 
 import lacar.junilu.readPuzzleLines
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 class Day03Test {
     @Test
-    fun `Github input solutions`() {
-        val puzzle = Day03(readPuzzleLines("aoc2025/day03-gh"))
+    fun `Solutions for Github input`() {
+        val solution = Day03(readPuzzleLines("aoc2025/day03-gh"))
 
-        assertEquals(17278L, puzzle.part1())
-        assertEquals(171528556468625L, puzzle.part2())
+        assertEquals(17278L, solution.part1())
+        assertEquals(171528556468625L, solution.part2())
+    }
+
+    @Test
+    fun `Solutions for Gmail input`() {
+        val solution = Day03(readPuzzleLines("aoc2025/day03-gm"))
+
+        assertEquals(17107L, solution.part1())
+        assertEquals(169349762274117L, solution.part2())
     }
 
     @Test

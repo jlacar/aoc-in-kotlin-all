@@ -7,6 +7,13 @@ import kotlin.test.assertEquals
 class Day11Test {
 
     @Test
+    fun `Solution for Part 1 using GitHub input`() {
+        val solution = using(readPuzzleLines("aoc2025/day11-gh"))
+
+        assertEquals(500, solution.pathCount("you", "out"))
+    }
+
+    @Test
     fun `Example - Part 1`() {
         val example = using(
             """
@@ -21,7 +28,7 @@ class Day11Test {
             hhh: ccc fff iii
             iii: out""".trimIndent().lines())
 
-        assertEquals(5, example.part1())
+        assertEquals(5, example.pathCount("you", "out"))
     }
 
     @Test
@@ -46,11 +53,10 @@ class Day11Test {
     }
 
     @Test
-    fun `GitHub input solution`() {
-        val puzzle = using(readPuzzleLines("aoc2025/day11-gh"))
+    fun `Solution for Part 2 using GitHub input`() {
+        val solution = using(readPuzzleLines("aoc2025/day11-gh"))
 
-        assertEquals(500, puzzle.part1())
-        assertEquals(0, puzzle.part2())
+        assertEquals(0, solution.part2())
     }
 
     private fun using(input: List<String>) = Day11(
