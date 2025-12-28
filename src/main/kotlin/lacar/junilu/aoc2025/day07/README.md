@@ -6,15 +6,64 @@ Code: [solution](Day07.kt) | [test](../../../../../../test/kotlin/lacar/junilu/a
 
 ## Overview
 
-This problem involves a tachyon manifold, a machine similar to a [quincunx](https://en.wikipedia.org/wiki/Quincunx), also known as a Galton Board. Instead of marbles, we are dealing with tachyon beams that pass through the tachyon manifold. Instead of pegs, we have splitters that split any beam that hits it in two, one going to the left and the other to the right of the splitter.
+This problem involves a machine that is very similar to a [quincunx](https://en.wikipedia.org/wiki/Quincunx), also known as a Galton Board. The machine in the puzzle is called a tachyon manifold. Unlike Galton board, however, tachyon beam pass through the manifold and instead of pegs, we have splitters that split any beam that hits it in two, one going to the left and the other to the right of the splitter. Essentially, the manifold is like a quincunx with missing pegs.
 
 ## The input data
 
-The input is a character representation of the board drawn as a grid. A space is indicated by a "." while a "^" denotes a splitter. Beams are directed vertically downwards through the manifold. The single source beam is denoted by an "S" centered in the first row at the top of the board. The end of the manifold is the bottom row of the grid.
+The input is a character representation of manifold and the splitters in it. A `'.'` represents space while a `'^'` represents a splitter. Beams enter the manifold from a point at the top of manifold indicated with an `'S'` and travel downwards through the manifold toward the bottom, changing direction only when it hits a splitter.
+
+I didn't see any need to parse the input data into a more structured format so in this problem, I just used the strings read from the input. However, I did choose to ignore every other line since the line we really need to work with are the ones with the splitters in them. So, I started with two pieces of information:
+
+1. The horizontal position of the entry point as indicated by `'S'`, which I chose to call `source`.
+
+    private val source = lines.first().indexOf('S')
+
+2. The manifold as a list of strings, chunked by two lines.
+
+    private val manifold = lines.drop(2).chunked(2)
 
 ## Part 1
 
-We need to find how many times beams have been split by the time they exit the manifold.
+The first part asks us to calculate how many times a beam that enters the manifold is split before it reaches the other end. To do this, we have to follow the path of the beam from the top of the manifold and track how many times it hits a splitter. Subsequently, we have to track the split beams and add them to the total. This continues until all the beams have reached the other end of the manifold.
+
+Of course, it's not as simple as counting the number of splitters because there's a chance that a splitter may not get hit by the beam at all. We need to track where the beams are on each level of the manifold and add the number of splitters that are hit. This means tracking the horizontal position of the beam on each level. The horizontal positions need to be updated whenever the beam hits a splitter.
+
+I chose to use a Boolean array to track the horizontal positions of the beams on each level. The array is sized to the width of the manifold with the `source` element set to true to represent the beam at the entry point to the manifold. I used the `also()` scope function to initialize the source beam position.
+
+    val beams = BooleanArray(width).also { it[source] == true }
+
+As the beam travels down the manifold and gets split, this array will be updated to reflect the new horizontal positions of the beams. To make the code easier to read, I defined an extension function:
+
+    private fun Char.isSplitter() = this == '^'
+
+Updating the horizontal positions of the beams is as simple as checking if the current position is a splitter and updating the `beams` array accordingly:
+
+    if (ch.isSplitter() && beams[i]) {
+        beams[i - 1] = true  // split left
+        beams[i + 1] = true  // split right
+        beams[i] = false     // current beam is no longer active
+    }
+
+Since we needed to count how many splits occurred, I made the `if` expression have a value of `1` if a splitter was hit and `0` otherwise.
+
+    if (ch.isSplitter() && beams[i]) {
+        beams[i - 1] = true  // split left
+        beams[i + 1] = true  // split right
+        beams[i] = false     // current beam is no longer active
+        1
+    } else 0
+
+A `sum()` operation around this gives the total number of splits on each level.
+
+Processing the entire manifold was done with a `fold()` operation, with `0` as the initial value for `totalSplits` and the number of splits on each level added to it in each iteration. Since the lines from the input are chunked by two, the `fold()` operation will process each chunk of the manifold separately. The lines with the splitters are isolated by using parameter destructuring:
+
+    manifold.fold(0) { totalSplits, (splitters, _) ->
+        splitters.mapIndexed { i, ch ->
+            ...
+        }.sum() + totalSplits
+    }
+
+The value of the above expression is the total number of times the beam is split in the manifold.
 
 ## Part 2
 
