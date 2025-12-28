@@ -25,6 +25,7 @@ Progress and links:
 * &#x2615; - Pondering...
 * &#x2603; - Chillin'
 * &#x26D4; - Not yet accessible
+* &#x2606; - Punted (AI-assisted)
 
 ## Reflections
 
