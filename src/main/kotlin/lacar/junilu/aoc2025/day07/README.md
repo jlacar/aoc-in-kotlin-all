@@ -73,9 +73,9 @@ Processing the entire manifold was done with a `fold()` operation, with `0` as t
 
 The value of the above expression is the total number of times the beam is split in the manifold.
 
-### Alternative Solutions
+### Alternative Solution
 
-I could have also just used a `map()` operation instead of a `fold()` operation.
+Alternatively, I could have used `map()` instead `fold()`.
 
 ```kotlin
     fun beamSplits(): Int {
@@ -92,7 +92,6 @@ I could have also just used a `map()` operation instead of a `fold()` operation.
         }.sum()
     }
 ```
-
 
 ## Part 2
 
@@ -151,3 +150,24 @@ The difference being that a beam could fall straight through several levels befo
 The key insight was that a beam combines with other beams falling through the same space in the manifold. The splitting and combining of beams is what dictates how many additional paths there are through a particular horizontal offset at any given level in the manifold.
 
 This is why Level 4 is different from Pascal's triangle because there is a space where a third splitter should be if we were to get the same numbers as Pascal's triangle. 
+
+### Improving semantics with extension functions
+
+I added a couple of extension functions to make the code more readable:
+
+```kotlin
+private fun Char.isSplitter() = this == '^'
+private fun Boolean.hits(ch: Char) = this && ch.isSplitter()
+```
+
+I made these private to the Day 7 solution to keep the scope limited to this puzzle.
+
+This allowed me to make the code more readable and conversational:
+
+```kotlin
+    splitters.mapIndexed { i, splitter ->
+    if (beams[i].hits(splitter)) {
+        ...
+        1
+    } else 0
+```
