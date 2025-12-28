@@ -1,6 +1,7 @@
 package lacar.junilu.aoc2025.day07
 
 private fun Char.isSplitter() = this == '^'
+private fun Boolean.hits(ch: Char) = this && ch.isSplitter()
 
 /**
  * AoC 2025 Day 07 - Laboratories
@@ -17,8 +18,8 @@ class Day07(val lines: List<String>) {
     fun beamSplits(): Int {
         val beams = BooleanArray(width).also { it[source] = true }
         return manifold.map { (splitters, _) ->
-            splitters.mapIndexed { i, ch ->
-                if (ch.isSplitter() && beams[i]) {
+            splitters.mapIndexed { i, splitter ->
+                if (beams[i].hits(splitter)) {
                     beams[i - 1] = true
                     beams[i + 1] = true
                     beams[i] = false
