@@ -73,6 +73,27 @@ Processing the entire manifold was done with a `fold()` operation, with `0` as t
 
 The value of the above expression is the total number of times the beam is split in the manifold.
 
+### Alternative Solutions
+
+I could have also just used a `map()` operation instead of a `fold()` operation.
+
+```kotlin
+    fun beamSplits(): Int {
+        val beams = BooleanArray(width).also { it[source] = true }
+        return manifold.map { (splitters, _) ->
+            splitters.mapIndexed { i, ch ->
+                if (ch.isSplitter() && beams[i]) {
+                    beams[i - 1] = true
+                    beams[i + 1] = true
+                    beams[i] = false
+                    1
+                } else 0
+            }.sum()
+        }.sum()
+    }
+```
+
+
 ## Part 2
 
 We need to find how many distinct timelines the beams can take to exit the manifold. A timeline is essentially a path a beam can take through the manifold. This is where the manifold differs from the quincunx in that the beams might fall straight through several levels instead of changing direction at every level. It all depends on the positions of the splitters. Essentially, the manifold is like a quincunx with missing pegs.

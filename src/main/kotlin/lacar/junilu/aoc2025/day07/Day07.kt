@@ -16,7 +16,7 @@ class Day07(val lines: List<String>) {
 
     fun beamSplits(): Int {
         val beams = BooleanArray(width).also { it[source] = true }
-        return manifold.fold (0) { totalSplits, (splitters, _) ->
+        return manifold.map { (splitters, _) ->
             splitters.mapIndexed { i, ch ->
                 if (ch.isSplitter() && beams[i]) {
                     beams[i - 1] = true
@@ -24,8 +24,8 @@ class Day07(val lines: List<String>) {
                     beams[i] = false
                     1
                 } else 0
-            }.sum() + totalSplits
-        }
+            }.sum()
+        }.sum()
     }
 
     fun beamTimeLines(): Long {
