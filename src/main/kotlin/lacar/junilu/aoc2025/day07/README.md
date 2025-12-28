@@ -10,17 +10,15 @@ This problem involves a machine that is very similar to a [quincunx](https://en.
 
 ## The input data
 
-The input is a character representation of manifold and the splitters in it. A `'.'` represents space while a `'^'` represents a splitter. Beams enter the manifold from a point at the top of manifold indicated with an `'S'` and travel downwards through the manifold toward the bottom, changing direction only when it hits a splitter.
-
-I didn't see any need to parse the input data into a more structured format so in this problem, I just used the strings read from the input. However, I did choose to ignore every other line since the line we really need to work with are the ones with the splitters in them. So, I started with two pieces of information:
+The input is a character representation of the manifold. I didn't see any need to parse the input data into a more structured format so in this problem, I just used the strings read from the input. However, I did choose to ignore every other line since the line we really need to work with are the ones with the splitters in them. So, I started with two pieces of information:
 
 1. The horizontal position of the entry point as indicated by `'S'`, which I chose to call `source`.
-
-    private val source = lines.first().indexOf('S')
-
 2. The manifold as a list of strings, chunked by two lines.
 
-    private val manifold = lines.drop(2).chunked(2)
+```kotlin 
+   private val source = lines.first().indexOf('S')
+   private val manifold = lines.drop(2).chunked(2)
+```
 
 ## Part 1
 
@@ -30,38 +28,48 @@ Of course, it's not as simple as counting the number of splitters because there'
 
 I chose to use a Boolean array to track the horizontal positions of the beams on each level. The array is sized to the width of the manifold with the `source` element set to true to represent the beam at the entry point to the manifold. I used the `also()` scope function to initialize the source beam position.
 
-    val beams = BooleanArray(width).also { it[source] == true }
+```kotlin
+   val beams = BooleanArray(width).also { it[source] == true }
+```
 
 As the beam travels down the manifold and gets split, this array will be updated to reflect the new horizontal positions of the beams. To make the code easier to read, I defined an extension function:
 
-    private fun Char.isSplitter() = this == '^'
+```kotlin
+   private fun Char.isSplitter() = this == '^'
+```
 
 Updating the horizontal positions of the beams is as simple as checking if the current position is a splitter and updating the `beams` array accordingly:
 
+```kotlin
     if (ch.isSplitter() && beams[i]) {
         beams[i - 1] = true  // split left
         beams[i + 1] = true  // split right
         beams[i] = false     // current beam is no longer active
     }
+```
 
 Since we needed to count how many splits occurred, I made the `if` expression have a value of `1` if a splitter was hit and `0` otherwise.
 
+```kotlin
     if (ch.isSplitter() && beams[i]) {
         beams[i - 1] = true  // split left
         beams[i + 1] = true  // split right
         beams[i] = false     // current beam is no longer active
         1
     } else 0
+```
 
 A `sum()` operation around this gives the total number of splits on each level.
 
 Processing the entire manifold was done with a `fold()` operation, with `0` as the initial value for `totalSplits` and the number of splits on each level added to it in each iteration. Since the lines from the input are chunked by two, the `fold()` operation will process each chunk of the manifold separately. The lines with the splitters are isolated by using parameter destructuring:
 
+```kotlin
     manifold.fold(0) { totalSplits, (splitters, _) ->
         splitters.mapIndexed { i, ch ->
             ...
         }.sum() + totalSplits
     }
+```
 
 The value of the above expression is the total number of times the beam is split in the manifold.
 
