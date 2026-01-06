@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val puzzleDay01 = Day01(readPuzzleLines("aoc2015/day01").first())
+private val solution = Day01(readPuzzleLines("aoc2015/day01").first())
 
 class Day01Test {
 
@@ -15,12 +15,12 @@ class Day01Test {
     inner class Solution {
         @Test
         fun part1() {
-            Assertions.assertEquals(280, puzzleDay01.lastFloor())
+            Assertions.assertEquals(280, solution.lastFloor())
         }
 
         @Test
         fun part2() {
-            Assertions.assertEquals(1797, puzzleDay01.positionOfFirstTimeInBasement())
+            Assertions.assertEquals(1797, solution.positionOfFirstTimeInBasement())
         }
     }
 

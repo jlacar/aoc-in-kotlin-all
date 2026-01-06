@@ -1,47 +1,47 @@
-# Day 1: Not Quite Lisp
+# AoC 2015 Day 1 - Not Quite Lisp
 
-A nice [warm-up puzzle](https://adventofcode.com/2015/day/1) to kick things off. 
+Puzzle page: https://adventofcode.com/2015/day/1
 
-This puzzle involves parsing a series of parentheses (the puzzle input). Santa is delivering presents in a large apartment building. He needs to follow the directions he's been given to find the right floor.  
+Code: [solution](./Day01.kt) | [tests](../../../../../../test/kotlin/lacar/junilu/aoc2015/day01/)
 
-Each parenthesis in the directions tells Santa which way to go: one floor up if it's an open parenthesis, `(`, one floor down if it's a close parenthesis, `)`.
+# Parsing the Input
+
+Since the puzzle input is a series of parentheses with each character representing a direction, there's no need to parse the input into a data structure.
+Interpreting the directions literally is all that's needed: `(` means go up one floor, `)` means go down one floor. Starting floor is always `0`
 
 # Part 1
 
-Starting from the ground floor (floor 0), we need to find the floor Santa ends up on after following all the directions. 
-
-I used `fold()` to solve this. Pretty straightforward.
+I used `fold()` to find the floor that Santa ends up on after following all directions. This is straightforward.
 
     override fun part1(): Int = directions.fold(0) { floor, direction ->
         floor + if (direction == '(') 1 else -1
     }
 
+In 2026, I refactored the code to use a sequence. See the [Refactoring to a Sequence](#refactoring-to-a-sequence) section for more details.
+
 # Part 2
 
-We need to find the position of the character in the directions that causes Santa to first enter the basement (floor -1). I used the `runningFold()` this time since we needed to find the index of the character.
+I used `runningFold()` to find the first time Santa enters the basement.
 
     override fun part2(): Int = directions.runningFold(0) { floor, direction -> 
         floor + if (direction == '(') 1 else -1
     }.indexOfFirst { it == -1 }
 
-# Refactoring Notes
+# Refactoring
 
-As short as the first cut of the program was, I still found opportunity to refactor for clarity. This resulted in quite a few more lines of code than the original because I extracted implementation details to private functions. However, the loss in brevity was offset by a gain in clarity in the high-level code, from hiding the implementation details behind more intention-revealing names.
+As short as the first cut of the program is, there were still opportunities to refactor for clarity. 
 
-Here's what `part1()` and `part2()` looked like after I extracted implementation details.
+## Better Naming and Extracting Implementation Details
 
-    override fun part1() = directions.lastFloor()
-    override fun part2() = directions.positionOfFirstTimeInBasement()
+The names `part1()` and `part2()` were refactored to `lastFloor()` and `positionOfFirstTimeInBasement()`, respectively.
 
-At the high level parts of the program, the code has a much stronger connection to how the problem was articulated in plain English. The nitty-gritty details of how the job was done were pushed under the hood, so to speak, into private functions.
-
-I also extracted the code that calculates the next floor to its own function because it was used in both parts.
+The shared logic for calculating the next floor visited was also extracted.
 
     private val nextFloor: (Int, Char) -> Int = { currentFloor, direction ->
         currentFloor + if (direction == '(') 1 else -1
     }
 
-I refactored this to use `inc()` and `dec()` instead.
+Finally, I refactored the calculation expressions to use `inc()` and `dec()` instead.
 
     private val nextFloor: (Int, Char) -> Int = { currentFloor, direction ->
         if (direction == '(') currentFloor.inc() else currentFloor.dec()
@@ -49,10 +49,29 @@ I refactored this to use `inc()` and `dec()` instead.
 
 ## Over-engineering vs. practicing good habits 
 
-For a program this small, it may seem a bit heavy-handed to do this kind of refactoring. However, applying this style of organizing and structuring code in real-world, thousands-of-lines-long and hundreds-of-files-big programs will pave the way for a gentler and more enjoyable experience for readers trying to understand what's going on in your program.
+For a program this small, it may seem a bit heavy-handed to do any refactoring at all. However, this is practice that will be applied in real-world programs. This kind of attention to detail paves the way for a gentler and more enjoyable experience for readers trying to understand the code.
 
-## Using a sequence for Part 2
+## Using a sequence for Part 2 (first solution)
 
-When I extracted the `runningFold()` operation in Part 2, I also added `.asSequence()` to the chain to make sure I was operating on a sequence rather than a collection. This allowed the iteration of `runningFold()` to be terminated as soon as the first `-1` floor was found. 
+When I extracted the `runningFold()` operation in Part 2, I also added `.asSequence()` to the call chain to make sure I was operating on a sequence rather than a collection. This allowed the iteration of `runningFold()` to be terminated as soon as the first `-1` floor was found. 
 
-Without the conversion to a sequence, the `runningFold()` would go through the entire set of directions, which would create a very large intermediate list for long inputs. With the sequence, the iterations are terminated as soon as `floor` becomes `-1` and the rest of the characters in the input will not be processed. The sequence essentially allows us to shortcircuit the iteration.  
+Without the conversion to a sequence, the `runningFold()` would go through the entire set of directions, which would create a huge intermediate list for long inputs. With the sequence, the iterations are terminated as soon as `floor` becomes `-1` and the rest of the characters in the input will not be processed. The sequence essentially allows us to shortcircuit the iteration.  
+
+# Refactoring to a Sequence
+
+Revisiting this code in 2026, I realized I could use a sequence to represent the floors visited by Santa. This made both parts of the solution more symmetrical by using the same sequence as the start of their respective call chains.
+
+I used `generateSequence()` to create the sequence of floors visited on demand, capturing an iterator for the directions in a closure. This is an example of a high-order function that returns a sequence generator function.
+
+```kotlin
+private fun floors(): Sequence<Int> {
+   val iterator = directions.iterator()
+   return generateSequence(0) {
+      it.nextFloor(iterator)
+   }
+}
+```
+
+# Adding Kotest Tests
+
+In December 2025 and January 2026, I started looking at other testing-related frameworks. I added Google Truth assertions and Kotest framework and started writing tests that used them.
