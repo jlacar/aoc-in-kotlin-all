@@ -8,6 +8,21 @@ import kotlin.test.Test
 class Day10Test {
 
     @Test
+    fun `Solution for GitHub input`() {
+        val solution = using(readPuzzleLines("aoc2025/day10-gh"))
+
+        assertEquals(432, solution.part1())
+        // assertEquals(0, solution.part2())
+    }
+
+    @Test
+    fun `Solution for Gmail input`() {
+        val solution = using(readPuzzleLines("aoc2025/day10-gm"))
+
+        assertEquals(571, solution.part1())
+    }
+
+    @Test
     fun `Examples - Part 1 & 2`() {
         val example = using(
             """
@@ -17,13 +32,5 @@ class Day10Test {
 
         assertEquals(7, example.part1())
         assertEquals(33, example.part2())
-    }
-
-    @Test
-    fun `GitHub input solution - Parts 1 & 2`() {
-        val puzzle = using(readPuzzleLines("aoc2025/day10-gh"))
-
-        assertEquals(432, puzzle.part1())
-        assertEquals(0, puzzle.part2())
     }
 }

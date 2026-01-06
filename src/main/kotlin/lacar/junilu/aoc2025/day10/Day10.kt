@@ -5,7 +5,7 @@ import lacar.junilu.common.dropEnds
 import lacar.junilu.common.findInts
 
 /**
- * AoC 2025 Day 10: Factory
+ * AoC 2025 Day 10 - Factory
  *
  * Puzzle page: https://adventofcode.com/2025/day/10
  */

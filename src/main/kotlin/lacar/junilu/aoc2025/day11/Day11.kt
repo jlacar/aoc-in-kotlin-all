@@ -2,6 +2,11 @@ package lacar.junilu.aoc2025.day11
 
 private typealias DevicePath = Sequence<String>
 
+/**
+ * AoC 2025 Day 11 - Reactor
+ *
+ * Puzzle page: https://adventofcode.com/2025/day/11
+ */
 class Day11(val connections: Map<String, List<String>>) {
 
     private val countMemo = mutableMapOf<String, Int>()
@@ -23,5 +28,9 @@ class Day11(val connections: Map<String, List<String>>) {
                 }
             }
         }
+    }
+
+    fun pathCount(from: String, to: String, includes: List<String>): Int {
+        return 0
     }
 }

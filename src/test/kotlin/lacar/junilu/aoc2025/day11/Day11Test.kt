@@ -7,10 +7,47 @@ import kotlin.test.assertEquals
 class Day11Test {
 
     @Test
-    fun `Solution for Part 1 using GitHub input`() {
+    fun `Solution for GitHub input`() {
         val solution = using(readPuzzleLines("aoc2025/day11-gh"))
 
-        assertEquals(500, solution.pathCount("you", "out"))
+        assertEquals(
+            expected = 500,
+            actual = solution.pathCount(
+                from = "you",
+                to = "out"
+            )
+        )
+
+        assertEquals(
+            expected = 0,
+            actual = solution.pathCount(
+                from = "svr",
+                to = "out",
+                includes = listOf("dac", "fft")
+            )
+        )
+    }
+
+    @Test
+    fun `Solution for Gmail input`() {
+        val solution = using(readPuzzleLines("aoc2025/day11-gm"))
+
+        assertEquals(
+            expected = 643,
+            actual = solution.pathCount(
+                from = "you",
+                to = "out"
+            )
+        )
+
+        assertEquals(
+            expected = 0,
+            actual = solution.pathCount(
+                from = "svr",
+                to = "out",
+                includes = listOf("dac", "fft")
+            )
+        )
     }
 
     @Test
@@ -28,7 +65,10 @@ class Day11Test {
             hhh: ccc fff iii
             iii: out""".trimIndent().lines())
 
-        assertEquals(5, example.pathCount("you", "out"))
+        assertEquals(
+            expected = 5,
+            actual = example.pathCount(from = "you", to = "out")
+        )
     }
 
     @Test
@@ -49,19 +89,20 @@ class Day11Test {
             ggg: out
             hhh: out""".trimIndent().lines())
 
-        assertEquals(2, example.part2())
+        assertEquals(
+            expected = 2,
+            actual = example.pathCount(
+                from = "svr",
+                to = "out",
+                includes = listOf("dac", "fft")
+            )
+        )
     }
 
-    @Test
-    fun `Solution for Part 2 using GitHub input`() {
-        val solution = using(readPuzzleLines("aoc2025/day11-gh"))
-
-        assertEquals(0, solution.part2())
-    }
-
-    private fun using(input: List<String>) = Day11(
-        input
-            .map { it.split(": ") }
-            .associate { (device, outputs) -> device to outputs.split(" ") }
-    )
 }
+
+private fun using(input: List<String>) = Day11(
+    input
+        .map { it.split(": ") }
+        .associate { (device, outputs) -> device to outputs.split(" ") }
+)

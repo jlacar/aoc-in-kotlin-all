@@ -3,18 +3,23 @@ package lacar.junilu.aoc2015.day01
 /**
  * AoC 2015 - Day 1: Not Quite Lisp
  *
- * https://adventofcode.com/2015/day/1
+ * Puzzle page: https://adventofcode.com/2015/day/1
  */
 class Day01(private val directions: String) {
+    fun lastFloor() = floors().last()
+    fun positionOfFirstTimeInBasement() = floors().indexOfFirst { it < 0 }
 
-    // Solutions
-    fun lastFloor() = directions.fold(0, nextFloor)
-
-    fun positionOfFirstTimeInBasement() = directions
-        .runningFold(0, nextFloor).indexOfFirst { it == -1 }
-
-    // Shared calculation
-    private val nextFloor: (Int, Char) -> Int = { currentFloor, direction ->
-        if (direction == '(') currentFloor.inc() else currentFloor.dec()
+    private fun floors(): Sequence<Int> {
+        val directionsIterator = directions.iterator()
+        return generateSequence(0) {
+            it.nextFloor(directionsIterator)
+        }
     }
+
 }
+
+private fun Int.nextFloor(directions: CharIterator): Int? =
+    when {
+        directions.hasNext() -> if (directions.next() == '(') this.inc() else this.dec()
+        else -> null
+    }
