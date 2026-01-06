@@ -8,7 +8,7 @@ package lacar.junilu.aoc2015.day01
 class Day01(private val directions: String) {
     fun lastFloor() = floors().last()
 
-    fun positionOfFirstTimeInBasement() = floors().indexOfFirst { it < 0 }
+    fun positionOfFirstTimeInBasement() = floors().indexOfFirst { it.isInBasement() }
 
     private fun floors(): Sequence<Int> = directions.iterator().let { iterator ->
         generateSequence(0) {
@@ -24,3 +24,5 @@ private fun Int.nextFloor(directions: CharIterator): Int? =
         }
         else -> null
     }
+
+private fun Int.isInBasement() = this < 0
