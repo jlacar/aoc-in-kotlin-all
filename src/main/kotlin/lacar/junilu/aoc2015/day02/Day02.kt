@@ -7,9 +7,9 @@ package lacar.junilu.aoc2015.day02
  */
 class Day02(private val boxDimensions: List<List<Int>>) {
 
-    fun part1() = boxDimensions.sumOf { wrapperNeeded(it) }
+    fun wrapperArea() = boxDimensions.sumOf { wrapperNeeded(it) }
 
-    fun part2() = boxDimensions.sumOf { ribbonNeeded(it) }
+    fun ribbonLength() = boxDimensions.sumOf { ribbonNeeded(it) }
 
     private fun wrapperNeeded(dims: List<Int>): Int {
         val (w, l, h) = dims

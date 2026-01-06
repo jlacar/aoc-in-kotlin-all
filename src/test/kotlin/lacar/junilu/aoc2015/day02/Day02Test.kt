@@ -1,53 +1,69 @@
 package lacar.junilu.aoc2015.day02
 
+import io.kotest.core.annotation.DisplayName
+import io.kotest.matchers.shouldBe
 import lacar.junilu.readPuzzleLines
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-private val day02 = Day02.using(readPuzzleLines("aoc2015/day02"))
-private val day02gh = Day02.using(readPuzzleLines("aoc2015/day02-gh"))
 
 class Day02Test {
 
     @Nested
-    inner class Solution {
+    @DisplayName("Solutions for GitHub input")
+    inner class SolutionGH {
+        private val solution = Day02.using(readPuzzleLines("aoc2015/day02-gh"))
+
         @Test
-        fun part1() {
-            Assertions.assertEquals(1588178, day02.part1())
-            Assertions.assertEquals(1586300, day02gh.part1())
+        fun `Part 1 - Wrapping paper needed`() {
+            solution.wrapperArea() shouldBe 1586300
         }
 
         @Test
-        fun part2() {
-            Assertions.assertEquals(3783758, day02.part2())
-            Assertions.assertEquals(3737498, day02gh.part2())
+        fun `Part 2 - Ribbon needed`() {
+            solution.ribbonLength() shouldBe 3737498
+        }
+    }
+
+    @Nested
+    @DisplayName("Solutions for Gmail input")
+    inner class SolutionGM {
+        private val solution = Day02.using(readPuzzleLines("aoc2015/day02"))
+
+        @Test
+        fun `Part 1 - Wrapping paper needed`() {
+            solution.wrapperArea() shouldBe 1588178
+        }
+
+        @Test
+        fun `Part 2 - Ribbon needed`() {
+            solution.ribbonLength() shouldBe 3783758
         }
     }
 
     @Nested
     inner class Examples {
 
-        @ParameterizedTest(name = "{0}x{1}x{2} should have an area of {3}")
+        @ParameterizedTest(name = "given a {0}x{1}x{2} box, it should need {3} sq feet of wrapping paper")
         @CsvSource(
             "2, 3, 4, 58",
             "1, 1, 10, 43"
         )
-        fun part1(w: Int, l: Int, h: Int, expectedArea: Int) {
-            val dimensions = listOf(w, l, h)
-            Assertions.assertEquals(expectedArea, Day02(listOf(dimensions)).part1())
+        fun `Part 1 - Wrapping paper needed `(w: Int, l: Int, h: Int, expectedArea: Int) {
+            Day02(boxDimensions(w, l, h)).wrapperArea() shouldBe expectedArea
         }
 
-        @ParameterizedTest(name = "{0}x{1}x{2} needs {3} length of ribbon")
+        @ParameterizedTest(name = "given a {0}x{1}x{2} box, it should need {3} feet of ribbon")
         @CsvSource(
             "2, 3, 4, 34",
             "1, 1, 10, 14",
         )
-        fun part2(w: Int, l: Int, h: Int, expectedLength: Int) {
-            val dimensions = listOf(w, l, h)
-            Assertions.assertEquals(expectedLength, Day02(listOf(dimensions)).part2())
+        fun `Part 2 - Ribbon needed `(w: Int, l: Int, h: Int, expectedLength: Int) {
+            Day02(boxDimensions(w, l, h)).ribbonLength() shouldBe expectedLength
         }
+
+        private fun boxDimensions(w: Int, l: Int, h: Int) = listOf(listOf(w, l, h))
     }
 }
