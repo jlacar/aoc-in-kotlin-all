@@ -11,9 +11,9 @@ class Day01(private val directions: String) {
     fun positionOfFirstTimeInBasement() = floors().indexOfFirst { it.isInBasement() }
 
     private fun floors(): Sequence<Int> = directions.iterator().let { directions ->
-        generateSequence(0) {
+        generateSequence(0) { floor ->
             if (directions.hasNext()) {
-                it.go(directions.next())
+                floor.go(directions.next())
             } else null
         }
     }
