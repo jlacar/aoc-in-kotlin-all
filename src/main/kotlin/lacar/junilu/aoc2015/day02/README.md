@@ -6,7 +6,7 @@ Code: [solution](./Day02.kt) | [tests](../../../../../../test/kotlin/lacar/junil
 
 # Parsing the Input
 
-Each line in the input represents the dimentions of a box: length x width x height. This is parsed by splitting the line on `x` and converting the resulting list of strings to integers.
+Each line in the input represents the dimensions of a box: length x width x height. This is parsed by splitting the line on `x` and converting the resulting list of strings to integers.
 
 # Part 1
 
@@ -15,4 +15,3 @@ To get the area of the wrapping paper needed, we need the surface area of the bo
 # Part 2
 
 To get the length of ribbon needed, we need the smallest perimeter of the box plus a length equal to the volume of the box for the bow.
-
