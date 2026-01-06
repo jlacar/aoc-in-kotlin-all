@@ -12,10 +12,9 @@ class Day01(private val directions: String) {
 
     private fun floors(): Sequence<Int> = directions.iterator().let { iterator ->
         generateSequence(0) {
-            when {
-                iterator.hasNext() -> if (iterator.next() == '(') it.inc() else it.dec()
-                else -> null
-            }
+            if (iterator.hasNext()) {
+                if (iterator.next() == '(') it.inc() else it.dec()
+            } else null
         }
     }
 }
