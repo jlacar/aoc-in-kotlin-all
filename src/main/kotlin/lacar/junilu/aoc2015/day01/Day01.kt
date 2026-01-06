@@ -10,9 +10,8 @@ class Day01(private val directions: String) {
 
     fun positionOfFirstTimeInBasement() = floors().indexOfFirst { it < 0 }
 
-    private fun floors(): Sequence<Int> {
-        val iterator = directions.iterator()
-        return generateSequence(0) {
+    private fun floors(): Sequence<Int> = directions.iterator().let { iterator ->
+        generateSequence(0) {
             it.nextFloor(iterator)
         }
     }
