@@ -10,14 +10,14 @@ class Day02BehaviorSpec : BehaviorSpec({
         val solution = using(readPuzzleLines("aoc2015/day02-gh"))
 
         Given("A list of box dimensions") {
-            When("Calculating the wrapping paper required") {
-                Then("The total wrapping paper required should be calculated correctly") {
+            When("Calculating the wrapping paper needed") {
+                Then("The answer should be correct") {
                     solution.sqFeetOfWrapper() shouldBe 1586300
                 }
             }
 
-            When("Calculating the ribbon required") {
-                Then("The total ribbon required should be calculated correctly") {
+            When("Calculating the ribbon needed") {
+                Then("The answer should be correct") {
                     solution.feetOfRibbon() shouldBe 3737498
                 }
             }
@@ -28,14 +28,14 @@ class Day02BehaviorSpec : BehaviorSpec({
         val solution = using(readPuzzleLines("aoc2015/day02"))
 
         Given("A list of box dimensions") {
-            When("Calculating the wrapping paper required") {
-                Then("The total wrapping paper required should be calculated correctly") {
+            When("Calculating the wrapping paper needed") {
+                Then("The answer should be correct") {
                     solution.sqFeetOfWrapper() shouldBe 1588178
                 }
             }
 
-            When("Calculating the ribbon required") {
-                Then("The total ribbon required should be calculated correctly") {
+            When("Calculating the ribbon needed") {
+                Then("The answer should be correct") {
                     solution.feetOfRibbon() shouldBe 3783758
                 }
             }
