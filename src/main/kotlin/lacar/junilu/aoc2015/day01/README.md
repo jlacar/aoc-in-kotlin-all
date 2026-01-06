@@ -72,6 +72,18 @@ private fun floors(): Sequence<Int> {
 }
 ```
 
+Further refactoring this, I used the `let()` scope function to capture the iterator in a closure and return the sequence.
+
+```kotlin
+private fun floors(): Sequence<Int> = directions.let { directions ->
+   generateSequence(0) { floor -> 
+       if (directions.hasNext()) {
+           if (directions.next() == '(') floor.nextFloor(directions.next())
+       } 
+   }
+```
+
+
 # Adding Kotest Tests
 
 In December 2025 and January 2026, I started looking at other testing-related frameworks. I added Google Truth assertions and Kotest framework and started writing tests that used them.
