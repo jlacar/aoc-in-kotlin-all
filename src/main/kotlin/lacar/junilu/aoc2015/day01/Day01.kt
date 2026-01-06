@@ -10,13 +10,17 @@ class Day01(private val directions: String) {
 
     fun positionOfFirstTimeInBasement() = floors().indexOfFirst { it.isInBasement() }
 
-    private fun floors(): Sequence<Int> = directions.iterator().let { iterator ->
+    private fun floors(): Sequence<Int> = directions.iterator().let { directions ->
         generateSequence(0) {
-            if (iterator.hasNext()) {
-                if (iterator.next() == '(') it.inc() else it.dec()
+            if (directions.hasNext()) {
+                it.go(directions.next())
             } else null
         }
     }
 }
+
+private fun Char.isUp() = this == '('
+
+private fun Int.go(next: Char): Int = if (next.isUp()) this.inc() else this.dec()
 
 private fun Int.isInBasement() = this < 0
