@@ -12,17 +12,12 @@ class Day01(private val directions: String) {
 
     private fun floors(): Sequence<Int> = directions.iterator().let { iterator ->
         generateSequence(0) {
-            it.nextFloor(iterator)
+            when {
+                iterator.hasNext() -> if (iterator.next() == '(') it.inc() else it.dec()
+                else -> null
+            }
         }
     }
 }
-
-private fun Int.nextFloor(directions: CharIterator): Int? =
-    when {
-        directions.hasNext() -> {
-            if (directions.next() == '(') this.inc() else this.dec()
-        }
-        else -> null
-    }
 
 private fun Int.isInBasement() = this < 0
