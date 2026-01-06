@@ -18,12 +18,12 @@ class Day02Test {
 
         @Test
         fun `Part 1 - Wrapping paper needed`() {
-            solution.wrapperArea() shouldBe 1586300
+            solution.sqFeetOfWrapper() shouldBe 1586300
         }
 
         @Test
         fun `Part 2 - Ribbon needed`() {
-            solution.ribbonLength() shouldBe 3737498
+            solution.feetOfRibbon() shouldBe 3737498
         }
     }
 
@@ -34,12 +34,12 @@ class Day02Test {
 
         @Test
         fun `Part 1 - Wrapping paper needed`() {
-            solution.wrapperArea() shouldBe 1588178
+            solution.sqFeetOfWrapper() shouldBe 1588178
         }
 
         @Test
         fun `Part 2 - Ribbon needed`() {
-            solution.ribbonLength() shouldBe 3783758
+            solution.feetOfRibbon() shouldBe 3783758
         }
     }
 
@@ -52,7 +52,7 @@ class Day02Test {
             "1, 1, 10, 43"
         )
         fun `Part 1 - Wrapping paper needed `(w: Int, l: Int, h: Int, expectedArea: Int) {
-            Day02(boxDimensions(w, l, h)).wrapperArea() shouldBe expectedArea
+            Day02(boxDimensions(w, l, h)).sqFeetOfWrapper() shouldBe expectedArea
         }
 
         @ParameterizedTest(name = "given a {0}x{1}x{2} box, it should need {3} feet of ribbon")
@@ -61,7 +61,7 @@ class Day02Test {
             "1, 1, 10, 14",
         )
         fun `Part 2 - Ribbon needed `(w: Int, l: Int, h: Int, expectedLength: Int) {
-            Day02(boxDimensions(w, l, h)).ribbonLength() shouldBe expectedLength
+            Day02(boxDimensions(w, l, h)).feetOfRibbon() shouldBe expectedLength
         }
 
         private fun boxDimensions(w: Int, l: Int, h: Int) = listOf(listOf(w, l, h))
