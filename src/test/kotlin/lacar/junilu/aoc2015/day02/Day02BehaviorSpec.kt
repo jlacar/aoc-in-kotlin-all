@@ -6,7 +6,7 @@ import lacar.junilu.aoc2015.day02.Day02.Companion.using
 import lacar.junilu.readPuzzleLines
 
 class Day02BehaviorSpec : BehaviorSpec({
-    context("Using GitHub puzzle input") {
+    Context("Using GitHub puzzle input") {
         val solution = using(readPuzzleLines("aoc2015/day02-gh"))
 
         Given("A list of box dimensions") {
@@ -24,7 +24,7 @@ class Day02BehaviorSpec : BehaviorSpec({
         }
     }
 
-    context("Using GMail puzzle input") {
+    Context("Using GMail puzzle input") {
         val solution = using(readPuzzleLines("aoc2015/day02"))
 
         Given("A list of box dimensions") {
