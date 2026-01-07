@@ -72,16 +72,19 @@ private fun floors(): Sequence<Int> {
 }
 ```
 
-I refactored this further by using the `let()` scope function to capture the iterator in a closure and return the sequence generator function. I also replaced the `nextFloor()` function with a simple `go()` extension function that returns the next floor based on the direction.
+I refactored this further to use the `let()` scope function to capture the iterator and return the sequence generator function. 
+
+I also replaced the `nextFloor()` function with the `go()` extension function, changing the semantics.
 
 ```kotlin
-private fun floors(): Sequence<Int> = directions.let { directions ->
-    generateSequence(0) { floor ->
-        if (directions.hasNext()) {
-            floor.go(directions.next())
-        } else null
+    private fun floors(): Sequence<Int> = directions.iterator()
+    .let { directions ->
+        generateSequence(0) { floor ->
+            if (directions.hasNext()) {
+                floor.go(directions.next())
+            } else null
+        }
     }
-}
 ```
 
 # Adding Kotest Tests
