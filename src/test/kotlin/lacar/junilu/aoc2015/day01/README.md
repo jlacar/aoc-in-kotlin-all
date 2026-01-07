@@ -8,7 +8,7 @@ Test: [Day01Test.kt](./Day01Test.kt)
 # Kotest 
 
 ## FunSpec style 
-Test: [Day01FunSpec.kt](./Day01FunSpec.)
+Test: [Day01FunSpec.kt](./Day01FunSpec.kt)
 
 Includes [data-driven tests](https://kotest.io/docs/framework/datatesting/data-driven-testing.html) for examples.
 
