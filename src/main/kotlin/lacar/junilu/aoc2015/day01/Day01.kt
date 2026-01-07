@@ -19,8 +19,12 @@ class Day01(private val directions: String) {
     }
 }
 
+//region Private extension functions
+
 private fun Char.isUp() = this == '('
 
 private fun Int.go(next: Char): Int = if (next.isUp()) this.inc() else this.dec()
 
 private fun Int.isInBasement() = this < 0
+
+//endregion
