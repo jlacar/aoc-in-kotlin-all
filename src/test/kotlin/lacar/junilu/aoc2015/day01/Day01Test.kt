@@ -20,7 +20,7 @@ class Day01Test {
 
         @Test
         fun part2() {
-            assertEquals(1797, solution.positionOfFirstTimeInBasement())
+            assertEquals(1797, solution.firstPositionInBasement())
         }
     }
 
@@ -49,7 +49,7 @@ class Day01Test {
             "()))())(()), 3",
         )
         fun `Position for first time in basement `(input: String, expectedPosition: Int) {
-            assertEquals(expectedPosition, Day01(input).positionOfFirstTimeInBasement())
+            assertEquals(expectedPosition, Day01(input).firstPositionInBasement())
         }
     }
 }

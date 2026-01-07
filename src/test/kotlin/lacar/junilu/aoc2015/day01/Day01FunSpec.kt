@@ -14,6 +14,6 @@ class Day01FunSpec : FunSpec({
     }
 
     test("Part 2 solution: position of instruction for first time in basement") {
-        solution.positionOfFirstTimeInBasement() shouldBe 1797
+        solution.firstPositionInBasement() shouldBe 1797
     }
 })

@@ -15,7 +15,7 @@ class Day01DescribeSpec : DescribeSpec({
         }
 
         it("Part 2 - position of instruction for first time in basement") {
-            solution.positionOfFirstTimeInBasement() shouldBe 1797
+            solution.firstPositionInBasement() shouldBe 1797
         }
     }
 })
