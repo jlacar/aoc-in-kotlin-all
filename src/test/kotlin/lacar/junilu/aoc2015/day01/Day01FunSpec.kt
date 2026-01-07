@@ -21,15 +21,15 @@ class Day01FunSpec : FunSpec({
     context("Examples - Part 1") {
         withData(
             nameFn = { "given directions ${it.input} last floor should be ${it.expected}" },
-            TestData("(())", 0),
-            TestData("()()", 0),
-            TestData("(((", 3),
-            TestData("(()(()(", 3),
-            TestData("))(((((", 3),
-            TestData("())", -1),
-            TestData("))(", -1),
-            TestData(")))", -3),
-            TestData(")())())", -3),
+            scenario("(())", 0),
+            scenario("()()", 0),
+            scenario("(((", 3),
+            scenario("(()(()(", 3),
+            scenario("))(((((", 3),
+            scenario("())", -1),
+            scenario("))(", -1),
+            scenario(")))", -3),
+            scenario(")())())", -3),
         ) { (directions, expectedFloor) ->
             Day01(directions).lastFloor() shouldBe expectedFloor
         }
@@ -38,9 +38,9 @@ class Day01FunSpec : FunSpec({
     context("Examples - Part 2") {
         withData(
             nameFn = { "given directions ${it.input} first position in basement should be ${it.expected}" },
-            TestData(")", 1),
-            TestData("()()))", 5),
-            TestData("()))())(())", 3)
+            scenario(")", 1),
+            scenario("()()))", 5),
+            scenario("()))())(())", 3)
         ) { (directions, expectedPosition) ->
             Day01(directions).firstPositionInBasement() shouldBe expectedPosition
         }
@@ -48,3 +48,4 @@ class Day01FunSpec : FunSpec({
 })
 
 internal data class TestData(val input: String, val expected: Int)
+internal fun scenario(input: String, expected: Int) = TestData(input, expected)
