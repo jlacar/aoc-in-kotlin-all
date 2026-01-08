@@ -2,43 +2,44 @@
 
 Puzzle page: https://adventofcode.com/2015/day/1
 
-Code: [solution](./Day01.kt) | [tests](../../../../../../test/kotlin/lacar/junilu/aoc2015/day01/)
+Code: [solution](./Day01.kt) | [tests](../../../../../../test/kotlin/lacar/junilu/aoc2015/day01)
 
 # Parsing the Input
 
-Since the puzzle input is a series of parentheses with each character representing a direction, there's no need to parse the input into a data structure.
-Interpreting the directions literally is all that's needed: `(` means go up one floor, `)` means go down one floor. Starting floor is always `0`
+There's no need for an abstract data type for the puzzle input. It is a series of parentheses, each one representing a direction:  `(` means go up one floor, and `)` means go down one floor. Santa always starts at floor `0`.
+
+To make the code more readable, however, I created an `isUp()` extension function on `Char`.
+
+    private fun Char.isUp() = this == '('
 
 # Part 1
 
-I used `fold()` to find the floor that Santa ends up on after following all directions. This is straightforward.
+To find the floor that Santa ends up on after following all directions, I used a `fold()` operation.
 
     override fun part1(): Int = directions.fold(0) { floor, direction ->
-        floor + if (direction == '(') 1 else -1
+        floor + if (direction.isUp()) 1 else -1
     }
 
 In 2026, I refactored the code to use a sequence. See the [Refactoring to a Sequence](#refactoring-to-a-sequence) section for more details.
 
 # Part 2
 
-I used `runningFold()` to find the first time Santa enters the basement.
+To find the position of the first direction that puts Santa in the basement (floor == -1) I used `runningFold()` and `indexOfFirst()`.
 
     override fun part2(): Int = directions.runningFold(0) { floor, direction -> 
-        floor + if (direction == '(') 1 else -1
+        floor + if (direction.isUp()) 1 else -1
     }.indexOfFirst { it == -1 }
 
 # Refactoring
 
-As short as the first cut of the program is, there were still opportunities to refactor for clarity. 
+As short as this program is, I still found opportunities to refactor for clarity. 
 
-## Better Naming and Extracting Implementation Details
+To make the code use the language from the puzzle description, I renamed `part1()` and `part2()` to `lastFloor()` and `firstPositionInBasement()`, respectively.
 
-The names `part1()` and `part2()` were refactored to `lastFloor()` and `positionOfFirstTimeInBasement()`, respectively.
-
-The shared logic for calculating the next floor visited was also extracted.
+I also extracted the shared logic for calculating the next floor visited to a private function.
 
     private val nextFloor: (Int, Char) -> Int = { currentFloor, direction ->
-        currentFloor + if (direction == '(') 1 else -1
+        currentFloor + if (direction.isUp()) 1 else -1
     }
 
 Finally, I refactored the calculation expressions to use `inc()` and `dec()` instead.
@@ -47,19 +48,17 @@ Finally, I refactored the calculation expressions to use `inc()` and `dec()` ins
         if (direction == '(') currentFloor.inc() else currentFloor.dec()
     }
 
-## Over-engineering vs. practicing good habits 
+## Practicing good habits v. over-engineering 
 
-For a program this small, it may seem a bit heavy-handed to do any refactoring at all. However, this is practice that will be applied in real-world programs. This kind of attention to detail paves the way for a gentler and more enjoyable experience for readers trying to understand the code.
+For a program this small, it may seem a bit heavy-handed to do any refactoring at all. However, I'm not solving these problems to compete based on time or brevity. I do this to practice habits that I can apply in real-world development. By being mindful of code design and readability, I aim to improve my skill in writing code that is more readable and maintainable.
 
 ## Using a sequence for Part 2 (first solution)
 
-When I extracted the `runningFold()` operation in Part 2, I also added `.asSequence()` to the call chain to make sure I was operating on a sequence rather than a collection. This allowed the iteration of `runningFold()` to be terminated as soon as the first `-1` floor was found. 
-
-Without the conversion to a sequence, the `runningFold()` would go through the entire set of directions, which would create a huge intermediate list for long inputs. With the sequence, the iterations are terminated as soon as `floor` becomes `-1` and the rest of the characters in the input will not be processed. The sequence essentially allows us to shortcircuit the iteration.  
+When I extracted the `runningFold()` operation in Part 2, I also added `.asSequence()` to the call chain to make sure I was operating on a sequence rather than a collection. This allowed `runningFold()` to terminate as soon as the answer was found. 
 
 # Refactoring to a Sequence
 
-Revisiting this code in 2026, I realized I could use a sequence to represent the floors visited by Santa. This made both parts of the solution more symmetrical by using the same sequence as the start of their respective call chains.
+Revisiting this code in 2026, I realized I could use a sequence to represent the floors visited by Santa. This made parts 1 and 2 more symmetrical.
 
 I used `generateSequence()` to create the sequence of floors visited on demand, capturing an iterator for the directions in a closure. This is an example of a high-order function that returns a sequence generator function.
 

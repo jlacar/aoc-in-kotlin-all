@@ -24,7 +24,7 @@ class Day01(private val directions: String) {
 
 private fun Char.isUp() = this == '('
 
-private fun Int.go(next: Char): Int = if (next.isUp()) this.inc() else this.dec()
+private fun Int.go(direction: Char): Int = if (direction.isUp()) this.inc() else this.dec()
 
 private fun Int.isInBasement() = this < 0
 
