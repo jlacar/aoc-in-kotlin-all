@@ -22,6 +22,8 @@ fun Pair<Point2D, Point2D>.area() = abs(first.x - second.x) * abs(first.y - seco
  *
  * A thin rectangle has a thickness of at least 1 unit along any axis.
  * For example, a rectangle with corners (1, 1) and (1, 3) has an area of 4.
+ *
+ * First used for AoC 2025 Day 9.
  */
 fun Pair<Point2D, Point2D>.thinArea() =
     (abs(first.x - second.x) + 1).toLong() *

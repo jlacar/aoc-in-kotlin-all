@@ -1,7 +1,6 @@
 package lacar.junilu.aoc2025.day09
 
 import lacar.junilu.common.Point2D
-import lacar.junilu.common.distance
 import lacar.junilu.common.thinArea
 
 /**
@@ -11,12 +10,15 @@ import lacar.junilu.common.thinArea
  */
 class Day09(val redTiles: List<Point2D>) {
 
-    fun maxRectangularArea(): Long =
-        redTiles.flatMapIndexed { i, corner1 ->
-            redTiles.subList(i + 1, redTiles.size).map { corner2 ->
-                Pair(corner1, corner2)
-            }
+    fun biggestRectangle(): Long =
+        redTiles.flatMapIndexed { i, corner ->
+            allRectanglesWith(corner, i)
         }.maxOf { it.thinArea() }
+
+    private fun allRectanglesWith(corner: Point2D, i: Int) =
+        redTiles.drop(i).map { other ->
+            Pair(corner, other)
+        }
 
     fun part2(): Nothing = TODO()
 }

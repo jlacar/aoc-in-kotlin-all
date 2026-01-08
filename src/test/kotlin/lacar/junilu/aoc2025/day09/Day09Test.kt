@@ -9,17 +9,16 @@ import kotlin.test.Test
 class Day09Test {
     @Test
     fun `Solutions for GitHub input`() {
-        val puzzle = using(readPuzzleLines("aoc2025/day09-gh"))
+        val solution = using(readPuzzleLines("aoc2025/day09-gh"))
 
-        assertEquals(4777409595, puzzle.maxRectangularArea())
+        assertEquals(4777409595, solution.biggestRectangle())
     }
 
     @Test
     fun `Solutions for Gmail input`() {
         val puzzle = using(readPuzzleLines("aoc2025/day09-gm"))
 
-//        assertEquals(4667642882, puzzle.maxRectangularArea())  // too low!
-        assertEquals(4733727792, puzzle.maxRectangularArea())  // too low!
+        assertEquals(4733727792, puzzle.biggestRectangle())
     }
 
     @Test
@@ -36,7 +35,7 @@ class Day09Test {
             7,3""".trimIndent().lines()
         )
 
-        assertEquals(50, example.maxRectangularArea())
+        assertEquals(50, example.biggestRectangle())
     }
 }
 
