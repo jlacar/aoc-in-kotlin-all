@@ -24,7 +24,7 @@ I'm slowly working my way through all the AoC puzzles starting from 2015. My goa
 
 I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average developer would. 
 
-I am, however, a big believer in simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Solving a problem usually goes much faster for me in the long run if I put in what others might consider extra effort in refactoring for clarity,simplicity, and maintainability. 
+I am, however, a big believer in simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Solving a problem usually goes much faster for me in the long run if I put in what others might consider extra effort in refactoring for clarity, simplicity, and maintainability. 
 
 I am also a strong believer in good engineering practices and you'll find that I write a lot of test code and do a lot of refactoring. I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is. 
 
