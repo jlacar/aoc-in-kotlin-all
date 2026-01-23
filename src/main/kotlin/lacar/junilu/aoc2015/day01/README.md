@@ -6,11 +6,13 @@ Code: [solution](./Day01.kt) | [tests](../../../../../../test/kotlin/lacar/junil
 
 # Parsing the Input
 
-There's no need for an abstract data type for the puzzle input. It is a series of parentheses, each one representing a direction:  `(` means go up one floor, and `)` means go down one floor. Santa always starts at floor `0`.
+The puzzle input is a series of parentheses, each one representing a direction:  "`(`" means go up one floor, and "`)`" means go down one floor. Santa always starts at floor `0`.
 
-To make the code more readable, however, I created an `isUp()` extension function on `Char`.
+To make the code more readable, I created an `isUp()` extension function on `Char`.
 
+```kotlin
     private fun Char.isUp() = this == '('
+```
 
 # Part 1
 

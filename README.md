@@ -1,8 +1,8 @@
 # Advent of Code in Kotlin - All Events
 
-[Advent of Code](https://adventofcode.com) is an annual programming competition with a Christmas-y theme. It originally ran from December 1st to the 25th. In 2025, it was shortened to twelve days, running only to December 12th. I suppose the creators saw that most people only made it halfway to December 25th and decided to shorten the event so as not to waste any effort creating twice as many puzzles as most people would ever complete.
+[Advent of Code](https://adventofcode.com) is an annual Christmas-themed programming competition. It was first held in 2015 and, as its name implies, was run during the Season of Advent from December 1st to the 24th. In 2025, its was shortened to twelve days, running only fro December 1st to the 12th.
 
-I'm slowly working my way through all the AoC puzzles starting from the first year it ran in 2015. My goal is to get all fifty stars for each year using Kotlin. This repository is a record of this multi-year exercise.
+I'm slowly working my way through all the AoC puzzles starting from 2015. My goal is to get all stars for each year using Kotlin. This repository is a record of this multi-year exercise.
 
 ## Events
 
@@ -22,13 +22,13 @@ I'm slowly working my way through all the AoC puzzles starting from the first ye
 
 ### Some over-engineering expected
 
-I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average. 
+I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average developer would. 
 
-I am, however, big on doing TDD and refactoring for simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Keeping the code as clean as it can be as I go helps me keep from getting confused and helps me solve the problem faster in the long run.
+I am, however, big on simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Keeping the code as clean as it can be as I go helps me keep from getting confused and helps me solve the problem faster in the long run. I am also a strong believer in good engineering practices and you'll find that I write a lot of test code and do a lot of refactoring.
 
-That said, I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is.
+While I strive for simplicity, I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is. Let me know with a comment if you see something that could be improved or simplified or approached differently.
 
-My general approach is to prefer clarity over brevity. Sometimes I refactor for clarity and get less code. Other times, I'll end up with more code. I never intentionally play [code golf](https://code.golf) with any of these solutions so if you see something that's brief but not clear or looks too clever but cryptic, please drop a comment and let me know.
+My general coding style is to prefer clarity over brevity. Sometimes I will refactor for clarity and get less code. At other times, I'll end up with more code. I never intentionally play [code golf](https://code.golf) with any of these solutions so if you see something that's brief but not clear or looks too clever but cryptic, please drop a comment and let me know.
 
 Feel free to comment and point out anything that might be a questionable or problematic practice in Kotlin. 
 
