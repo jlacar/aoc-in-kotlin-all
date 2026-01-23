@@ -24,15 +24,15 @@ I'm slowly working my way through all the AoC puzzles starting from 2015. My goa
 
 I'm not much of a competitive programmer so I don't expect to solve these puzzles faster than the average developer would. 
 
-I am, however, big on simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Keeping the code as clean as it can be as I go helps me keep from getting confused and helps me solve the problem faster in the long run. I am also a strong believer in good engineering practices and you'll find that I write a lot of test code and do a lot of refactoring.
+I am, however, a big believer in simplicity, clarity, and ease of maintenance. I strive to keep the code clean, where "clean" means easy to understand and work with. Solving a problem usually goes much faster for me in the long run if I put in what others might consider extra effort in refactoring for clarity,simplicity, and maintainability. 
 
-While I strive for simplicity, I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is. Let me know with a comment if you see something that could be improved or simplified or approached differently.
+I am also a strong believer in good engineering practices and you'll find that I write a lot of test code and do a lot of refactoring. I still manage to go overboard at times and end up with code that looks over-engineered, which it probably is. 
 
 My general coding style is to prefer clarity over brevity. Sometimes I will refactor for clarity and get less code. At other times, I'll end up with more code. I never intentionally play [code golf](https://code.golf) with any of these solutions so if you see something that's brief but not clear or looks too clever but cryptic, please drop a comment and let me know.
 
-Feel free to comment and point out anything that might be a questionable or problematic practice in Kotlin. 
+Also, feel free to comment and point out anything that might be a questionable or problematic practice in Kotlin. 
 
-Suggestions for alternative approaches are always welcome and greatly appreciated.
+Suggestions for improvement or use of alternative approaches are always welcome and greatly appreciated.
 
 ### Semantic Commit Messages
 
