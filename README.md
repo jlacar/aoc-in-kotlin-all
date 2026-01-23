@@ -1,6 +1,6 @@
 # Advent of Code in Kotlin - All Events
 
-[Advent of Code](https://adventofcode.com) is an annual Christmas-themed programming competition. It was first held in 2015 and, as its name implies, was run during the Season of Advent from December 1st to the 24th. In 2025, its was shortened to twelve days, running only from December 1st to the 12th.
+[Advent of Code](https://adventofcode.com) is an annual Christmas-themed programming competition. It was first held in 2015 and, as its name implies, was run during the Season of Advent from December 1st to the 24th. In 2025, it was shortened to twelve days, running only from December 1st to the 12th.
 
 I'm slowly working my way through all the AoC puzzles starting from 2015. My goal is to get all stars for each year using Kotlin. This repository is a record of this multi-year exercise.
 
